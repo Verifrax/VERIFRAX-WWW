@@ -4,18 +4,18 @@
   "hostClass": "root",
   "role": "www",
   "title": "VERIFRAX",
-  "description": "Canonical public entry for the VERIFRAX system.",
+  "description": "Root surface for the VERIFRAX public perimeter. This surface routes public navigation only. It does not publish proof, determine verification truth, issue authority, execute governed actions, or accept intake.",
   "deployMode": "static-root",
   "adjacentHosts": {
+    "Docs": "https://docs.verifrax.net",
+    "Proof": "https://proof.verifrax.net",
+    "Verify": "https://verify.verifrax.net",
+    "Apply": "https://apply.verifrax.net",
     "Execution": "https://api.verifrax.net",
-    "Proof publication": "https://proof.verifrax.net",
-    "Verification": "https://verify.verifrax.net",
     "Authority": "https://auctoriseal.verifrax.net",
-    "Runtime reference": "https://corpiform.verifrax.net",
-    "Enforcement reference": "https://cicullis.verifrax.net",
-    "Seal archive": "https://sigillarium.verifrax.net",
-    "Intake": "https://apply.verifrax.net",
-    "Documentation": "https://docs.verifrax.net",
+    "Runtime": "https://corpiform.verifrax.net",
+    "Enforcement": "https://cicullis.verifrax.net",
+    "Archive": "https://sigillarium.verifrax.net",
     "Status": "https://status.verifrax.net"
   }
 }
