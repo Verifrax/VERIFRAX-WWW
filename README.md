@@ -2,6 +2,11 @@
 
 Canonical repository for `www.verifrax.net`.
 
+## Terminal planes
+
+- **[ANAGNORIUM](https://github.com/Verifrax/ANAGNORIUM)** — terminal recognition
+- **[REGRESSORIUM](https://github.com/Verifrax/REGRESSORIUM)** — terminal recourse
+
 ## Status
 
 - Repository role: public root host surface
@@ -84,3 +89,11 @@ Do not read it as proof, verification, authority, runtime, archive, intake, docs
 ## License
 
 Apache License Version 2.0
+
+## Adjacent sovereign surfaces
+
+This repository is part of the Verifrax sovereign stack and remains bounded relative to:
+
+- **[ANAGNORIUM](https://github.com/Verifrax/ANAGNORIUM)** for terminal recognition
+- **[REGRESSORIUM](https://github.com/Verifrax/REGRESSORIUM)** for terminal recourse
+
