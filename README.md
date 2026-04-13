@@ -152,13 +152,3 @@ VERIFRAX-WWW is not intake.
 ## License
 
 Apache License Version 2.0
-
-## Adjacent sovereign surfaces
-
-- `VERIFRAX` — authored protocol and evidence-root boundary
-- `AUCTORISEAL` — authority issuance
-- `CORPIFORM` — governed execution
-- `VERIFRAX-verify` — public verification
-- `proof` — proof publication
-- `SIGILLARIUM` — archive/reference
-- `apply` — intake
