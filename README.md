@@ -1,6 +1,6 @@
 # VERIFRAX-WWW
 
-Canonical repository for `www.verifrax.net`.
+VERIFRAX-WWW is the Verifrax public root-host boundary: the public surface for `https://www.verifrax.net` that presents the root commercial/public entry surface without becoming authored protocol source, authority issuance, governed execution, public verification, proof publication, archive/reference, or intake.
 
 ## Proof artifacts
 
@@ -24,82 +24,130 @@ This repository is part of the VERIFRAX proof perimeter.
 
 ## Status
 
-- Repository role: public root host surface
-- Public host ownership: `https://www.verifrax.net/`
-- Apex behavior: `https://verifrax.net/` redirects to `https://www.verifrax.net/`
-- Current live host binding: static GitHub Pages-backed root surface on the custom domain
-- Package status: repository-only static surface
-- License: Apache License Version 2.0
+* Surface class: public root host
+* Repository class: root host surface
+* Public host ownership: `https://www.verifrax.net`
+* Host class: root
+* Role: www
+* Deploy mode: static-root
+* Current repository posture: live public root-entry boundary
+* License: Apache License Version 2.0
 
-## One-sentence role
+## Boundary
 
-`VERIFRAX-WWW` owns the public root host and must remain the single commercial and navigational entry surface without absorbing proof, verification, authority, runtime, archive, intake, docs, or status roles.
+This repository owns root-host presentation only.
 
-## What this repository is
+It presents the public root surface for `https://www.verifrax.net`.
+It exposes bounded entry, routing, and public-facing orientation at the root host.
 
-This repository exists to hold:
+It does not author normative source material.
+It does not issue authority.
+It does not execute governed actions.
+It does not verify published material.
+It does not publish proof.
+It does not serve as archive/reference.
+It does not operate intake.
+It does not replace adjacent sovereign boundaries.
 
-- the public root host surface
-- root-level system framing
-- adjacent-host navigation
-- static deployment material for `www.verifrax.net`
-- root-boundary language for the public entry surface
+## What it does
 
-## What this repository is not
+- defines the bounded root-host surface for `https://www.verifrax.net`
+- presents public-facing entry and routing orientation
+- preserves a clean distinction between public root presentation and operational surfaces
+- keeps public host identity inspectable without claiming protocol or verification authority
+- anchors root-host role truth for adjacent repositories and hosts
 
-This repository is not:
+## What it does not do
 
-- the API host
-- the proof publication host
-- the verification host
-- the authority host
-- the runtime reference host
-- the enforcement host
-- the archive host
-- the intake host
-- the docs host
-- the status host
+- not authored protocol source; that belongs to VERIFRAX
+- not authority issuance; that belongs to AUCTORISEAL
+- not governed execution; that belongs to CORPIFORM
+- not public verification; that belongs to VERIFRAX-verify
+- not proof publication; that belongs to proof
+- not archive/reference; that belongs to SIGILLARIUM
+- not intake; that belongs to apply
+- not constitutional doctrine; that belongs to SYNTAGMARIUM
+- not canonical world-state; that belongs to ORBISTIUM
+- not reconciliation or repair; that belongs to CONSONORIUM
+- not sovereign cognition; that belongs to TACHYRIUM
 
-It must not:
+## Adjacent sovereign surfaces
 
-- execute verification
-- publish proof material
-- issue authority
-- describe runtime receipt semantics as if owned here
-- act as the archive surface
-- accept intake as if owned here
-- impersonate documentation or status ownership
+- `VERIFRAX` — authored protocol and evidence-root boundary
+- `AUCTORISEAL` — authority issuance
+- `CORPIFORM` — governed execution
+- `VERIFRAX-verify` — public verification
+- `proof` — proof publication
+- `SIGILLARIUM` — archive/reference
+- `apply` — intake
+- `VERIFRAX-DOCS` — explanatory documentation
 
-## Current live boundary
+VERIFRAX-WWW presents the public root.
+It does not author.
+It does not issue authority.
+It does not execute.
+It does not verify.
+It does not publish proof.
 
-The current live host at `https://www.verifrax.net/` is the public root only.
+That separation must remain explicit.
 
-That means this repository may state:
+## Public surface
 
-- the root host is live
-- the apex redirects to the root host
-- the root links to adjacent isolated public surfaces
+The public surface of this repository is its repository identity, README boundary, root host surface, and public-facing presentation materials carried by this repository.
 
-It must not collapse adjacent-host semantics into the root.
+Publication here is not authored source.
+Publication here is not authority.
+Publication here is not execution.
+Publication here is not verification.
+Publication here is not proof publication.
+Publication here is not archive/reference.
+Publication here is not intake.
 
-## Adjacent surfaces
+## Package / host / repo truth
 
-- `https://api.verifrax.net/` — execution surface
-- `https://proof.verifrax.net/` — proof publication
-- `https://verify.verifrax.net/` — verification
-- `https://auctoriseal.verifrax.net/` — authority
-- `https://corpiform.verifrax.net/` — runtime reference
-- `https://cicullis.verifrax.net/` — enforcement reference
-- `https://sigillarium.verifrax.net/` — archive
-- `https://apply.verifrax.net/` — intake
-- `https://docs.verifrax.net/` — documentation
-- `https://status.verifrax.net/` — status
+Repository truth for VERIFRAX-WWW lives in this repository.
+
+Host truth for this surface is `https://www.verifrax.net`.
+Host presentation and repository truth are related but not interchangeable.
+Repository boundary still controls root-host role truth here.
+
+## Root-host meaning in-system
+
+Root-host meaning in-system means the stack can point to VERIFRAX-WWW and say that a bounded public root-entry surface, public routing surface, or commercial/public presentation surface belongs to this boundary.
+
+The root host here presents.
+The root host here does not author.
+The root host here does not issue authority.
+The root host here does not execute.
+The root host here does not verify.
+The root host here does not publish proof.
+
+That does not by itself mean:
+
+- the root host became authored protocol source
+- the root host issued authority
+- the root host executed a governed action
+- the root host verified truth
+- the root host published proof
+- the root host replaced archive/reference
+- the root host replaced intake
+- the root host replaced the evidence-root repository
 
 ## Reading rule
 
-Read this repository as the public root boundary only.
+Read this repository as root-host presentation only.
 
-Do not read it as proof, verification, authority, runtime, archive, intake, docs, or status truth.
+If this repository starts sounding like authored protocol source, authority, execution, verification, proof publication, archive, or intake at the same time, the boundary is already broken.
+
+## Not this
+
+VERIFRAX-WWW is not authored protocol source.
+VERIFRAX-WWW is not authority issuance.
+VERIFRAX-WWW is not governed execution.
+VERIFRAX-WWW is not public verification.
+VERIFRAX-WWW is not proof publication.
+VERIFRAX-WWW is not archive/reference.
+VERIFRAX-WWW is not intake.
 
 ## License
 
@@ -107,7 +155,10 @@ Apache License Version 2.0
 
 ## Adjacent sovereign surfaces
 
-This repository is part of the Verifrax sovereign stack and remains bounded relative to:
-
-- **[ANAGNORIUM](https://github.com/Verifrax/ANAGNORIUM)** for terminal recognition
-- **[REGRESSORIUM](https://github.com/Verifrax/REGRESSORIUM)** for terminal recourse
+- `VERIFRAX` — authored protocol and evidence-root boundary
+- `AUCTORISEAL` — authority issuance
+- `CORPIFORM` — governed execution
+- `VERIFRAX-verify` — public verification
+- `proof` — proof publication
+- `SIGILLARIUM` — archive/reference
+- `apply` — intake
