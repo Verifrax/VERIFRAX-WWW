@@ -4,7 +4,7 @@
   "hostClass": "root",
   "role": "www",
   "title": "VERIFRAX",
-  "description": "Root surface for the VERIFRAX public perimeter. This surface routes public navigation only. It does not publish proof, determine verification truth, issue authority, execute governed actions, or accept intake.",
+  "description": "Public root-host boundary for the VERIFRAX public perimeter. This surface presents root entry and routing only. It does not issue authority, execute governed actions, verify published material, publish proof, serve archive/reference, or accept intake.",
   "deployMode": "static-root",
   "adjacentHosts": {
     "Docs": "https://docs.verifrax.net",
