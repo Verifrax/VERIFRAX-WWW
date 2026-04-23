@@ -31,7 +31,7 @@ This repository is part of the VERIFRAX governed public-host perimeter.
 * Role: www
 * Deploy mode: static-root
 * Current repository posture: live public root-entry boundary
-* License: Apache License Version 2.0
+* License: Mozilla Public License 2.0
 
 ## Boundary
 
@@ -184,4 +184,5 @@ VERIFRAX-WWW is not intake.
 
 ## License
 
-Apache License Version 2.0
+This repository is licensed under the Mozilla Public License 2.0. See `LICENSE`.
+
