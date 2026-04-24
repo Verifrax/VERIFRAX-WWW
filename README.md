@@ -1,6 +1,6 @@
 # VERIFRAX-WWW
 
-* License: Mozilla Public License Version 2.0
+* License: Mozilla Public License 2.0
 
 VERIFRAX-WWW is the Verifrax public root-host boundary: the public surface for `https://www.verifrax.net` that presents the root commercial/public entry surface without becoming authored protocol source, authority issuance, governed execution, public verification, proof publication, archive/reference, or intake.
 
@@ -185,4 +185,4 @@ VERIFRAX-WWW is not intake.
 
 ## License
 
-This repository is licensed under the Mozilla Public License Version 2.0. See `LICENSE`.
+This repository is licensed under the Mozilla Public License 2.0. See `LICENSE`.
