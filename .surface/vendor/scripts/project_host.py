@@ -255,6 +255,54 @@ def observatory_webgl_css(cfg):
 .oc-proofline{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 @media (max-width:1200px){.oc-left,.oc-right,.oc-inspector{position:relative;inset:auto;width:auto;margin:12px 14px}.oc-left,.oc-right{display:grid;grid-template-columns:1fr}.observatory-webgl-runtime{min-height:1160px}.oc-bottom{position:relative;left:auto;right:auto;bottom:auto;margin:12px 14px 14px}}
 @media (max-width:780px){.oc-topbar nav,.oc-left,.oc-right{display:none}.oc-hero{top:90px;left:16px;right:16px}.oc-hero h2{font-size:54px}.oc-inspector{margin-top:720px}.oc-journey ol{grid-template-columns:1fr 1fr}}
+
+.surface-fallback-root{
+  max-width:1180px;
+  margin:28px auto 44px;
+  padding:18px;
+  border:1px solid rgba(115,208,255,.14);
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(5,12,20,.72),rgba(3,8,14,.92));
+  box-shadow:0 24px 80px rgba(0,0,0,.38);
+}
+.surface-fallback-root .surface-id,
+.surface-fallback-root .surface-title,
+.surface-fallback-root .surface-role,
+.surface-fallback-root .surface-boundary,
+.surface-fallback-root .divider,
+.surface-fallback-root .panel{
+  max-width:none;
+}
+.surface-fallback-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:18px;
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:rgba(255,255,255,.035);
+}
+.surface-fallback-head span{
+  color:#73d0ff;
+  font:900 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.14em;
+}
+.surface-fallback-head strong{
+  color:#dcecff;
+  font:800 13px/1.3 Inter,ui-sans-serif,system-ui,sans-serif;
+}
+body.vf-observatory-full .surface-fallback-root,
+body[data-observatory-render-permission="FULL_OBSERVATORY"] .surface-fallback-root,
+body.vf-observatory-command-dominant .surface-fallback-root{
+  display:none;
+}
+body.vf-observatory-blocked .surface-fallback-root,
+body.vf-observatory-safe .surface-fallback-root{
+  display:block;
+}
+
 """
 
 def render(cfg, surface_sha):
@@ -293,6 +341,11 @@ def render(cfg, surface_sha):
 <body>
   <main class="surface stack">
 {observatory_webgl_lead}
+    <section id="static-root-contract" class="surface-fallback-root" aria-label="Static VERIFRAX root contract fallback">
+      <div class="surface-fallback-head">
+        <span>STATIC ROOT CONTRACT</span>
+        <strong>Fallback doctrine remains available below the Observatory.</strong>
+      </div>
     <div class="surface-id">VERIFRAX / {escape(role)}</div>
     <h1 class="surface-title">VERIFRAX</h1>
     <p class="surface-role">Canonical public entry for the VERIFRAX system.</p>
@@ -328,6 +381,8 @@ def render(cfg, surface_sha):
       <div class="links">
         {reading}
       </div>
+    </section>
+
     </section>
 
 {observatory_webgl}

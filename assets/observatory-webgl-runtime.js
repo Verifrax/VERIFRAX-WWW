@@ -31,6 +31,12 @@ const chamberOrder = [
   "regressorium"
 ];
 
+
+function markObservatoryDominant(renderPermission) {
+  document.body.dataset.observatoryRenderPermission = renderPermission || "STATIC_FALLBACK";
+  document.body.classList.toggle("vf-observatory-command-dominant", renderPermission === "FULL_OBSERVATORY");
+}
+
 function $(root, selector) {
   return root.querySelector(selector);
 }
@@ -729,3 +735,18 @@ if (document.readyState === "loading") {
 } else {
   boot();
 }
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const apply = () => {
+    const explicit = document.body.dataset.observatoryRenderPermission;
+    const permissionNode = document.querySelector("[data-render-permission]");
+    const permission = explicit || (permissionNode ? permissionNode.textContent.trim() : "");
+    if (permission === "FULL_OBSERVATORY") {
+      markObservatoryDominant("FULL_OBSERVATORY");
+    }
+  };
+  apply();
+  window.setTimeout(apply, 500);
+  window.setTimeout(apply, 1500);
+});
