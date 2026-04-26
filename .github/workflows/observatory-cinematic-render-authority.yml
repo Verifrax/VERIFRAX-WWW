@@ -1,0 +1,44 @@
+name: Observatory Cinematic Render Authority
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  cinematic-render-authority:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install browser dependencies
+        run: |
+          npm install --no-save playwright pngjs
+          npx playwright install --with-deps chromium
+
+      - name: Validate projected authority
+        run: |
+          rm -rf .surface/vendor/scripts/__pycache__
+          python3 .surface/vendor/scripts/project_host.py
+          python3 .surface/vendor/scripts/project_host.py
+          rm -rf .surface/vendor/scripts/__pycache__
+          git diff --exit-code -- . ':(exclude).surface/vendor/scripts/__pycache__'
+          node scripts/check-observatory-attestation.mjs
+          node scripts/check-observatory-runtime-boot.mjs
+          node scripts/check-observatory-real3d-hardening.mjs
+
+      - name: Run cinematic render authority guard
+        run: |
+          python3 -m http.server 4181 > /tmp/verifrax-www-cinematic-render-authority.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" >/dev/null 2>&1 || true' EXIT
+          sleep 2
+          node scripts/check-observatory-cinematic-render-authority.cjs http://127.0.0.1:4181/

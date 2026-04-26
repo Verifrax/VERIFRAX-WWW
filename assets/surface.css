@@ -1044,6 +1044,35 @@ html,body{margin:0!important;width:100%!important;height:100%!important;min-heig
 }
 /* END VCO MACHINE FIRST PANEL EJECTION */
 
+
+
+/* BEGIN VCO CINEMATIC REAL3D AUTHORITY */
+#observatory-webgl-runtime{
+  background:
+    radial-gradient(circle at 50% 52%, rgba(82,190,255,.18), transparent 24%),
+    radial-gradient(circle at 50% 72%, rgba(10,30,44,.82), transparent 44%),
+    #010409 !important;
+}
+#observatory-webgl-runtime canvas{
+  filter: contrast(1.12) saturate(1.18) brightness(.96) !important;
+}
+#observatory-webgl-runtime::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 46%, transparent 0 31%, rgba(0,0,0,.10) 48%, rgba(0,0,0,.48) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.035), transparent 24%, transparent 72%, rgba(0,0,0,.28));
+  mix-blend-mode:screen;
+  opacity:.62;
+}
+.oc-topbar,.oc-bottom{backdrop-filter:blur(18px) saturate(1.18)!important}
+.oc-hero h2{text-shadow:0 16px 58px rgba(0,0,0,.92),0 0 38px rgba(115,208,255,.16)!important}
+.oc-journey li.is-active{box-shadow:0 0 0 1px rgba(162,238,255,.34),0 0 24px rgba(53,188,255,.32),inset 0 0 18px rgba(77,204,255,.12)!important}
+/* END VCO CINEMATIC REAL3D AUTHORITY */
+
 /* BEGIN VCO CINEMATIC COMMAND KEYBOARD CLICK AUTHORITY */
 .vco-command{
   position:fixed;

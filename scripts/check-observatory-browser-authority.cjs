@@ -22,7 +22,16 @@ function pass(name) { console.log(`${name} PASS`); }
   const response = await page.goto(`${target}${target.includes("?") ? "&" : "?"}v=${Date.now()}`, { waitUntil: "networkidle", timeout: 30000 });
   if (response && response.status() >= 200 && response.status() < 300) pass("http_200"); else fail("http_200", response && String(response.status()));
 
-  await page.waitForSelector("#observatory-webgl-runtime", { timeout: 15000 });
+  await page.waitForFunction(() => {
+    const runtime = document.querySelector("#observatory-webgl-runtime");
+    const rect = runtime?.getBoundingClientRect?.();
+    return !!runtime && !!rect && rect.width > 100 && rect.height > 100;
+  }, null, { timeout: 15000 });
+  await page.waitForFunction(() => {
+    const canvas = document.querySelector("#observatory-webgl-runtime canvas");
+    const rect = canvas?.getBoundingClientRect?.();
+    return !!canvas && !!rect && rect.width > 100 && rect.height > 100;
+  }, null, { timeout: 20000 });
   await page.waitForTimeout(4500);
 
   const facts = await page.evaluate(() => {
