@@ -71,11 +71,15 @@ jobs:
           }
 
           hash_tree() {
-            find "$1" -type f -print0 \
-              | sort -z \
-              | xargs -0 shasum -a 256 \
-              | shasum -a 256 \
-              | awk '{print $1}'
+            root="$1"
+            (
+              cd "$root"
+              find . -type f -print0 \
+                | sort -z \
+                | xargs -0 sha256sum \
+                | sha256sum \
+                | awk '{print $1}'
+            )
           }
 
           A="$(mktemp -d)/dist"
