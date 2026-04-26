@@ -20,5 +20,6 @@ jobs:
           node --check assets/observatory-webgl-runtime.js
           node scripts/check-observatory-attestation.mjs
           node scripts/check-observatory-runtime-boot.mjs
+          node scripts/check-observatory-real3d-hardening.mjs
       - name: Assert committed output is current
         run: git diff --exit-code -- . ':!README.md'
