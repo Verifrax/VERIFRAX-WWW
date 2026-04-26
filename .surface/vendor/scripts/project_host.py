@@ -176,6 +176,149 @@ body.vf-observatory-blocked .observatory-render-gate{
 """
 
 
+def render_observatory_webgl(cfg):
+    if not cfg.get("observatoryWebglRuntime"):
+        return ""
+    return """
+    <section id="observatory-webgl-runtime" class="observatory-webgl-runtime" aria-label="VERIFRAX Constitutional Observatory real WebGL runtime">
+      <div class="observatory-webgl-copy">
+        <span class="observatory-webgl-kicker">REAL WEBGL PROJECTION RUNTIME</span>
+        <h2>VERIFRAX Constitutional Observatory</h2>
+        <p>35 repositories. 9 chambers. ADMISSORIUM at the border. Rendered from signed projection data.</p>
+        <code data-runtime-status>STATIC_FALLBACK: waiting for runtime.</code>
+      </div>
+      <div class="observatory-webgl-stage" data-runtime-stage></div>
+      <aside class="observatory-webgl-inspector" data-runtime-inspector>
+        <strong>Projection inspector</strong>
+        <span>Click a chamber, host gate, core, or ADMISSORIUM gate.</span>
+        <p>Every visible object is subordinate to DERIVED_PROJECTION / NOT_TRUTH_SOURCE.</p>
+      </aside>
+    </section>
+"""
+
+def render_observatory_webgl_script(cfg):
+    if not cfg.get("observatoryWebglRuntime"):
+        return ""
+    return '  <script type="module" src="assets/observatory-webgl-runtime.js"></script>\n'
+
+def observatory_webgl_css(cfg):
+    if not cfg.get("observatoryWebglRuntime"):
+        return ""
+    return r"""
+.observatory-webgl-runtime{
+  position:relative;
+  min-height:760px;
+  margin:28px 0 0;
+  border:1px solid rgba(115,208,255,.18);
+  border-radius:24px;
+  overflow:hidden;
+  background:#02060b;
+  box-shadow:0 30px 90px rgba(0,0,0,.44);
+}
+.observatory-webgl-stage{
+  position:absolute;
+  inset:0;
+}
+.observatory-webgl-stage canvas{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.observatory-webgl-copy{
+  position:absolute;
+  z-index:2;
+  top:24px;
+  left:24px;
+  max-width:440px;
+  padding:18px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:20px;
+  background:linear-gradient(180deg,rgba(2,8,14,.80),rgba(2,8,14,.52));
+  backdrop-filter:blur(10px);
+}
+.observatory-webgl-kicker{
+  display:block;
+  margin-bottom:10px;
+  color:#73d0ff;
+  font:800 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.14em;
+}
+.observatory-webgl-copy h2{
+  margin:0;
+  color:#f2f8ff;
+  font:800 clamp(28px,4vw,56px)/.95 Inter,ui-sans-serif,system-ui,sans-serif;
+  letter-spacing:-.05em;
+}
+.observatory-webgl-copy p{
+  margin:14px 0;
+  color:#b9c7d6;
+  font:500 15px/1.55 Inter,ui-sans-serif,system-ui,sans-serif;
+}
+.observatory-webgl-copy code{
+  display:inline-block;
+  padding:8px 10px;
+  border:1px solid rgba(115,208,255,.22);
+  border-radius:999px;
+  color:#9ee6b8;
+  background:rgba(115,208,255,.08);
+  font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.observatory-webgl-inspector{
+  position:absolute;
+  z-index:2;
+  right:24px;
+  bottom:24px;
+  width:min(360px,calc(100% - 48px));
+  padding:16px;
+  border:1px solid rgba(115,208,255,.20);
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(2,8,14,.86),rgba(2,8,14,.62));
+  backdrop-filter:blur(10px);
+  color:#dcecff;
+}
+.observatory-webgl-inspector strong{
+  display:block;
+  margin-bottom:6px;
+  font:800 15px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.observatory-webgl-inspector span{
+  display:block;
+  color:#73d0ff;
+  font:700 11px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.observatory-webgl-inspector p{
+  margin:10px 0 0;
+  color:#b9c7d6;
+  font:500 13px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;
+}
+.observatory-webgl-inspector small{
+  display:block;
+  margin-top:10px;
+  color:#9ee6b8;
+  font:700 11px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (max-width:780px){
+  .observatory-webgl-runtime{
+    min-height:620px;
+  }
+  .observatory-webgl-copy{
+    left:14px;
+    right:14px;
+    top:14px;
+    max-width:none;
+  }
+  .observatory-webgl-inspector{
+    left:14px;
+    right:14px;
+    bottom:14px;
+    width:auto;
+  }
+}
+"""
+
+
 def render(cfg, surface_sha):
     host = cfg["host"]
     host_class = cfg["hostClass"]
@@ -195,6 +338,8 @@ def render(cfg, surface_sha):
     deploy_note = "Static public host." if deploy_mode == "static-root" else "Preview-only surface projection. Live host stays outside GitHub Pages."
     observatory_gate = render_observatory_gate(cfg)
     observatory_script = render_observatory_script(cfg)
+    observatory_webgl = render_observatory_webgl(cfg)
+    observatory_webgl_script = render_observatory_webgl_script(cfg)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -250,9 +395,10 @@ def render(cfg, surface_sha):
     <div class="footer">
       Generated from <code>surface.host.json</code> by the vendored VERIFRAX-SURFACE projector.
     </div>
+{observatory_webgl}
 {observatory_gate}
   </main>
-{observatory_script}</body>
+{observatory_script}{observatory_webgl_script}</body>
 </html>
 """
 
@@ -266,7 +412,7 @@ def main():
 
     shell_css = (repo_root / ".surface" / "vendor" / "shell" / "base.css").read_text(encoding="utf-8")
     tokens_css = (repo_root / ".surface" / "vendor" / "tokens" / "surface.css").read_text(encoding="utf-8")
-    css = tokens_css + "\n\n" + shell_css + "\n\n" + observatory_css(cfg)
+    css = tokens_css + "\n\n" + shell_css + "\n\n" + observatory_css(cfg) + "\n\n" + observatory_webgl_css(cfg)
 
     if cfg["deployMode"] == "static-root":
         out_dir = repo_root
