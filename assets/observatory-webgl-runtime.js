@@ -1112,9 +1112,6 @@ function advanceJourney() {
   }));
 }
 
-
-
-
 /* BEGIN VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */
 (() => {
   const VCO_DEEP_OBJECTS = [
@@ -1304,12 +1301,6 @@ function advanceJourney() {
   };
 })();
 /* END VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */
-
-
-
-
-
-
 
 /* BEGIN VCO REAL3D ANTI TOY RUNTIME AUTHORITY */
 function vcoMakeBrushedAuthorityTexture(THREE) {

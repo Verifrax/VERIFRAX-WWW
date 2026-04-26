@@ -1107,6 +1107,32 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
             html.write_text(data, encoding="utf-8")
 
 
+
+# VCO_REAL3D_IDEMPOTENT_BLOCK_SPACING
+def _vco_real3d_idempotent_block_spacing():
+    import re
+    from pathlib import Path
+    targets = [
+        Path("assets/observatory-webgl-runtime.js"),
+        Path("assets/surface.css"),
+    ]
+    markers = [
+        "/* BEGIN VCO REAL3D ANTI TOY RUNTIME AUTHORITY */",
+        "/* BEGIN VCO REAL3D VIEWPORT HARDENING */",
+        "/* BEGIN VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */",
+        "/* BEGIN VCO OBSERVATORY DEEP REPAIR REAL3D COMMAND AUTHORITY */",
+    ]
+    for path in targets:
+        if not path.exists():
+            continue
+        data = path.read_text(encoding="utf-8")
+        for marker in markers:
+            data = re.sub(r"\n{3,}" + re.escape(marker), "\n\n" + marker, data)
+        path.write_text(data, encoding="utf-8")
+
+
 if __name__ == "__main__":
     main()
+    _vco_real3d_idempotent_block_spacing()
     _vco_real3d_hardening_post_project()
+    _vco_real3d_idempotent_block_spacing()
