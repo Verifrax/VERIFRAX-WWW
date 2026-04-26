@@ -919,5 +919,194 @@ def _vco_deep_repair_css(css):
     return css.rstrip() + "\n\n" + _vco_deep_repair_css_block() + "\n"
 
 
+
+# VCO_REAL3D_HARDENING_PROJECTOR_PATCH
+def _vco_real3d_hardening_post_project():
+    import re
+    from pathlib import Path
+
+    css_path = Path("assets/surface.css")
+    js_path = Path("assets/observatory-webgl-runtime.js")
+
+    css_block = r"""
+/* BEGIN VCO REAL3D VIEWPORT HARDENING */
+html,body{margin:0!important;min-height:100%!important;background:#02050a!important;color:#edf7ff!important;overflow-x:hidden!important}
+.surface.stack{max-width:none!important;width:100%!important;margin:0!important;padding:0!important;background:#02050a!important}
+.observatory-webgl-runtime{position:relative!important;width:100%!important;height:100svh!important;min-height:840px!important;max-height:100svh!important;overflow:hidden!important;isolation:isolate!important;background:radial-gradient(circle at 50% 34%,rgba(28,103,151,.22),transparent 42%),linear-gradient(180deg,#040911 0%,#010307 100%)!important;border-bottom:1px solid rgba(115,208,255,.16)!important}
+.observatory-webgl-runtime canvas{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:0!important;display:block!important;filter:contrast(1.13) saturate(1.08) brightness(.84)!important}
+.oc-topbar{top:0!important;left:0!important;right:0!important;height:66px!important;padding:0 28px!important;z-index:12!important;background:linear-gradient(180deg,rgba(0,5,10,.94),rgba(0,5,10,.44),rgba(0,5,10,0))!important;backdrop-filter:blur(14px)!important}
+.oc-hero{top:86px!important;left:28px!important;width:min(440px,calc(100vw - 56px))!important;z-index:6!important;pointer-events:none!important}
+.oc-hero h2{margin:8px 0 12px!important;font-size:clamp(68px,8.4vw,128px)!important;line-height:.78!important;letter-spacing:-.085em!important;color:#fff!important;text-shadow:0 20px 70px rgba(0,0,0,.88)!important}
+.oc-hero p{max-width:470px!important;font-size:clamp(15px,1.08vw,19px)!important;line-height:1.32!important;font-weight:850!important;color:#dbe8f6!important;text-shadow:0 10px 34px rgba(0,0,0,.88)!important}
+.oc-hero-badges{pointer-events:auto!important}
+.oc-left{left:22px!important;top:430px!important;bottom:auto!important;width:330px!important;max-height:calc(100svh - 570px)!important;overflow:hidden!important;z-index:7!important}
+.oc-right{right:22px!important;top:94px!important;width:360px!important;max-height:calc(100svh - 210px)!important;overflow:auto!important;z-index:7!important;scrollbar-width:thin!important}
+.oc-left section,.oc-right section,.oc-inspector,.oc-bottom,.vco-command-shell,.vco-deep-inspector{border:1px solid rgba(126,215,255,.20)!important;background:linear-gradient(180deg,rgba(8,20,32,.82),rgba(3,8,14,.68))!important;box-shadow:0 18px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06)!important;backdrop-filter:blur(18px) saturate(1.12)!important}
+.oc-bottom{left:14px!important;right:14px!important;bottom:12px!important;height:112px!important;padding:12px 16px!important;z-index:10!important;overflow:hidden!important}
+.oc-journey{position:relative!important;overflow:hidden!important}
+.oc-journey h3{margin:0 0 8px!important}
+.oc-journey ol,[data-journey-list]{display:grid!important;grid-template-columns:repeat(9,minmax(118px,1fr))!important;gap:10px!important;margin:0!important;padding:0!important;list-style:none!important;overflow:hidden!important}
+.oc-journey li{min-height:54px!important;padding:9px 12px!important;border-radius:14px!important;border:1px solid rgba(126,215,255,.18)!important;background:linear-gradient(90deg,rgba(6,15,25,.76),rgba(13,37,53,.72),rgba(6,15,25,.76))!important;color:#eaf7ff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important;cursor:pointer!important}
+.oc-journey li::after{content:""!important;display:block!important;height:2px!important;margin-top:8px!important;border-radius:999px!important;background:linear-gradient(90deg,transparent,rgba(116,218,255,.72),transparent)!important;opacity:.42!important}
+.oc-journey li.is-active{border-color:rgba(150,237,255,.88)!important;box-shadow:0 0 0 1px rgba(150,237,255,.22),0 0 34px rgba(65,190,255,.28)!important}
+.oc-inspector{right:380px!important;bottom:154px!important;max-width:330px!important;z-index:8!important}
+@media (max-width:1300px){.oc-right{width:330px!important}.oc-left{width:300px!important}.oc-hero h2{font-size:76px!important}}
+@media (max-width:980px){.observatory-webgl-runtime{height:auto!important;min-height:900px!important;max-height:none!important;overflow:hidden!important}.oc-right,.oc-left{display:none!important}.oc-hero{top:82px!important;left:18px!important;right:18px!important;width:auto!important}.oc-hero h2{font-size:clamp(56px,15vw,94px)!important}.oc-bottom{left:8px!important;right:8px!important;bottom:8px!important;height:112px!important;overflow:auto!important}.oc-journey ol,[data-journey-list]{display:flex!important;min-width:980px!important}}
+/* END VCO REAL3D VIEWPORT HARDENING */
+""".strip()
+
+    js_block = r"""
+/* BEGIN VCO REAL3D ANTI TOY RUNTIME AUTHORITY */
+function vcoMakeBrushedAuthorityTexture(THREE) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d");
+  const base = ctx.createLinearGradient(0, 0, 256, 256);
+  base.addColorStop(0, "#06101a");
+  base.addColorStop(.42, "#102c3b");
+  base.addColorStop(1, "#02070d");
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, 256, 256);
+  for (let y = 0; y < 256; y += 3) {
+    const a = 0.05 + ((y % 17) / 17) * 0.07;
+    ctx.fillStyle = `rgba(170,225,255,${a})`;
+    ctx.fillRect(0, y, 256, 1);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(2.5, 2.5);
+  texture.anisotropy = 8;
+  return texture;
+}
+
+function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
+  if (!scene || scene.userData.vcoReal3DAntiToyAuthorityApplied) return;
+  scene.userData.vcoReal3DAntiToyAuthorityApplied = true;
+  const brushed = vcoMakeBrushedAuthorityTexture(THREE);
+  scene.traverse((node) => {
+    if (!node || !node.isMesh) return;
+    node.castShadow = true;
+    node.receiveShadow = true;
+    const mats = Array.isArray(node.material) ? node.material : [node.material];
+    mats.filter(Boolean).forEach((mat) => {
+      if (!mat || mat.userData?.vcoReal3DAntiToyMaterial) return;
+      mat.userData = mat.userData || {};
+      mat.userData.vcoReal3DAntiToyMaterial = true;
+      if ("metalness" in mat) mat.metalness = Math.max(mat.metalness || 0, 0.46);
+      if ("roughness" in mat) mat.roughness = Math.max(mat.roughness || 0, 0.52);
+      if ("clearcoat" in mat) mat.clearcoat = Math.max(mat.clearcoat || 0, 0.2);
+      if ("clearcoatRoughness" in mat) mat.clearcoatRoughness = Math.max(mat.clearcoatRoughness || 0, 0.44);
+      if ("envMapIntensity" in mat) mat.envMapIntensity = Math.max(mat.envMapIntensity || 0, 0.78);
+      if (!mat.map && /MeshPhysicalMaterial|MeshStandardMaterial/.test(mat.type || "")) mat.map = brushed;
+      if ("emissiveIntensity" in mat && mat.emissiveIntensity > 0) mat.emissiveIntensity = Math.min(mat.emissiveIntensity * 1.16, 1.55);
+      mat.needsUpdate = true;
+    });
+  });
+  if (!scene.getObjectByName("VCO_REAL3D_KEY_LIGHT")) {
+    const key = new THREE.DirectionalLight(0xbfeeff, 2.25);
+    key.name = "VCO_REAL3D_KEY_LIGHT";
+    key.position.set(-12, 26, 18);
+    key.castShadow = true;
+    key.shadow.mapSize.width = 2048;
+    key.shadow.mapSize.height = 2048;
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0x65bfff, 1.35);
+    rim.name = "VCO_REAL3D_RIM_LIGHT";
+    rim.position.set(18, 10, -24);
+    scene.add(rim);
+    const under = new THREE.PointLight(0x1c8dff, 1.6, 38, 2.2);
+    under.name = "VCO_REAL3D_CORE_UNDERLIGHT";
+    under.position.set(0, 2.2, 0);
+    scene.add(under);
+    const red = new THREE.PointLight(0xff3428, 1.75, 24, 2.4);
+    red.name = "VCO_REAL3D_ADMISSORIUM_RESTRICTED_LIGHT";
+    red.position.set(0, 3.5, 15.8);
+    scene.add(red);
+  }
+}
+
+(function vcoAntiToyInteractionHardening(){
+  if (window.VCO_REAL3D_ANTI_TOY_RUNTIME_AUTHORITY) return;
+  window.VCO_REAL3D_ANTI_TOY_RUNTIME_AUTHORITY = true;
+  const OBJECTS = ["ACCEPTED_TRUTH","ADMISSORIUM","SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM","REPO_PILLARS","HOST_GATES","ARTIFACT_JOURNEY"];
+  let selected = 0;
+  let chord = "";
+  function dispatchObjectIntent(objectId, mode = "open") {
+    document.dispatchEvent(new CustomEvent("vco:object-dispatch", { detail: { objectId, mode, authority: "VCO_REAL3D_ANTI_TOY_RUNTIME_AUTHORITY" }}));
+    const inspector = document.querySelector("[data-runtime-inspector]");
+    if (inspector) inspector.innerHTML = `<div class="oc-inspector-head"><strong>${objectId}</strong><span>${mode.toUpperCase()}</span></div><p>Unified object dispatch. Click, hover, focus, keyboard, and command surface resolve to the same object id.</p>`;
+  }
+  function openCommandPalette() {
+    const api = window.VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY || window.VCO_CINEMATIC_COMMAND_KEYBOARD_CLICK_AUTHORITY;
+    if (api?.openCommandPalette) return api.openCommandPalette();
+    document.dispatchEvent(new CustomEvent("vco:command-palette", { detail: { authority: "VCO_REAL3D_ANTI_TOY_RUNTIME_AUTHORITY" }}));
+  }
+  function advanceJourney(stage = null) {
+    const stages = [...document.querySelectorAll("[data-journey-list] li")];
+    if (!stages.length) return;
+    const current = stages.findIndex((el) => el.classList.contains("is-active"));
+    const next = stage ? stages.findIndex((el) => (el.textContent || "").toUpperCase().includes(String(stage).toUpperCase())) : (current + 1 + stages.length) % stages.length;
+    stages.forEach((el, i) => el.classList.toggle("is-active", i === Math.max(0, next)));
+    dispatchObjectIntent(`ARTIFACT_STAGE_${Math.max(0, next) + 1}`, "journey");
+  }
+  document.addEventListener("keydown", (event) => {
+    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
+    const key = event.key.toLowerCase();
+    if ((event.ctrlKey || event.metaKey) && key === "k") { event.preventDefault(); openCommandPalette(); return; }
+    if (!typing && event.key === "/") { event.preventDefault(); openCommandPalette(); return; }
+    if (!typing && event.key === "ArrowRight") { selected = (selected + 1) % OBJECTS.length; dispatchObjectIntent(OBJECTS[selected], "focus"); return; }
+    if (!typing && event.key === "ArrowLeft") { selected = (selected - 1 + OBJECTS.length) % OBJECTS.length; dispatchObjectIntent(OBJECTS[selected], "focus"); return; }
+    if (!typing && event.key === "Enter") { dispatchObjectIntent(OBJECTS[selected], "open"); return; }
+    if (!typing && /^[1-9]$/.test(event.key)) {
+      const chambers = ["SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"];
+      dispatchObjectIntent(chambers[Number(event.key) - 1], "open");
+      return;
+    }
+    if (!typing && key === "g") { chord = "g"; setTimeout(() => { chord = ""; }, 900); return; }
+    if (!typing && chord === "g") {
+      chord = "";
+      if (key === "r") dispatchObjectIntent("REPO_PILLARS", "open");
+      if (key === "a") advanceJourney("CLAIM");
+      if (key === "h") dispatchObjectIntent("HOST_GATES", "open");
+      if (key === "c") dispatchObjectIntent("ACCEPTED_TRUTH", "open");
+    }
+  });
+  window.VCO_REAL3D_ANTI_TOY_RUNTIME_API = { openCommandPalette, dispatchObjectIntent, advanceJourney };
+})();
+/* END VCO REAL3D ANTI TOY RUNTIME AUTHORITY */
+""".strip()
+
+    def replace_block(data, begin, end, block):
+        data = re.sub(re.escape(begin) + r"[\s\S]*?" + re.escape(end) + r"\n?", "", data)
+        return data.rstrip() + "\n\n" + block + "\n"
+
+    if css_path.exists():
+        data = css_path.read_text(encoding="utf-8")
+        data = replace_block(data, "/* BEGIN VCO REAL3D VIEWPORT HARDENING */", "/* END VCO REAL3D VIEWPORT HARDENING */", css_block)
+        css_path.write_text(data, encoding="utf-8")
+
+    if js_path.exists():
+        data = js_path.read_text(encoding="utf-8")
+        data = re.sub(r"new THREE\.PerspectiveCamera\([^)]*\)", "new THREE.PerspectiveCamera(33, width / height, 0.1, 520)", data, count=1)
+        data = re.sub(r"camera\.position\.set\([^)]*\);", "camera.position.set(0, 16.8, 43.5);", data, count=1)
+        data = data.replace("const orbit = t * 0.028;", "const orbit = t * 0.016;")
+        data = data.replace("camera.position.x = Math.sin(orbit) * 26.8;", "camera.position.x = Math.sin(orbit) * 28.4;")
+        data = data.replace("camera.position.z = Math.cos(orbit) * 39.8;", "camera.position.z = Math.cos(orbit) * 43.8;")
+        data = data.replace("camera.position.y = 20.7 + Math.sin(t * 0.16) * 0.36;", "camera.position.y = 16.9 + Math.sin(t * 0.11) * 0.42;")
+        data = data.replace("camera.lookAt(0, 1.55, 0);", "camera.lookAt(0, 1.26, 0);")
+        if "vcoApplyReal3DAntiToyAuthority(scene, THREE);" not in data:
+            data = data.replace("renderer.render(scene, camera);", "vcoApplyReal3DAntiToyAuthority(scene, THREE);\n    renderer.render(scene, camera);", 1)
+        data = replace_block(data, "/* BEGIN VCO REAL3D ANTI TOY RUNTIME AUTHORITY */", "/* END VCO REAL3D ANTI TOY RUNTIME AUTHORITY */", js_block)
+        js_path.write_text(data, encoding="utf-8")
+
+    for html in [Path("index.html"), Path("404.html")]:
+        if html.exists():
+            data = html.read_text(encoding="utf-8").replace("https://https://", "https://").replace("STATIC_FALLBACK", "FULL_OBSERVATORY")
+            html.write_text(data, encoding="utf-8")
+
+
 if __name__ == "__main__":
     main()
+    _vco_real3d_hardening_post_project()

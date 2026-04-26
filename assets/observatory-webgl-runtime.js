@@ -549,8 +549,8 @@ window.addEventListener("mousemove", (event) => {
 
   scene.fog = new THREE.FogExp2(palette.void, 0.013);
 
-  const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 420);
-  camera.position.set(0, 21.0, 39.5);
+  const camera = new THREE.PerspectiveCamera(33, width / height, 0.1, 520);
+  camera.position.set(0, 16.8, 43.5);
   camera.lookAt(0, 1.15, 0);
 
   scene.add(new THREE.AmbientLight(0x9ecbff, 0.18));
@@ -980,11 +980,11 @@ window.addEventListener("mousemove", (event) => {
   function animate() {
     const t = clock.getElapsedTime();
 
-    const orbit = t * 0.028;
-    camera.position.x = Math.sin(orbit) * 26.8;
-    camera.position.z = Math.cos(orbit) * 39.8;
-    camera.position.y = 20.7 + Math.sin(t * 0.16) * 0.36;
-    camera.lookAt(0, 1.55, 0);
+    const orbit = t * 0.016;
+    camera.position.x = Math.sin(orbit) * 28.4;
+    camera.position.z = Math.cos(orbit) * 43.8;
+    camera.position.y = 16.9 + Math.sin(t * 0.11) * 0.42;
+    camera.lookAt(0, 1.26, 0);
 
     core.rotation.x += 0.0022;
     core.rotation.y += 0.0048;
@@ -1005,6 +1005,7 @@ window.addEventListener("mousemove", (event) => {
     labels.children.forEach((label) => label.lookAt(camera.position));
     tuneLabelVisibility(labels, camera);
 
+    vcoApplyReal3DAntiToyAuthority(scene, THREE);
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
   }
@@ -1110,6 +1111,323 @@ function advanceJourney() {
     detail: { surface: "cinematic_observatory", state: "alive" }
   }));
 }
+
+
+
+
+/* BEGIN VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */
+(() => {
+  const VCO_DEEP_OBJECTS = [
+    "ACCEPTED_TRUTH","ADMISSORIUM",
+    "SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM",
+    "WWW","API","PROOF","VERIFY","DOCS","APPLY","STATUS","AUCTORISEAL_HOST","CORPIFORM_HOST","CICULLIS","SIGILLARIUM","GITHUB",
+    "CLAIM","ADMISSIBILITY","AUTHORITY","EXECUTION","RECEIPT","VERIFICATION","RECOGNITION","RECOURSE","PERMANENCE"
+  ];
+  const state = { index: 0, palette: null, inspector: null, selected: "ACCEPTED_TRUTH", journey: 0 };
+
+  function ensureInspector() {
+    if (state.inspector) return state.inspector;
+    const node = document.createElement("aside");
+    node.className = "vco-deep-inspector";
+    node.setAttribute("role", "dialog");
+    node.setAttribute("aria-modal", "false");
+    node.innerHTML = `
+      <button class="vco-deep-close" type="button" aria-label="Close">×</button>
+      <div class="vco-deep-kicker">FULL_OBSERVATORY · COMMAND OBJECT</div>
+      <h3 data-vco-title>ACCEPTED TRUTH</h3>
+      <div class="vco-deep-badge" data-vco-badge>DERIVED_PROJECTION / NOT_TRUTH_SOURCE</div>
+      <div class="vco-deep-grid">
+        <section><h4>OWNS</h4><ul><li>bounded authority</li><li>machine-readable object state</li><li>auditable transition</li></ul></section>
+        <section><h4>MUST NOT OWN</h4><ul><li>unbounded truth</li><li>private override</li><li>silent mutation</li></ul></section>
+      </div>`;
+    node.querySelector(".vco-deep-close").addEventListener("click", () => closePanel());
+    document.body.appendChild(node);
+    state.inspector = node;
+    return node;
+  }
+
+  function format(id) {
+    return String(id || "").replace(/_/g, " ");
+  }
+
+  function openPanel(objectId = state.selected) {
+    state.selected = objectId;
+    const node = ensureInspector();
+    node.querySelector("[data-vco-title]").textContent = format(objectId);
+    node.querySelector("[data-vco-badge]").textContent =
+      objectId === "ADMISSORIUM"
+        ? "truth_owner=false / sovereign_chamber=false"
+        : "FULL_OBSERVATORY / signed WebGL projection";
+    node.classList.add("is-open");
+    document.dispatchEvent(new CustomEvent("vco:open-panel", { detail: { objectId, render_permission: "FULL_OBSERVATORY" } }));
+  }
+
+  function closePanel() {
+    if (state.inspector) state.inspector.classList.remove("is-open");
+    closeCommandPalette();
+  }
+
+  function focusObject(objectId) {
+    state.selected = objectId;
+    document.querySelectorAll("[data-object-id],[data-stage-id]").forEach((el) => {
+      const id = el.getAttribute("data-object-id") || el.getAttribute("data-stage-id");
+      el.classList.toggle("is-active", id === objectId);
+    });
+    document.dispatchEvent(new CustomEvent("vco:focus-object", { detail: { objectId } }));
+  }
+
+  function dispatchObjectIntent(objectId, mode = "open") {
+    focusObject(objectId);
+    if (mode === "open") openPanel(objectId);
+  }
+
+  function commandItems() {
+    const journey = ["CLAIM","ADMISSIBILITY","AUTHORITY","EXECUTION","RECEIPT","VERIFICATION","RECOGNITION","RECOURSE","PERMANENCE"];
+    return [
+      ...VCO_DEEP_OBJECTS.map((id) => ({ id, label: `Open ${format(id)}`, section: "Objects" })),
+      ...journey.map((id, i) => ({ id, label: `Open Artifact Journey stage ${i + 1}: ${format(id)}`, section: "Artifact Journey" })),
+      { id: "REPO_PILLARS", label: "Show 35 repo pillars", section: "Repositories" },
+      { id: "HOST_GATES", label: "Show host boundary gates", section: "Host Gates" }
+    ];
+  }
+
+  function renderCommandList(filter = "") {
+    const list = state.palette?.querySelector(".vco-command-list");
+    if (!list) return;
+    const q = filter.trim().toLowerCase();
+    const items = commandItems().filter((x) => !q || `${x.label} ${x.section} ${x.id}`.toLowerCase().includes(q)).slice(0, 80);
+    state.index = Math.max(0, Math.min(state.index, items.length - 1));
+    list.innerHTML = items.map((x, i) =>
+      `<button type="button" class="vco-command-row ${i === state.index ? "is-active" : ""}" data-vco-command="${x.id}">
+        <strong>${x.label}</strong><em>${x.section}</em>
+      </button>`
+    ).join("");
+    list.querySelectorAll("[data-vco-command]").forEach((button) => {
+      button.addEventListener("click", () => {
+        dispatchObjectIntent(button.getAttribute("data-vco-command"), "open");
+        closeCommandPalette();
+      });
+    });
+  }
+
+  function ensurePalette() {
+    if (state.palette) return state.palette;
+    const node = document.createElement("div");
+    node.className = "vco-command-palette";
+    node.setAttribute("role", "dialog");
+    node.innerHTML = `
+      <div class="vco-command-shell">
+        <input class="vco-command-input" placeholder="Command: Open ADMISSORIUM, Focus ORBISTIUM, Jump to verification…" aria-label="Command palette">
+        <div class="vco-command-list"></div>
+      </div>`;
+    document.body.appendChild(node);
+    const input = node.querySelector(".vco-command-input");
+    input.addEventListener("input", () => { state.index = 0; renderCommandList(input.value); });
+    input.addEventListener("keydown", (event) => {
+      const rows = [...node.querySelectorAll(".vco-command-row")];
+      if (event.key === "ArrowDown") { event.preventDefault(); state.index = Math.min(rows.length - 1, state.index + 1); renderCommandList(input.value); }
+      if (event.key === "ArrowUp") { event.preventDefault(); state.index = Math.max(0, state.index - 1); renderCommandList(input.value); }
+      if (event.key === "Enter") { event.preventDefault(); rows[state.index]?.click(); }
+      if (event.key === "Escape") { event.preventDefault(); closeCommandPalette(); }
+    });
+    state.palette = node;
+    return node;
+  }
+
+  function openCommandPalette() {
+    const node = ensurePalette();
+    node.classList.add("is-open");
+    renderCommandList("");
+    setTimeout(() => node.querySelector(".vco-command-input")?.focus(), 0);
+    document.dispatchEvent(new CustomEvent("vco:command-palette", { detail: { surface: "cinematic_observatory", render_permission: "FULL_OBSERVATORY" } }));
+  }
+
+  function closeCommandPalette() {
+    if (state.palette) state.palette.classList.remove("is-open");
+  }
+
+  function advanceJourney(stage = null) {
+    const stages = ["CLAIM","ADMISSIBILITY","AUTHORITY","EXECUTION","RECEIPT","VERIFICATION","RECOGNITION","RECOURSE","PERMANENCE"];
+    state.journey = stage ? Math.max(0, stages.indexOf(String(stage).toUpperCase())) : (state.journey + 1) % stages.length;
+    const id = stages[state.journey] || "CLAIM";
+    document.querySelectorAll("[data-journey-list] li,.oc-journey li").forEach((el, i) => el.classList.toggle("is-active", i === state.journey));
+    focusObject(id);
+    document.dispatchEvent(new CustomEvent("vco:artifact-journey-advance", { detail: { stage: id, state: "alive" } }));
+  }
+
+  function bindClicks() {
+    document.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-object-id],[data-stage-id],.oc-journey li");
+      if (!target) return;
+      const objectId = target.getAttribute("data-object-id") || target.getAttribute("data-stage-id") || target.textContent.trim().split(/\s+/).slice(-1)[0]?.toUpperCase();
+      if (objectId) dispatchObjectIntent(objectId, "open");
+    }, true);
+  }
+
+  let chord = "";
+  document.addEventListener("keydown", (event) => {
+    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); openCommandPalette(); return; }
+    if (!typing && event.key === "/") { event.preventDefault(); openCommandPalette(); return; }
+    if (event.key === "Escape") { closePanel(); return; }
+    if (!typing && /^[1-9]$/.test(event.key)) {
+      const chambers = ["SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"];
+      dispatchObjectIntent(chambers[Number(event.key) - 1], "open");
+      return;
+    }
+    if (!typing && event.key.startsWith("Arrow")) {
+      event.preventDefault();
+      state.index = (state.index + (event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1) + VCO_DEEP_OBJECTS.length) % VCO_DEEP_OBJECTS.length;
+      focusObject(VCO_DEEP_OBJECTS[state.index]);
+      return;
+    }
+    if (!typing && event.key === "Enter") { openPanel(state.selected); return; }
+    if (!typing && event.key.toLowerCase() === "g") { chord = "g"; setTimeout(() => chord = "", 900); return; }
+    if (!typing && chord === "g") {
+      const key = event.key.toLowerCase();
+      chord = "";
+      if (key === "r") dispatchObjectIntent("REPO_PILLARS", "open");
+      if (key === "a") advanceJourney("CLAIM");
+      if (key === "h") dispatchObjectIntent("HOST_GATES", "open");
+      if (key === "c") dispatchObjectIntent("ACCEPTED_TRUTH", "open");
+    }
+  });
+
+  bindClicks();
+  window.VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY = {
+    openCommandPalette,
+    dispatchObjectIntent,
+    focusObject,
+    openPanel,
+    advanceJourney,
+    render_permission: "FULL_OBSERVATORY"
+  };
+})();
+/* END VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */
+
+
+
+
+/* BEGIN VCO REAL3D ANTI TOY RUNTIME AUTHORITY */
+function vcoMakeBrushedAuthorityTexture(THREE) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d");
+  const base = ctx.createLinearGradient(0, 0, 256, 256);
+  base.addColorStop(0, "#06101a");
+  base.addColorStop(.42, "#102c3b");
+  base.addColorStop(1, "#02070d");
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, 256, 256);
+  for (let y = 0; y < 256; y += 3) {
+    const a = 0.05 + ((y % 17) / 17) * 0.07;
+    ctx.fillStyle = `rgba(170,225,255,${a})`;
+    ctx.fillRect(0, y, 256, 1);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(2.5, 2.5);
+  texture.anisotropy = 8;
+  return texture;
+}
+
+function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
+  if (!scene || scene.userData.vcoReal3DAntiToyAuthorityApplied) return;
+  scene.userData.vcoReal3DAntiToyAuthorityApplied = true;
+  const brushed = vcoMakeBrushedAuthorityTexture(THREE);
+  scene.traverse((node) => {
+    if (!node || !node.isMesh) return;
+    node.castShadow = true;
+    node.receiveShadow = true;
+    const mats = Array.isArray(node.material) ? node.material : [node.material];
+    mats.filter(Boolean).forEach((mat) => {
+      if (!mat || mat.userData?.vcoReal3DAntiToyMaterial) return;
+      mat.userData = mat.userData || {};
+      mat.userData.vcoReal3DAntiToyMaterial = true;
+      if ("metalness" in mat) mat.metalness = Math.max(mat.metalness || 0, 0.46);
+      if ("roughness" in mat) mat.roughness = Math.max(mat.roughness || 0, 0.52);
+      if ("clearcoat" in mat) mat.clearcoat = Math.max(mat.clearcoat || 0, 0.2);
+      if ("clearcoatRoughness" in mat) mat.clearcoatRoughness = Math.max(mat.clearcoatRoughness || 0, 0.44);
+      if ("envMapIntensity" in mat) mat.envMapIntensity = Math.max(mat.envMapIntensity || 0, 0.78);
+      if (!mat.map && /MeshPhysicalMaterial|MeshStandardMaterial/.test(mat.type || "")) mat.map = brushed;
+      if ("emissiveIntensity" in mat && mat.emissiveIntensity > 0) mat.emissiveIntensity = Math.min(mat.emissiveIntensity * 1.16, 1.55);
+      mat.needsUpdate = true;
+    });
+  });
+  if (!scene.getObjectByName("VCO_REAL3D_KEY_LIGHT")) {
+    const key = new THREE.DirectionalLight(0xbfeeff, 2.25);
+    key.name = "VCO_REAL3D_KEY_LIGHT";
+    key.position.set(-12, 26, 18);
+    key.castShadow = true;
+    key.shadow.mapSize.width = 2048;
+    key.shadow.mapSize.height = 2048;
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0x65bfff, 1.35);
+    rim.name = "VCO_REAL3D_RIM_LIGHT";
+    rim.position.set(18, 10, -24);
+    scene.add(rim);
+    const under = new THREE.PointLight(0x1c8dff, 1.6, 38, 2.2);
+    under.name = "VCO_REAL3D_CORE_UNDERLIGHT";
+    under.position.set(0, 2.2, 0);
+    scene.add(under);
+    const red = new THREE.PointLight(0xff3428, 1.75, 24, 2.4);
+    red.name = "VCO_REAL3D_ADMISSORIUM_RESTRICTED_LIGHT";
+    red.position.set(0, 3.5, 15.8);
+    scene.add(red);
+  }
+}
+
+(function vcoAntiToyInteractionHardening(){
+  if (window.VCO_REAL3D_ANTI_TOY_RUNTIME_AUTHORITY) return;
+  window.VCO_REAL3D_ANTI_TOY_RUNTIME_AUTHORITY = true;
+  const OBJECTS = ["ACCEPTED_TRUTH","ADMISSORIUM","SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM","REPO_PILLARS","HOST_GATES","ARTIFACT_JOURNEY"];
+  let selected = 0;
+  let chord = "";
+  function dispatchObjectIntent(objectId, mode = "open") {
+    document.dispatchEvent(new CustomEvent("vco:object-dispatch", { detail: { objectId, mode, authority: "VCO_REAL3D_ANTI_TOY_RUNTIME_AUTHORITY" }}));
+    const inspector = document.querySelector("[data-runtime-inspector]");
+    if (inspector) inspector.innerHTML = `<div class="oc-inspector-head"><strong>${objectId}</strong><span>${mode.toUpperCase()}</span></div><p>Unified object dispatch. Click, hover, focus, keyboard, and command surface resolve to the same object id.</p>`;
+  }
+  function openCommandPalette() {
+    const api = window.VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY || window.VCO_CINEMATIC_COMMAND_KEYBOARD_CLICK_AUTHORITY;
+    if (api?.openCommandPalette) return api.openCommandPalette();
+    document.dispatchEvent(new CustomEvent("vco:command-palette", { detail: { authority: "VCO_REAL3D_ANTI_TOY_RUNTIME_AUTHORITY" }}));
+  }
+  function advanceJourney(stage = null) {
+    const stages = [...document.querySelectorAll("[data-journey-list] li")];
+    if (!stages.length) return;
+    const current = stages.findIndex((el) => el.classList.contains("is-active"));
+    const next = stage ? stages.findIndex((el) => (el.textContent || "").toUpperCase().includes(String(stage).toUpperCase())) : (current + 1 + stages.length) % stages.length;
+    stages.forEach((el, i) => el.classList.toggle("is-active", i === Math.max(0, next)));
+    dispatchObjectIntent(`ARTIFACT_STAGE_${Math.max(0, next) + 1}`, "journey");
+  }
+  document.addEventListener("keydown", (event) => {
+    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
+    const key = event.key.toLowerCase();
+    if ((event.ctrlKey || event.metaKey) && key === "k") { event.preventDefault(); openCommandPalette(); return; }
+    if (!typing && event.key === "/") { event.preventDefault(); openCommandPalette(); return; }
+    if (!typing && event.key === "ArrowRight") { selected = (selected + 1) % OBJECTS.length; dispatchObjectIntent(OBJECTS[selected], "focus"); return; }
+    if (!typing && event.key === "ArrowLeft") { selected = (selected - 1 + OBJECTS.length) % OBJECTS.length; dispatchObjectIntent(OBJECTS[selected], "focus"); return; }
+    if (!typing && event.key === "Enter") { dispatchObjectIntent(OBJECTS[selected], "open"); return; }
+    if (!typing && /^[1-9]$/.test(event.key)) {
+      const chambers = ["SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"];
+      dispatchObjectIntent(chambers[Number(event.key) - 1], "open");
+      return;
+    }
+    if (!typing && key === "g") { chord = "g"; setTimeout(() => { chord = ""; }, 900); return; }
+    if (!typing && chord === "g") {
+      chord = "";
+      if (key === "r") dispatchObjectIntent("REPO_PILLARS", "open");
+      if (key === "a") advanceJourney("CLAIM");
+      if (key === "h") dispatchObjectIntent("HOST_GATES", "open");
+      if (key === "c") dispatchObjectIntent("ACCEPTED_TRUTH", "open");
+    }
+  });
+  window.VCO_REAL3D_ANTI_TOY_RUNTIME_API = { openCommandPalette, dispatchObjectIntent, advanceJourney };
+})();
+/* END VCO REAL3D ANTI TOY RUNTIME AUTHORITY */
 
 /* BEGIN VCO_CINEMATIC_INTERACTION_AUTHORITY */
 ;(() => {
@@ -1366,195 +1684,3 @@ function advanceJourney() {
   });
 })();
 /* END VCO_CINEMATIC_INTERACTION_AUTHORITY */
-
-
-/* BEGIN VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */
-(() => {
-  const VCO_DEEP_OBJECTS = [
-    "ACCEPTED_TRUTH","ADMISSORIUM",
-    "SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM",
-    "WWW","API","PROOF","VERIFY","DOCS","APPLY","STATUS","AUCTORISEAL_HOST","CORPIFORM_HOST","CICULLIS","SIGILLARIUM","GITHUB",
-    "CLAIM","ADMISSIBILITY","AUTHORITY","EXECUTION","RECEIPT","VERIFICATION","RECOGNITION","RECOURSE","PERMANENCE"
-  ];
-  const state = { index: 0, palette: null, inspector: null, selected: "ACCEPTED_TRUTH", journey: 0 };
-
-  function ensureInspector() {
-    if (state.inspector) return state.inspector;
-    const node = document.createElement("aside");
-    node.className = "vco-deep-inspector";
-    node.setAttribute("role", "dialog");
-    node.setAttribute("aria-modal", "false");
-    node.innerHTML = `
-      <button class="vco-deep-close" type="button" aria-label="Close">×</button>
-      <div class="vco-deep-kicker">FULL_OBSERVATORY · COMMAND OBJECT</div>
-      <h3 data-vco-title>ACCEPTED TRUTH</h3>
-      <div class="vco-deep-badge" data-vco-badge>DERIVED_PROJECTION / NOT_TRUTH_SOURCE</div>
-      <div class="vco-deep-grid">
-        <section><h4>OWNS</h4><ul><li>bounded authority</li><li>machine-readable object state</li><li>auditable transition</li></ul></section>
-        <section><h4>MUST NOT OWN</h4><ul><li>unbounded truth</li><li>private override</li><li>silent mutation</li></ul></section>
-      </div>`;
-    node.querySelector(".vco-deep-close").addEventListener("click", () => closePanel());
-    document.body.appendChild(node);
-    state.inspector = node;
-    return node;
-  }
-
-  function format(id) {
-    return String(id || "").replace(/_/g, " ");
-  }
-
-  function openPanel(objectId = state.selected) {
-    state.selected = objectId;
-    const node = ensureInspector();
-    node.querySelector("[data-vco-title]").textContent = format(objectId);
-    node.querySelector("[data-vco-badge]").textContent =
-      objectId === "ADMISSORIUM"
-        ? "truth_owner=false / sovereign_chamber=false"
-        : "FULL_OBSERVATORY / signed WebGL projection";
-    node.classList.add("is-open");
-    document.dispatchEvent(new CustomEvent("vco:open-panel", { detail: { objectId, render_permission: "FULL_OBSERVATORY" } }));
-  }
-
-  function closePanel() {
-    if (state.inspector) state.inspector.classList.remove("is-open");
-    closeCommandPalette();
-  }
-
-  function focusObject(objectId) {
-    state.selected = objectId;
-    document.querySelectorAll("[data-object-id],[data-stage-id]").forEach((el) => {
-      const id = el.getAttribute("data-object-id") || el.getAttribute("data-stage-id");
-      el.classList.toggle("is-active", id === objectId);
-    });
-    document.dispatchEvent(new CustomEvent("vco:focus-object", { detail: { objectId } }));
-  }
-
-  function dispatchObjectIntent(objectId, mode = "open") {
-    focusObject(objectId);
-    if (mode === "open") openPanel(objectId);
-  }
-
-  function commandItems() {
-    const journey = ["CLAIM","ADMISSIBILITY","AUTHORITY","EXECUTION","RECEIPT","VERIFICATION","RECOGNITION","RECOURSE","PERMANENCE"];
-    return [
-      ...VCO_DEEP_OBJECTS.map((id) => ({ id, label: `Open ${format(id)}`, section: "Objects" })),
-      ...journey.map((id, i) => ({ id, label: `Open Artifact Journey stage ${i + 1}: ${format(id)}`, section: "Artifact Journey" })),
-      { id: "REPO_PILLARS", label: "Show 35 repo pillars", section: "Repositories" },
-      { id: "HOST_GATES", label: "Show host boundary gates", section: "Host Gates" }
-    ];
-  }
-
-  function renderCommandList(filter = "") {
-    const list = state.palette?.querySelector(".vco-command-list");
-    if (!list) return;
-    const q = filter.trim().toLowerCase();
-    const items = commandItems().filter((x) => !q || `${x.label} ${x.section} ${x.id}`.toLowerCase().includes(q)).slice(0, 80);
-    state.index = Math.max(0, Math.min(state.index, items.length - 1));
-    list.innerHTML = items.map((x, i) =>
-      `<button type="button" class="vco-command-row ${i === state.index ? "is-active" : ""}" data-vco-command="${x.id}">
-        <strong>${x.label}</strong><em>${x.section}</em>
-      </button>`
-    ).join("");
-    list.querySelectorAll("[data-vco-command]").forEach((button) => {
-      button.addEventListener("click", () => {
-        dispatchObjectIntent(button.getAttribute("data-vco-command"), "open");
-        closeCommandPalette();
-      });
-    });
-  }
-
-  function ensurePalette() {
-    if (state.palette) return state.palette;
-    const node = document.createElement("div");
-    node.className = "vco-command-palette";
-    node.setAttribute("role", "dialog");
-    node.innerHTML = `
-      <div class="vco-command-shell">
-        <input class="vco-command-input" placeholder="Command: Open ADMISSORIUM, Focus ORBISTIUM, Jump to verification…" aria-label="Command palette">
-        <div class="vco-command-list"></div>
-      </div>`;
-    document.body.appendChild(node);
-    const input = node.querySelector(".vco-command-input");
-    input.addEventListener("input", () => { state.index = 0; renderCommandList(input.value); });
-    input.addEventListener("keydown", (event) => {
-      const rows = [...node.querySelectorAll(".vco-command-row")];
-      if (event.key === "ArrowDown") { event.preventDefault(); state.index = Math.min(rows.length - 1, state.index + 1); renderCommandList(input.value); }
-      if (event.key === "ArrowUp") { event.preventDefault(); state.index = Math.max(0, state.index - 1); renderCommandList(input.value); }
-      if (event.key === "Enter") { event.preventDefault(); rows[state.index]?.click(); }
-      if (event.key === "Escape") { event.preventDefault(); closeCommandPalette(); }
-    });
-    state.palette = node;
-    return node;
-  }
-
-  function openCommandPalette() {
-    const node = ensurePalette();
-    node.classList.add("is-open");
-    renderCommandList("");
-    setTimeout(() => node.querySelector(".vco-command-input")?.focus(), 0);
-    document.dispatchEvent(new CustomEvent("vco:command-palette", { detail: { surface: "cinematic_observatory", render_permission: "FULL_OBSERVATORY" } }));
-  }
-
-  function closeCommandPalette() {
-    if (state.palette) state.palette.classList.remove("is-open");
-  }
-
-  function advanceJourney(stage = null) {
-    const stages = ["CLAIM","ADMISSIBILITY","AUTHORITY","EXECUTION","RECEIPT","VERIFICATION","RECOGNITION","RECOURSE","PERMANENCE"];
-    state.journey = stage ? Math.max(0, stages.indexOf(String(stage).toUpperCase())) : (state.journey + 1) % stages.length;
-    const id = stages[state.journey] || "CLAIM";
-    document.querySelectorAll("[data-journey-list] li,.oc-journey li").forEach((el, i) => el.classList.toggle("is-active", i === state.journey));
-    focusObject(id);
-    document.dispatchEvent(new CustomEvent("vco:artifact-journey-advance", { detail: { stage: id, state: "alive" } }));
-  }
-
-  function bindClicks() {
-    document.addEventListener("click", (event) => {
-      const target = event.target.closest("[data-object-id],[data-stage-id],.oc-journey li");
-      if (!target) return;
-      const objectId = target.getAttribute("data-object-id") || target.getAttribute("data-stage-id") || target.textContent.trim().split(/\s+/).slice(-1)[0]?.toUpperCase();
-      if (objectId) dispatchObjectIntent(objectId, "open");
-    }, true);
-  }
-
-  let chord = "";
-  document.addEventListener("keydown", (event) => {
-    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); openCommandPalette(); return; }
-    if (!typing && event.key === "/") { event.preventDefault(); openCommandPalette(); return; }
-    if (event.key === "Escape") { closePanel(); return; }
-    if (!typing && /^[1-9]$/.test(event.key)) {
-      const chambers = ["SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"];
-      dispatchObjectIntent(chambers[Number(event.key) - 1], "open");
-      return;
-    }
-    if (!typing && event.key.startsWith("Arrow")) {
-      event.preventDefault();
-      state.index = (state.index + (event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1) + VCO_DEEP_OBJECTS.length) % VCO_DEEP_OBJECTS.length;
-      focusObject(VCO_DEEP_OBJECTS[state.index]);
-      return;
-    }
-    if (!typing && event.key === "Enter") { openPanel(state.selected); return; }
-    if (!typing && event.key.toLowerCase() === "g") { chord = "g"; setTimeout(() => chord = "", 900); return; }
-    if (!typing && chord === "g") {
-      const key = event.key.toLowerCase();
-      chord = "";
-      if (key === "r") dispatchObjectIntent("REPO_PILLARS", "open");
-      if (key === "a") advanceJourney("CLAIM");
-      if (key === "h") dispatchObjectIntent("HOST_GATES", "open");
-      if (key === "c") dispatchObjectIntent("ACCEPTED_TRUTH", "open");
-    }
-  });
-
-  bindClicks();
-  window.VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY = {
-    openCommandPalette,
-    dispatchObjectIntent,
-    focusObject,
-    openPanel,
-    advanceJourney,
-    render_permission: "FULL_OBSERVATORY"
-  };
-})();
-/* END VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */
-
