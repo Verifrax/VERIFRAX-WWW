@@ -1110,3 +1110,259 @@ function advanceJourney() {
     detail: { surface: "cinematic_observatory", state: "alive" }
   }));
 }
+
+/* BEGIN VCO_CINEMATIC_INTERACTION_AUTHORITY */
+;(() => {
+  "use strict";
+
+  const VCO_CINEMATIC_INTERACTION_AUTHORITY = "VCO_CINEMATIC_INTERACTION_AUTHORITY";
+  const VCO_REAL3D_MATERIAL_DEPTH_PASS = "VCO_REAL3D_MATERIAL_DEPTH_PASS";
+  const VCO_CAMERA_CINEMATIC_AUTHORITY_PASS = "VCO_CAMERA_CINEMATIC_AUTHORITY_PASS";
+
+  const OBJECTS = [
+    "ACCEPTED_TRUTH",
+    "ADMISSORIUM",
+    "SYNTAGMARIUM",
+    "ORBISTIUM",
+    "CONSONORIUM",
+    "TACHYRIUM",
+    "AUCTORISEAL",
+    "CORPIFORM",
+    "VERIFRAX",
+    "ANAGNORIUM",
+    "REGRESSORIUM",
+    "WWW",
+    "API",
+    "PROOF",
+    "VERIFY",
+    "DOCS",
+    "APPLY",
+    "STATUS",
+    "ARCHIVE"
+  ];
+
+  let selectedIndex = 0;
+  let chord = "";
+
+  function normalizeObjectId(value) {
+    return String(value || "").trim().toUpperCase().replace(/[^A-Z0-9]+/g, "_");
+  }
+
+  function dispatchObjectIntent(objectId, intent = "open") {
+    const id = normalizeObjectId(objectId || OBJECTS[selectedIndex] || "ACCEPTED_TRUTH");
+    document.dispatchEvent(new CustomEvent("vco:object-intent", {
+      detail: {
+        id,
+        objectId: id,
+        intent,
+        surface: "cinematic_observatory",
+        authority: VCO_CINEMATIC_INTERACTION_AUTHORITY,
+        render_permission: "FULL_OBSERVATORY"
+      }
+    }));
+    document.dispatchEvent(new CustomEvent("vco:focus-object", {
+      detail: { id, objectId: id, intent, render_permission: "FULL_OBSERVATORY" }
+    }));
+    return id;
+  }
+
+  function closeCommandPalette() {
+    document.querySelector("[data-vco-command-palette]")?.remove();
+  }
+
+  function openCommandPalette() {
+    closeCommandPalette();
+
+    const palette = document.createElement("section");
+    palette.className = "vco-command";
+    palette.dataset.vcoCommandPalette = "true";
+    palette.setAttribute("role", "dialog");
+    palette.setAttribute("aria-label", "VERIFRAX Observatory command palette");
+
+    palette.innerHTML = `
+      <div class="vco-command-shell">
+        <div class="vco-command-head">
+          <strong>Command surface</strong>
+          <span>Ctrl/Cmd+K · / · arrows · enter · 1-9 · g r/a/h/c</span>
+          <button type="button" data-vco-close>×</button>
+        </div>
+        <input data-vco-command-input autocomplete="off" spellcheck="false" placeholder="Open ADMISSORIUM, Focus ORBISTIUM, Jump to verification…" />
+        <div class="vco-command-grid" data-vco-command-list></div>
+      </div>
+    `;
+
+    const list = palette.querySelector("[data-vco-command-list]");
+    const input = palette.querySelector("[data-vco-command-input]");
+
+    const commands = [
+      ...OBJECTS.map((id) => ({ label: `Open ${id.replaceAll("_", " ")}`, id, type: "Object" })),
+      ...["CLAIM","ADMISSIBILITY","AUTHORITY","EXECUTION","RECEIPT","VERIFICATION","RECOGNITION","RECOURSE","PERMANENCE"].map((id, index) => ({
+        label: `Open Artifact Journey stage ${index + 1}: ${id}`,
+        id: `JOURNEY_${index + 1}_${id}`,
+        type: "Artifact Journey"
+      })),
+      { label: "Show repo pillars", id: "REPOSITORIES", type: "Surface" },
+      { label: "Search repositories", id: "SEARCH_REPOSITORIES", type: "Surface" },
+      { label: "Open Accepted Truth core", id: "ACCEPTED_TRUTH", type: "Core" }
+    ];
+
+    function render() {
+      const q = input.value.trim().toLowerCase();
+      const rows = commands
+        .filter((cmd) => !q || cmd.label.toLowerCase().includes(q) || cmd.id.toLowerCase().includes(q))
+        .slice(0, 24);
+
+      list.innerHTML = rows.map((cmd, index) => `
+        <button type="button" data-vco-command-row data-object-id="${cmd.id}" class="${index === 0 ? "is-selected" : ""}">
+          <span>${cmd.label}</span>
+          <em>${cmd.type}</em>
+        </button>
+      `).join("");
+    }
+
+    palette.addEventListener("click", (event) => {
+      const close = event.target.closest("[data-vco-close]");
+      if (close) {
+        closeCommandPalette();
+        return;
+      }
+
+      const row = event.target.closest("[data-vco-command-row]");
+      if (!row) return;
+      dispatchObjectIntent(row.dataset.objectId, "open");
+      closeCommandPalette();
+    });
+
+    input.addEventListener("keydown", (event) => {
+      const rows = [...palette.querySelectorAll("[data-vco-command-row]")];
+      let current = rows.findIndex((row) => row.classList.contains("is-selected"));
+      if (current < 0) current = 0;
+
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        rows[current]?.classList.remove("is-selected");
+        current = event.key === "ArrowDown"
+          ? Math.min(rows.length - 1, current + 1)
+          : Math.max(0, current - 1);
+        rows[current]?.classList.add("is-selected");
+        rows[current]?.scrollIntoView({ block: "nearest" });
+      }
+
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const row = rows[current];
+        if (row) dispatchObjectIntent(row.dataset.objectId, "open");
+        closeCommandPalette();
+      }
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeCommandPalette();
+      }
+    });
+
+    input.addEventListener("input", render);
+
+    document.body.appendChild(palette);
+    render();
+    input.focus();
+
+    document.dispatchEvent(new CustomEvent("vco:command-palette", {
+      detail: { surface: "cinematic_observatory", render_permission: "FULL_OBSERVATORY" }
+    }));
+  }
+
+  function advanceJourney(stage = null) {
+    const selected = stage || document.querySelector(".oc-journey li.is-active")?.dataset.stage || "verification";
+    document.dispatchEvent(new CustomEvent("vco:artifact-journey-advance", {
+      detail: {
+        stage: selected,
+        surface: "cinematic_observatory",
+        state: "alive",
+        render_permission: "FULL_OBSERVATORY"
+      }
+    }));
+  }
+
+  document.addEventListener("keydown", (event) => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(event.target?.tagName || "") || event.target?.isContentEditable;
+
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      openCommandPalette();
+      return;
+    }
+
+    if (!typing && event.key === "/") {
+      event.preventDefault();
+      openCommandPalette();
+      return;
+    }
+
+    if (event.key === "Escape") {
+      closeCommandPalette();
+      document.dispatchEvent(new CustomEvent("vco:panel-close", { detail: { reason: "escape" } }));
+      return;
+    }
+
+    if (!typing && (event.key === "ArrowRight" || event.key === "ArrowDown")) {
+      event.preventDefault();
+      selectedIndex = (selectedIndex + 1) % OBJECTS.length;
+      dispatchObjectIntent(OBJECTS[selectedIndex], "focus");
+      return;
+    }
+
+    if (!typing && (event.key === "ArrowLeft" || event.key === "ArrowUp")) {
+      event.preventDefault();
+      selectedIndex = (selectedIndex - 1 + OBJECTS.length) % OBJECTS.length;
+      dispatchObjectIntent(OBJECTS[selectedIndex], "focus");
+      return;
+    }
+
+    if (!typing && event.key === "Enter") {
+      event.preventDefault();
+      dispatchObjectIntent(OBJECTS[selectedIndex], "open");
+      return;
+    }
+
+    if (!typing && /^[1-9]$/.test(event.key)) {
+      event.preventDefault();
+      const chambers = OBJECTS.slice(2, 11);
+      dispatchObjectIntent(chambers[Number(event.key) - 1], "open");
+      return;
+    }
+
+    if (!typing && event.key.toLowerCase() === "g") {
+      chord = "g";
+      window.setTimeout(() => { chord = ""; }, 900);
+      return;
+    }
+
+    if (!typing && chord === "g") {
+      const key = event.key.toLowerCase();
+      chord = "";
+      if (key === "r") dispatchObjectIntent("REPOSITORIES", "open");
+      if (key === "a") advanceJourney("claim");
+      if (key === "h") dispatchObjectIntent("HOST_BOUNDARY_GATES", "open");
+      if (key === "c") dispatchObjectIntent("ACCEPTED_TRUTH", "open");
+    }
+  }, true);
+
+  document.addEventListener("pointerdown", (event) => {
+    const target = event.target.closest?.("[data-object-id],[data-repo-id],[data-chamber-id],[data-journey-stage]");
+    if (!target) return;
+    const id = target.dataset.objectId || target.dataset.repoId || target.dataset.chamberId || target.dataset.journeyStage;
+    if (!id) return;
+    dispatchObjectIntent(id, "open");
+  }, true);
+
+  window.VCO_OBSERVATORY_INTERACTION_AUTHORITY = Object.freeze({
+    marker: VCO_CINEMATIC_INTERACTION_AUTHORITY,
+    material: VCO_REAL3D_MATERIAL_DEPTH_PASS,
+    camera: VCO_CAMERA_CINEMATIC_AUTHORITY_PASS,
+    openCommandPalette,
+    dispatchObjectIntent,
+    advanceJourney
+  });
+})();
+/* END VCO_CINEMATIC_INTERACTION_AUTHORITY */
