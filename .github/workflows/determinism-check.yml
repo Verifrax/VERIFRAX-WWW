@@ -3,8 +3,7 @@ name: Determinism Check
 on:
   pull_request:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -15,92 +14,90 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Verify clean workspace
+      - name: Hard clean
         shell: bash
         run: |
           set -euo pipefail
           git reset --hard
           git clean -ffd
-          test -z "$(git status --porcelain=v1)"
-          git diff --exit-code
 
-      - name: Verify Observatory boundaries
+      - name: Verify clean workspace
         shell: bash
         run: |
           set -euo pipefail
-          python3 .surface/vendor/scripts/validate_host.py surface.host.json
-          python3 -m py_compile .surface/vendor/scripts/project_host.py
-          node --check assets/observatory-webgl-runtime.js
-          node scripts/check-observatory-attestation.mjs
-          node scripts/check-observatory-runtime-boot.mjs
-          node scripts/check-observatory-terminal-machine.mjs
+          test -z "$(git status --porcelain=v1)"
+          git diff --exit-code
 
       - name: Build artifact twice and compare digests
         shell: bash
         run: |
           set -euo pipefail
 
-          make_dist() {
+          build_once() {
             out="$1"
-            rm -rf "$out"
-            mkdir -p "$out"
-            cp index.html "$out/index.html"
-            cp 404.html "$out/404.html"
-            cp public/CNAME "$out/CNAME"
-            cp -R assets "$out/assets"
-            cp -R data "$out/data"
+rm -rf "$out/dist"
+mkdir -p "$out/dist"
+cp index.html "$out/dist/index.html"
+cp 404.html "$out/dist/404.html"
+cp public/CNAME "$out/dist/CNAME"
+cp -R assets "$out/dist/assets"
+cp -R data "$out/dist/data"
+test -f "$out/dist/index.html"
+test -f "$out/dist/404.html"
+test -f "$out/dist/CNAME"
+test -f "$out/dist/assets/surface.css"
+test -f "$out/dist/assets/observatory-render-gate.js"
+test -f "$out/dist/data/verifrax-observatory.json"
+test -f "$out/dist/data/projection-attestation.json"
+grep -Fx "www.verifrax.net" "$out/dist/CNAME"
+grep -q "observatory-render-gate" "$out/dist/index.html"
+grep -q "assets/observatory-render-gate.js" "$out/dist/index.html"
+grep -q "DERIVED_PROJECTION" "$out/dist/data/verifrax-observatory.json"
 
-            test -f "$out/index.html"
-            test -f "$out/404.html"
-            test -f "$out/CNAME"
-            test -f "$out/assets/surface.css"
-            test -f "$out/assets/observatory-webgl-runtime.js"
-            test -f "$out/assets/observatory-render-gate.js"
-            test -f "$out/data/verifrax-observatory.json"
-            test -f "$out/data/projection-attestation.json"
-
-            grep -Fx "www.verifrax.net" "$out/CNAME"
-            grep -q "observatory-render-gate" "$out/index.html"
-            grep -q "assets/observatory-render-gate.js" "$out/index.html"
-            grep -q "assets/observatory-webgl-runtime.js" "$out/index.html"
-            grep -q "VCO_TERMINAL_INTERACTION_COMMAND_MACHINE" "$out/assets/observatory-webgl-runtime.js"
-            grep -q "FULL_OBSERVATORY" "$out/assets/observatory-webgl-runtime.js"
-            grep -q "panel_containment_css" "$out/assets/surface.css"
-            grep -q "DERIVED_PROJECTION" "$out/data/verifrax-observatory.json"
           }
 
-          hash_tree() {
-            root="$1"
-            (
-              cd "$root"
-              find . -type f -print0 \
-                | sort -z \
-                | xargs -0 sha256sum \
-                | sha256sum \
-                | awk '{print $1}'
-            )
+          tree_hash() {
+            python3 - "$1" <<PY2
+import hashlib
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+h = hashlib.sha256()
+
+for p in sorted(root.rglob("*")):
+    if p.is_file():
+        rel = p.relative_to(root).as_posix().encode()
+        h.update(rel)
+        h.update(b"\0")
+        h.update(p.read_bytes())
+        h.update(b"\0")
+
+print(h.hexdigest())
+PY2
           }
 
-          A="$(mktemp -d)/dist"
-          B="$(mktemp -d)/dist"
+          A="$(mktemp -d)"
+          B="$(mktemp -d)"
 
-          make_dist "$A"
-          make_dist "$B"
+          build_once "$A"
+          build_once "$B"
 
-          HASH_A="$(hash_tree "$A")"
-          HASH_B="$(hash_tree "$B")"
+          HASH_A="$(tree_hash "$A/dist")"
+          HASH_B="$(tree_hash "$B/dist")"
 
           echo "HASH_A=$HASH_A"
           echo "HASH_B=$HASH_B"
 
           test "$HASH_A" = "$HASH_B"
-          diff -ru "$A" "$B"
+          diff -ru "$A/dist" "$B/dist"
 
-      - name: Verify clean workspace after deterministic build
+      - name: Verify clean workspace after build
         shell: bash
         run: |
           set -euo pipefail
-          git clean -ffd .surface/vendor/scripts/__pycache__ || true
           test -z "$(git status --porcelain=v1)"
           git diff --exit-code

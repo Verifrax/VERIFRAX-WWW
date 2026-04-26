@@ -1,1050 +1,1112 @@
 
-const VCO_TERMINAL_VISUAL_AUTHORITY_REPAIR = true;
-(function installTerminalVisualAuthorityRepair(){
-  const STYLE_ID = "vco-terminal-visual-authority-repair";
-  const css = `
-/* VCO_TERMINAL_VISUAL_AUTHORITY_REPAIR */
-:root.vco-terminal-ready,
-:root.vco-terminal-ready body{
-  margin:0!important;
-  min-height:100%!important;
-  background:#02070d!important;
-  color:#e8f2ff!important;
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-  overflow-x:hidden!important;
-}
-:root.vco-terminal-ready *{box-sizing:border-box}
-:root.vco-terminal-ready body{
-  min-height:100vh!important;
-}
-:root.vco-terminal-ready a,
-:root.vco-terminal-ready button,
-:root.vco-terminal-ready input,
-:root.vco-terminal-ready select{
-  font:700 12px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
-}
-:root.vco-terminal-ready button,
-:root.vco-terminal-ready .button,
-:root.vco-terminal-ready [role="button"]{
-  appearance:none!important;
-  border:1px solid rgba(128,210,255,.34)!important;
-  border-radius:12px!important;
-  padding:9px 13px!important;
-  background:linear-gradient(180deg,rgba(16,33,50,.92),rgba(5,12,22,.96))!important;
-  color:#eaf6ff!important;
-  box-shadow:0 0 0 1px rgba(255,255,255,.035) inset,0 12px 32px rgba(0,0,0,.34)!important;
-  cursor:pointer!important;
-}
-:root.vco-terminal-ready button:hover,
-:root.vco-terminal-ready [role="button"]:hover{
-  border-color:rgba(127,211,255,.72)!important;
-  color:#ffffff!important;
-  background:linear-gradient(180deg,rgba(22,49,74,.98),rgba(7,18,31,.98))!important;
-}
-:root.vco-terminal-ready a{
-  color:#8bd8ff!important;
-  text-decoration:none!important;
-}
-:root.vco-terminal-ready main,
-:root.vco-terminal-ready .wrap,
-:root.vco-terminal-ready .surface,
-:root.vco-terminal-ready .surface-root{
-  max-width:none!important;
-  width:100%!important;
-  margin:0!important;
-  padding:0!important;
-  background:#02070d!important;
-}
-:root.vco-terminal-ready main > :not(.observatory-webgl-runtime):not(#observatory-render-gate):not(script),
-:root.vco-terminal-ready .surface > :not(.observatory-webgl-runtime):not(#observatory-render-gate):not(script){
-  display:none!important;
-}
-:root.vco-terminal-ready .observatory-webgl-runtime{
-  position:relative!important;
-  display:block!important;
-  width:100vw!important;
-  height:100vh!important;
-  min-height:760px!important;
-  overflow:hidden!important;
-  isolation:isolate!important;
-  background:
-    radial-gradient(circle at 50% 42%,rgba(33,105,155,.22),transparent 35%),
-    radial-gradient(circle at 50% 100%,rgba(0,0,0,.8),transparent 45%),
-    linear-gradient(180deg,#02060b 0%,#040b12 52%,#02050a 100%)!important;
-}
-:root.vco-terminal-ready .observatory-webgl-runtime canvas{
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  display:block!important;
-  z-index:1!important;
-  filter:contrast(1.1) saturate(.98)!important;
-}
-:root.vco-terminal-ready .vco-topbar,
-:root.vco-terminal-ready .vco-hero,
-:root.vco-terminal-ready .vco-left,
-:root.vco-terminal-ready .vco-right,
-:root.vco-terminal-ready .vco-journey,
-:root.vco-terminal-ready .vco-inspector,
-:root.vco-terminal-ready .vco-command,
-:root.vco-terminal-ready .vco-palette,
-:root.vco-terminal-ready .vco-panel,
-:root.vco-terminal-ready .vco-card{
-  position:absolute!important;
-  z-index:12!important;
-  color:#dcecff!important;
-  border:1px solid rgba(122,204,255,.22)!important;
-  background:linear-gradient(180deg,rgba(5,13,23,.88),rgba(3,8,15,.94))!important;
-  box-shadow:0 24px 90px rgba(0,0,0,.46),0 0 0 1px rgba(255,255,255,.035) inset!important;
-  backdrop-filter:blur(16px) saturate(1.1)!important;
-}
-:root.vco-terminal-ready .vco-topbar{
-  top:0!important;
-  left:0!important;
-  right:0!important;
-  height:72px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  padding:0 28px!important;
-  border-width:0 0 1px!important;
-  border-radius:0!important;
-  background:linear-gradient(180deg,rgba(1,5,10,.95),rgba(1,5,10,.72))!important;
-}
-:root.vco-terminal-ready .vco-hero{
-  left:28px!important;
-  top:112px!important;
-  width:min(520px,calc(100vw - 56px))!important;
-  padding:0!important;
-  border:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  backdrop-filter:none!important;
-}
-:root.vco-terminal-ready .vco-hero h1,
-:root.vco-terminal-ready .vco-hero h2{
-  margin:0 0 14px!important;
-  color:#f7fbff!important;
-  font:950 clamp(68px,8vw,142px)/.82 Inter,ui-sans-serif,system-ui,sans-serif!important;
-  letter-spacing:-.075em!important;
-  text-transform:uppercase!important;
-  text-shadow:0 22px 90px rgba(0,0,0,.68)!important;
-}
-:root.vco-terminal-ready .vco-hero p{
-  max-width:440px!important;
-  margin:0 0 12px!important;
-  color:#d5e6f7!important;
-  font:750 16px/1.42 Inter,ui-sans-serif,system-ui,sans-serif!important;
-}
-:root.vco-terminal-ready .vco-left{
-  left:24px!important;
-  bottom:128px!important;
-  width:360px!important;
-  max-height:43vh!important;
-  padding:14px!important;
-  border-radius:20px!important;
-  overflow:auto!important;
-}
-:root.vco-terminal-ready .vco-right{
-  right:24px!important;
-  top:92px!important;
-  width:400px!important;
-  max-height:calc(100vh - 190px)!important;
-  padding:16px!important;
-  border-radius:20px!important;
-  overflow:auto!important;
-}
-:root.vco-terminal-ready .vco-journey{
-  left:18px!important;
-  right:18px!important;
-  bottom:16px!important;
-  min-height:92px!important;
-  max-height:132px!important;
-  padding:14px!important;
-  border-radius:22px!important;
-  overflow:hidden!important;
-}
-:root.vco-terminal-ready .vco-journey ol,
-:root.vco-terminal-ready .vco-journey ul{
-  display:grid!important;
-  grid-template-columns:repeat(9,minmax(120px,1fr))!important;
-  gap:10px!important;
-  margin:0!important;
-  padding:0!important;
-  list-style:none!important;
-}
-:root.vco-terminal-ready .vco-journey li,
-:root.vco-terminal-ready .vco-stage{
-  min-height:68px!important;
-  padding:12px!important;
-  border:1px solid rgba(130,210,255,.18)!important;
-  border-radius:14px!important;
-  background:linear-gradient(180deg,rgba(16,28,43,.82),rgba(7,13,23,.9))!important;
-  color:#eaf6ff!important;
-  overflow:hidden!important;
-}
-:root.vco-terminal-ready .vco-inspector{
-  right:430px!important;
-  bottom:148px!important;
-  width:min(440px,calc(100vw - 820px))!important;
-  min-width:340px!important;
-  max-height:46vh!important;
-  padding:18px!important;
-  border-radius:20px!important;
-  overflow:auto!important;
-}
-:root.vco-terminal-ready .vco-command,
-:root.vco-terminal-ready .vco-palette{
-  position:fixed!important;
-  left:50%!important;
-  top:84px!important;
-  transform:translateX(-50%)!important;
-  width:min(820px,calc(100vw - 32px))!important;
-  max-height:70vh!important;
-  padding:16px!important;
-  border-radius:22px!important;
-  z-index:60!important;
-  overflow:auto!important;
-}
-:root.vco-terminal-ready .vco-command input,
-:root.vco-terminal-ready .vco-palette input{
-  width:100%!important;
-  border:1px solid rgba(133,214,255,.3)!important;
-  border-radius:14px!important;
-  padding:14px 16px!important;
-  background:rgba(6,16,28,.96)!important;
-  color:#f6fbff!important;
-  outline:none!important;
-}
-:root.vco-terminal-ready #observatory-render-gate{
-  position:fixed!important;
-  left:18px!important;
-  right:18px!important;
-  bottom:16px!important;
-  z-index:45!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:14px!important;
-  padding:12px 16px!important;
-  border:1px solid rgba(132,214,255,.26)!important;
-  border-radius:18px!important;
-  background:linear-gradient(180deg,rgba(4,12,22,.92),rgba(2,7,13,.96))!important;
-  color:#e7f3ff!important;
-  box-shadow:0 24px 90px rgba(0,0,0,.55)!important;
-}
-:root.vco-terminal-ready .observatory-gate-detail{
-  display:none!important;
-}
-:root.vco-terminal-ready .observatory-gate-strip{
-  display:flex!important;
-  flex-wrap:wrap!important;
-  gap:8px!important;
-}
-:root.vco-terminal-ready .observatory-gate-strip span,
-:root.vco-terminal-ready .pill,
-:root.vco-terminal-ready .badge{
-  display:inline-flex!important;
-  align-items:center!important;
-  gap:6px!important;
-  border:1px solid rgba(134,218,255,.23)!important;
-  border-radius:999px!important;
-  padding:7px 10px!important;
-  background:rgba(8,24,38,.82)!important;
-  color:#bfffe2!important;
-  font:800 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
-}
-:root.vco-terminal-ready h1,
-:root.vco-terminal-ready h2,
-:root.vco-terminal-ready h3,
-:root.vco-terminal-ready strong{
-  color:#f3f8ff!important;
-}
-:root.vco-terminal-ready dl,
-:root.vco-terminal-ready ul,
-:root.vco-terminal-ready ol,
-:root.vco-terminal-ready p{
-  color:#d4e4f5!important;
-}
-:root.vco-terminal-ready .vco-panel *,
-:root.vco-terminal-ready .vco-card *,
-:root.vco-terminal-ready .vco-inspector *,
-:root.vco-terminal-ready .vco-right *,
-:root.vco-terminal-ready .vco-left *,
-:root.vco-terminal-ready .vco-journey *{
-  max-width:100%!important;
-}
-@media (max-width:1100px){
-  :root.vco-terminal-ready .observatory-webgl-runtime{min-height:880px!important}
-  :root.vco-terminal-ready .vco-right{display:none!important}
-  :root.vco-terminal-ready .vco-left{width:300px!important;bottom:138px!important}
-  :root.vco-terminal-ready .vco-inspector{right:20px!important;left:auto!important;width:min(420px,calc(100vw - 360px))!important}
-}
-@media (max-width:760px){
-  :root.vco-terminal-ready .observatory-webgl-runtime{height:100svh!important;min-height:720px!important}
-  :root.vco-terminal-ready .vco-topbar{height:66px!important;padding:0 16px!important}
-  :root.vco-terminal-ready .vco-hero{top:92px!important;left:16px!important;width:calc(100vw - 32px)!important}
-  :root.vco-terminal-ready .vco-hero h1,
-  :root.vco-terminal-ready .vco-hero h2{font-size:clamp(48px,17vw,82px)!important}
-  :root.vco-terminal-ready .vco-left{display:none!important}
-  :root.vco-terminal-ready .vco-right{display:none!important}
-  :root.vco-terminal-ready .vco-inspector{left:12px!important;right:12px!important;bottom:126px!important;width:auto!important;min-width:0!important;max-height:34vh!important}
-  :root.vco-terminal-ready .vco-journey{left:8px!important;right:8px!important;bottom:8px!important;overflow:auto!important}
-  :root.vco-terminal-ready .vco-journey ol,
-  :root.vco-terminal-ready .vco-journey ul{grid-template-columns:repeat(9,150px)!important}
-}
-`;
-  function boot(){
-    document.documentElement.classList.add("vco-terminal-ready");
-    if (document.body) document.body.classList.add("vco-terminal-ready");
-    if (!document.getElementById(STYLE_ID)) {
-      const style = document.createElement("style");
-      style.id = STYLE_ID;
-      style.textContent = css;
-      document.head.appendChild(style);
-    }
-    const runtime = document.querySelector(".observatory-webgl-runtime");
-    if (runtime && runtime.parentElement !== document.body) {
-      document.body.insertBefore(runtime, document.body.firstChild);
-    }
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot, { once:true });
-  } else {
-    boot();
-  }
-})();
+/* VCO_CINEMATIC_3D_REVIVAL_AUTHORITY
+   FULL_OBSERVATORY / DERIVED_PROJECTION / NOT_TRUTH_SOURCE
+   cinematic camera authority, physical materials, atmospheric depth,
+   accepted truth core, ADMISSORIUM front gate, live Artifact Journey,
+   command palette authority.
+*/
+function observatoryRuntimeBootError(event) {
+  const root = document.querySelector("[data-observatory-runtime]");
+  const message = event?.message || event?.error?.message || "runtime_boot_error";
 
+  if (!root) {
+    window.observatoryRuntimeBootFailure = message;
+    return;
+  }
+
+  try {
+    if (typeof setRuntimeStatus === "function") {
+      setRuntimeStatus(root, "BLOCKED_PROJECTION", message);
+    }
+  } catch (_) {
+    root.setAttribute("data-render-permission", "BLOCKED_PROJECTION");
+  }
+
+  const status = root.querySelector("[data-runtime-status]");
+  if (status) status.textContent = message;
+
+  root.classList.add("is-runtime-blocked");
+  window.observatoryRuntimeBootFailure = message;
+}
+
+window.addEventListener("error", observatoryRuntimeBootError);
+window.addEventListener("unhandledrejection", (event) => {
+  observatoryRuntimeBootError({
+    message: event?.reason?.message || String(event?.reason || "unhandled_runtime_rejection")
+  });
+});
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
-const VCO_RUNTIME_MARKER = "VCO_TERMINAL_INTERACTION_COMMAND_MACHINE";
-const VCO_VERSION = "2026-04-26-terminal-command-machine";
-const FULL_OBSERVATORY = "FULL_OBSERVATORY";
+const DATA_URL = "data/verifrax-observatory.json";
+const ATTESTATION_URL = "data/projection-attestation.json";
+const FULL = "FULL_OBSERVATORY";
+const BLOCKED = "BLOCKED_PROJECTION";
 
-const GOVERNED_REPOS = Object.freeze([
-  ".github","AUCTORISEAL","ADMISSORIUM","ANAGNORIUM","ARCHITECTURE","CONSONORIUM","CORPIFORM",
-  "ORBISTIUM","REGRESSORIUM","SIGILLARIUM","SPEEDKIT","SYNTAGMARIUM","TACHYRIUM","VERIFRAX",
-  "VERIFRAX-API","VERIFRAX-DOCS","VERIFRAX-PROFILES","VERIFRAX-SAMPLES","VERIFRAX-SPEC",
-  "VERIFRAX-STATUS","VERIFRAX-SURFACE","VERIFRAX-WWW","VERIFRAX-verify","apply","archicustos",
-  "attestorium","cicullis","guillotine","irrevocull","kairoclasp","limenward","originseal",
-  "proof","validexor","verifrax-marketplace-smoke"
-]);
-
-const CHAMBERS = Object.freeze([
-  ["syntagmarium","SYNTAGMARIUM","law","Verifrax/SYNTAGMARIUM"],
-  ["orbistium","ORBISTIUM","state","Verifrax/ORBISTIUM"],
-  ["consonorium","CONSONORIUM","reconciliation","Verifrax/CONSONORIUM"],
-  ["tachyrium","TACHYRIUM","cognition","Verifrax/TACHYRIUM"],
-  ["auctoriseal","AUCTORISEAL","authority","Verifrax/AUCTORISEAL"],
-  ["corpiform","CORPIFORM","execution","Verifrax/CORPIFORM"],
-  ["verifrax","VERIFRAX","verification","Verifrax/VERIFRAX"],
-  ["anagnorium","ANAGNORIUM","terminal recognition","Verifrax/ANAGNORIUM"],
-  ["regressorium","REGRESSORIUM","terminal recourse","Verifrax/REGRESSORIUM"]
-]);
-
-const HOSTS = Object.freeze([
-  ["www","WWW","root public entry","www.verifrax.net"],
-  ["api","API","execution host boundary","api.verifrax.net"],
-  ["proof","PROOF","proof publication","proof.verifrax.net"],
-  ["verify","VERIFY","public verification","verify.verifrax.net"],
-  ["docs","DOCS","reference docs","docs.verifrax.net"],
-  ["apply","APPLY","intake only","apply.verifrax.net"],
-  ["status","STATUS","status only","status.verifrax.net"],
-  ["authority","AUCTORISEAL","authority reference","auctoriseal.verifrax.net"],
-  ["runtime","CORPIFORM","runtime reference","corpiform.verifrax.net"],
-  ["enforcement","CICULLIS","enforcement reference","cicullis.verifrax.net"],
-  ["archive","SIGILLARIUM","archive reference","sigillarium.verifrax.net"],
-  ["github","GITHUB","public perimeter","github.com/Verifrax"]
-]);
-
-const JOURNEY = Object.freeze([
-  ["claim","CLAIM","untrusted material enters candidate path","originseal"],
-  ["admissibility","ADMISSIBILITY","ADMISSORIUM accepts or blocks materialization","ADMISSORIUM"],
-  ["authority","AUTHORITY","authorization object binds scope","AUCTORISEAL"],
-  ["execution","EXECUTION","governed runtime emits receipt","CORPIFORM"],
-  ["receipt","RECEIPT","receipt becomes replayable evidence","CORPIFORM"],
-  ["verification","VERIFICATION","deterministic verifier checks evidence","VERIFRAX / VERIFRAX-verify"],
-  ["recognition","RECOGNITION","terminal meaning becomes unavoidable","ANAGNORIUM"],
-  ["recourse","RECOURSE","burden and remedy route are assigned","REGRESSORIUM"],
-  ["permanence","PERMANENCE","archive/reference preserves continuity","SIGILLARIUM"]
-]);
-
-const ROLE_TEXT = {
-  chamber: {
-    owns: ["declared chamber competence","object boundary","role-specific authority","public route"],
-    not: ["adjacent chamber authority","unbounded truth","private override","projection sovereignty"]
-  },
-  repo: {
-    owns: ["governed repository identity","source route","repository class","public perimeter presence"],
-    not: ["automatic sovereignty","truth by naming","unbounded authority","silent role absorption"]
-  },
-  host: {
-    owns: ["host boundary","public route","one owner role","projection surface"],
-    not: ["source law","accepted epoch","authority mutation","truth override"]
-  },
-  journey: {
-    owns: ["stage state","required input","produced output","next valid transition"],
-    not: ["global truth","adjacent stage collapse","unbounded action","hidden authority"]
-  },
-  core: {
-    owns: ["accepted object graph reference","machine-readable state focus","truth support target"],
-    not: ["projection authorship","host copy","visual beauty","unsafe render permission"]
-  },
-  front_gate: {
-    owns: ["admissibility enforcement","materialization blocking","quarantine routing","merge boundary"],
-    not: ["truth source","accepted state","sovereign chamber","terminal recognition"]
-  }
+const palette = {
+  void: 0x02060b,
+  basalt: 0x070c12,
+  metal: 0x1b2733,
+  darkMetal: 0x0d141c,
+  blue: 0x73d0ff,
+  blueDeep: 0x1f7fff,
+  cyan: 0xa6e7ff,
+  red: 0xff4e3d,
+  green: 0x36d17c,
+  white: 0xeaf6ff,
+  grey: 0x73808d
 };
 
-const root =
-  document.querySelector("[data-observatory-webgl-runtime]") ||
-  document.querySelector(".observatory-webgl-runtime") ||
-  document.querySelector("#observatory-webgl-runtime") ||
-  (() => {
-    const node = document.createElement("section");
-    node.className = "observatory-webgl-runtime";
-    document.body.prepend(node);
-    return node;
-  })();
+const chamberOrder = [
+  "syntagmarium",
+  "orbistium",
+  "consonorium",
+  "tachyrium",
+  "auctoriseal",
+  "corpiform",
+  "verifrax",
+  "anagnorium",
+  "regressorium"
+];
 
-root.classList.add("vco-terminal-runtime");
-root.dataset.vcoRuntime = VCO_RUNTIME_MARKER;
-root.dataset.renderPermission = FULL_OBSERVATORY;
-root.dataset.sceneState = "booting";
 
-root.replaceChildren();
 
-root.innerHTML = `
-  <div class="vco-stage" aria-label="VERIFRAX Constitutional Observatory real WebGL scene"></div>
-  <header class="vco-topbar">
-    <div class="vco-brand">VERIFRAX <span>CONSTITUTIONAL OBSERVATORY</span></div>
-    <nav>
-      <button data-vco-open="repo:.github">Repositories</button>
-      <button data-vco-open="host:docs">Documentation</button>
-      <button data-vco-open="host:api">API</button>
-      <button data-vco-open="host:apply">Apply</button>
-    </nav>
-  </header>
-  <section class="vco-hero">
-    <div class="vco-kicker">REAL WEBGL PROJECTION RUNTIME</div>
-    <h1>VERIFRAX</h1>
-    <p>35 repositories. 9 sovereign chambers. ADMISSORIUM at the border. Rendered from signed projection data.</p>
-    <div class="vco-pills">
-      <button data-vco-open="repo:ADMISSORIUM">35 repos live</button>
-      <button data-vco-open="core:accepted-truth">FULL_OBSERVATORY · signed WebGL constitutional projection active.</button>
-    </div>
-  </section>
-  <aside class="vco-left">
-    <div class="vco-card">
-      <h2>LIVE OBJECT GRAPH OBSERVATORY</h2>
-      <div class="vco-metrics">
-        <button data-vco-open="group:repos"><span>REPOSITORIES</span><b>35</b></button>
-        <button data-vco-open="group:chambers"><span>CHAMBERS</span><b>9</b></button>
-        <button data-vco-open="group:hosts"><span>HOSTS</span><b>12</b></button>
-        <button data-vco-open="group:packages"><span>PACKAGES</span><b>18</b></button>
-      </div>
-    </div>
-    <div class="vco-card vco-stack">
-      <h2>SOVEREIGN STACK TOWER</h2>
-      ${CHAMBERS.map((c,i)=>`<button data-vco-open="chamber:${c[0]}"><b>${String(i+1).padStart(2,"0")}</b><span>${c[1]}</span><em>${c[2]}</em></button>`).join("")}
-    </div>
-  </aside>
-  <aside class="vco-right">
-    <div class="vco-card vco-enterprise">
-      <h2>ENTERPRISE CONTROL</h2>
-      <p>Control above the perimeter. Open truth below.</p>
-      <button data-vco-open="chamber:auctoriseal"><b>Authority Governance Platform</b><span>AUCTORISEAL</span><em>Who was allowed to authorize this action, under what scope, and with what audit trail?</em></button>
-      <button data-vco-open="chamber:corpiform"><b>Deterministic Workflow Infrastructure</b><span>CORPIFORM</span><em>What ran, under which authority, with which receipt, and with what reproducible boundary?</em></button>
-      <button data-vco-open="host:enforcement"><b>CI Governance Layer</b><span>CICULLIS</span><em>What changes were allowed to pass, under which rules, and which gates prevented mutation?</em></button>
-      <button data-vco-open="chamber:verifrax"><b>Verification Authority Platform</b><span>VERIFRAX + VERIFRAX-API</span><em>What verified, under which public rules, and how can machines integrate it?</em></button>
-      <button data-vco-open="host:archive"><b>Artifact Certification Platform</b><span>SIGILLARIUM</span><em>How are certified artifacts issued, surfaced, and referenced?</em></button>
-    </div>
-    <div class="vco-card vco-hosts">
-      <h2>HOST BOUNDARY GATES</h2>
-      ${HOSTS.map(h=>`<button data-vco-open="host:${h[0]}"><b>${h[1]}</b><span>${h[3]}</span></button>`).join("")}
-    </div>
-  </aside>
-  <section class="vco-journey" aria-label="Artifact Journey live state machine">
-    <h2>ARTIFACT JOURNEY</h2>
-    <div class="vco-token" aria-hidden="true"></div>
-    <div class="vco-journey-grid">
-      ${JOURNEY.map((s,i)=>`<button class="vco-journey-stage" data-stage-index="${i}" data-vco-open="journey:${s[0]}"><strong>${i+1}</strong><b>${s[1]}</b><span>${s[3]}</span><em>${s[2]}</em></button>`).join("")}
-    </div>
-    <div class="vco-proofline">
-      <button data-vco-open="core:projection">Projection vco-2026-04-26T07-28-32Z</button>
-      <button data-vco-open="core:render">Render FULL_OBSERVATORY</button>
-      <button data-vco-open="core:warning">DERIVED_PROJECTION / NOT_TRUTH_SOURCE</button>
-    </div>
-  </section>
-  <section class="vco-inspector" role="dialog" aria-live="polite" hidden></section>
-  <section class="vco-command" role="dialog" aria-label="VERIFRAX command palette" hidden>
-    <div class="vco-command-box">
-      <input aria-label="Command search" placeholder="Search chambers, repos, host gates, artifact journey…">
-      <div class="vco-command-list"></div>
-    </div>
-  </section>
-  <footer class="vco-status">
-    <b>VERIFRAX CONSTITUTIONAL OBSERVATORY</b>
-    <span>Render permission: <strong>FULL_OBSERVATORY</strong></span>
-    <button data-vco-open="core:attestation">Verify projection</button>
-  </footer>
-`;
+function tuneLabelVisibility(labels, camera) {
+  labels.children.forEach((label) => {
+    const d = label.position.distanceTo(camera.position);
+    const isCore = label.userData && label.userData.visualWeight === "core";
+    const isChamber = label.userData && label.userData.visualWeight === "chamber";
+    const isHost = label.userData && label.userData.visualWeight === "host";
+    const isRepo = label.userData && label.userData.visualWeight === "repo";
 
-const stage = root.querySelector(".vco-stage");
-const inspector = root.querySelector(".vco-inspector");
-const command = root.querySelector(".vco-command");
-const commandInput = command.querySelector("input");
-const commandList = command.querySelector(".vco-command-list");
+    let scale = 0.62;
+    let opacity = 0.78;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-stage.appendChild(renderer.domElement);
+    if (isCore) {
+      scale = 0.88;
+      opacity = 0.96;
+    } else if (isChamber) {
+      scale = d < 22 ? 0.84 : d > 44 ? 0.66 : 0.76;
+      opacity = d > 48 ? 0.68 : 0.90;
+    } else if (isRepo) {
+      scale = d > 42 ? 0.34 : 0.42;
+      opacity = d > 42 ? 0.54 : 0.74;
+    } else if (isHost) {
+      scale = d > 42 ? 0.34 : 0.42;
+      opacity = d > 42 ? 0.42 : 0.62;
+    } else {
+      scale = d > 44 ? 0.50 : 0.58;
+      opacity = d > 44 ? 0.58 : 0.76;
+    }
 
-const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x02070b, 0.026);
-
-const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 420);
-camera.position.set(0, 15.5, 29);
-camera.lookAt(0, 1.7, 0);
-
-const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
-const mouse = new THREE.Vector2();
-const interactive = [];
-const registry = new Map();
-let activeId = "core:accepted-truth";
-let journeyIndex = 0;
-let paletteCursor = 0;
-let keyChord = "";
-
-const mat = {
-  floor: new THREE.MeshStandardMaterial({ color: 0x050a0f, roughness: 0.92, metalness: 0.66 }),
-  chamber: new THREE.MeshStandardMaterial({ color: 0x123c4c, roughness: 0.42, metalness: 0.82 }),
-  chamberDark: new THREE.MeshStandardMaterial({ color: 0x061922, roughness: 0.58, metalness: 0.88 }),
-  trim: new THREE.MeshStandardMaterial({ color: 0x8bd9ff, roughness: 0.18, metalness: 0.72, emissive: 0x12364c, emissiveIntensity: 0.55 }),
-  glass: new THREE.MeshPhysicalMaterial({ color: 0x9edcff, transparent: true, opacity: 0.45, roughness: 0.12, metalness: 0.05, transmission: 0.25, thickness: 0.9 }),
-  repo: new THREE.MeshStandardMaterial({ color: 0x244958, roughness: 0.52, metalness: 0.82 }),
-  repoDark: new THREE.MeshStandardMaterial({ color: 0x061018, roughness: 0.62, metalness: 0.84 }),
-  signal: new THREE.MeshStandardMaterial({ color: 0xb9f0ff, emissive: 0x55ccff, emissiveIntensity: 1.55, roughness: 0.18, metalness: 0.45 }),
-  red: new THREE.MeshStandardMaterial({ color: 0x7a0810, emissive: 0xff1b18, emissiveIntensity: 0.75, roughness: 0.48, metalness: 0.72 })
-};
-
-function register(entry) {
-  registry.set(entry.id, entry);
-  return entry;
+    const aspect = (label.userData && label.userData.labelAspect) || 2.85;
+    const baseHeight = (label.userData && label.userData.labelBaseHeight) || 0.78;
+    label.scale.set(scale * aspect * 2.35, scale * baseHeight, 1);
+    if (label.material) {
+      label.material.opacity = opacity;
+      label.material.transparent = true;
+      label.material.depthTest = false;
+      label.material.depthWrite = false;
+    }
+    label.renderOrder = isCore ? 95 : isChamber ? 86 : isRepo ? 72 : isHost ? 58 : 70;
+  });
 }
 
-register({ id:"core:accepted-truth", label:"ACCEPTED TRUTH", type:"core", subtitle:"machine-readable accepted object graph", route:"DERIVED_PROJECTION / NOT_TRUTH_SOURCE", priority:1000 });
-register({ id:"core:projection", label:"PROJECTION", type:"core", subtitle:"signed derived projection", route:"public/data/verifrax-observatory.json", priority:940 });
-register({ id:"core:render", label:"RENDER PERMISSION", type:"core", subtitle:"FULL_OBSERVATORY", route:"projection-attestation.json", priority:930 });
-register({ id:"core:warning", label:"NOT TRUTH SOURCE", type:"core", subtitle:"projection is subordinate to accepted objects", route:"DERIVED_PROJECTION", priority:920 });
-register({ id:"core:attestation", label:"SIGNED ATTESTATION", type:"core", subtitle:"manifest + receipt + ledger hash boundary", route:"projection-attestation.json", priority:950 });
-register({ id:"group:repos", label:"35 GOVERNED REPOSITORIES", type:"repo", subtitle:"full public governed perimeter", route:"github.com/Verifrax", priority:500 });
-register({ id:"group:chambers", label:"9 SOVEREIGN CHAMBERS", type:"chamber", subtitle:"law to terminal recourse", route:"sovereign topology", priority:500 });
-register({ id:"group:hosts", label:"12 HOST BOUNDARY GATES", type:"host", subtitle:"one host, one owner, one primary role", route:"public host perimeter", priority:500 });
-register({ id:"group:packages", label:"18 PACKAGES", type:"repo", subtitle:"installable distribution surfaces", route:"GitHub Packages", priority:500 });
-
-CHAMBERS.forEach(([id,label,subtitle,route], i) => register({ id:`chamber:${id}`, label, type:"chamber", subtitle, route, priority:800-i }));
-HOSTS.forEach(([id,label,subtitle,route], i) => register({ id:`host:${id}`, label, type:"host", subtitle, route, priority:650-i }));
-JOURNEY.forEach(([id,label,subtitle,route], i) => register({ id:`journey:${id}`, label, type:"journey", subtitle, route, priority:700-i }));
-GOVERNED_REPOS.forEach((name, i) => register({
-  id:`repo:${name}`,
-  label:name,
-  type:name === "ADMISSORIUM" ? "front_gate" : "repo",
-  subtitle:name === "ADMISSORIUM" ? "repo 35 · front admissibility gate" : `governed repository ${i+1}/35`,
-  route:`Verifrax/${name}`,
-  priority:name === "ADMISSORIUM" ? 990 : 300-i
-}));
-
-function bindObject(object, id) {
-  object.userData.objectId = id;
-  object.userData.interactive = true;
-  interactive.push(object);
-  return object;
+function markObservatoryDominant(renderPermission) {
+  document.body.dataset.observatoryRenderPermission = renderPermission || "STATIC_FALLBACK";
+  document.body.classList.toggle("vf-observatory-command-dominant", renderPermission === "FULL_OBSERVATORY");
 }
 
-function labelSprite(title, sub = "", w = 760, h = 210) {
-  const canvas = document.createElement("canvas");
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0,0,w,h);
-  ctx.fillStyle = "rgba(3,13,20,0.76)";
-  roundRect(ctx, 12, 18, w-24, h-36, 22);
-  ctx.fill();
-  ctx.strokeStyle = "rgba(141,222,255,0.64)";
-  ctx.lineWidth = 3;
-  roundRect(ctx, 12, 18, w-24, h-36, 22);
-  ctx.stroke();
-  ctx.fillStyle = "#eaf7ff";
-  ctx.font = "900 42px ui-monospace, SFMono-Regular, Menlo, monospace";
-  ctx.textAlign = "center";
-  ctx.fillText(title, w/2, 92);
-  ctx.fillStyle = "#a6c7d7";
-  ctx.font = "800 23px ui-monospace, SFMono-Regular, Menlo, monospace";
-  ctx.fillText(sub, w/2, 132);
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.92, depthTest: false }));
-  sprite.scale.set(4.6, 1.28, 1);
-  return sprite;
+function $(root, selector) {
+  return root.querySelector(selector);
 }
 
-function roundRect(ctx, x, y, w, h, r) {
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function roundRect(ctx, x, y, width, height, radius) {
   ctx.beginPath();
-  ctx.moveTo(x+r,y);
-  ctx.arcTo(x+w,y,x+w,y+h,r);
-  ctx.arcTo(x+w,y+h,x,y+h,r);
-  ctx.arcTo(x,y+h,x,y,r);
-  ctx.arcTo(x,y,x+w,y,r);
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + width, y, x + width, y + height, radius);
+  ctx.arcTo(x + width, y + height, x, y + height, radius);
+  ctx.arcTo(x, y + height, x, y, radius);
+  ctx.arcTo(x, y, x + width, y, radius);
   ctx.closePath();
 }
 
-function addLights() {
-  scene.add(new THREE.HemisphereLight(0x9fdcff, 0x020407, 1.75));
-  const key = new THREE.DirectionalLight(0xd9f5ff, 2.8);
-  key.position.set(-8, 22, 16);
-  key.castShadow = true;
-  key.shadow.mapSize.set(2048, 2048);
-  scene.add(key);
+function makeLabel(text, subtext = "", width = 512, height = 192, accent = "#73d0ff") {
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
 
-  const rim = new THREE.DirectionalLight(0x55baff, 1.45);
-  rim.position.set(10, 13, -20);
-  scene.add(rim);
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, width, height);
 
-  const core = new THREE.PointLight(0x7bdcff, 6.5, 38, 1.6);
-  core.position.set(0, 4.6, 0);
-  scene.add(core);
+  ctx.fillStyle = "rgba(2, 7, 12, 0.82)";
+  ctx.strokeStyle = "rgba(115, 208, 255, 0.62)";
+  ctx.lineWidth = 3;
+  roundRect(ctx, 10, 10, width - 20, height - 20, 18);
+  ctx.fill();
+  ctx.stroke();
 
-  const red = new THREE.PointLight(0xff291c, 4.2, 13, 1.9);
-  red.position.set(0, 2.4, 10.6);
-  scene.add(red);
-}
+  ctx.fillStyle = "#edf8ff";
+  ctx.font = "800 42px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, width / 2, height / 2 - (subtext ? 22 : 0));
 
-function addFloor() {
-  const floor = new THREE.Mesh(new THREE.CylinderGeometry(20.8, 22.4, 0.36, 192), mat.floor);
-  floor.position.y = -0.22;
-  floor.receiveShadow = true;
-  scene.add(floor);
+  if (subtext) {
+    ctx.fillStyle = accent;
+    ctx.font = "700 24px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+    ctx.fillText(subtext, width / 2, height / 2 + 35);
+  }
 
-  [4.2, 6.3, 8.9, 13.8, 17.0].forEach((r, idx) => {
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(r, idx === 3 ? 0.055 : 0.035, 10, 220), mat.trim);
-    ring.rotation.x = Math.PI / 2;
-    ring.position.y = 0.02 + idx * 0.01;
-    scene.add(ring);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.anisotropy = 4;
+
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    depthWrite: false
   });
 
-  for (let i=0;i<72;i++) {
-    const a = (i / 72) * Math.PI * 2;
-    const len = i % 6 === 0 ? 18.8 : 15.5;
-    const geo = new THREE.BoxGeometry(0.018, 0.018, len);
-    const line = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0x214456, emissive: 0x06243a, emissiveIntensity: 0.4 }));
-    line.position.set(Math.sin(a)*len/2, 0.05, Math.cos(a)*len/2);
-    line.rotation.y = a;
-    scene.add(line);
-  }
+  const sprite = new THREE.Sprite(material);
+  
+  sprite.userData.labelAspect = width / height;
+  sprite.userData.labelBaseHeight = Math.max(0.55, Math.min(1.05, height / 180));
+sprite.scale.set(width / 115, height / 115, 1);
+  sprite.userData.canvasLabel = true;
+  return sprite;
 }
 
-function chamberMesh(id, label, subtitle, x, z, index) {
-  const g = new THREE.Group();
-  g.position.set(x, 0, z);
-  g.userData.objectId = `chamber:${id}`;
+function assertManifest(manifest, attestation) {
+  const errors = [];
 
-  const base = bindObject(new THREE.Mesh(new THREE.CylinderGeometry(2.25, 2.55, 0.48, 96), mat.chamberDark), `chamber:${id}`);
-  base.position.y = 0.28;
-  base.castShadow = true;
-  base.receiveShadow = true;
-  g.add(base);
+  if (manifest?.projection_type !== "DERIVED_PROJECTION") errors.push("projection_type_not_derived");
+  if (manifest?.truth_warning !== "NOT_TRUTH_SOURCE") errors.push("truth_warning_missing");
+  if (!Array.isArray(manifest?.repositories) || manifest.repositories.length !== 35) errors.push("repo_count_not_35");
+  if (!Array.isArray(manifest?.chambers) || manifest.chambers.length !== 9) errors.push("chamber_count_not_9");
+  if (!Array.isArray(manifest?.hosts) || manifest.hosts.length !== 12) errors.push("host_count_not_12");
 
-  const body = bindObject(new THREE.Mesh(new THREE.CylinderGeometry(1.95, 2.28, 2.55, 128), mat.chamber), `chamber:${id}`);
-  body.position.y = 1.7;
+  const admissorium = manifest?.repositories?.find((repo) => repo.name === "ADMISSORIUM");
+  if (!admissorium) errors.push("admissorium_missing");
+  if (admissorium && admissorium.visual_class !== "front_gate") errors.push("admissorium_not_front_gate");
+  if (admissorium && admissorium.sovereign_chamber !== false) errors.push("admissorium_claims_chamber");
+  if (admissorium && admissorium.truth_owner !== false) errors.push("admissorium_claims_truth");
+  if (attestation?.render_permission !== FULL) errors.push("attestation_not_full");
+
+  return errors;
+}
+
+
+function createAuthorityBlock(width, height, depth, mat, capMat) {
+  const group = new THREE.Group();
+
+  const body = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), mat.clone());
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(width * 1.08, height * 0.08, depth * 1.08), capMat.clone());
+  const base = new THREE.Mesh(new THREE.BoxGeometry(width * 1.14, height * 0.10, depth * 1.14), capMat.clone());
+
   body.castShadow = true;
   body.receiveShadow = true;
-  g.add(body);
-
-  const crown = bindObject(new THREE.Mesh(new THREE.CylinderGeometry(2.18, 2.02, 0.36, 128), mat.chamberDark), `chamber:${id}`);
-  crown.position.y = 3.13;
-  crown.castShadow = true;
-  g.add(crown);
-
-  const top = new THREE.Mesh(new THREE.TorusGeometry(2.13, 0.07, 12, 128), mat.trim);
-  top.rotation.x = Math.PI / 2;
-  top.position.y = 3.38;
-  g.add(top);
-
-  const trim = new THREE.Mesh(new THREE.TorusGeometry(2.05, 0.045, 12, 128), mat.trim);
-  trim.rotation.x = Math.PI / 2;
-  trim.position.y = 2.95;
-  g.add(trim);
-
-  for (let i=0;i<4;i++) {
-    const p = new THREE.Mesh(new THREE.BoxGeometry(0.17, 1.35, 0.12), mat.chamberDark);
-    const a = i * Math.PI / 2 + Math.PI / 4;
-    p.position.set(Math.sin(a)*2.03, 1.55, Math.cos(a)*2.03);
-    p.rotation.y = a;
-    g.add(p);
-  }
-
-  const lab = labelSprite(label, subtitle);
-  lab.position.set(0, 3.9, 0);
-  lab.userData.followCamera = true;
-  g.add(lab);
-
-  const route = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.045, Math.hypot(x,z)), mat.signal);
-  route.position.set(-x/2, 1.15, -z/2);
-  route.rotation.y = Math.atan2(x,z);
-  route.castShadow = false;
-  g.add(route);
-
-  scene.add(g);
-  return g;
-}
-
-function repoPillar(name, i, total) {
-  const special = name === "ADMISSORIUM";
-  const a = special ? Math.PI : (i / total) * Math.PI * 2 - Math.PI * 0.56;
-  const r = special ? 12.05 : 16.3 + (i % 3) * 0.38;
-  const x = Math.sin(a) * r;
-  const z = Math.cos(a) * r;
-  const id = `repo:${name}`;
-
-  const g = new THREE.Group();
-  g.position.set(x, 0, z);
-  g.rotation.y = a;
-  g.userData.objectId = id;
-
-  const plinth = bindObject(new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.55, 0.28, 8), special ? mat.red : mat.repoDark), id);
-  plinth.position.y = 0.25;
-  plinth.castShadow = true;
-  g.add(plinth);
-
-  const shaft = bindObject(new THREE.Mesh(new THREE.BoxGeometry(special ? 1.85 : 0.46, special ? 1.55 : 2.0, special ? 0.72 : 0.46), special ? mat.red : mat.repo), id);
-  shaft.position.y = special ? 1.18 : 1.32;
-  shaft.castShadow = true;
-  shaft.receiveShadow = true;
-  g.add(shaft);
-
-  const cap = bindObject(new THREE.Mesh(new THREE.BoxGeometry(special ? 2.15 : 0.74, 0.22, special ? 0.9 : 0.74), special ? mat.red : mat.repo), id);
-  cap.position.y = special ? 2.1 : 2.44;
   cap.castShadow = true;
-  g.add(cap);
-
-  if (special) {
-    const arch = bindObject(new THREE.Mesh(new THREE.BoxGeometry(3.05, 0.28, 0.75), mat.red), id);
-    arch.position.y = 2.78;
-    g.add(arch);
-    const lab = labelSprite("ADMISSORIUM", "repo 35 · front admissibility gate", 860, 210);
-    lab.position.set(0, 3.5, 0.05);
-    lab.scale.set(5.2, 1.28, 1);
-    lab.userData.followCamera = true;
-    g.add(lab);
-  } else if (i % 2 === 0 || i < 12) {
-    const lab = labelSprite(name.toUpperCase(), "governed repo", 620, 180);
-    lab.position.set(0, 3.05, 0);
-    lab.scale.set(2.4, 0.72, 1);
-    lab.userData.followCamera = true;
-    g.add(lab);
-  }
-
-  scene.add(g);
-}
-
-function hostGate([id,label,subtitle,route], i) {
-  const a = (i / HOSTS.length) * Math.PI * 2 + Math.PI * 0.08;
-  const r = 18.8;
-  const x = Math.sin(a) * r;
-  const z = Math.cos(a) * r;
-  const objId = `host:${id}`;
-
-  const g = new THREE.Group();
-  g.position.set(x, 0, z);
-  g.rotation.y = a;
-  const l = bindObject(new THREE.Mesh(new THREE.BoxGeometry(0.72, 2.25, 0.42), mat.repoDark), objId);
-  l.position.set(-0.34, 1.25, 0);
-  const rr = bindObject(new THREE.Mesh(new THREE.BoxGeometry(0.72, 2.25, 0.42), mat.repoDark), objId);
-  rr.position.set(0.34, 1.25, 0);
-  const top = bindObject(new THREE.Mesh(new THREE.BoxGeometry(1.22, 0.22, 0.54), mat.repo), objId);
-  top.position.y = 2.52;
-  g.add(l, rr, top);
-
-  if (i % 2 === 0) {
-    const lab = labelSprite(label, subtitle, 600, 170);
-    lab.position.set(0, 3.1, 0);
-    lab.scale.set(2.15, 0.62, 1);
-    lab.userData.followCamera = true;
-    g.add(lab);
-  }
-  scene.add(g);
-}
-
-function coreMachine() {
-  const base = bindObject(new THREE.Mesh(new THREE.CylinderGeometry(2.28, 2.8, 1.35, 128), mat.chamber), "core:accepted-truth");
-  base.position.y = 0.82;
+  cap.receiveShadow = true;
   base.castShadow = true;
-  scene.add(base);
+  base.receiveShadow = true;
 
-  const sphere = bindObject(new THREE.Mesh(new THREE.IcosahedronGeometry(1.42, 4), mat.glass), "core:accepted-truth");
-  sphere.position.y = 2.75;
-  sphere.castShadow = true;
-  scene.add(sphere);
+  cap.position.y = height * 0.54;
+  base.position.y = -height * 0.54;
 
-  const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(1.46, 2), new THREE.MeshBasicMaterial({ color: 0xb9ecff, wireframe: true, transparent: true, opacity: 0.7 }));
-  wire.position.copy(sphere.position);
-  scene.add(wire);
-
-  const lab = labelSprite("ACCEPTED TRUTH", "not truth source · accepted object graph", 820, 210);
-  lab.position.set(0, 1.88, 0.15);
-  lab.scale.set(4.8, 1.2, 1);
-  lab.userData.followCamera = true;
-  scene.add(lab);
-
-  for (let i=0;i<9;i++) {
-    const a = (i / 9) * Math.PI * 2;
-    const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.055, 7.5), mat.signal);
-    spoke.position.set(Math.sin(a)*3.7, 1.95, Math.cos(a)*3.7);
-    spoke.rotation.y = a;
-    scene.add(spoke);
-  }
+  group.add(body, cap, base);
+  return group;
 }
 
-function buildScene() {
-  addLights();
-  addFloor();
-  coreMachine();
-
-  CHAMBERS.forEach(([id,label,subtitle], i) => {
-    const a = -Math.PI/2 + (i / CHAMBERS.length) * Math.PI * 2;
-    const r = 8.45;
-    chamberMesh(id, label, subtitle, Math.sin(a)*r, Math.cos(a)*r, i);
+function addGlowColumn(scene, x, z, h, color, intensity = 0.58) {
+  const geometry = new THREE.CylinderGeometry(0.055, 0.055, h, 14);
+  const columnMaterial = new THREE.MeshPhysicalMaterial({
+    color,
+    emissive: color,
+    emissiveIntensity: intensity,
+    transparent: true,
+    opacity: 0.62,
+    roughness: 0.18,
+    metalness: 0.18
   });
 
-  GOVERNED_REPOS.forEach((name, i) => repoPillar(name, i, GOVERNED_REPOS.length));
-  HOSTS.forEach(hostGate);
-
-  root.dataset.sceneState = "active";
+  const mesh = new THREE.Mesh(geometry, columnMaterial);
+  mesh.position.set(x, h / 2, z);
+  scene.add(mesh);
+  return mesh;
 }
 
-function objectHtml(entry) {
-  const role = ROLE_TEXT[entry.type] || ROLE_TEXT.repo;
-  const badge = entry.type === "front_gate" ? "FRONT_GATE" : entry.type.toUpperCase();
-  const special = entry.type === "front_gate"
-    ? `<div class="vco-truth-guard">truth_owner=false / sovereign_chamber=false</div>`
+
+function material(color, emissive = 0x000000, intensity = 0, roughness = 0.64, metalness = 0.76) {
+  return new THREE.MeshPhysicalMaterial({
+    color,
+    emissive,
+    emissiveIntensity: intensity,
+    roughness,
+    metalness
+  });
+}
+
+function polar(radius, angle, y = 0) {
+  return new THREE.Vector3(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
+}
+
+function addRing(scene, radius, tube, color, y = 0.02, intensity = 0.08) {
+  const mesh = new THREE.Mesh(
+    new THREE.TorusGeometry(radius, tube, 16, 220),
+    material(color, color, intensity, 0.48, 0.88)
+  );
+  mesh.rotation.x = Math.PI / 2;
+  mesh.position.y = y;
+  scene.add(mesh);
+  return mesh;
+}
+
+function createRail(scene, from, to, color = palette.blue, thickness = 0.035) {
+  const direction = new THREE.Vector3().subVectors(to, from);
+  const length = direction.length();
+  const mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(thickness, thickness, length, 12, 1, true),
+    material(color, color, 0.72, 0.35, 0.38)
+  );
+  const midpoint = new THREE.Vector3().addVectors(from, to).multiplyScalar(0.5);
+  mesh.position.copy(midpoint);
+  mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
+  scene.add(mesh);
+  return mesh;
+}
+
+function setRuntimeStatus(container, mode, message) {
+  container.dataset.observatoryRuntime = mode;
+  const status = $(container, "[data-runtime-status]");
+  if (status) status.textContent = message;
+}
+
+function hydrateCommandSurface(container, manifest, attestation) {
+  const metrics = {
+    repos: manifest.repositories.length,
+    chambers: manifest.chambers.length,
+    hosts: manifest.hosts.length,
+    packages: manifest.packages?.length || 0,
+    products: manifest.enterprise_products?.length || 0,
+    projection: attestation.projection_id,
+    permission: attestation.render_permission
+  };
+
+  container.querySelectorAll("[data-count]").forEach((node) => {
+    const key = node.getAttribute("data-count");
+    node.textContent = metrics[key] ?? "—";
+  });
+
+  const stack = $(container, "[data-stack-list]");
+  if (stack) {
+    stack.innerHTML = chamberOrder.map((id, index) => {
+      const chamber = manifest.chambers.find((item) => item.id === id);
+      return `<li><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(chamber?.name || id)}</strong><em>${escapeHtml(chamber?.role || "")}</em></li>`;
+    }).join("");
+  }
+
+  const journey = $(container, "[data-journey-list]");
+  if (journey) {
+    journey.innerHTML = (manifest.journey || []).map((item, index) => {
+      return `<li><span>${index + 1}</span><strong>${escapeHtml(item.label)}</strong><em>${escapeHtml(item.maps_to || item.role)}</em></li>`;
+    }).join("");
+  }
+
+  const enterprise = $(container, "[data-enterprise-list]");
+  if (enterprise) {
+    enterprise.innerHTML = (manifest.enterprise_products || []).map((item) => {
+      return `<button type="button" data-enterprise="${escapeHtml(item.id)}"><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.maps_to)}</span><small>${escapeHtml(item.buyer_outcome)}</small></button>`;
+    }).join("");
+  }
+
+  const hostMap = $(container, "[data-host-list]");
+  if (hostMap) {
+    hostMap.innerHTML = (manifest.hosts || []).map((host) => {
+      return `<li><strong>${escapeHtml(host.label || host.id)}</strong><span>${escapeHtml(host.host)}</span></li>`;
+    }).join("");
+  }
+
+  const projection = $(container, "[data-projection-id]");
+  if (projection) projection.textContent = attestation.projection_id;
+
+  const permission = $(container, "[data-render-permission]");
+  if (permission) permission.textContent = attestation.render_permission;
+}
+
+function writeInspector(container, data) {
+  const inspector = $(container, "[data-runtime-inspector]");
+  if (!inspector) return;
+
+  const ownership = Array.isArray(data.owns) && data.owns.length
+    ? `<h4>Owns</h4><ul>${data.owns.slice(0, 5).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
     : "";
-  return `
-    <button class="vco-close" aria-label="Close">×</button>
-    <div class="vco-inspector-head"><b>${entry.label}</b><span>${badge}</span></div>
-    <p>${entry.subtitle || ""}</p>
-    <code>${entry.route || ""}</code>
-    ${special}
-    <h3>OWNS</h3>
-    <ul>${role.owns.map(x=>`<li>${x}</li>`).join("")}</ul>
-    <h3>MUST NOT OWN</h3>
-    <ul>${role.not.map(x=>`<li>${x}</li>`).join("")}</ul>
+
+  const notOwnership = Array.isArray(data.must_not_own) && data.must_not_own.length
+    ? `<h4>Must not own</h4><ul>${data.must_not_own.slice(0, 5).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+    : "";
+
+  inspector.innerHTML = `
+    <div class="oc-inspector-head">
+      <strong>${escapeHtml(data.name || data.id || "VERIFRAX OBJECT")}</strong>
+      <span>${escapeHtml(data.visual_class || "projection_object")}</span>
+    </div>
+    <p>${escapeHtml(data.role || data.question || "Bounded projection object.")}</p>
+    <code>${escapeHtml(data.warning || data.repo || data.owner_repo || "DERIVED_PROJECTION / NOT_TRUTH_SOURCE")}</code>
+    ${ownership}
+    ${notOwnership}
   `;
 }
 
-function openPanel(id) {
-  const entry = registry.get(id) || registry.get("core:accepted-truth");
-  activeId = entry.id;
-  inspector.hidden = false;
-  inspector.innerHTML = objectHtml(entry);
-  inspector.querySelector(".vco-close").addEventListener("click", () => inspector.hidden = true);
-  root.dataset.activeObject = entry.id;
-  document.querySelectorAll("[data-vco-open]").forEach(el => {
-    el.toggleAttribute("data-active", el.dataset.vcoOpen === entry.id);
-  });
-}
 
-function focusObject(id) {
-  if (!registry.has(id)) return;
-  openPanel(id);
-  const n = [...registry.keys()].indexOf(id);
-  if (n >= 0) paletteCursor = n;
-}
+function createGovernedRepoPillar(repo, index, total, radius, labels, selectable) {
+  const angle = -Math.PI / 2 + (index / total) * Math.PI * 2;
+  const p = polar(radius, angle, 1.18);
 
-function resolveRay(event) {
-  const rect = renderer.domElement.getBoundingClientRect();
-  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-  raycaster.setFromCamera(pointer, camera);
-  const hits = raycaster.intersectObjects(interactive, false)
-    .filter(h => h.object?.userData?.objectId)
-    .sort((a,b) => (registry.get(b.object.userData.objectId)?.priority || 0) - (registry.get(a.object.userData.objectId)?.priority || 0));
-  return hits[0]?.object?.userData?.objectId || null;
-}
+  const group = new THREE.Group();
 
-function resolveScreenFallback(event) {
-  const rect = root.getBoundingClientRect();
-  const x = (event.clientX - rect.left) / rect.width;
-  const y = (event.clientY - rect.top) / rect.height;
-  if (y > 0.84) return `journey:${JOURNEY[Math.min(8, Math.max(0, Math.floor(x * 9)))][0]}`;
-  if (x < 0.22 && y > 0.48) return "group:chambers";
-  if (x > 0.78 && y < 0.76) return "group:hosts";
-  const dx = x - 0.52;
-  const dy = y - 0.54;
-  const chamberIndex = Math.round((((Math.atan2(dx / 0.34, dy / 0.25) + Math.PI/2) / (Math.PI*2)) * 9 + 9) % 9) % 9;
-  return `chamber:${CHAMBERS[chamberIndex][0]}`;
-}
-
-function openCommandPalette(seed = "") {
-  command.hidden = false;
-  commandInput.value = seed;
-  renderCommands(seed);
-  setTimeout(() => commandInput.focus(), 0);
-}
-
-function closeCommandPalette() {
-  command.hidden = true;
-}
-
-function renderCommands(query = "") {
-  const q = query.trim().toLowerCase();
-  const rows = [...registry.values()]
-    .filter(e => !q || `${e.label} ${e.subtitle} ${e.route} ${e.type}`.toLowerCase().includes(q))
-    .sort((a,b) => (b.priority || 0) - (a.priority || 0))
-    .slice(0, 72);
-  paletteCursor = Math.min(paletteCursor, Math.max(0, rows.length - 1));
-  commandList.innerHTML = rows.map((e,i)=>`
-    <button data-command-id="${e.id}" ${i===paletteCursor ? "data-selected" : ""}>
-      <b>${e.label}</b><span>${e.type}</span><em>${e.subtitle || e.route || ""}</em>
-    </button>
-  `).join("");
-  commandList.querySelectorAll("[data-command-id]").forEach(btn => {
-    btn.addEventListener("click", () => { focusObject(btn.dataset.commandId); closeCommandPalette(); });
-  });
-}
-
-function advanceJourney(target = null) {
-  journeyIndex = target == null ? (journeyIndex + 1) % JOURNEY.length : target;
-  root.style.setProperty("--vco-journey-index", String(journeyIndex));
-  root.querySelectorAll(".vco-journey-stage").forEach((el,i)=>el.toggleAttribute("data-live", i === journeyIndex));
-}
-
-function resize() {
-  const r = root.getBoundingClientRect();
-  renderer.setSize(Math.max(320, r.width), Math.max(420, r.height), false);
-  camera.aspect = Math.max(320, r.width) / Math.max(420, r.height);
-  camera.updateProjectionMatrix();
-}
-
-function animate(t) {
-  const time = t * 0.001;
-  const orbit = time * 0.035;
-  camera.position.x = Math.sin(orbit) * 2.5 + mouse.x * 0.9;
-  camera.position.z = 29 + Math.cos(orbit) * 1.9;
-  camera.position.y = 15.4 + Math.sin(time * 0.35) * 0.34 - mouse.y * 0.4;
-  camera.lookAt(0, 1.7, 0);
-
-  scene.traverse(o => {
-    if (o.userData.followCamera) o.lookAt(camera.position);
-    if (o.material?.emissiveIntensity && o.userData.objectId === activeId) o.material.emissiveIntensity = 2.2;
+  const live = repo.status === "live" || repo.status === "aligned" || repo.truth_status === "active";
+  const coreColor = live ? palette.blue : palette.grey;
+  const repoMetal = material(0x0f1924, coreColor, live ? 0.22 : 0.08, 0.42, 0.92);
+  const repoCap = material(0x223242, coreColor, live ? 0.36 : 0.14, 0.26, 0.90);
+  const repoGlass = new THREE.MeshPhysicalMaterial({
+    color: 0x123247,
+    emissive: coreColor,
+    emissiveIntensity: live ? 0.42 : 0.16,
+    transparent: true,
+    opacity: 0.54,
+    roughness: 0.12,
+    metalness: 0.22
   });
 
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
+  const plinth = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.78, 0.20, 18), repoCap.clone());
+  const shaft = new THREE.Mesh(new THREE.BoxGeometry(0.42, 2.10, 0.42), repoMetal.clone());
+  const glass = new THREE.Mesh(new THREE.BoxGeometry(0.28, 1.62, 0.28), repoGlass);
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.18, 0.72), repoCap.clone());
+  const crown = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.10, 0.88), repoCap.clone());
+  const statusLine = new THREE.Mesh(
+    new THREE.BoxGeometry(0.048, 1.82, 0.052),
+    material(coreColor, coreColor, live ? 0.92 : 0.28, 0.18, 0.42)
+  );
+
+  plinth.position.y = -1.02;
+  shaft.position.y = 0.05;
+  glass.position.set(0, 0.15, -0.236);
+  cap.position.y = 1.20;
+  crown.position.y = 1.36;
+  statusLine.position.set(0.285, 0.12, -0.29);
+
+  for (const part of [plinth, shaft, glass, cap, crown, statusLine]) {
+    part.castShadow = true;
+    part.receiveShadow = true;
+    group.add(part);
+  }
+
+  const sourcePlate = new THREE.Mesh(
+    new THREE.BoxGeometry(0.82, 0.30, 0.08),
+    material(0x07111b, coreColor, 0.18, 0.35, 0.82)
+  );
+  sourcePlate.position.set(0, 0.48, -0.39);
+  group.add(sourcePlate);
+
+  group.position.copy(p);
+  group.lookAt(0, 1.18, 0);
+
+  group.userData = {
+    id: repo.id,
+    name: repo.name,
+    visual_class: repo.visual_class || "governed_repo",
+    role: repo.class || repo.role || "governed repository",
+    repo: repo.repo,
+    url: repo.url,
+    owns: repo.owns || ["governed source boundary", "repository surface", "projection source binding"],
+    must_not_own: repo.must_not_own || ["accepted truth", "sovereign chamber role", "private truth control"],
+    truth_status: repo.truth_status || "derived"
+  };
+
+  selectable.push(group);
+
+  const repoName = String(repo.name || repo.id || `REPO-${index + 1}`).replace(/^VERIFRAX-/, "");
+  const label = makeLabel(repoName, `repo ${String(index + 1).padStart(2, "0")}`, 560, 172, live ? "#73d0ff" : "#8ea4b8");
+  const out = polar(radius + 0.56, angle, 3.18);
+  label.position.copy(out);
+  label.userData.visualWeight = "repo";
+  labels.add(label);
+
+  return group;
 }
 
-async function loadProjectionBoundary() {
-  try {
-    const manifest = await fetch("data/verifrax-observatory.json", { cache: "no-store" }).then(r=>r.ok?r.json():null).catch(()=>null);
-    const attestation = await fetch("data/projection-attestation.json", { cache: "no-store" }).then(r=>r.ok?r.json():null).catch(()=>null);
-    const repoCount = manifest?.repositories?.length || GOVERNED_REPOS.length;
-    const chamberCount = manifest?.chambers?.length || CHAMBERS.length;
-    const permission = attestation?.render_permission || FULL_OBSERVATORY;
-    const safe = repoCount === 35 && chamberCount === 9 && permission === FULL_OBSERVATORY;
-    root.dataset.renderPermission = safe ? FULL_OBSERVATORY : "SAFE_PROJECTION";
-    root.querySelector(".vco-status strong").textContent = root.dataset.renderPermission;
-  } catch {
-    root.dataset.renderPermission = FULL_OBSERVATORY;
+function createAdmissoriumRepoGate(scene, repo, labels, selectable) {
+  const group = new THREE.Group();
+
+  const gateMat = material(0x1a0d0d, palette.red, 0.34, 0.48, 0.84);
+  const metalMat = material(0x151b22, palette.blue, 0.18, 0.38, 0.92);
+  const warningMat = material(0x3a0908, palette.red, 0.88, 0.28, 0.55);
+
+  const base = new THREE.Mesh(new THREE.BoxGeometry(5.8, 0.54, 1.20), metalMat.clone());
+  const towerA = new THREE.Mesh(new THREE.BoxGeometry(0.72, 2.80, 0.92), metalMat.clone());
+  const towerB = new THREE.Mesh(new THREE.BoxGeometry(0.72, 2.80, 0.92), metalMat.clone());
+  const lintel = new THREE.Mesh(new THREE.BoxGeometry(5.55, 0.58, 0.90), metalMat.clone());
+  const shield = new THREE.Mesh(new THREE.BoxGeometry(3.85, 1.46, 0.32), warningMat.clone());
+  const denial = new THREE.Mesh(new THREE.BoxGeometry(2.38, 0.16, 0.10), material(palette.red, palette.red, 1.1, 0.18, 0.42));
+
+  base.position.set(0, 0.18, 16.38);
+  towerA.position.set(-2.62, 1.55, 16.28);
+  towerB.position.set(2.62, 1.55, 16.28);
+  lintel.position.set(0, 3.08, 16.23);
+  shield.position.set(0, 1.50, 16.82);
+  denial.position.set(0, 1.50, 17.03);
+
+  for (const part of [base, towerA, towerB, lintel, shield, denial]) {
+    part.castShadow = true;
+    part.receiveShadow = true;
+    group.add(part);
   }
+
+  const bars = [];
+  for (let i = -4; i <= 4; i += 1) {
+    const bar = new THREE.Mesh(
+      new THREE.BoxGeometry(0.08, 1.82, 0.08),
+      material(0x1b2733, palette.blue, 0.38, 0.22, 0.92)
+    );
+    bar.position.set(i * 0.28, 1.34, 17.12);
+    bars.push(bar);
+    group.add(bar);
+  }
+
+  group.userData = {
+    id: repo.id,
+    name: "ADMISSORIUM",
+    visual_class: "front_gate",
+    role: "admissibility enforcement implementation",
+    repo: repo.repo,
+    url: repo.url,
+    owns: repo.owns || ["admissibility enforcement", "materialization blocking", "quarantine routing"],
+    must_not_own: repo.must_not_own || ["truth source", "accepted state", "sovereign chamber", "terminal recognition"],
+    warning: "truth_owner=false / sovereign_chamber=false",
+    truth_status: "derived"
+  };
+
+  selectable.push(group);
+  scene.add(group);
+
+  const label = makeLabel("ADMISSORIUM", "repo 35 · front admissibility gate", 760, 200, "#ff8b7e");
+  label.position.set(0, 4.34, 16.92);
+  label.userData.visualWeight = "chamber";
+  labels.add(label);
+
+  return group;
 }
 
-root.addEventListener("pointerdown", event => {
-  const target = event.target.closest("[data-vco-open]");
-  if (target) {
-    focusObject(target.dataset.vcoOpen);
-    return;
-  }
-  const id = resolveRay(event) || resolveScreenFallback(event);
-  if (id) focusObject(id);
-});
+function buildScene(container, manifest) {
+  const stage = $(container, "[data-runtime-stage]");
+  const width = stage.clientWidth || container.clientWidth || 1600;
+  const height = stage.clientHeight || container.clientHeight || 900;
 
-root.addEventListener("pointermove", event => {
-  const rect = root.getBoundingClientRect();
-  mouse.x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-  mouse.y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-  root.style.cursor = resolveRay(event) ? "pointer" : "default";
-});
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: false,
+    powerPreference: "high-performance"
+  });
 
-commandInput.addEventListener("input", () => renderCommands(commandInput.value));
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+  renderer.setClearColor(palette.void, 1);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.18;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-document.addEventListener("keydown", event => {
-  const typing = /input|textarea|select/i.test(event.target?.tagName || "");
-  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-    event.preventDefault();
-    openCommandPalette();
-    return;
-  }
-  if (!typing && event.key === "/") {
-    event.preventDefault();
-    openCommandPalette();
-    return;
-  }
-  if (event.key === "Escape") {
-    inspector.hidden = true;
-    closeCommandPalette();
-    keyChord = "";
-    return;
-  }
-  if (!command.hidden) {
-    if (event.key === "ArrowDown") { event.preventDefault(); paletteCursor++; renderCommands(commandInput.value); return; }
-    if (event.key === "ArrowUp") { event.preventDefault(); paletteCursor = Math.max(0, paletteCursor - 1); renderCommands(commandInput.value); return; }
-    if (event.key === "Enter") {
-      event.preventDefault();
-      const selected = commandList.querySelector("[data-selected]") || commandList.querySelector("[data-command-id]");
-      if (selected) focusObject(selected.dataset.commandId);
-      closeCommandPalette();
-      return;
-    }
-  }
-  if (!typing && /^[1-9]$/.test(event.key)) {
-    const c = CHAMBERS[Number(event.key) - 1];
-    if (c) focusObject(`chamber:${c[0]}`);
-    return;
-  }
-  if (!typing && event.key.toLowerCase() === "g") {
-    keyChord = "g";
-    setTimeout(()=>{ keyChord = ""; }, 900);
-    return;
-  }
-  if (!typing && keyChord === "g") {
-    const k = event.key.toLowerCase();
-    keyChord = "";
-    if (k === "r") focusObject("group:repos");
-    if (k === "a") focusObject("journey:claim");
-    if (k === "h") focusObject("group:hosts");
-    if (k === "c") focusObject("core:accepted-truth");
-  }
-});
+  stage.innerHTML = "";
+  stage.appendChild(renderer.domElement);
 
-window.addEventListener("resize", resize);
-window.__VERIFRAX_OBSERVATORY_COMMAND_MACHINE__ = {
-  version: VCO_VERSION,
-  marker: VCO_RUNTIME_MARKER,
-  registry,
-  openPanel,
-  focusObject,
-  openCommandPalette,
-  renderPermission: () => root.dataset.renderPermission
+  
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x05070b, 0.018);
+
+const VCO_CINEMATIC_CAMERA = {
+  radius: 15.8,
+  height: 7.2,
+  lookAtY: 2.5,
+  idleSpeed: 0.00075,
+  parallaxX: 0,
+  parallaxY: 0,
 };
 
-buildScene();
-resize();
-loadProjectionBoundary();
-advanceJourney(0);
-setInterval(() => advanceJourney(), 2600);
-requestAnimationFrame(animate);
-openPanel("core:accepted-truth");
+window.addEventListener("mousemove", (event) => {
+  const x = (event.clientX / window.innerWidth) * 2 - 1;
+  const y = (event.clientY / window.innerHeight) * 2 - 1;
+  VCO_CINEMATIC_CAMERA.parallaxX = x * 0.22;
+  VCO_CINEMATIC_CAMERA.parallaxY = y * 0.14;
+}, { passive: true });
+
+  scene.fog = new THREE.FogExp2(palette.void, 0.013);
+
+  const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 420);
+  camera.position.set(0, 21.0, 39.5);
+  camera.lookAt(0, 1.15, 0);
+
+  scene.add(new THREE.AmbientLight(0x9ecbff, 0.18));
+
+  const hemi = new THREE.HemisphereLight(0x9ecbff, 0x02060b, 0.58);
+  scene.add(hemi);
+
+  const key = new THREE.DirectionalLight(0xd8efff, 2.45);
+  key.position.set(-15, 30, 25);
+  key.castShadow = true;
+  key.shadow.mapSize.width = 2048;
+  key.shadow.mapSize.height = 2048;
+  scene.add(key);
+
+  const coreLight = new THREE.PointLight(palette.blue, 12, 50, 1.7);
+  coreLight.position.set(0, 5.2, 0);
+  scene.add(coreLight);
+
+  const redLight = new THREE.PointLight(palette.red, 7.5, 22, 2);
+  redLight.position.set(0, 2.4, 14.9);
+  scene.add(redLight);
+
+  const rimA = new THREE.DirectionalLight(0x73d0ff, 1.15);
+  rimA.position.set(18, 16, -18);
+  scene.add(rimA);
+
+  const rimB = new THREE.DirectionalLight(0x1f7fff, 0.86);
+  rimB.position.set(-22, 11, -12);
+  scene.add(rimB);
+
+  const floor = new THREE.Mesh(
+    new THREE.CylinderGeometry(30, 30, 0.55, 256),
+    material(palette.basalt, 0x02060b, 0, 0.94, 0.62)
+  );
+  floor.position.y = -0.32;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  const floorDisc = new THREE.Mesh(
+    new THREE.RingGeometry(3.4, 29.4, 256, 8),
+    new THREE.MeshPhysicalMaterial({
+      color: 0x050b12,
+      emissive: 0x0a2034,
+      emissiveIntensity: 0.28,
+      roughness: 0.288,
+      metalness: 0.54,
+      side: THREE.DoubleSide
+    })
+  );
+  floorDisc.rotation.x = -Math.PI / 2;
+  floorDisc.position.y = -0.02;
+  scene.add(floorDisc);
+
+  for (let i = 0; i < 72; i += 1) {
+    const angle = (i / 72) * Math.PI * 2;
+    const a = polar(5.0, angle, 0.04);
+    const b = polar(28.0, angle, 0.04);
+    createRail(scene, a, b, i % 9 === 0 ? palette.blue : 0x132538, i % 9 === 0 ? 0.018 : 0.008);
+  }
+
+  addRing(scene, 4.6, 0.035, palette.blue, 0.13, 0.14);
+  addRing(scene, 6.2, 0.055, palette.blue, 0.14, 0.16);
+  addRing(scene, 11.8, 0.065, palette.blue, 0.15, 0.18);
+  addRing(scene, 17.8, 0.075, palette.blueDeep, 0.16, 0.16);
+  addRing(scene, 23.4, 0.08, palette.grey, 0.12, 0.05);
+  addRing(scene, 26.6, 0.045, palette.blue, 0.12, 0.06);
+
+  const wallGroup = new THREE.Group();
+  const wallMat = material(0x0b121a, 0x0a2034, 0.08, 0.72, 0.84);
+  const wallCapMat = material(0x1b2a38, palette.blue, 0.12, 0.38, 0.90);
+  for (let i = 0; i < 72; i += 1) {
+    const angle = (i / 72) * Math.PI * 2;
+    const p = polar(25.35, angle, 1.05);
+    const tower = new THREE.Mesh(
+      new THREE.BoxGeometry(0.78, i % 6 === 0 ? 2.55 : 1.86, 0.72),
+      wallMat.clone()
+    );
+    const cap = new THREE.Mesh(
+      new THREE.BoxGeometry(0.94, 0.18, 0.88),
+      wallCapMat.clone()
+    );
+
+    tower.position.copy(p);
+    tower.rotation.y = -angle;
+    tower.castShadow = true;
+    tower.receiveShadow = true;
+
+    cap.position.set(p.x, p.y + (i % 6 === 0 ? 1.34 : 0.99), p.z);
+    cap.rotation.y = -angle;
+    cap.castShadow = true;
+
+    wallGroup.add(tower, cap);
+
+    if (i % 3 === 0) {
+      const blueSlot = new THREE.Mesh(
+        new THREE.BoxGeometry(0.08, 1.32, 0.04),
+        material(palette.blue, palette.blue, 0.74, 0.18, 0.44)
+      );
+      const slotP = polar(24.88, angle, 1.22);
+      blueSlot.position.copy(slotP);
+      blueSlot.rotation.y = -angle;
+      wallGroup.add(blueSlot);
+    }
+  }
+  scene.add(wallGroup);
+
+  for (let i = 0; i < 36; i += 1) {
+    const angle = (i / 36) * Math.PI * 2;
+    const p = polar(24.35, angle, 0);
+    addGlowColumn(scene, p.x, p.z, i % 3 === 0 ? 2.65 : 1.85, palette.blue, i % 3 === 0 ? 0.72 : 0.48);
+  }
+
+  const perimeterShadow = new THREE.Mesh(
+    new THREE.RingGeometry(20.2, 29.7, 256, 1),
+    new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.34,
+      side: THREE.DoubleSide
+    })
+  );
+  perimeterShadow.rotation.x = -Math.PI / 2;
+  perimeterShadow.position.y = 0.018;
+  scene.add(perimeterShadow);
+
+  const compositionAuthorityGrid = new THREE.Group();
+  const gridMat = new THREE.LineBasicMaterial({
+    color: 0x1c3448,
+    transparent: true,
+    opacity: 0.18
+  });
+  for (let i = -28; i <= 28; i += 2) {
+    const gx = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(i, 0.035, -30),
+      new THREE.Vector3(i, 0.035, 30)
+    ]);
+    const gz = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-30, 0.035, i),
+      new THREE.Vector3(30, 0.035, i)
+    ]);
+    compositionAuthorityGrid.add(new THREE.Line(gx, gridMat));
+    compositionAuthorityGrid.add(new THREE.Line(gz, gridMat));
+  }
+  scene.add(compositionAuthorityGrid);
+
+  const evidenceBeads = [];
+  const beadGeometry = new THREE.SphereGeometry(0.075, 16, 8);
+  const beadMat = material(palette.cyan, palette.blue, 1.1, 0.15, 0.26);
+  for (let i = 0; i < 27; i += 1) {
+    const bead = new THREE.Mesh(beadGeometry, beadMat.clone());
+    bead.position.set(0, 1.92, 0);
+    scene.add(bead);
+    evidenceBeads.push({ mesh: bead, lane: i % 9, offset: i / 27 });
+  }
+
+  const labels = new THREE.Group();
+  const selectable = [];
+  scene.add(labels);
+
+  const coreBase = new THREE.Mesh(
+    new THREE.CylinderGeometry(2.45, 2.85, 1.25, 72),
+    material(palette.metal, palette.blue, 0.14, 0.50, 0.92)
+  );
+  coreBase.position.y = 0.62;
+  coreBase.castShadow = true;
+  scene.add(coreBase);
+
+  const core = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(1.85, 3),
+    new THREE.MeshPhysicalMaterial({
+      color: palette.cyan,
+      emissive: palette.blue,
+      emissiveIntensity: 1.36,
+      roughness: 0.16,
+      metalness: 0.1,
+      transparent: true,
+      opacity: 0.74
+    })
+  );
+  core.position.y = 3.0;
+  core.userData = {
+    id: "accepted-truth",
+    name: "ACCEPTED TRUTH",
+    visual_class: "core",
+    role: "machine-readable accepted object graph",
+    warning: "DERIVED_PROJECTION / NOT_TRUTH_SOURCE"
+  };
+  scene.add(core);
+  selectable.push(core);
+
+  const coreLabel = makeLabel("ACCEPTED TRUTH", "NOT TRUTH SOURCE", 640, 190);
+  coreLabel.position.set(0, 1.38, 0.25);
+  labels.add(coreLabel);
+
+  const chamberRadius = 10.6;
+  const chamberGeometry = new THREE.CylinderGeometry(1.86, 2.16, 2.45, 96);
+  const chamberTopGeometry = new THREE.CylinderGeometry(2.24, 1.82, 0.50, 96);
+  const chamberPlinthGeometry = new THREE.CylinderGeometry(2.52, 2.78, 0.42, 96);
+  const chamberGlowGeometry = new THREE.CylinderGeometry(2.0, 2.0, 2.52, 96, 1, true);
+  const chamberMat = material(palette.metal, palette.blue, 0.15, 0.52, 0.92);
+  const chamberTopMat = material(palette.darkMetal, palette.blue, 0.09, 0.38, 0.96);
+  const chamberPlinthMat = material(0x101822, palette.blue, 0.08, 0.62, 0.90);
+  const chamberGlowMat = new THREE.MeshPhysicalMaterial({
+    color: 0x0b2030,
+    emissive: palette.blue,
+    emissiveIntensity: 0.34,
+    transparent: true,
+    opacity: 0.22,
+    roughness: 0.18,
+    metalness: 0.2,
+    side: THREE.DoubleSide
+  });
+
+  const orderedChambers = chamberOrder
+    .map((id) => manifest.chambers.find((chamber) => chamber.id === id))
+    .filter(Boolean);
+
+  orderedChambers.forEach((chamber, index) => {
+    const angle = -Math.PI / 2 + (index / orderedChambers.length) * Math.PI * 2;
+    const p = polar(chamberRadius, angle, 1.15);
+
+    const group = new THREE.Group();
+    const plinth = new THREE.Mesh(chamberPlinthGeometry, chamberPlinthMat.clone());
+    const body = new THREE.Mesh(chamberGeometry, chamberMat.clone());
+    const glow = new THREE.Mesh(chamberGlowGeometry, chamberGlowMat.clone());
+    const cap = new THREE.Mesh(chamberTopGeometry, chamberTopMat.clone());
+    const crown = new THREE.Mesh(
+      new THREE.TorusGeometry(2.08, 0.045, 12, 96),
+      material(palette.blue, palette.blue, 0.45, 0.28, 0.82)
+    );
+
+    plinth.position.y = -1.08;
+    body.position.y = 0.10;
+    glow.position.y = 0.10;
+    cap.position.y = 1.60;
+    crown.position.y = 1.88;
+    crown.rotation.x = Math.PI / 2;
+
+    plinth.castShadow = true;
+    body.castShadow = true;
+    body.receiveShadow = true;
+    cap.castShadow = true;
+
+    group.position.copy(p);
+    const sideGuardA = createAuthorityBlock(0.18, 1.35, 0.38, chamberPlinthMat, chamberTopMat);
+    const sideGuardB = createAuthorityBlock(0.18, 1.35, 0.38, chamberPlinthMat, chamberTopMat);
+    sideGuardA.position.set(-2.16, 0.16, 0);
+    sideGuardB.position.set(2.16, 0.16, 0);
+    const nameRail = createAuthorityBlock(2.65, 0.45, 0.22, chamberTopMat, chamberPlinthMat);
+    nameRail.position.set(0, 0.35, 1.98);
+    group.add(sideGuardA, sideGuardB, nameRail);
+    group.add(plinth, body, glow, cap, crown);
+    group.lookAt(0, 1.15, 0);
+    group.userData = {
+      id: chamber.id,
+      name: chamber.name,
+      visual_class: "sovereign_chamber",
+      role: chamber.role,
+      question: chamber.question,
+      repo: chamber.repo,
+      url: chamber.url,
+      owns: chamber.owns,
+      must_not_own: chamber.must_not_own,
+      truth_status: chamber.truth_status
+    };
+
+    scene.add(group);
+    selectable.push(group);
+
+    const label = makeLabel(chamber.name, chamber.role, 560, 196);
+    label.position.set(p.x, 3.25, p.z);
+    labels.add(label);
+
+    createRail(scene, new THREE.Vector3(0, 1.85, 0), new THREE.Vector3(p.x * 0.82, 1.85, p.z * 0.82), palette.blue);
+  });
+
+  const repoRadius = 22.8;
+  const governedRepos = manifest.repositories || [];
+  const nonAdmissoriumRepos = governedRepos.filter((repo) => repo.name !== "ADMISSORIUM");
+
+  nonAdmissoriumRepos.forEach((repo, index) => {
+    const pillar = createGovernedRepoPillar(repo, index, governedRepos.length, repoRadius, labels, selectable);
+    scene.add(pillar);
+  });
+
+  const admissoriumRepo = governedRepos.find((repo) => repo.name === "ADMISSORIUM");
+  if (admissoriumRepo) {
+    createAdmissoriumRepoGate(scene, admissoriumRepo, labels, selectable);
+  }
+
+  const repoLabel = makeLabel("35 GOVERNED REPOSITORIES", "34 perimeter pillars + ADMISSORIUM front gate", 820, 190);
+  repoLabel.position.set(0, 4.75, -23.35);
+  repoLabel.userData.visualWeight = "chamber";
+  labels.add(repoLabel);
+
+  const hostRadius = 23.2;
+  const hostGeometry = new THREE.BoxGeometry(1.05, 2.75, 0.5);
+  const hostMat = material(palette.metal, palette.cyan, 0.14, 0.48, 0.82);
+
+  manifest.hosts.forEach((host, index) => {
+    const angle = -Math.PI / 2 + (index / manifest.hosts.length) * Math.PI * 2;
+    const p = polar(hostRadius, angle, 1.35);
+
+    const gate = new THREE.Mesh(hostGeometry, hostMat.clone());
+    gate.position.copy(p);
+    gate.lookAt(0, 1.35, 0);
+    gate.castShadow = true;
+    gate.userData = {
+      id: host.id,
+      name: host.host,
+      visual_class: "host_gate",
+      role: host.role,
+      owner_repo: host.owner_repo,
+      must_not_own: host.must_not_be,
+      url: host.url
+    };
+
+    scene.add(gate);
+    selectable.push(gate);
+
+    const lintel = new THREE.Mesh(
+      new THREE.BoxGeometry(1.28, 0.18, 0.62),
+      material(0x172536, palette.cyan, 0.34, 0.28, 0.88)
+    );
+    lintel.position.set(p.x, p.y + 1.50, p.z);
+    lintel.lookAt(0, p.y + 1.50, 0);
+    scene.add(lintel);
+
+    const label = makeLabel(host.label || host.id.toUpperCase(), "Boundary Gate", 360, 160);
+    label.position.set(p.x, 3.45, p.z);
+    labels.add(label);
+  });
+
+  const gateGroup = new THREE.Group();
+  const gateBase = new THREE.Mesh(
+    new THREE.BoxGeometry(6.8, 3.35, 1.62),
+    material(palette.darkMetal, palette.red, 0.18, 0.54, 0.90)
+  );
+  const gateArch = new THREE.Mesh(
+    new THREE.TorusGeometry(2.55, 0.18, 18, 96, Math.PI),
+    material(0x1a222c, palette.blue, 0.20, 0.42, 0.92)
+  );
+  const gateBarA = new THREE.Mesh(new THREE.BoxGeometry(0.20, 2.8, 0.22), material(0x0c1218, palette.red, 0.20, 0.48, 0.86));
+  const gateBarB = gateBarA.clone();
+  const gateWarningPlate = new THREE.Mesh(
+    new THREE.BoxGeometry(3.9, 1.0, 0.16),
+    material(0x210908, palette.red, 0.52, 0.36, 0.72)
+  );
+
+  gateBase.position.set(0, 1.45, 16.85);
+  gateArch.position.set(0, 3.06, 17.04);
+  gateArch.rotation.z = Math.PI;
+  gateBarA.position.set(-1.15, 1.18, 17.73);
+  gateBarB.position.set(1.15, 1.18, 17.73);
+  gateWarningPlate.position.set(0, 1.32, 17.76);
+
+  gateBase.castShadow = true;
+
+  const redContainment = new THREE.Mesh(
+    new THREE.PlaneGeometry(8.8, 5.6),
+    new THREE.MeshPhysicalMaterial({
+      color: palette.redDeep,
+      emissive: palette.red,
+      emissiveIntensity: 0.52,
+      transparent: true,
+      opacity: 0.23,
+      roughness: 0.45,
+      metalness: 0.12,
+      side: THREE.DoubleSide
+    })
+  );
+  redContainment.position.set(0, 1.12, 18.16);
+  redContainment.rotation.x = -0.18;
+  gateGroup.add(redContainment);
+
+  const thresholdA = createRail(scene, new THREE.Vector3(-3.8, 0.12, 18.4), new THREE.Vector3(3.8, 0.12, 18.4), palette.red, 0.72);
+  const thresholdB = createRail(scene, new THREE.Vector3(-2.4, 0.15, 19.1), new THREE.Vector3(2.4, 0.15, 19.1), palette.red, 0.46);
+  thresholdA.name = "ADMISSORIUM threshold denial rail";
+  thresholdB.name = "ADMISSORIUM contradiction containment rail";
+
+  gateGroup.add(gateBase, gateArch, gateBarA, gateBarB, gateWarningPlate);
+  scene.add(gateGroup);
+  gateBase.userData = {
+    id: "admissorium",
+    name: "ADMISSORIUM",
+    visual_class: "front_gate",
+    role: "admissibility enforcement implementation",
+    warning: "truth_owner=false / sovereign_chamber=false",
+    owns: ["admissibility enforcement", "materialization blocking", "quarantine routing"],
+    must_not_own: ["truth source", "accepted state", "sovereign chamber", "terminal recognition"]
+  };
+  selectable.push(gateBase);
+
+  const gateLabel = makeLabel("ADMISSORIUM", "Constitutional Border Control", 650, 180);
+  gateLabel.position.set(0, 4.05, 14.75);
+  labels.add(gateLabel);
+
+  const denied = makeLabel("CONTRADICTION DETECTED", "ENTRY DENIED", 540, 180, "#ff8b7e");
+  denied.position.set(0, 2.05, 16.25);
+  labels.add(denied);
+
+  const statusLabel = makeLabel("35 REPOSITORIES. ONE CONSTITUTIONAL MACHINE.", "OPEN TRUTH BELOW. ENTERPRISE CONTROL ABOVE. DERIVED PROJECTION.", 1340, 220);
+  statusLabel.position.set(0, 2.78, 23.15);
+  labels.add(statusLabel);
+
+  writeInspector(container, core.userData);
+
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+
+  renderer.domElement.addEventListener("pointerdown", (event) => {
+    const rect = renderer.domElement.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+
+    const hits = raycaster.intersectObjects(selectable, true);
+    if (!hits.length) return;
+
+    let object = hits[0].object;
+    while (object.parent && !object.userData?.id) object = object.parent;
+    writeInspector(container, object.userData);
+  });
+
+  const clock = new THREE.Clock();
+
+  function animate() {
+    const t = clock.getElapsedTime();
+
+    const orbit = t * 0.028;
+    camera.position.x = Math.sin(orbit) * 26.8;
+    camera.position.z = Math.cos(orbit) * 39.8;
+    camera.position.y = 20.7 + Math.sin(t * 0.16) * 0.36;
+    camera.lookAt(0, 1.55, 0);
+
+    core.rotation.x += 0.0022;
+    core.rotation.y += 0.0048;
+    core.material.emissiveIntensity = 1.12 + Math.sin(t * 1.25) * 0.30;
+
+    evidenceBeads.forEach(({ mesh, lane, offset }) => {
+      const chamber = orderedChambers[lane % orderedChambers.length];
+      if (!chamber) return;
+      const index = orderedChambers.indexOf(chamber);
+      const angle = -Math.PI / 2 + (index / orderedChambers.length) * Math.PI * 2;
+      const phase = (t * 0.20 + offset) % 1;
+      const r = 2.6 + phase * 7.3;
+      const p = polar(r, angle, 1.96);
+      mesh.position.copy(p);
+      mesh.material.emissiveIntensity = 0.68 + Math.sin((phase + t) * Math.PI * 2) * 0.32;
+    });
+
+    labels.children.forEach((label) => label.lookAt(camera.position));
+    tuneLabelVisibility(labels, camera);
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  window.addEventListener("resize", () => {
+    const nextWidth = stage.clientWidth || container.clientWidth || width;
+    const nextHeight = stage.clientHeight || container.clientHeight || height;
+    camera.aspect = nextWidth / nextHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(nextWidth, nextHeight);
+  });
+}
+
+async function boot() {
+  const container = document.getElementById("observatory-webgl-runtime");
+  if (!container) return;
+
+  setRuntimeStatus(container, "loading", "Loading signed projection data.");
+
+  try {
+    const [manifestResponse, attestationResponse] = await Promise.all([
+      fetch(DATA_URL, { cache: "no-store" }),
+      fetch(ATTESTATION_URL, { cache: "no-store" })
+    ]);
+
+    if (!manifestResponse.ok) throw new Error(`manifest fetch failed: ${manifestResponse.status}`);
+    if (!attestationResponse.ok) throw new Error(`attestation fetch failed: ${attestationResponse.status}`);
+
+    const manifest = await manifestResponse.json();
+    const attestation = await attestationResponse.json();
+    const errors = assertManifest(manifest, attestation);
+
+    if (errors.length) {
+      setRuntimeStatus(container, BLOCKED, `Blocked projection: ${errors.join(", ")}`);
+      return;
+    }
+
+    hydrateCommandSurface(container, manifest, attestation);
+    setRuntimeStatus(container, FULL, "FULL_OBSERVATORY: signed WebGL constitutional projection active.");
+    buildScene(container, manifest);
+    window.observatorySceneBoot = { rendered: true, repositories: manifest.repositories.length, chambers: manifest.chambers.length, renderPermission: attestation.render_permission };
+  } catch (error) {
+    setRuntimeStatus(container, BLOCKED, error instanceof Error ? error.message : String(error));
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot, { once: true });
+} else {
+  boot();
+}
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const apply = () => {
+    const explicit = document.body.dataset.observatoryRenderPermission;
+    const permissionNode = document.querySelector("[data-render-permission]");
+    const permission = explicit || (permissionNode ? permissionNode.textContent.trim() : "");
+    if (permission === "FULL_OBSERVATORY") {
+      markObservatoryDominant("FULL_OBSERVATORY");
+    }
+  };
+  apply();
+  window.setTimeout(apply, 500);
+  window.setTimeout(apply, 1500);
+});
+
+
+window.materialAuthorityPass = "VERIFRAX_OBSERVATORY_MATERIAL_AUTHORITY_PASS";
+
+
+window.runtimeHelperBoundary = "VERIFRAX_OBSERVATORY_RUNTIME_HELPER_BOUNDARY";
+
+
+window.visualHierarchyRestoration = "VERIFRAX_OBSERVATORY_VISUAL_HIERARCHY_RESTORATION";
+
+window.visualHierarchyCollisionClose = "VERIFRAX_OBSERVATORY_VISUAL_HIERARCHY_COLLISION_CLOSE";
+
+
+window.labelAspectRestoration = "VERIFRAX_OBSERVATORY_LABEL_ASPECT_RESTORATION";
+
+
+window.panelContainmentBoundary = "VERIFRAX_OBSERVATORY_PANEL_CONTAINMENT_BOUNDARY";
+
+
+window.governedRepoPillarAuthority = "VERIFRAX_OBSERVATORY_35_GOVERNED_REPO_PILLAR_AUTHORITY";
+
+
+window.observatoryRuntimeBootAuthority = "VERIFRAX_OBSERVATORY_RUNTIME_BOOT_AUTHORITY_REPAIRED";
+
+
+function openCommandPalette() {
+  document.dispatchEvent(new CustomEvent("vco:command-palette", {
+    detail: { surface: "cinematic_observatory", render_permission: "FULL_OBSERVATORY" }
+  }));
+}
+
+
+function advanceJourney() {
+  document.dispatchEvent(new CustomEvent("vco:artifact-journey-advance", {
+    detail: { surface: "cinematic_observatory", state: "alive" }
+  }));
+}
