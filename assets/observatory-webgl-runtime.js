@@ -509,11 +509,9 @@ function buildScene(container, manifest) {
   const width = stage.clientWidth || container.clientWidth || 1600;
   const height = stage.clientHeight || container.clientHeight || 900;
 
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
+  const renderer = new THREE.WebGLRenderer({ antialias: true,
     alpha: false,
-    powerPreference: "high-performance"
-  });
+    powerPreference: "high-performance", preserveDrawingBuffer: true, powerPreference: "high-performance" });
 
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
@@ -1678,3 +1676,215 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
   });
 })();
 /* END VCO_CINEMATIC_INTERACTION_AUTHORITY */
+
+/* BEGIN VCO BROWSER TRUTH AUTHORITY RUNTIME */
+(function vcoBrowserTruthAuthorityRuntime(){
+  if (window.VCO_BROWSER_TRUTH_AUTHORITY_RUNTIME) return;
+  window.VCO_BROWSER_TRUTH_AUTHORITY_RUNTIME = true;
+
+  const OBJECTS = [
+    "ACCEPTED_TRUTH","ADMISSORIUM","SYNTAGMARIUM","ORBISTIUM","CONSONORIUM",
+    "TACHYRIUM","AUCTORISEAL","CORPIFORM","VERIFRAX","ANAGNORIUM",
+    "REGRESSORIUM","REPO_PILLARS","HOST_GATES","ARTIFACT_JOURNEY"
+  ];
+
+  const CHAMBERS = [
+    "SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL",
+    "CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"
+  ];
+
+  let selected = 0;
+  let chord = "";
+
+  function inspector() {
+    return document.querySelector("[data-runtime-inspector]");
+  }
+
+  function writeInspector(objectId, mode = "open") {
+    const el = inspector();
+    if (!el) return;
+    el.innerHTML = `
+      <div class="oc-inspector-head">
+        <strong>${objectId}</strong>
+        <span>${mode.toUpperCase()} · ${Date.now()}</span>
+      </div>
+      <p>Browser-truth dispatch resolved <code>${objectId}</code>. Keyboard, click, command palette, and Artifact Journey state use one object id.</p>
+    `;
+  }
+
+  function dispatchObjectIntent(objectId, mode = "open") {
+    writeInspector(objectId, mode);
+    setTimeout(() => writeInspector(objectId, mode), 60);
+    setTimeout(() => writeInspector(objectId, mode), 180);
+    document.dispatchEvent(new CustomEvent("vco:object-dispatch", {
+      detail: { objectId, mode, authority: "VCO_BROWSER_TRUTH_AUTHORITY_RUNTIME", at: Date.now() }
+    }));
+  }
+
+  function openCommandPalette() {
+    let shell = document.querySelector(".vco-command-palette");
+    if (!shell) {
+      shell = document.createElement("div");
+      shell.className = "vco-command-palette";
+      shell.innerHTML = `
+        <div class="vco-command-shell" role="dialog" aria-label="VERIFRAX command palette">
+          <input class="vco-command-input" placeholder="Open ADMISSORIUM, Focus ORBISTIUM, Show repo pillars..." />
+          <div class="vco-command-list"></div>
+        </div>
+      `;
+      document.body.appendChild(shell);
+    }
+
+    const input = shell.querySelector(".vco-command-input");
+    const list = shell.querySelector(".vco-command-list");
+
+    function render(query = "") {
+      const q = query.trim().toUpperCase();
+      const rows = OBJECTS.filter((id) => !q || id.includes(q));
+      list.innerHTML = rows.map((id, index) => `
+        <button class="vco-command-row ${index === 0 ? "is-active" : ""}" data-vco-command="${id}" type="button">
+          <strong>${id}</strong>
+          <em>${id === "ADMISSORIUM" ? "front gate" : id === "ACCEPTED_TRUTH" ? "core" : "object"}</em>
+        </button>
+      `).join("");
+    }
+
+    render("");
+    shell.classList.add("is-open");
+    input.value = "";
+    input.focus();
+
+    input.oninput = () => render(input.value);
+    shell.onclick = (event) => {
+      const row = event.target.closest("[data-vco-command]");
+      if (!row) return;
+      dispatchObjectIntent(row.dataset.vcoCommand, "open");
+      shell.classList.remove("is-open");
+      input.blur();
+    };
+  }
+
+  function closeCommandPalette() {
+    document.querySelectorAll(".vco-command-palette,.vco-command").forEach((el) => el.classList.remove("is-open"));
+    document.activeElement?.blur?.();
+  }
+
+  function advanceJourney(stage = null) {
+    const stages = [...document.querySelectorAll("[data-journey-list] li")];
+    if (!stages.length) return;
+
+    const current = stages.findIndex((el) => el.classList.contains("is-active"));
+    const next = stage
+      ? Math.max(0, stages.findIndex((el) => (el.textContent || "").toUpperCase().includes(String(stage).toUpperCase())))
+      : (current + 1 + stages.length) % stages.length;
+
+    stages.forEach((el, index) => el.classList.toggle("is-active", index === next));
+    dispatchObjectIntent(`ARTIFACT_STAGE_${next + 1}`, "journey");
+  }
+
+  document.addEventListener("keydown", (event) => {
+    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
+    const key = event.key.toLowerCase();
+
+    if ((event.ctrlKey || event.metaKey) && key === "k") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      openCommandPalette();
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      closeCommandPalette();
+      return;
+    }
+
+    if (!typing && event.key === "/") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      openCommandPalette();
+      return;
+    }
+
+    if (!typing && event.key === "ArrowRight") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      selected = (selected + 1) % OBJECTS.length;
+      dispatchObjectIntent(OBJECTS[selected], "focus");
+      return;
+    }
+
+    if (!typing && event.key === "ArrowLeft") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      selected = (selected - 1 + OBJECTS.length) % OBJECTS.length;
+      dispatchObjectIntent(OBJECTS[selected], "focus");
+      return;
+    }
+
+    if (!typing && event.key === "Enter") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      dispatchObjectIntent(OBJECTS[selected], "open");
+      return;
+    }
+
+    if (!typing && /^[1-9]$/.test(event.key)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const id = CHAMBERS[Number(event.key) - 1];
+      selected = OBJECTS.indexOf(id);
+      dispatchObjectIntent(id, "open");
+      return;
+    }
+
+    if (!typing && key === "g") {
+      chord = "g";
+      setTimeout(() => { chord = ""; }, 900);
+      return;
+    }
+
+    if (!typing && chord === "g") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      chord = "";
+      if (key === "r") dispatchObjectIntent("REPO_PILLARS", "open");
+      if (key === "a") advanceJourney("CLAIM");
+      if (key === "h") dispatchObjectIntent("HOST_GATES", "open");
+      if (key === "c") dispatchObjectIntent("ACCEPTED_TRUTH", "open");
+    }
+  }, true);
+
+  document.addEventListener("pointerdown", (event) => {
+    const runtime = document.getElementById("observatory-webgl-runtime");
+    if (!runtime || !runtime.contains(event.target)) return;
+
+    const explicit = event.target.closest("[data-object-id],[data-stage-id],[data-vco-command]");
+    if (explicit) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      dispatchObjectIntent(
+        explicit.getAttribute("data-object-id") ||
+        explicit.getAttribute("data-stage-id") ||
+        explicit.getAttribute("data-vco-command"),
+        "open"
+      );
+      return;
+    }
+
+    if (event.target.matches("canvas")) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      dispatchObjectIntent("CANVAS_OBJECT_GRAPH", "click");
+    }
+  }, true);
+
+  window.VCO_BROWSER_TRUTH_AUTHORITY_API = {
+    openCommandPalette,
+    closeCommandPalette,
+    dispatchObjectIntent,
+    advanceJourney
+  };
+})();
+/* END VCO BROWSER TRUTH AUTHORITY RUNTIME */
