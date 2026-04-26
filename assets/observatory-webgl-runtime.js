@@ -1303,6 +1303,9 @@ function advanceJourney() {
 
 
 
+
+
+
 /* BEGIN VCO VISUAL TRUTH ANTI FAKE RUNTIME */
 (function vcoVisualTruthAntiFakeRuntime(){
   if (window.VCO_VISUAL_TRUTH_ANTI_FAKE_RUNTIME) return;
@@ -1684,6 +1687,120 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
   window.VCO_REAL3D_ANTI_TOY_RUNTIME_API = { openCommandPalette, dispatchObjectIntent, advanceJourney };
 })();
 /* END VCO REAL3D ANTI TOY RUNTIME AUTHORITY */
+
+
+
+/* BEGIN VCO PANEL QUARANTINE FINAL RUNTIME */
+(function vcoPanelQuarantineFinalRuntime(){
+  if (window.VCO_PANEL_QUARANTINE_FINAL_RUNTIME) return;
+  window.VCO_PANEL_QUARANTINE_FINAL_RUNTIME = true;
+
+  const CHAMBERS = [
+    "SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL",
+    "CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"
+  ];
+
+  function clean(value) {
+    return String(value || "")
+      .replace(/^\d+/, "")
+      .replace(/ADMISSIBILITYADMISSORIUM/i, "ADMISSORIUM")
+      .replace(/AUTHORITYAUCTORISEAL/i, "AUCTORISEAL")
+      .replace(/EXECUTIONCORPIFORM/i, "CORPIFORM")
+      .replace(/RECEIPTCORPIFORM/i, "CORPIFORM_RECEIPT")
+      .replace(/RECOGNITIONANAGNORIUM/i, "ANAGNORIUM")
+      .replace(/RECOURSEREGRESSORIUM/i, "REGRESSORIUM")
+      .replace(/PERMANENCESIGILLARIUM/i, "SIGILLARIUM")
+      .trim();
+  }
+
+  function inspector() {
+    let el = document.querySelector("[data-runtime-inspector]");
+    if (!el) {
+      el = document.createElement("aside");
+      el.className = "oc-inspector";
+      el.setAttribute("data-runtime-inspector", "");
+      document.getElementById("observatory-webgl-runtime")?.appendChild(el);
+    }
+    return el;
+  }
+
+  function closeCommandSurfaces() {
+    document.querySelectorAll(".vco-command-palette,.vco-command").forEach((el) => el.classList.remove("is-open"));
+    if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName || "")) document.activeElement.blur();
+  }
+
+  function publish(raw, mode = "open") {
+    const objectId = clean(raw) || "CANVAS_OBJECT_GRAPH";
+    document.body.setAttribute("data-vco-last-dispatch", objectId);
+
+    const el = inspector();
+    el.innerHTML = `
+      <div class="oc-inspector-head">
+        <strong>${objectId}</strong>
+        <span>${mode.toUpperCase()} · ${Date.now()}</span>
+      </div>
+      <p>Panel-quarantined dispatch resolved <code>${objectId}</code>.</p>
+    `;
+
+    document.dispatchEvent(new CustomEvent("vco:object-dispatch", {
+      detail: { objectId, mode, authority: "VCO_PANEL_QUARANTINE_FINAL_RUNTIME", at: Date.now() }
+    }));
+  }
+
+  window.addEventListener("keydown", (event) => {
+    const key = event.key;
+
+    if (/^[1-9]$/.test(key)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      closeCommandSurfaces();
+      publish(CHAMBERS[Number(key) - 1], "open");
+      return;
+    }
+
+    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
+    if (typing) return;
+
+    if (key === "ArrowRight") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish("NEXT_OBJECT", "focus");
+      return;
+    }
+
+    if (key === "ArrowLeft") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish("PREVIOUS_OBJECT", "focus");
+      return;
+    }
+  }, true);
+
+  window.addEventListener("pointerdown", (event) => {
+    const runtime = document.getElementById("observatory-webgl-runtime");
+    if (!runtime || !runtime.contains(event.target)) return;
+    if (event.target.matches("canvas")) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish("CANVAS_OBJECT_GRAPH", "click");
+    }
+  }, true);
+
+  const api = {
+    dispatchClean: publish,
+    dispatchObjectIntent: publish,
+    dispatchPanelQuarantine: publish,
+    lastDispatch: () => document.body.getAttribute("data-vco-last-dispatch"),
+    accepted: true,
+    authority: "VCO_PANEL_QUARANTINE_FINAL_RUNTIME"
+  };
+
+  window.VCO_PANEL_QUARANTINE_API = api;
+  window.VCO_PANEL_QUARANTINE_REAL_FIX_API = api;
+  window.VCO_PANEL_QUARANTINE_FINAL_API = api;
+  window.VCO_PANEL_QUARANTINE_WINDOW_CAPTURE_API = api;
+})();
+/* END VCO PANEL QUARANTINE FINAL RUNTIME */
 
 /* BEGIN VCO_CINEMATIC_INTERACTION_AUTHORITY */
 ;(() => {
