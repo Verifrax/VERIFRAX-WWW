@@ -1302,6 +1302,186 @@ html,body{margin:0!important;min-height:100%!important;background:#02050a!import
         runtime_path.write_text(data.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
 
 
+
+
+
+
+
+# VCO_PANEL_QUARANTINE_FINAL_PROJECTOR_HOOK
+def _vco_panel_quarantine_final_projector_hook():
+    import re
+    from pathlib import Path
+
+    css_block = r"""/* BEGIN VCO PANEL QUARANTINE FINAL */
+html,body{margin:0!important;width:100%!important;min-height:100%!important;overflow:hidden!important;background:#02050a!important}
+.surface.stack{width:100%!important;max-width:none!important;height:100vh!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#02050a!important}
+#static-root-contract,.surface-fallback-root,.observatory-render-gate{display:none!important}
+.observatory-webgl-runtime{position:relative!important;width:100vw!important;height:100vh!important;min-height:100vh!important;max-height:100vh!important;margin:0!important;overflow:hidden!important;isolation:isolate!important;border:0!important;border-radius:0!important;background:#02050a!important}
+.oc-stage,.observatory-webgl-runtime canvas{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;display:block!important;z-index:0!important}
+.observatory-webgl-runtime:before{content:""!important;position:absolute!important;inset:0!important;z-index:1!important;pointer-events:none!important;background:linear-gradient(90deg,rgba(0,0,0,.54),transparent 19%,transparent 78%,rgba(0,0,0,.58)),linear-gradient(180deg,rgba(0,0,0,.22),transparent 18%,transparent 78%,rgba(0,0,0,.48)),radial-gradient(circle at 51% 48%,rgba(105,212,255,.10),transparent 26%)!important}
+.oc-topbar{position:absolute!important;top:0!important;left:0!important;right:0!important;height:58px!important;min-height:58px!important;padding:0 24px!important;z-index:40!important;background:linear-gradient(180deg,rgba(0,5,10,.94),rgba(0,5,10,.42),rgba(0,5,10,0))!important;border-bottom:1px solid rgba(120,217,255,.16)!important}
+.oc-brand strong{font-size:22px!important;letter-spacing:.24em!important}.oc-brand span{font-size:9px!important}.oc-topbar nav{display:flex!important;gap:8px!important}.oc-topbar a{min-height:30px!important;padding:0 12px!important;border-radius:10px!important;font-size:11px!important}
+
+.oc-hero{position:absolute!important;top:78px!important;left:24px!important;width:292px!important;max-width:292px!important;max-height:184px!important;overflow:hidden!important;z-index:12!important;pointer-events:none!important}
+.oc-hero span{font-size:9px!important;letter-spacing:.16em!important}.oc-hero h2{margin:6px 0 8px!important;font-size:clamp(46px,5.2vw,78px)!important;line-height:.82!important;letter-spacing:-.075em!important}.oc-hero p{max-width:280px!important;font-size:13px!important;line-height:1.28!important}.oc-hero-badges{gap:7px!important;margin-top:10px!important}.oc-hero code,.oc-proofline span{padding:6px 8px!important;font-size:9px!important}
+
+.oc-left{position:absolute!important;left:18px!important;bottom:108px!important;width:214px!important;max-width:214px!important;max-height:178px!important;overflow:hidden!important;z-index:12!important;display:grid!important;gap:8px!important;pointer-events:auto!important}
+.oc-left section{padding:9px!important}.oc-left h3,.oc-right h3,.oc-bottom h3{font-size:9px!important;margin-bottom:6px!important}.oc-left dl{gap:5px!important}.oc-left dl div{padding:7px!important}.oc-left dt{font-size:8px!important}.oc-left dd{font-size:15px!important}.oc-left li{grid-template-columns:20px 1fr auto!important;gap:5px!important;font-size:8px!important;line-height:1.05!important}
+
+.oc-right{position:absolute!important;right:18px!important;top:78px!important;width:244px!important;max-width:244px!important;max-height:342px!important;overflow:hidden!important;z-index:12!important;display:grid!important;gap:8px!important;pointer-events:auto!important}
+.oc-right section{padding:9px!important}.oc-right p{font-size:10px!important;line-height:1.24!important;margin-bottom:7px!important}.oc-enterprise{gap:7px!important}.oc-enterprise button,.oc-enterprise article{padding:8px!important;border-radius:12px!important}.oc-enterprise strong{font-size:11px!important}.oc-enterprise span,.oc-enterprise small,.oc-right li{font-size:8px!important;line-height:1.15!important}
+
+.oc-inspector,.vco-deep-inspector{position:absolute!important;left:auto!important;top:auto!important;right:274px!important;bottom:96px!important;transform:none!important;width:236px!important;max-width:236px!important;max-height:94px!important;padding:9px!important;overflow:hidden!important;z-index:16!important;pointer-events:auto!important;background:linear-gradient(180deg,rgba(3,12,20,.92),rgba(1,5,10,.96))!important;border:1px solid rgba(120,217,255,.22)!important;border-radius:14px!important;box-shadow:0 18px 44px rgba(0,0,0,.42)!important}
+.oc-inspector-head{gap:8px!important}.oc-inspector-head strong,.oc-inspector strong,.vco-deep-inspector h3{font-size:9px!important;line-height:1.05!important}.oc-inspector-head span,.oc-inspector span{font-size:7px!important}.oc-inspector p,.vco-deep-inspector p{font-size:9px!important;line-height:1.18!important;margin:4px 0 0!important}.oc-inspector code{padding:5px 6px!important;font-size:8px!important}.vco-deep-inspector ul,.vco-deep-inspector ol,.vco-deep-inspector .owns,.vco-deep-inspector .must-not-own{display:none!important}
+
+.oc-bottom{position:absolute!important;left:286px!important;right:306px!important;bottom:10px!important;height:72px!important;max-height:72px!important;padding:8px!important;overflow:hidden!important;z-index:14!important;pointer-events:auto!important;background:linear-gradient(180deg,rgba(4,13,21,.90),rgba(1,5,10,.96))!important;border:1px solid rgba(120,217,255,.18)!important;border-radius:18px!important}
+.oc-journey{max-height:54px!important;overflow:hidden!important}.oc-journey ol,[data-journey-list]{display:grid!important;grid-template-columns:repeat(9,minmax(52px,1fr))!important;gap:5px!important;margin:0!important;padding:0!important;overflow:hidden!important}.oc-journey li{height:38px!important;min-height:38px!important;max-height:38px!important;padding:5px!important;border-radius:9px!important;overflow:hidden!important}.oc-journey strong{font-size:8px!important}.oc-journey em,.oc-journey small{display:none!important}.oc-journey li.is-active{border-color:rgba(155,236,255,.88)!important;box-shadow:0 0 0 1px rgba(155,236,255,.22),0 0 28px rgba(65,190,255,.25)!important}
+
+.vco-command-palette,.vco-command{opacity:0!important;pointer-events:none!important}.vco-command-palette.is-open,.vco-command.is-open{opacity:1!important;pointer-events:auto!important;position:fixed!important;inset:0!important;z-index:80!important;display:grid!important;place-items:center!important;background:rgba(0,4,8,.56)!important}.vco-command-shell{width:min(620px,calc(100vw - 44px))!important;max-height:min(560px,calc(100vh - 80px))!important;overflow:auto!important}
+
+@media (max-width:1280px),(max-height:760px){.oc-left,.oc-right{display:none!important}.oc-inspector,.vco-deep-inspector{right:18px!important;bottom:92px!important}.oc-bottom{left:18px!important;right:18px!important}}
+@media (max-width:820px),(max-height:620px){.oc-left,.oc-right,.oc-inspector,.vco-deep-inspector{display:none!important}.oc-hero{top:72px!important;left:16px!important;width:calc(100vw - 32px)!important;max-width:calc(100vw - 32px)!important}.oc-hero h2{font-size:clamp(48px,14vw,78px)!important}.oc-bottom{left:8px!important;right:8px!important;bottom:8px!important;height:74px!important}.oc-journey ol,[data-journey-list]{display:flex!important;overflow-x:auto!important;scrollbar-width:none!important}.oc-journey ol::-webkit-scrollbar{display:none!important}.oc-journey li{flex:0 0 118px!important}}
+/* END VCO PANEL QUARANTINE FINAL */"""
+    runtime_block = r"""/* BEGIN VCO PANEL QUARANTINE FINAL RUNTIME */
+(function vcoPanelQuarantineFinalRuntime(){
+  if (window.VCO_PANEL_QUARANTINE_FINAL_RUNTIME) return;
+  window.VCO_PANEL_QUARANTINE_FINAL_RUNTIME = true;
+
+  const CHAMBERS = [
+    "SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL",
+    "CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"
+  ];
+
+  function clean(value) {
+    return String(value || "")
+      .replace(/^\d+/, "")
+      .replace(/ADMISSIBILITYADMISSORIUM/i, "ADMISSORIUM")
+      .replace(/AUTHORITYAUCTORISEAL/i, "AUCTORISEAL")
+      .replace(/EXECUTIONCORPIFORM/i, "CORPIFORM")
+      .replace(/RECEIPTCORPIFORM/i, "CORPIFORM_RECEIPT")
+      .replace(/RECOGNITIONANAGNORIUM/i, "ANAGNORIUM")
+      .replace(/RECOURSEREGRESSORIUM/i, "REGRESSORIUM")
+      .replace(/PERMANENCESIGILLARIUM/i, "SIGILLARIUM")
+      .trim();
+  }
+
+  function inspector() {
+    let el = document.querySelector("[data-runtime-inspector]");
+    if (!el) {
+      el = document.createElement("aside");
+      el.className = "oc-inspector";
+      el.setAttribute("data-runtime-inspector", "");
+      document.getElementById("observatory-webgl-runtime")?.appendChild(el);
+    }
+    return el;
+  }
+
+  function closeCommandSurfaces() {
+    document.querySelectorAll(".vco-command-palette,.vco-command").forEach((el) => el.classList.remove("is-open"));
+    if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName || "")) document.activeElement.blur();
+  }
+
+  function publish(raw, mode = "open") {
+    const objectId = clean(raw) || "CANVAS_OBJECT_GRAPH";
+    document.body.setAttribute("data-vco-last-dispatch", objectId);
+
+    const el = inspector();
+    el.innerHTML = `
+      <div class="oc-inspector-head">
+        <strong>${objectId}</strong>
+        <span>${mode.toUpperCase()} · ${Date.now()}</span>
+      </div>
+      <p>Panel-quarantined dispatch resolved <code>${objectId}</code>.</p>
+    `;
+
+    document.dispatchEvent(new CustomEvent("vco:object-dispatch", {
+      detail: { objectId, mode, authority: "VCO_PANEL_QUARANTINE_FINAL_RUNTIME", at: Date.now() }
+    }));
+  }
+
+  window.addEventListener("keydown", (event) => {
+    const key = event.key;
+
+    if (/^[1-9]$/.test(key)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      closeCommandSurfaces();
+      publish(CHAMBERS[Number(key) - 1], "open");
+      return;
+    }
+
+    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
+    if (typing) return;
+
+    if (key === "ArrowRight") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish("NEXT_OBJECT", "focus");
+      return;
+    }
+
+    if (key === "ArrowLeft") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish("PREVIOUS_OBJECT", "focus");
+      return;
+    }
+  }, true);
+
+  window.addEventListener("pointerdown", (event) => {
+    const runtime = document.getElementById("observatory-webgl-runtime");
+    if (!runtime || !runtime.contains(event.target)) return;
+    if (event.target.matches("canvas")) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish("CANVAS_OBJECT_GRAPH", "click");
+    }
+  }, true);
+
+  const api = {
+    dispatchClean: publish,
+    dispatchObjectIntent: publish,
+    dispatchPanelQuarantine: publish,
+    lastDispatch: () => document.body.getAttribute("data-vco-last-dispatch"),
+    accepted: true,
+    authority: "VCO_PANEL_QUARANTINE_FINAL_RUNTIME"
+  };
+
+  window.VCO_PANEL_QUARANTINE_API = api;
+  window.VCO_PANEL_QUARANTINE_REAL_FIX_API = api;
+  window.VCO_PANEL_QUARANTINE_FINAL_API = api;
+  window.VCO_PANEL_QUARANTINE_WINDOW_CAPTURE_API = api;
+})();
+/* END VCO PANEL QUARANTINE FINAL RUNTIME */"""
+
+    def strip_blocks(text):
+        names = [
+            "VCO PANEL QUARANTINE REAL FIX",
+            "VCO PANEL QUARANTINE FINAL",
+            "VCO PANEL QUARANTINE HARD CLOSE",
+            "VCO PANEL QUARANTINE RUNTIME",
+            "VCO PANEL QUARANTINE REAL FIX RUNTIME",
+            "VCO PANEL QUARANTINE WINDOW CAPTURE",
+            "VCO PANEL QUARANTINE FINAL RUNTIME",
+        ]
+        for name in names:
+            text = re.sub(
+                rf"/\* BEGIN {re.escape(name)} \*/[\s\S]*?/\* END {re.escape(name)} \*/\n?",
+                "",
+                text,
+            )
+        return text
+
+    css_path = Path("assets/surface.css")
+    if css_path.exists():
+        css = strip_blocks(css_path.read_text(encoding="utf-8"))
+        css_path.write_text(css.rstrip() + "\n\n" + css_block + "\n", encoding="utf-8")
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        js = strip_blocks(runtime_path.read_text(encoding="utf-8"))
+        runtime_path.write_text(js.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
+
 if __name__ == "__main__":
     main()
     _vco_visual_truth_anti_fake_projector_hook()
@@ -1309,3 +1489,4 @@ if __name__ == "__main__":
     _vco_real3d_idempotent_block_spacing()
     _vco_real3d_hardening_post_project()
     _vco_real3d_idempotent_block_spacing()
+    _vco_panel_quarantine_final_projector_hook()

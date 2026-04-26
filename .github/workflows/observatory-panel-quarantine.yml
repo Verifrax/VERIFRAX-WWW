@@ -1,0 +1,35 @@
+name: Observatory Panel Quarantine
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  panel-quarantine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install browser dependency
+        run: npm install --no-save playwright
+      - name: Install Chromium
+        run: npx playwright install chromium --with-deps
+      - name: Project surface
+        run: python3 .surface/vendor/scripts/project_host.py
+      - name: Verify static contracts
+        run: |
+          node --check assets/observatory-webgl-runtime.js
+          node scripts/check-observatory-attestation.mjs
+          node scripts/check-observatory-runtime-boot.mjs
+          node scripts/check-observatory-real3d-hardening.mjs
+      - name: Verify panel quarantine in browser
+        run: |
+          python3 -m http.server 4175 > /tmp/verifrax-panel-http.log 2>&1 &
+          server_pid="$!"
+          trap 'kill "$server_pid" || true' EXIT
+          sleep 2
+          node scripts/check-observatory-panel-quarantine.cjs http://127.0.0.1:4175/
+      - name: Assert generated output is committed
+        run: git diff --exit-code -- . ':!README.md'
