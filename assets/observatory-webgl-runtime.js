@@ -249,6 +249,9 @@ function buildScene(container, manifest) {
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
   renderer.setClearColor(palette.void, 1);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.18;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -256,16 +259,19 @@ function buildScene(container, manifest) {
   stage.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(palette.void, 0.024);
+  scene.fog = new THREE.FogExp2(palette.void, 0.018);
 
-  const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 320);
-  camera.position.set(0, 24, 38);
-  camera.lookAt(0, 0, 0);
+  const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 360);
+  camera.position.set(0, 18.5, 34);
+  camera.lookAt(0, 1.2, 0);
 
-  scene.add(new THREE.AmbientLight(0x9ecbff, 0.20));
+  scene.add(new THREE.AmbientLight(0x9ecbff, 0.13));
 
-  const key = new THREE.DirectionalLight(0xd8efff, 2.0);
-  key.position.set(-13, 28, 24);
+  const hemi = new THREE.HemisphereLight(0x9ecbff, 0x02060b, 0.46);
+  scene.add(hemi);
+
+  const key = new THREE.DirectionalLight(0xd8efff, 2.45);
+  key.position.set(-15, 30, 25);
   key.castShadow = true;
   key.shadow.mapSize.width = 2048;
   key.shadow.mapSize.height = 2048;
@@ -275,9 +281,17 @@ function buildScene(container, manifest) {
   coreLight.position.set(0, 5.2, 0);
   scene.add(coreLight);
 
-  const redLight = new THREE.PointLight(palette.red, 6, 20, 2);
+  const redLight = new THREE.PointLight(palette.red, 7.5, 22, 2);
   redLight.position.set(0, 2.4, 14.9);
   scene.add(redLight);
+
+  const rimA = new THREE.DirectionalLight(0x73d0ff, 1.15);
+  rimA.position.set(18, 16, -18);
+  scene.add(rimA);
+
+  const rimB = new THREE.DirectionalLight(0x1f7fff, 0.86);
+  rimB.position.set(-22, 11, -12);
+  scene.add(rimB);
 
   const floor = new THREE.Mesh(
     new THREE.CylinderGeometry(30, 30, 0.55, 256),
@@ -315,6 +329,68 @@ function buildScene(container, manifest) {
   addRing(scene, 17.8, 0.075, palette.blueDeep, 0.16, 0.16);
   addRing(scene, 23.4, 0.08, palette.grey, 0.12, 0.05);
   addRing(scene, 26.6, 0.045, palette.blue, 0.12, 0.06);
+
+  const wallGroup = new THREE.Group();
+  const wallMat = material(0x0b121a, 0x0a2034, 0.08, 0.72, 0.84);
+  const wallCapMat = material(0x1b2a38, palette.blue, 0.12, 0.38, 0.90);
+  for (let i = 0; i < 72; i += 1) {
+    const angle = (i / 72) * Math.PI * 2;
+    const p = polar(25.35, angle, 1.05);
+    const tower = new THREE.Mesh(
+      new THREE.BoxGeometry(0.78, i % 6 === 0 ? 2.55 : 1.86, 0.72),
+      wallMat.clone()
+    );
+    const cap = new THREE.Mesh(
+      new THREE.BoxGeometry(0.94, 0.18, 0.88),
+      wallCapMat.clone()
+    );
+
+    tower.position.copy(p);
+    tower.rotation.y = -angle;
+    tower.castShadow = true;
+    tower.receiveShadow = true;
+
+    cap.position.set(p.x, p.y + (i % 6 === 0 ? 1.34 : 0.99), p.z);
+    cap.rotation.y = -angle;
+    cap.castShadow = true;
+
+    wallGroup.add(tower, cap);
+
+    if (i % 3 === 0) {
+      const blueSlot = new THREE.Mesh(
+        new THREE.BoxGeometry(0.08, 1.32, 0.04),
+        material(palette.blue, palette.blue, 0.74, 0.18, 0.44)
+      );
+      const slotP = polar(24.88, angle, 1.22);
+      blueSlot.position.copy(slotP);
+      blueSlot.rotation.y = -angle;
+      wallGroup.add(blueSlot);
+    }
+  }
+  scene.add(wallGroup);
+
+  const perimeterShadow = new THREE.Mesh(
+    new THREE.RingGeometry(20.2, 29.7, 256, 1),
+    new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.34,
+      side: THREE.DoubleSide
+    })
+  );
+  perimeterShadow.rotation.x = -Math.PI / 2;
+  perimeterShadow.position.y = 0.018;
+  scene.add(perimeterShadow);
+
+  const evidenceBeads = [];
+  const beadGeometry = new THREE.SphereGeometry(0.075, 16, 8);
+  const beadMat = material(palette.cyan, palette.blue, 1.1, 0.15, 0.26);
+  for (let i = 0; i < 27; i += 1) {
+    const bead = new THREE.Mesh(beadGeometry, beadMat.clone());
+    bead.position.set(0, 1.92, 0);
+    scene.add(bead);
+    evidenceBeads.push({ mesh: bead, lane: i % 9, offset: i / 27 });
+  }
 
   const labels = new THREE.Group();
   const selectable = [];
@@ -462,8 +538,8 @@ function buildScene(container, manifest) {
   scene.add(repoMesh);
   scene.add(repoCapMesh);
 
-  const repoLabel = makeLabel("35", "REPOSITORY PILLARS", 350, 160);
-  repoLabel.position.set(0, 4.25, -19.8);
+  const repoLabel = makeLabel("35", "GOVERNED REPOSITORY PERIMETER", 520, 170);
+  repoLabel.position.set(0, 4.55, -20.35);
   labels.add(repoLabel);
 
   const hostRadius = 23.2;
@@ -549,8 +625,8 @@ function buildScene(container, manifest) {
   denied.position.set(0, 2.05, 16.25);
   labels.add(denied);
 
-  const statusLabel = makeLabel("35 REPOSITORIES. ONE CONSTITUTIONAL MACHINE.", "OPEN TRUTH BELOW. ENTERPRISE CONTROL ABOVE.", 1220, 210);
-  statusLabel.position.set(0, 2.65, 20.2);
+  const statusLabel = makeLabel("35 REPOSITORIES. ONE CONSTITUTIONAL MACHINE.", "OPEN TRUTH BELOW. ENTERPRISE CONTROL ABOVE. DERIVED PROJECTION.", 1340, 220);
+  statusLabel.position.set(0, 2.82, 20.65);
   labels.add(statusLabel);
 
   writeInspector(container, core.userData);
@@ -577,15 +653,27 @@ function buildScene(container, manifest) {
   function animate() {
     const t = clock.getElapsedTime();
 
-    const orbit = t * 0.045;
-    camera.position.x = Math.sin(orbit) * 28;
-    camera.position.z = Math.cos(orbit) * 36;
-    camera.position.y = 20.5 + Math.sin(t * 0.22) * 0.85;
-    camera.lookAt(0, 1.35, 0);
+    const orbit = t * 0.028;
+    camera.position.x = Math.sin(orbit) * 25.5;
+    camera.position.z = Math.cos(orbit) * 34.0;
+    camera.position.y = 17.6 + Math.sin(t * 0.16) * 0.55;
+    camera.lookAt(0, 1.65, 0);
 
-    core.rotation.x += 0.003;
-    core.rotation.y += 0.006;
-    core.material.emissiveIntensity = 1.05 + Math.sin(t * 1.4) * 0.28;
+    core.rotation.x += 0.0022;
+    core.rotation.y += 0.0048;
+    core.material.emissiveIntensity = 1.12 + Math.sin(t * 1.25) * 0.30;
+
+    evidenceBeads.forEach(({ mesh, lane, offset }) => {
+      const chamber = orderedChambers[lane % orderedChambers.length];
+      if (!chamber) return;
+      const index = orderedChambers.indexOf(chamber);
+      const angle = -Math.PI / 2 + (index / orderedChambers.length) * Math.PI * 2;
+      const phase = (t * 0.20 + offset) % 1;
+      const r = 2.6 + phase * 7.3;
+      const p = polar(r, angle, 1.96);
+      mesh.position.copy(p);
+      mesh.material.emissiveIntensity = 0.68 + Math.sin((phase + t) * Math.PI * 2) * 0.32;
+    });
 
     labels.children.forEach((label) => label.lookAt(camera.position));
 
