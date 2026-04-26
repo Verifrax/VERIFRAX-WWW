@@ -39,6 +39,7 @@ function tuneLabelVisibility(labels, camera) {
     const isCore = label.userData && label.userData.visualWeight === "core";
     const isChamber = label.userData && label.userData.visualWeight === "chamber";
     const isHost = label.userData && label.userData.visualWeight === "host";
+    const isRepo = label.userData && label.userData.visualWeight === "repo";
 
     let scale = 0.62;
     let opacity = 0.78;
@@ -49,9 +50,12 @@ function tuneLabelVisibility(labels, camera) {
     } else if (isChamber) {
       scale = d < 22 ? 0.84 : d > 44 ? 0.66 : 0.76;
       opacity = d > 48 ? 0.68 : 0.90;
+    } else if (isRepo) {
+      scale = d > 42 ? 0.34 : 0.42;
+      opacity = d > 42 ? 0.54 : 0.74;
     } else if (isHost) {
-      scale = d > 42 ? 0.40 : 0.48;
-      opacity = d > 42 ? 0.48 : 0.68;
+      scale = d > 42 ? 0.34 : 0.42;
+      opacity = d > 42 ? 0.42 : 0.62;
     } else {
       scale = d > 44 ? 0.50 : 0.58;
       opacity = d > 44 ? 0.58 : 0.76;
@@ -66,7 +70,7 @@ function tuneLabelVisibility(labels, camera) {
       label.material.depthTest = false;
       label.material.depthWrite = false;
     }
-    label.renderOrder = isCore ? 90 : isChamber ? 80 : isHost ? 60 : 70;
+    label.renderOrder = isCore ? 95 : isChamber ? 86 : isRepo ? 72 : isHost ? 58 : 70;
   });
 }
 
@@ -321,6 +325,146 @@ function writeInspector(container, data) {
     ${ownership}
     ${notOwnership}
   `;
+}
+
+
+function createGovernedRepoPillar(repo, index, total, radius, labels, selectable) {
+  const angle = -Math.PI / 2 + (index / total) * Math.PI * 2;
+  const p = polar(radius, angle, 1.18);
+
+  const group = new THREE.Group();
+
+  const live = repo.status === "live" || repo.status === "aligned" || repo.truth_status === "active";
+  const coreColor = live ? palette.blue : palette.grey;
+  const repoMetal = material(0x0f1924, coreColor, live ? 0.22 : 0.08, 0.42, 0.92);
+  const repoCap = material(0x223242, coreColor, live ? 0.36 : 0.14, 0.26, 0.90);
+  const repoGlass = new THREE.MeshStandardMaterial({
+    color: 0x123247,
+    emissive: coreColor,
+    emissiveIntensity: live ? 0.42 : 0.16,
+    transparent: true,
+    opacity: 0.54,
+    roughness: 0.12,
+    metalness: 0.22
+  });
+
+  const plinth = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.78, 0.20, 18), repoCap.clone());
+  const shaft = new THREE.Mesh(new THREE.BoxGeometry(0.42, 2.10, 0.42), repoMetal.clone());
+  const glass = new THREE.Mesh(new THREE.BoxGeometry(0.28, 1.62, 0.28), repoGlass);
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.18, 0.72), repoCap.clone());
+  const crown = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.10, 0.88), repoCap.clone());
+  const statusLine = new THREE.Mesh(
+    new THREE.BoxGeometry(0.048, 1.82, 0.052),
+    material(coreColor, coreColor, live ? 0.92 : 0.28, 0.18, 0.42)
+  );
+
+  plinth.position.y = -1.02;
+  shaft.position.y = 0.05;
+  glass.position.set(0, 0.15, -0.236);
+  cap.position.y = 1.20;
+  crown.position.y = 1.36;
+  statusLine.position.set(0.285, 0.12, -0.29);
+
+  for (const part of [plinth, shaft, glass, cap, crown, statusLine]) {
+    part.castShadow = true;
+    part.receiveShadow = true;
+    group.add(part);
+  }
+
+  const sourcePlate = new THREE.Mesh(
+    new THREE.BoxGeometry(0.82, 0.30, 0.08),
+    material(0x07111b, coreColor, 0.18, 0.35, 0.82)
+  );
+  sourcePlate.position.set(0, 0.48, -0.39);
+  group.add(sourcePlate);
+
+  group.position.copy(p);
+  group.lookAt(0, 1.18, 0);
+
+  group.userData = {
+    id: repo.id,
+    name: repo.name,
+    visual_class: repo.visual_class || "governed_repo",
+    role: repo.class || repo.role || "governed repository",
+    repo: repo.repo,
+    url: repo.url,
+    owns: repo.owns || ["governed source boundary", "repository surface", "projection source binding"],
+    must_not_own: repo.must_not_own || ["accepted truth", "sovereign chamber role", "private truth control"],
+    truth_status: repo.truth_status || "derived"
+  };
+
+  selectable.push(group);
+
+  const repoName = String(repo.name || repo.id || `REPO-${index + 1}`).replace(/^VERIFRAX-/, "");
+  const label = makeLabel(repoName, `repo ${String(index + 1).padStart(2, "0")}`, 560, 172, live ? "#73d0ff" : "#8ea4b8");
+  const out = polar(radius + 0.56, angle, 3.18);
+  label.position.copy(out);
+  label.userData.visualWeight = "repo";
+  labels.add(label);
+
+  return group;
+}
+
+function createAdmissoriumRepoGate(repo, labels, selectable) {
+  const group = new THREE.Group();
+
+  const gateMat = material(0x1a0d0d, palette.red, 0.34, 0.48, 0.84);
+  const metalMat = material(0x151b22, palette.blue, 0.18, 0.38, 0.92);
+  const warningMat = material(0x3a0908, palette.red, 0.88, 0.28, 0.55);
+
+  const base = new THREE.Mesh(new THREE.BoxGeometry(5.8, 0.54, 1.20), metalMat.clone());
+  const towerA = new THREE.Mesh(new THREE.BoxGeometry(0.72, 2.80, 0.92), metalMat.clone());
+  const towerB = new THREE.Mesh(new THREE.BoxGeometry(0.72, 2.80, 0.92), metalMat.clone());
+  const lintel = new THREE.Mesh(new THREE.BoxGeometry(5.55, 0.58, 0.90), metalMat.clone());
+  const shield = new THREE.Mesh(new THREE.BoxGeometry(3.85, 1.46, 0.32), warningMat.clone());
+  const denial = new THREE.Mesh(new THREE.BoxGeometry(2.38, 0.16, 0.10), material(palette.red, palette.red, 1.1, 0.18, 0.42));
+
+  base.position.set(0, 0.18, 16.38);
+  towerA.position.set(-2.62, 1.55, 16.28);
+  towerB.position.set(2.62, 1.55, 16.28);
+  lintel.position.set(0, 3.08, 16.23);
+  shield.position.set(0, 1.50, 16.82);
+  denial.position.set(0, 1.50, 17.03);
+
+  for (const part of [base, towerA, towerB, lintel, shield, denial]) {
+    part.castShadow = true;
+    part.receiveShadow = true;
+    group.add(part);
+  }
+
+  const bars = [];
+  for (let i = -4; i <= 4; i += 1) {
+    const bar = new THREE.Mesh(
+      new THREE.BoxGeometry(0.08, 1.82, 0.08),
+      material(0x1b2733, palette.blue, 0.38, 0.22, 0.92)
+    );
+    bar.position.set(i * 0.28, 1.34, 17.12);
+    bars.push(bar);
+    group.add(bar);
+  }
+
+  group.userData = {
+    id: repo.id,
+    name: "ADMISSORIUM",
+    visual_class: "front_gate",
+    role: "admissibility enforcement implementation",
+    repo: repo.repo,
+    url: repo.url,
+    owns: repo.owns || ["admissibility enforcement", "materialization blocking", "quarantine routing"],
+    must_not_own: repo.must_not_own || ["truth source", "accepted state", "sovereign chamber", "terminal recognition"],
+    warning: "truth_owner=false / sovereign_chamber=false",
+    truth_status: "derived"
+  };
+
+  selectable.push(group);
+  scene.add(group);
+
+  const label = makeLabel("ADMISSORIUM", "repo 35 · front admissibility gate", 760, 200, "#ff8b7e");
+  label.position.set(0, 4.34, 16.92);
+  label.userData.visualWeight = "chamber";
+  labels.add(label);
+
+  return group;
 }
 
 function buildScene(container, manifest) {
@@ -628,39 +772,22 @@ function buildScene(container, manifest) {
   });
 
   const repoRadius = 22.8;
-  const repoGeometry = new THREE.BoxGeometry(0.58, 2.28, 0.58);
-  const repoCapGeometry = new THREE.BoxGeometry(0.74, 0.16, 0.74);
-  const repoMat = material(palette.darkMetal, palette.blue, 0.28, 0.32, 0.92);
-  const repoCapMat = material(0x182636, palette.cyan, 0.38, 0.26, 0.88);
-  const repoMesh = new THREE.InstancedMesh(repoGeometry, repoMat, manifest.repositories.length);
-  const repoCapMesh = new THREE.InstancedMesh(repoCapGeometry, repoCapMat, manifest.repositories.length);
-  repoMesh.castShadow = true;
-  repoMesh.receiveShadow = true;
-  repoCapMesh.castShadow = true;
+  const governedRepos = manifest.repositories || [];
+  const nonAdmissoriumRepos = governedRepos.filter((repo) => repo.name !== "ADMISSORIUM");
 
-  const dummy = new THREE.Object3D();
-  const capDummy = new THREE.Object3D();
-  manifest.repositories.forEach((repo, index) => {
-    if (repo.name === "ADMISSORIUM") return;
-    const angle = -Math.PI / 2 + (index / manifest.repositories.length) * Math.PI * 2;
-    const p = polar(repoRadius, angle, 1.12);
-    dummy.position.copy(p);
-    dummy.rotation.y = -angle;
-    dummy.scale.set(1, repo.class === "sovereign-chamber" ? 1.28 : 1, 1);
-    dummy.updateMatrix();
-    repoMesh.setMatrixAt(index, dummy.matrix);
-
-    capDummy.position.set(p.x, p.y + 1.23 * dummy.scale.y, p.z);
-    capDummy.rotation.y = -angle;
-    capDummy.scale.copy(dummy.scale);
-    capDummy.updateMatrix();
-    repoCapMesh.setMatrixAt(index, capDummy.matrix);
+  nonAdmissoriumRepos.forEach((repo, index) => {
+    const pillar = createGovernedRepoPillar(repo, index, governedRepos.length, repoRadius, labels, selectable);
+    scene.add(pillar);
   });
-  scene.add(repoMesh);
-  scene.add(repoCapMesh);
 
-  const repoLabel = makeLabel("35", "GOVERNED REPOSITORY PERIMETER", 520, 170);
-  repoLabel.position.set(0, 4.60, -23.35);
+  const admissoriumRepo = governedRepos.find((repo) => repo.name === "ADMISSORIUM");
+  if (admissoriumRepo) {
+    createAdmissoriumRepoGate(admissoriumRepo, labels, selectable);
+  }
+
+  const repoLabel = makeLabel("35 GOVERNED REPOSITORIES", "34 perimeter pillars + ADMISSORIUM front gate", 820, 190);
+  repoLabel.position.set(0, 4.75, -23.35);
+  repoLabel.userData.visualWeight = "chamber";
   labels.add(repoLabel);
 
   const hostRadius = 23.2;
@@ -906,3 +1033,6 @@ window.labelAspectRestoration = "VERIFRAX_OBSERVATORY_LABEL_ASPECT_RESTORATION";
 
 
 window.panelContainmentBoundary = "VERIFRAX_OBSERVATORY_PANEL_CONTAINMENT_BOUNDARY";
+
+
+window.governedRepoPillarAuthority = "VERIFRAX_OBSERVATORY_35_GOVERNED_REPO_PILLAR_AUTHORITY";
