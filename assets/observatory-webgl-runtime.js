@@ -903,3 +903,6 @@ window.visualHierarchyCollisionClose = "VERIFRAX_OBSERVATORY_VISUAL_HIERARCHY_CO
 
 
 window.labelAspectRestoration = "VERIFRAX_OBSERVATORY_LABEL_ASPECT_RESTORATION";
+
+
+window.panelContainmentBoundary = "VERIFRAX_OBSERVATORY_PANEL_CONTAINMENT_BOUNDARY";
