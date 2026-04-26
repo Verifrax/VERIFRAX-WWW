@@ -1,3 +1,321 @@
+
+const VCO_TERMINAL_VISUAL_AUTHORITY_REPAIR = true;
+(function installTerminalVisualAuthorityRepair(){
+  const STYLE_ID = "vco-terminal-visual-authority-repair";
+  const css = `
+/* VCO_TERMINAL_VISUAL_AUTHORITY_REPAIR */
+:root.vco-terminal-ready,
+:root.vco-terminal-ready body{
+  margin:0!important;
+  min-height:100%!important;
+  background:#02070d!important;
+  color:#e8f2ff!important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  overflow-x:hidden!important;
+}
+:root.vco-terminal-ready *{box-sizing:border-box}
+:root.vco-terminal-ready body{
+  min-height:100vh!important;
+}
+:root.vco-terminal-ready a,
+:root.vco-terminal-ready button,
+:root.vco-terminal-ready input,
+:root.vco-terminal-ready select{
+  font:700 12px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
+}
+:root.vco-terminal-ready button,
+:root.vco-terminal-ready .button,
+:root.vco-terminal-ready [role="button"]{
+  appearance:none!important;
+  border:1px solid rgba(128,210,255,.34)!important;
+  border-radius:12px!important;
+  padding:9px 13px!important;
+  background:linear-gradient(180deg,rgba(16,33,50,.92),rgba(5,12,22,.96))!important;
+  color:#eaf6ff!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.035) inset,0 12px 32px rgba(0,0,0,.34)!important;
+  cursor:pointer!important;
+}
+:root.vco-terminal-ready button:hover,
+:root.vco-terminal-ready [role="button"]:hover{
+  border-color:rgba(127,211,255,.72)!important;
+  color:#ffffff!important;
+  background:linear-gradient(180deg,rgba(22,49,74,.98),rgba(7,18,31,.98))!important;
+}
+:root.vco-terminal-ready a{
+  color:#8bd8ff!important;
+  text-decoration:none!important;
+}
+:root.vco-terminal-ready main,
+:root.vco-terminal-ready .wrap,
+:root.vco-terminal-ready .surface,
+:root.vco-terminal-ready .surface-root{
+  max-width:none!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  background:#02070d!important;
+}
+:root.vco-terminal-ready main > :not(.observatory-webgl-runtime):not(#observatory-render-gate):not(script),
+:root.vco-terminal-ready .surface > :not(.observatory-webgl-runtime):not(#observatory-render-gate):not(script){
+  display:none!important;
+}
+:root.vco-terminal-ready .observatory-webgl-runtime{
+  position:relative!important;
+  display:block!important;
+  width:100vw!important;
+  height:100vh!important;
+  min-height:760px!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(33,105,155,.22),transparent 35%),
+    radial-gradient(circle at 50% 100%,rgba(0,0,0,.8),transparent 45%),
+    linear-gradient(180deg,#02060b 0%,#040b12 52%,#02050a 100%)!important;
+}
+:root.vco-terminal-ready .observatory-webgl-runtime canvas{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  z-index:1!important;
+  filter:contrast(1.1) saturate(.98)!important;
+}
+:root.vco-terminal-ready .vco-topbar,
+:root.vco-terminal-ready .vco-hero,
+:root.vco-terminal-ready .vco-left,
+:root.vco-terminal-ready .vco-right,
+:root.vco-terminal-ready .vco-journey,
+:root.vco-terminal-ready .vco-inspector,
+:root.vco-terminal-ready .vco-command,
+:root.vco-terminal-ready .vco-palette,
+:root.vco-terminal-ready .vco-panel,
+:root.vco-terminal-ready .vco-card{
+  position:absolute!important;
+  z-index:12!important;
+  color:#dcecff!important;
+  border:1px solid rgba(122,204,255,.22)!important;
+  background:linear-gradient(180deg,rgba(5,13,23,.88),rgba(3,8,15,.94))!important;
+  box-shadow:0 24px 90px rgba(0,0,0,.46),0 0 0 1px rgba(255,255,255,.035) inset!important;
+  backdrop-filter:blur(16px) saturate(1.1)!important;
+}
+:root.vco-terminal-ready .vco-topbar{
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  height:72px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  padding:0 28px!important;
+  border-width:0 0 1px!important;
+  border-radius:0!important;
+  background:linear-gradient(180deg,rgba(1,5,10,.95),rgba(1,5,10,.72))!important;
+}
+:root.vco-terminal-ready .vco-hero{
+  left:28px!important;
+  top:112px!important;
+  width:min(520px,calc(100vw - 56px))!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+}
+:root.vco-terminal-ready .vco-hero h1,
+:root.vco-terminal-ready .vco-hero h2{
+  margin:0 0 14px!important;
+  color:#f7fbff!important;
+  font:950 clamp(68px,8vw,142px)/.82 Inter,ui-sans-serif,system-ui,sans-serif!important;
+  letter-spacing:-.075em!important;
+  text-transform:uppercase!important;
+  text-shadow:0 22px 90px rgba(0,0,0,.68)!important;
+}
+:root.vco-terminal-ready .vco-hero p{
+  max-width:440px!important;
+  margin:0 0 12px!important;
+  color:#d5e6f7!important;
+  font:750 16px/1.42 Inter,ui-sans-serif,system-ui,sans-serif!important;
+}
+:root.vco-terminal-ready .vco-left{
+  left:24px!important;
+  bottom:128px!important;
+  width:360px!important;
+  max-height:43vh!important;
+  padding:14px!important;
+  border-radius:20px!important;
+  overflow:auto!important;
+}
+:root.vco-terminal-ready .vco-right{
+  right:24px!important;
+  top:92px!important;
+  width:400px!important;
+  max-height:calc(100vh - 190px)!important;
+  padding:16px!important;
+  border-radius:20px!important;
+  overflow:auto!important;
+}
+:root.vco-terminal-ready .vco-journey{
+  left:18px!important;
+  right:18px!important;
+  bottom:16px!important;
+  min-height:92px!important;
+  max-height:132px!important;
+  padding:14px!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+}
+:root.vco-terminal-ready .vco-journey ol,
+:root.vco-terminal-ready .vco-journey ul{
+  display:grid!important;
+  grid-template-columns:repeat(9,minmax(120px,1fr))!important;
+  gap:10px!important;
+  margin:0!important;
+  padding:0!important;
+  list-style:none!important;
+}
+:root.vco-terminal-ready .vco-journey li,
+:root.vco-terminal-ready .vco-stage{
+  min-height:68px!important;
+  padding:12px!important;
+  border:1px solid rgba(130,210,255,.18)!important;
+  border-radius:14px!important;
+  background:linear-gradient(180deg,rgba(16,28,43,.82),rgba(7,13,23,.9))!important;
+  color:#eaf6ff!important;
+  overflow:hidden!important;
+}
+:root.vco-terminal-ready .vco-inspector{
+  right:430px!important;
+  bottom:148px!important;
+  width:min(440px,calc(100vw - 820px))!important;
+  min-width:340px!important;
+  max-height:46vh!important;
+  padding:18px!important;
+  border-radius:20px!important;
+  overflow:auto!important;
+}
+:root.vco-terminal-ready .vco-command,
+:root.vco-terminal-ready .vco-palette{
+  position:fixed!important;
+  left:50%!important;
+  top:84px!important;
+  transform:translateX(-50%)!important;
+  width:min(820px,calc(100vw - 32px))!important;
+  max-height:70vh!important;
+  padding:16px!important;
+  border-radius:22px!important;
+  z-index:60!important;
+  overflow:auto!important;
+}
+:root.vco-terminal-ready .vco-command input,
+:root.vco-terminal-ready .vco-palette input{
+  width:100%!important;
+  border:1px solid rgba(133,214,255,.3)!important;
+  border-radius:14px!important;
+  padding:14px 16px!important;
+  background:rgba(6,16,28,.96)!important;
+  color:#f6fbff!important;
+  outline:none!important;
+}
+:root.vco-terminal-ready #observatory-render-gate{
+  position:fixed!important;
+  left:18px!important;
+  right:18px!important;
+  bottom:16px!important;
+  z-index:45!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  padding:12px 16px!important;
+  border:1px solid rgba(132,214,255,.26)!important;
+  border-radius:18px!important;
+  background:linear-gradient(180deg,rgba(4,12,22,.92),rgba(2,7,13,.96))!important;
+  color:#e7f3ff!important;
+  box-shadow:0 24px 90px rgba(0,0,0,.55)!important;
+}
+:root.vco-terminal-ready .observatory-gate-detail{
+  display:none!important;
+}
+:root.vco-terminal-ready .observatory-gate-strip{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:8px!important;
+}
+:root.vco-terminal-ready .observatory-gate-strip span,
+:root.vco-terminal-ready .pill,
+:root.vco-terminal-ready .badge{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  border:1px solid rgba(134,218,255,.23)!important;
+  border-radius:999px!important;
+  padding:7px 10px!important;
+  background:rgba(8,24,38,.82)!important;
+  color:#bfffe2!important;
+  font:800 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
+}
+:root.vco-terminal-ready h1,
+:root.vco-terminal-ready h2,
+:root.vco-terminal-ready h3,
+:root.vco-terminal-ready strong{
+  color:#f3f8ff!important;
+}
+:root.vco-terminal-ready dl,
+:root.vco-terminal-ready ul,
+:root.vco-terminal-ready ol,
+:root.vco-terminal-ready p{
+  color:#d4e4f5!important;
+}
+:root.vco-terminal-ready .vco-panel *,
+:root.vco-terminal-ready .vco-card *,
+:root.vco-terminal-ready .vco-inspector *,
+:root.vco-terminal-ready .vco-right *,
+:root.vco-terminal-ready .vco-left *,
+:root.vco-terminal-ready .vco-journey *{
+  max-width:100%!important;
+}
+@media (max-width:1100px){
+  :root.vco-terminal-ready .observatory-webgl-runtime{min-height:880px!important}
+  :root.vco-terminal-ready .vco-right{display:none!important}
+  :root.vco-terminal-ready .vco-left{width:300px!important;bottom:138px!important}
+  :root.vco-terminal-ready .vco-inspector{right:20px!important;left:auto!important;width:min(420px,calc(100vw - 360px))!important}
+}
+@media (max-width:760px){
+  :root.vco-terminal-ready .observatory-webgl-runtime{height:100svh!important;min-height:720px!important}
+  :root.vco-terminal-ready .vco-topbar{height:66px!important;padding:0 16px!important}
+  :root.vco-terminal-ready .vco-hero{top:92px!important;left:16px!important;width:calc(100vw - 32px)!important}
+  :root.vco-terminal-ready .vco-hero h1,
+  :root.vco-terminal-ready .vco-hero h2{font-size:clamp(48px,17vw,82px)!important}
+  :root.vco-terminal-ready .vco-left{display:none!important}
+  :root.vco-terminal-ready .vco-right{display:none!important}
+  :root.vco-terminal-ready .vco-inspector{left:12px!important;right:12px!important;bottom:126px!important;width:auto!important;min-width:0!important;max-height:34vh!important}
+  :root.vco-terminal-ready .vco-journey{left:8px!important;right:8px!important;bottom:8px!important;overflow:auto!important}
+  :root.vco-terminal-ready .vco-journey ol,
+  :root.vco-terminal-ready .vco-journey ul{grid-template-columns:repeat(9,150px)!important}
+}
+`;
+  function boot(){
+    document.documentElement.classList.add("vco-terminal-ready");
+    if (document.body) document.body.classList.add("vco-terminal-ready");
+    if (!document.getElementById(STYLE_ID)) {
+      const style = document.createElement("style");
+      style.id = STYLE_ID;
+      style.textContent = css;
+      document.head.appendChild(style);
+    }
+    const runtime = document.querySelector(".observatory-webgl-runtime");
+    if (runtime && runtime.parentElement !== document.body) {
+      document.body.insertBefore(runtime, document.body.firstChild);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot, { once:true });
+  } else {
+    boot();
+  }
+})();
+
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 const VCO_RUNTIME_MARKER = "VCO_TERMINAL_INTERACTION_COMMAND_MACHINE";
