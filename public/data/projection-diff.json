@@ -1,0 +1,24 @@
+{
+  "diff_from": null,
+  "diff_to": "vco-2026-04-26T06-58-49Z",
+  "changes": [
+    {
+      "type": "created",
+      "object_class": "projection",
+      "id": "vco-2026-04-26T06-58-49Z",
+      "impact": "initial_observatory_projection_boundary"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "DERIVED_PROJECTION",
+      "severity": "boundary",
+      "message": "This public Observatory projection renders VERIFRAX structure. It does not define truth."
+    },
+    {
+      "code": "OBJECT_MATURITY_PARTIAL",
+      "severity": "honesty",
+      "message": "The structural perimeter is live. Machine-deference completeness requires stronger public bounded object families."
+    }
+  ]
+}

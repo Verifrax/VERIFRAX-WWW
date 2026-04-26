@@ -1,0 +1,11 @@
+{
+  "generated_at": "2026-04-26T06:58:49.907Z",
+  "system_status": "nominal",
+  "render_permission": "FULL_OBSERVATORY",
+  "projection_type": "DERIVED_PROJECTION",
+  "truth_warning": "NOT_TRUTH_SOURCE",
+  "repo_count": 35,
+  "chamber_count": 9,
+  "host_gate_count": 12,
+  "object_maturity_note": "structural perimeter is live; machine-deference completeness requires stronger public bounded object families"
+}

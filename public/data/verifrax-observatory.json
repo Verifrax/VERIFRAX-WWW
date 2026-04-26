@@ -1,0 +1,2033 @@
+{
+  "schema_version": "1.0.0",
+  "projection_id": "vco-2026-04-26T06-58-49Z",
+  "projection_type": "DERIVED_PROJECTION",
+  "projection_warning": "NOT_TRUTH_SOURCE",
+  "truth_warning": "NOT_TRUTH_SOURCE",
+  "truth_source": "accepted VERIFRAX object graph",
+  "generated_at": "2026-04-26T06:58:49.907Z",
+  "generated_by": "VERIFRAX-WWW projection bootstrap compiler",
+  "system": {
+    "name": "VERIFRAX",
+    "tagline": "35 repositories. One constitutional machine.",
+    "governed_repo_count": 35,
+    "sovereign_chamber_count": 9,
+    "host_gate_count": 12,
+    "system_status": "nominal"
+  },
+  "warnings": [
+    {
+      "code": "DERIVED_PROJECTION",
+      "severity": "boundary",
+      "message": "This public Observatory projection renders VERIFRAX structure. It does not define truth."
+    },
+    {
+      "code": "OBJECT_MATURITY_PARTIAL",
+      "severity": "honesty",
+      "message": "The structural perimeter is live. Machine-deference completeness requires stronger public bounded object families."
+    }
+  ],
+  "chambers": [
+    {
+      "id": "syntagmarium",
+      "name": "SYNTAGMARIUM",
+      "role": "law",
+      "question": "What may count?",
+      "repo": "Verifrax/SYNTAGMARIUM",
+      "url": "https://github.com/Verifrax/SYNTAGMARIUM",
+      "position": 0,
+      "owns": [
+        "constitutional law",
+        "invariants",
+        "role definitions",
+        "object schemas",
+        "transition rules",
+        "projection contracts"
+      ],
+      "must_not_own": [
+        "accepted state",
+        "execution",
+        "verification verdicts",
+        "terminal recognition",
+        "terminal recourse"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    },
+    {
+      "id": "orbistium",
+      "name": "ORBISTIUM",
+      "role": "state",
+      "question": "What does count now, and what counted at each accepted epoch?",
+      "repo": "Verifrax/ORBISTIUM",
+      "url": "https://github.com/Verifrax/ORBISTIUM",
+      "position": 1,
+      "owns": [
+        "canonical world-state",
+        "accepted epochs",
+        "state indexes",
+        "contradiction memory",
+        "historical state retention"
+      ],
+      "must_not_own": [
+        "constitutional law",
+        "runtime reconciliation",
+        "authority issuance",
+        "verification verdicts",
+        "terminal recognition",
+        "terminal recourse"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    },
+    {
+      "id": "consonorium",
+      "name": "CONSONORIUM",
+      "role": "reconciliation",
+      "question": "What drifted, what must be repaired, and what must be quarantined?",
+      "repo": "Verifrax/CONSONORIUM",
+      "url": "https://github.com/Verifrax/CONSONORIUM",
+      "position": 2,
+      "owns": [
+        "collection",
+        "normalization",
+        "contradiction classification",
+        "repair planning",
+        "quarantine planning",
+        "projection compilation"
+      ],
+      "must_not_own": [
+        "constitutional law",
+        "accepted state of record",
+        "authority issuance",
+        "verification truth by itself",
+        "terminal recognition",
+        "terminal recourse"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    },
+    {
+      "id": "tachyrium",
+      "name": "TACHYRIUM",
+      "role": "cognition",
+      "question": "What is the best bounded machine-legible candidate understanding?",
+      "repo": "Verifrax/TACHYRIUM",
+      "url": "https://github.com/Verifrax/TACHYRIUM",
+      "position": 3,
+      "owns": [
+        "bounded lawful cognition",
+        "ambiguity compression",
+        "candidate generation",
+        "topology reasoning",
+        "operator amplification"
+      ],
+      "must_not_own": [
+        "law",
+        "accepted state",
+        "authority",
+        "execution legitimacy",
+        "verification verdict",
+        "recognition-of-record",
+        "recourse-of-record"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    },
+    {
+      "id": "auctoriseal",
+      "name": "AUCTORISEAL",
+      "role": "authority",
+      "question": "Who may authorize?",
+      "repo": "Verifrax/AUCTORISEAL",
+      "url": "https://github.com/Verifrax/AUCTORISEAL",
+      "position": 4,
+      "owns": [
+        "authority-of-record",
+        "authorization objects",
+        "revocation objects",
+        "authority references",
+        "continuity records"
+      ],
+      "must_not_own": [
+        "execution runtime",
+        "verification verdicts",
+        "accepted state authority",
+        "proof publication",
+        "terminal recognition",
+        "terminal recourse"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    },
+    {
+      "id": "corpiform",
+      "name": "CORPIFORM",
+      "role": "execution",
+      "question": "What ran under authority?",
+      "repo": "Verifrax/CORPIFORM",
+      "url": "https://github.com/Verifrax/CORPIFORM",
+      "position": 5,
+      "owns": [
+        "governed execution",
+        "execution semantics",
+        "receipt emission",
+        "authority-bound runtime legitimacy"
+      ],
+      "must_not_own": [
+        "issuance authority",
+        "accepted state",
+        "proof publication",
+        "verifier authority",
+        "terminal recognition",
+        "terminal recourse"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    },
+    {
+      "id": "verifrax",
+      "name": "VERIFRAX",
+      "role": "verification",
+      "question": "What verified?",
+      "repo": "Verifrax/VERIFRAX",
+      "url": "https://github.com/Verifrax/VERIFRAX",
+      "position": 6,
+      "owns": [
+        "authored protocol source",
+        "evidence root",
+        "verification boundary",
+        "verification outputs"
+      ],
+      "must_not_own": [
+        "constitutional law",
+        "accepted state",
+        "authority issuance",
+        "governed execution",
+        "proof host",
+        "archive host",
+        "intake host"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    },
+    {
+      "id": "anagnorium",
+      "name": "ANAGNORIUM",
+      "role": "terminal recognition",
+      "question": "What truth has now become unavoidable?",
+      "repo": "Verifrax/ANAGNORIUM",
+      "url": "https://github.com/Verifrax/ANAGNORIUM",
+      "position": 7,
+      "owns": [
+        "terminal recognition",
+        "unavoidable meaning",
+        "recognition boundary rules"
+      ],
+      "must_not_own": [
+        "first-instance verification",
+        "accepted state memory",
+        "burden assignment",
+        "remedy routing",
+        "terminal recourse"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    },
+    {
+      "id": "regressorium",
+      "name": "REGRESSORIUM",
+      "role": "terminal recourse",
+      "question": "What now must follow?",
+      "repo": "Verifrax/REGRESSORIUM",
+      "url": "https://github.com/Verifrax/REGRESSORIUM",
+      "position": 8,
+      "owns": [
+        "burden attachment",
+        "claim posture",
+        "remedy routing",
+        "escalation path",
+        "closure state"
+      ],
+      "must_not_own": [
+        "autonomous recognition",
+        "first-instance verification",
+        "constitutional law",
+        "accepted state memory",
+        "verification"
+      ],
+      "truth_status": "structural_chamber_live_object_maturity_partial"
+    }
+  ],
+  "repositories": [
+    {
+      "id": "github",
+      "name": ".github",
+      "repo": "Verifrax/.github",
+      "url": "https://github.com/Verifrax/.github",
+      "class": "governance-and-topology",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 0,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "architecture",
+      "name": "ARCHITECTURE",
+      "repo": "Verifrax/ARCHITECTURE",
+      "url": "https://github.com/Verifrax/ARCHITECTURE",
+      "class": "governance-and-topology",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 1,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "speedkit",
+      "name": "SPEEDKIT",
+      "repo": "Verifrax/SPEEDKIT",
+      "url": "https://github.com/Verifrax/SPEEDKIT",
+      "class": "governance-and-topology",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 2,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "syntagmarium",
+      "name": "SYNTAGMARIUM",
+      "repo": "Verifrax/SYNTAGMARIUM",
+      "url": "https://github.com/Verifrax/SYNTAGMARIUM",
+      "class": "sovereign-chamber",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 3,
+      "sovereign_chamber": true,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "SOVEREIGN_CHAMBER_REPO_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "orbistium",
+      "name": "ORBISTIUM",
+      "repo": "Verifrax/ORBISTIUM",
+      "url": "https://github.com/Verifrax/ORBISTIUM",
+      "class": "sovereign-chamber",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 4,
+      "sovereign_chamber": true,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "SOVEREIGN_CHAMBER_REPO_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "consonorium",
+      "name": "CONSONORIUM",
+      "repo": "Verifrax/CONSONORIUM",
+      "url": "https://github.com/Verifrax/CONSONORIUM",
+      "class": "sovereign-chamber",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 5,
+      "sovereign_chamber": true,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "SOVEREIGN_CHAMBER_REPO_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "tachyrium",
+      "name": "TACHYRIUM",
+      "repo": "Verifrax/TACHYRIUM",
+      "url": "https://github.com/Verifrax/TACHYRIUM",
+      "class": "sovereign-chamber",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 6,
+      "sovereign_chamber": true,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "SOVEREIGN_CHAMBER_REPO_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "anagnorium",
+      "name": "ANAGNORIUM",
+      "repo": "Verifrax/ANAGNORIUM",
+      "url": "https://github.com/Verifrax/ANAGNORIUM",
+      "class": "sovereign-chamber",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 7,
+      "sovereign_chamber": true,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "SOVEREIGN_CHAMBER_REPO_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "regressorium",
+      "name": "REGRESSORIUM",
+      "repo": "Verifrax/REGRESSORIUM",
+      "url": "https://github.com/Verifrax/REGRESSORIUM",
+      "class": "sovereign-chamber",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 8,
+      "sovereign_chamber": true,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "SOVEREIGN_CHAMBER_REPO_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax",
+      "name": "VERIFRAX",
+      "repo": "Verifrax/VERIFRAX",
+      "url": "https://github.com/Verifrax/VERIFRAX",
+      "class": "authored-protocol-and-evidence-core",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 9,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-spec",
+      "name": "VERIFRAX-SPEC",
+      "repo": "Verifrax/VERIFRAX-SPEC",
+      "url": "https://github.com/Verifrax/VERIFRAX-SPEC",
+      "class": "package-bearing-protocol-surface",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 10,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-profiles",
+      "name": "VERIFRAX-PROFILES",
+      "repo": "Verifrax/VERIFRAX-PROFILES",
+      "url": "https://github.com/Verifrax/VERIFRAX-PROFILES",
+      "class": "package-bearing-protocol-surface",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 11,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-samples",
+      "name": "VERIFRAX-SAMPLES",
+      "repo": "Verifrax/VERIFRAX-SAMPLES",
+      "url": "https://github.com/Verifrax/VERIFRAX-SAMPLES",
+      "class": "operational-tooling-and-validation",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 12,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-marketplace-smoke",
+      "name": "verifrax-marketplace-smoke",
+      "repo": "Verifrax/verifrax-marketplace-smoke",
+      "url": "https://github.com/Verifrax/verifrax-marketplace-smoke",
+      "class": "operational-tooling-and-validation",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 13,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "originseal",
+      "name": "originseal",
+      "repo": "Verifrax/originseal",
+      "url": "https://github.com/Verifrax/originseal",
+      "class": "irreversible-primitive",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 14,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "archicustos",
+      "name": "archicustos",
+      "repo": "Verifrax/archicustos",
+      "url": "https://github.com/Verifrax/archicustos",
+      "class": "irreversible-primitive",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 15,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "kairoclasp",
+      "name": "kairoclasp",
+      "repo": "Verifrax/kairoclasp",
+      "url": "https://github.com/Verifrax/kairoclasp",
+      "class": "irreversible-primitive",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 16,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "limenward",
+      "name": "limenward",
+      "repo": "Verifrax/limenward",
+      "url": "https://github.com/Verifrax/limenward",
+      "class": "irreversible-primitive",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 17,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "validexor",
+      "name": "validexor",
+      "repo": "Verifrax/validexor",
+      "url": "https://github.com/Verifrax/validexor",
+      "class": "irreversible-primitive",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 18,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "attestorium",
+      "name": "attestorium",
+      "repo": "Verifrax/attestorium",
+      "url": "https://github.com/Verifrax/attestorium",
+      "class": "irreversible-primitive",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 19,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "irrevocull",
+      "name": "irrevocull",
+      "repo": "Verifrax/irrevocull",
+      "url": "https://github.com/Verifrax/irrevocull",
+      "class": "irreversible-primitive",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 20,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "guillotine",
+      "name": "guillotine",
+      "repo": "Verifrax/guillotine",
+      "url": "https://github.com/Verifrax/guillotine",
+      "class": "irreversible-primitive",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 21,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-verify",
+      "name": "VERIFRAX-verify",
+      "repo": "Verifrax/VERIFRAX-verify",
+      "url": "https://github.com/Verifrax/VERIFRAX-verify",
+      "class": "host-owner-implementation",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 22,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": true,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "proof",
+      "name": "proof",
+      "repo": "Verifrax/proof",
+      "url": "https://github.com/Verifrax/proof",
+      "class": "host-owner-implementation",
+      "license": "Apache-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 23,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": true,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-www",
+      "name": "VERIFRAX-WWW",
+      "repo": "Verifrax/VERIFRAX-WWW",
+      "url": "https://github.com/Verifrax/VERIFRAX-WWW",
+      "class": "host-owner-implementation",
+      "license": "MPL-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 24,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": true,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-docs",
+      "name": "VERIFRAX-DOCS",
+      "repo": "Verifrax/VERIFRAX-DOCS",
+      "url": "https://github.com/Verifrax/VERIFRAX-DOCS",
+      "class": "host-owner-implementation",
+      "license": "MPL-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 25,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": true,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-status",
+      "name": "VERIFRAX-STATUS",
+      "repo": "Verifrax/VERIFRAX-STATUS",
+      "url": "https://github.com/Verifrax/VERIFRAX-STATUS",
+      "class": "host-owner-implementation",
+      "license": "MPL-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 26,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": true,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-surface",
+      "name": "VERIFRAX-SURFACE",
+      "repo": "Verifrax/VERIFRAX-SURFACE",
+      "url": "https://github.com/Verifrax/VERIFRAX-SURFACE",
+      "class": "shared-projection-form-infrastructure",
+      "license": "MPL-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 27,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "sigillarium",
+      "name": "SIGILLARIUM",
+      "repo": "Verifrax/SIGILLARIUM",
+      "url": "https://github.com/Verifrax/SIGILLARIUM",
+      "class": "host-owner-implementation",
+      "license": "MPL-2.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 28,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": true,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "auctoriseal",
+      "name": "AUCTORISEAL",
+      "repo": "Verifrax/AUCTORISEAL",
+      "url": "https://github.com/Verifrax/AUCTORISEAL",
+      "class": "authority-execution-enforcement-substrate",
+      "license": "AGPL-3.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 29,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "corpiform",
+      "name": "CORPIFORM",
+      "repo": "Verifrax/CORPIFORM",
+      "url": "https://github.com/Verifrax/CORPIFORM",
+      "class": "authority-execution-enforcement-substrate",
+      "license": "AGPL-3.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 30,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "cicullis",
+      "name": "cicullis",
+      "repo": "Verifrax/cicullis",
+      "url": "https://github.com/Verifrax/cicullis",
+      "class": "authority-execution-enforcement-substrate",
+      "license": "AGPL-3.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 31,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "verifrax-api",
+      "name": "VERIFRAX-API",
+      "repo": "Verifrax/VERIFRAX-API",
+      "url": "https://github.com/Verifrax/VERIFRAX-API",
+      "class": "host-owner-implementation",
+      "license": "AGPL-3.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 32,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": true,
+      "package_default": true,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "apply",
+      "name": "apply",
+      "repo": "Verifrax/apply",
+      "url": "https://github.com/Verifrax/apply",
+      "class": "host-owner-implementation",
+      "license": "AGPL-3.0",
+      "visual_class": "repository_pillar",
+      "perimeter_position": 33,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": true,
+      "package_default": false,
+      "render_right": {
+        "mode": "GOVERNED_REPOSITORY_PILLAR",
+        "allowed": true,
+        "reason": [
+          "present_in_governed_repo_registry",
+          "source_repo_bound",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_source",
+          "duplicate_repository",
+          "missing_route"
+        ]
+      }
+    },
+    {
+      "id": "admissorium",
+      "name": "ADMISSORIUM",
+      "repo": "Verifrax/ADMISSORIUM",
+      "url": "https://github.com/Verifrax/ADMISSORIUM",
+      "class": "admissibility-enforcement-implementation",
+      "license": "AGPL-3.0",
+      "visual_class": "front_gate",
+      "perimeter_position": 34,
+      "sovereign_chamber": false,
+      "truth_owner": false,
+      "host_default": false,
+      "package_default": false,
+      "render_right": {
+        "mode": "FRONT_GATE_ONLY",
+        "allowed": true,
+        "forbidden_modes": [
+          "SOVEREIGN_CHAMBER",
+          "TRUTH_SOURCE",
+          "ACCEPTED_STATE"
+        ],
+        "reason": [
+          "class=admissibility-enforcement-implementation",
+          "truth_owner=false",
+          "sovereign_chamber=false",
+          "may_block_merge=true",
+          "may_rewrite_current_truth_objects=false"
+        ]
+      }
+    }
+  ],
+  "hosts": [
+    {
+      "id": "www",
+      "host": "www.verifrax.net",
+      "label": "WWW",
+      "role": "public root and commercial entry",
+      "owner_repo": "Verifrax/VERIFRAX-WWW",
+      "must_not_be": [
+        "execution",
+        "proof publication",
+        "authority",
+        "archive root",
+        "intake"
+      ],
+      "url": "https://www.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 0,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "api",
+      "host": "api.verifrax.net",
+      "label": "API",
+      "role": "execution host boundary",
+      "owner_repo": "Verifrax/VERIFRAX-API",
+      "must_not_be": [
+        "proof publication",
+        "verification authority",
+        "constitutional law",
+        "intake"
+      ],
+      "url": "https://api.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 1,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "proof",
+      "host": "proof.verifrax.net",
+      "label": "PROOF",
+      "role": "proof publication",
+      "owner_repo": "Verifrax/proof",
+      "must_not_be": [
+        "verification",
+        "authority",
+        "execution",
+        "intake"
+      ],
+      "url": "https://proof.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 2,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "verify",
+      "host": "verify.verifrax.net",
+      "label": "VERIFY",
+      "role": "public verification",
+      "owner_repo": "Verifrax/VERIFRAX-verify",
+      "must_not_be": [
+        "proof publication",
+        "authority",
+        "execution",
+        "intake"
+      ],
+      "url": "https://verify.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 3,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "docs",
+      "host": "docs.verifrax.net",
+      "label": "DOCS",
+      "role": "reference documentation",
+      "owner_repo": "Verifrax/VERIFRAX-DOCS",
+      "must_not_be": [
+        "current truth of record",
+        "authority",
+        "verification",
+        "proof publication"
+      ],
+      "url": "https://docs.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 4,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "apply",
+      "host": "apply.verifrax.net",
+      "label": "APPLY",
+      "role": "intake",
+      "owner_repo": "Verifrax/apply",
+      "must_not_be": [
+        "proof",
+        "verification",
+        "authority",
+        "execution"
+      ],
+      "url": "https://apply.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 5,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "status",
+      "host": "status.verifrax.net",
+      "label": "STATUS",
+      "role": "status publication",
+      "owner_repo": "Verifrax/VERIFRAX-STATUS",
+      "must_not_be": [
+        "current truth of record",
+        "proof",
+        "verification",
+        "authority"
+      ],
+      "url": "https://status.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 6,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "auctoriseal",
+      "host": "auctoriseal.verifrax.net",
+      "label": "AUCTORISEAL",
+      "role": "authority reference",
+      "owner_repo": "Verifrax/AUCTORISEAL",
+      "must_not_be": [
+        "execution",
+        "verification",
+        "proof publication",
+        "accepted state"
+      ],
+      "url": "https://auctoriseal.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 7,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "corpiform",
+      "host": "corpiform.verifrax.net",
+      "label": "CORPIFORM",
+      "role": "runtime reference",
+      "owner_repo": "Verifrax/CORPIFORM",
+      "must_not_be": [
+        "authority issuance",
+        "verification",
+        "proof publication",
+        "accepted state"
+      ],
+      "url": "https://corpiform.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 8,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "cicullis",
+      "host": "cicullis.verifrax.net",
+      "label": "CICULLIS",
+      "role": "enforcement reference",
+      "owner_repo": "Verifrax/cicullis",
+      "must_not_be": [
+        "truth source",
+        "authority issuance",
+        "execution runtime",
+        "verification"
+      ],
+      "url": "https://cicullis.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 9,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "sigillarium",
+      "host": "sigillarium.verifrax.net",
+      "label": "SIGILLARIUM",
+      "role": "archive/reference",
+      "owner_repo": "Verifrax/SIGILLARIUM",
+      "must_not_be": [
+        "proof primary host",
+        "verification",
+        "authority",
+        "execution"
+      ],
+      "url": "https://sigillarium.verifrax.net",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 10,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    },
+    {
+      "id": "github",
+      "host": "github.com/Verifrax",
+      "label": "GITHUB",
+      "role": "public repository perimeter",
+      "owner_repo": "Verifrax/.github",
+      "must_not_be": [
+        "accepted state",
+        "constitutional law",
+        "private enterprise control"
+      ],
+      "url": "https://github.com/Verifrax",
+      "visual_class": "host_gate",
+      "status": "live",
+      "position": 11,
+      "render_right": {
+        "mode": "HOST_GATE",
+        "allowed": true,
+        "reason": [
+          "host_role_declared",
+          "owner_repo_bound",
+          "not_role_clauses_declared",
+          "route_available"
+        ],
+        "downgrade_if": [
+          "missing_owner_repo",
+          "missing_role",
+          "missing_not_role_clauses"
+        ]
+      }
+    }
+  ],
+  "packages": [
+    {
+      "id": "originseal",
+      "package": "@verifrax/originseal",
+      "source_repo": "Verifrax/ORIGINSEAL",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 0
+    },
+    {
+      "id": "archicustos",
+      "package": "@verifrax/archicustos",
+      "source_repo": "Verifrax/ARCHICUSTOS",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 1
+    },
+    {
+      "id": "kairoclasp",
+      "package": "@verifrax/kairoclasp",
+      "source_repo": "Verifrax/KAIROCLASP",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 2
+    },
+    {
+      "id": "limenward",
+      "package": "@verifrax/limenward",
+      "source_repo": "Verifrax/LIMENWARD",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 3
+    },
+    {
+      "id": "validexor",
+      "package": "@verifrax/validexor",
+      "source_repo": "Verifrax/VALIDEXOR",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 4
+    },
+    {
+      "id": "attestorium",
+      "package": "@verifrax/attestorium",
+      "source_repo": "Verifrax/ATTESTORIUM",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 5
+    },
+    {
+      "id": "irrevocull",
+      "package": "@verifrax/irrevocull",
+      "source_repo": "Verifrax/IRREVOCULL",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 6
+    },
+    {
+      "id": "guillotine",
+      "package": "@verifrax/guillotine",
+      "source_repo": "Verifrax/GUILLOTINE",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 7
+    },
+    {
+      "id": "auctoriseal",
+      "package": "@verifrax/auctoriseal",
+      "source_repo": "Verifrax/AUCTORISEAL",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 8
+    },
+    {
+      "id": "corpiform",
+      "package": "@verifrax/corpiform",
+      "source_repo": "Verifrax/CORPIFORM",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 9
+    },
+    {
+      "id": "cicullis",
+      "package": "@verifrax/cicullis",
+      "source_repo": "Verifrax/CICULLIS",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 10
+    },
+    {
+      "id": "verifrax-verify",
+      "package": "@verifrax/verifrax-verify",
+      "source_repo": "Verifrax/VERIFRAX-verify",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 11
+    },
+    {
+      "id": "verifrax-profiles",
+      "package": "@verifrax/verifrax-profiles",
+      "source_repo": "Verifrax/VERIFRAX-PROFILES",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 12
+    },
+    {
+      "id": "verifrax-spec",
+      "package": "@verifrax/verifrax-spec",
+      "source_repo": "Verifrax/VERIFRAX-SPEC",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 13
+    },
+    {
+      "id": "verifrax",
+      "package": "@verifrax/verifrax",
+      "source_repo": "Verifrax/VERIFRAX",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 14
+    },
+    {
+      "id": "sigillarium",
+      "package": "@verifrax/sigillarium",
+      "source_repo": "Verifrax/SIGILLARIUM",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 15
+    },
+    {
+      "id": "verifrax-api",
+      "package": "@verifrax/verifrax-api",
+      "source_repo": "Verifrax/VERIFRAX-API",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 16
+    },
+    {
+      "id": "root",
+      "package": "@verifrax/root",
+      "source_repo": "Verifrax/VERIFRAX",
+      "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+      "visual_class": "package_surface",
+      "position": 17
+    }
+  ],
+  "enterprise_products": [
+    {
+      "id": "authority-governance",
+      "name": "Authority Governance Platform",
+      "maps_to": "AUCTORISEAL",
+      "paid_layer": true,
+      "public_truth_layer": false,
+      "buyer_outcome": "Who was allowed to authorize this action, under what scope, and with what audit trail?",
+      "cta": "Book a demo"
+    },
+    {
+      "id": "deterministic-workflow",
+      "name": "Deterministic Workflow Infrastructure",
+      "maps_to": "CORPIFORM",
+      "paid_layer": true,
+      "public_truth_layer": false,
+      "buyer_outcome": "What ran, under which authority, with which receipt, and with what reproducible boundary?",
+      "cta": "Book a demo"
+    },
+    {
+      "id": "ci-governance",
+      "name": "CI Governance Layer",
+      "maps_to": "cicullis",
+      "paid_layer": true,
+      "public_truth_layer": false,
+      "buyer_outcome": "What changes were allowed to pass, under which rules, and which gates prevented illegitimate mutation?",
+      "cta": "Book a demo"
+    },
+    {
+      "id": "verification-platform",
+      "name": "Verification Authority Platform",
+      "maps_to": "VERIFRAX + VERIFRAX-API",
+      "paid_layer": true,
+      "public_truth_layer": false,
+      "buyer_outcome": "What verified, under which public rules, and how can we integrate that verification into risk, compliance, and machine workflows?",
+      "cta": "Book a demo"
+    },
+    {
+      "id": "artifact-certification",
+      "name": "Artifact Certification Platform",
+      "maps_to": "SIGILLARIUM",
+      "paid_layer": true,
+      "public_truth_layer": false,
+      "buyer_outcome": "How are certified artifacts issued, surfaced, and referenced without collapsing proof, verification, and archive roles?",
+      "cta": "Book a demo"
+    }
+  ],
+  "journey": [
+    {
+      "id": "claim",
+      "label": "CLAIM",
+      "role": "untrusted material enters candidate path",
+      "maps_to": null,
+      "position": 0,
+      "visual_class": "journey_segment"
+    },
+    {
+      "id": "admissibility",
+      "label": "ADMISSIBILITY",
+      "role": "candidate material is checked before materialization",
+      "maps_to": "ADMISSORIUM",
+      "position": 1,
+      "visual_class": "journey_segment"
+    },
+    {
+      "id": "authority",
+      "label": "AUTHORITY",
+      "role": "authority scope is checked",
+      "maps_to": "AUCTORISEAL",
+      "position": 2,
+      "visual_class": "journey_segment"
+    },
+    {
+      "id": "execution",
+      "label": "EXECUTION",
+      "role": "governed execution runs under authority",
+      "maps_to": "CORPIFORM",
+      "position": 3,
+      "visual_class": "journey_segment"
+    },
+    {
+      "id": "receipt",
+      "label": "RECEIPT",
+      "role": "execution receipt anchors what ran",
+      "maps_to": "CORPIFORM",
+      "position": 4,
+      "visual_class": "journey_segment"
+    },
+    {
+      "id": "verification",
+      "label": "VERIFICATION",
+      "role": "verification evaluates evidence",
+      "maps_to": "VERIFRAX / VERIFRAX-verify",
+      "position": 5,
+      "visual_class": "journey_segment"
+    },
+    {
+      "id": "recognition",
+      "label": "RECOGNITION",
+      "role": "terminal recognition evaluates unavoidable meaning",
+      "maps_to": "ANAGNORIUM",
+      "position": 6,
+      "visual_class": "journey_segment"
+    },
+    {
+      "id": "recourse",
+      "label": "RECOURSE",
+      "role": "terminal recourse routes what follows",
+      "maps_to": "REGRESSORIUM",
+      "position": 7,
+      "visual_class": "journey_segment"
+    },
+    {
+      "id": "permanence",
+      "label": "PERMANENCE",
+      "role": "archive/reference preserves projection and evidence references",
+      "maps_to": "SIGILLARIUM",
+      "position": 8,
+      "visual_class": "journey_segment"
+    }
+  ],
+  "rails": [
+    {
+      "from": "SYNTAGMARIUM",
+      "to": "ORBISTIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "SYNTAGMARIUM",
+      "to": "CONSONORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "ORBISTIUM",
+      "to": "CONSONORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "SYNTAGMARIUM",
+      "to": "TACHYRIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "ORBISTIUM",
+      "to": "TACHYRIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "CONSONORIUM",
+      "to": "TACHYRIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "SYNTAGMARIUM",
+      "to": "AUCTORISEAL",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "AUCTORISEAL",
+      "to": "CORPIFORM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "CORPIFORM",
+      "to": "VERIFRAX",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "VERIFRAX",
+      "to": "ANAGNORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "ANAGNORIUM",
+      "to": "REGRESSORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "CONSONORIUM",
+      "to": "ADMISSORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "governed_repositories",
+      "value": 35
+    },
+    {
+      "id": "sovereign_chambers",
+      "value": 9
+    },
+    {
+      "id": "host_gates",
+      "value": 12
+    },
+    {
+      "id": "enterprise_products",
+      "value": 5
+    }
+  ],
+  "provenance": {
+    "sources": [
+      {
+        "id": "topology",
+        "path": "public/data/topology.json",
+        "sha256": "sha256:3f61aecf1dc30333040498f8340070b1a722936c4109a407b9d6ae0654613b60"
+      },
+      {
+        "id": "repos",
+        "path": "public/data/repos.json",
+        "sha256": "sha256:d98c39857f840f005c9559d19a0ae69be43aea40051d8c8b34370dbc7db2517e"
+      },
+      {
+        "id": "hosts",
+        "path": "public/data/hosts.json",
+        "sha256": "sha256:d43b9404ef6e5ab7f6f440c154ace8e0d18683dbb84a20e992f5b12064d8ab9c"
+      },
+      {
+        "id": "packages",
+        "path": "public/data/packages.json",
+        "sha256": "sha256:240fa2b7e7d07cebd6c8ebab770fda96589ae9494c24dc7e9b9cec724de53314"
+      },
+      {
+        "id": "products",
+        "path": "public/data/products.json",
+        "sha256": "sha256:8943d30280b9750ce19399d2ab6da2e67115a496089292faf4971fbc8ee75f29"
+      },
+      {
+        "id": "status",
+        "path": "public/data/status.json",
+        "sha256": "sha256:f481c677cc9e6be866c7c6f23bd22a8f57ff9a766c3d6f7efd0f334bf2179c42"
+      }
+    ],
+    "hashes": {
+      "topology": "sha256:3f61aecf1dc30333040498f8340070b1a722936c4109a407b9d6ae0654613b60",
+      "repos": "sha256:d98c39857f840f005c9559d19a0ae69be43aea40051d8c8b34370dbc7db2517e",
+      "hosts": "sha256:d43b9404ef6e5ab7f6f440c154ace8e0d18683dbb84a20e992f5b12064d8ab9c",
+      "packages": "sha256:240fa2b7e7d07cebd6c8ebab770fda96589ae9494c24dc7e9b9cec724de53314",
+      "products": "sha256:8943d30280b9750ce19399d2ab6da2e67115a496089292faf4971fbc8ee75f29",
+      "status": "sha256:f481c677cc9e6be866c7c6f23bd22a8f57ff9a766c3d6f7efd0f334bf2179c42"
+    },
+    "asset_hashes": {
+      "models/chamber.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "models/repo-pillar.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "models/host-gate.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "models/admissorium-gate.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "models/accepted-truth-core.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "last_verified_at": "2026-04-26T06:58:49.907Z"
+  }
+}

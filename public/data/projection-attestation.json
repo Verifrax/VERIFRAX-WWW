@@ -1,0 +1,37 @@
+{
+  "attestation_type": "VERIFRAX_OBSERVATORY_PROJECTION_ATTESTATION",
+  "schema_version": "1.0.0",
+  "projection_id": "vco-2026-04-26T06-58-49Z",
+  "projection_type": "DERIVED_PROJECTION",
+  "truth_warning": "NOT_TRUTH_SOURCE",
+  "subject": {
+    "manifest": "public/data/verifrax-observatory.json",
+    "manifest_sha256": "sha256:ec9aa00d720d812e768456ecb1beff116812eab5402b8beec4c872bd4f2de0cf",
+    "receipt": "public/data/projection-receipt.json",
+    "receipt_sha256": "sha256:de5cf8c001f3b5e8500fecad891cc586b36d5ea4ffbc6be9fe6f0c7c2c889465",
+    "ledger": "public/data/projection-ledger.json",
+    "ledger_sha256": "sha256:777daadc4cf71baa2b9f9f569d21de418b3b63a9be4204a8d6bb8243d8a067eb",
+    "ledger_entry_sha256": "sha256:95569d0683f4e7c768b4996b248718ea80e86069b4c9e48040f31c3da678715d"
+  },
+  "source_hashes": {
+    "topology": "sha256:3f61aecf1dc30333040498f8340070b1a722936c4109a407b9d6ae0654613b60",
+    "repos": "sha256:d98c39857f840f005c9559d19a0ae69be43aea40051d8c8b34370dbc7db2517e",
+    "hosts": "sha256:d43b9404ef6e5ab7f6f440c154ace8e0d18683dbb84a20e992f5b12064d8ab9c",
+    "packages": "sha256:240fa2b7e7d07cebd6c8ebab770fda96589ae9494c24dc7e9b9cec724de53314",
+    "products": "sha256:8943d30280b9750ce19399d2ab6da2e67115a496089292faf4971fbc8ee75f29",
+    "status": "sha256:f481c677cc9e6be866c7c6f23bd22a8f57ff9a766c3d6f7efd0f334bf2179c42"
+  },
+  "asset_hashes": {
+    "models/chamber.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "models/repo-pillar.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "models/host-gate.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "models/admissorium-gate.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "models/accepted-truth-core.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "render_permission": "FULL_OBSERVATORY",
+  "signed_by": "VERIFRAX-WWW projection release key",
+  "signature_algorithm": "ed25519",
+  "public_key_id": "verifrax-www-projection-key-001",
+  "signed_payload_sha256": "sha256:655662e7005e15637b740e9816880f5425f4a396f1916414362dc50c127a5b3c",
+  "signature": "nRDDYjWfqyjvW7khbJn7+6twWdVD+UKZr2GUoWtWH/3Cy6dgbKh+etLOiiN2xh+itP0kzvVXRuLBkgpPnNxLCA=="
+}

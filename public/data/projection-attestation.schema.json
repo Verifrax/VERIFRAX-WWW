@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.verifrax.net/data/projection-attestation.schema.json",
+  "title": "VERIFRAX Observatory Projection Attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "attestation_type",
+    "schema_version",
+    "projection_id",
+    "projection_type",
+    "truth_warning",
+    "subject",
+    "source_hashes",
+    "asset_hashes",
+    "render_permission",
+    "signed_by",
+    "signature_algorithm",
+    "public_key_id",
+    "signed_payload_sha256",
+    "signature"
+  ],
+  "properties": {
+    "attestation_type": {
+      "const": "VERIFRAX_OBSERVATORY_PROJECTION_ATTESTATION"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "projection_id": {
+      "type": "string",
+      "minLength": 8
+    },
+    "projection_type": {
+      "const": "DERIVED_PROJECTION"
+    },
+    "truth_warning": {
+      "const": "NOT_TRUTH_SOURCE"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest",
+        "manifest_sha256",
+        "receipt",
+        "receipt_sha256",
+        "ledger",
+        "ledger_sha256",
+        "ledger_entry_sha256"
+      ],
+      "properties": {
+        "manifest": { "const": "public/data/verifrax-observatory.json" },
+        "manifest_sha256": { "$ref": "#/$defs/sha256" },
+        "receipt": { "const": "public/data/projection-receipt.json" },
+        "receipt_sha256": { "$ref": "#/$defs/sha256" },
+        "ledger": { "const": "public/data/projection-ledger.json" },
+        "ledger_sha256": { "$ref": "#/$defs/sha256" },
+        "ledger_entry_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "source_hashes": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/sha256" }
+    },
+    "asset_hashes": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/sha256" }
+    },
+    "render_permission": {
+      "enum": [
+        "FULL_OBSERVATORY",
+        "PARTIAL_OBSERVATORY",
+        "SAFE_PROJECTION",
+        "STATIC_FALLBACK",
+        "BLOCKED_PROJECTION"
+      ]
+    },
+    "signed_by": {
+      "const": "VERIFRAX-WWW projection release key"
+    },
+    "signature_algorithm": {
+      "const": "ed25519"
+    },
+    "public_key_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "signed_payload_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 64
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}
