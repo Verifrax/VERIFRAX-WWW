@@ -1,0 +1,146 @@
+[
+  {
+    "id": "originseal",
+    "package": "@verifrax/originseal",
+    "source_repo": "Verifrax/ORIGINSEAL",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 0
+  },
+  {
+    "id": "archicustos",
+    "package": "@verifrax/archicustos",
+    "source_repo": "Verifrax/ARCHICUSTOS",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 1
+  },
+  {
+    "id": "kairoclasp",
+    "package": "@verifrax/kairoclasp",
+    "source_repo": "Verifrax/KAIROCLASP",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 2
+  },
+  {
+    "id": "limenward",
+    "package": "@verifrax/limenward",
+    "source_repo": "Verifrax/LIMENWARD",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 3
+  },
+  {
+    "id": "validexor",
+    "package": "@verifrax/validexor",
+    "source_repo": "Verifrax/VALIDEXOR",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 4
+  },
+  {
+    "id": "attestorium",
+    "package": "@verifrax/attestorium",
+    "source_repo": "Verifrax/ATTESTORIUM",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 5
+  },
+  {
+    "id": "irrevocull",
+    "package": "@verifrax/irrevocull",
+    "source_repo": "Verifrax/IRREVOCULL",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 6
+  },
+  {
+    "id": "guillotine",
+    "package": "@verifrax/guillotine",
+    "source_repo": "Verifrax/GUILLOTINE",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 7
+  },
+  {
+    "id": "auctoriseal",
+    "package": "@verifrax/auctoriseal",
+    "source_repo": "Verifrax/AUCTORISEAL",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 8
+  },
+  {
+    "id": "corpiform",
+    "package": "@verifrax/corpiform",
+    "source_repo": "Verifrax/CORPIFORM",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 9
+  },
+  {
+    "id": "cicullis",
+    "package": "@verifrax/cicullis",
+    "source_repo": "Verifrax/CICULLIS",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 10
+  },
+  {
+    "id": "verifrax-verify",
+    "package": "@verifrax/verifrax-verify",
+    "source_repo": "Verifrax/VERIFRAX-verify",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 11
+  },
+  {
+    "id": "verifrax-profiles",
+    "package": "@verifrax/verifrax-profiles",
+    "source_repo": "Verifrax/VERIFRAX-PROFILES",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 12
+  },
+  {
+    "id": "verifrax-spec",
+    "package": "@verifrax/verifrax-spec",
+    "source_repo": "Verifrax/VERIFRAX-SPEC",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 13
+  },
+  {
+    "id": "verifrax",
+    "package": "@verifrax/verifrax",
+    "source_repo": "Verifrax/VERIFRAX",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 14
+  },
+  {
+    "id": "sigillarium",
+    "package": "@verifrax/sigillarium",
+    "source_repo": "Verifrax/SIGILLARIUM",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 15
+  },
+  {
+    "id": "verifrax-api",
+    "package": "@verifrax/verifrax-api",
+    "source_repo": "Verifrax/VERIFRAX-API",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 16
+  },
+  {
+    "id": "root",
+    "package": "@verifrax/root",
+    "source_repo": "Verifrax/VERIFRAX",
+    "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
+    "visual_class": "package_surface",
+    "position": 17
+  }
+]

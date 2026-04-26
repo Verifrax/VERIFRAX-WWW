@@ -1,0 +1,99 @@
+{
+  "topology_type": "VERIFRAX_CONSTITUTIONAL_STACK",
+  "order": [
+    "law",
+    "state",
+    "reconciliation",
+    "cognition",
+    "authority",
+    "execution",
+    "verification",
+    "terminal recognition",
+    "terminal recourse"
+  ],
+  "chambers": [
+    "syntagmarium",
+    "orbistium",
+    "consonorium",
+    "tachyrium",
+    "auctoriseal",
+    "corpiform",
+    "verifrax",
+    "anagnorium",
+    "regressorium"
+  ],
+  "rails": [
+    {
+      "from": "SYNTAGMARIUM",
+      "to": "ORBISTIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "SYNTAGMARIUM",
+      "to": "CONSONORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "ORBISTIUM",
+      "to": "CONSONORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "SYNTAGMARIUM",
+      "to": "TACHYRIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "ORBISTIUM",
+      "to": "TACHYRIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "CONSONORIUM",
+      "to": "TACHYRIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "SYNTAGMARIUM",
+      "to": "AUCTORISEAL",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "AUCTORISEAL",
+      "to": "CORPIFORM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "CORPIFORM",
+      "to": "VERIFRAX",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "VERIFRAX",
+      "to": "ANAGNORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "ANAGNORIUM",
+      "to": "REGRESSORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    },
+    {
+      "from": "CONSONORIUM",
+      "to": "ADMISSORIUM",
+      "relation": "authority_direction",
+      "visual_class": "dependency_rail"
+    }
+  ]
+}
