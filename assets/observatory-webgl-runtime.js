@@ -44,20 +44,22 @@ function tuneLabelVisibility(labels, camera) {
     let opacity = 0.78;
 
     if (isCore) {
-      scale = 0.72;
+      scale = 0.88;
       opacity = 0.96;
     } else if (isChamber) {
-      scale = d < 22 ? 0.72 : d > 44 ? 0.56 : 0.66;
+      scale = d < 22 ? 0.84 : d > 44 ? 0.66 : 0.76;
       opacity = d > 48 ? 0.68 : 0.90;
     } else if (isHost) {
-      scale = d > 42 ? 0.46 : 0.52;
+      scale = d > 42 ? 0.40 : 0.48;
       opacity = d > 42 ? 0.48 : 0.68;
     } else {
       scale = d > 44 ? 0.50 : 0.58;
       opacity = d > 44 ? 0.58 : 0.76;
     }
 
-    label.scale.setScalar(scale);
+    const aspect = (label.userData && label.userData.labelAspect) || 2.85;
+    const baseHeight = (label.userData && label.userData.labelBaseHeight) || 0.78;
+    label.scale.set(scale * aspect * 2.35, scale * baseHeight, 1);
     if (label.material) {
       label.material.opacity = opacity;
       label.material.transparent = true;
@@ -132,7 +134,10 @@ function makeLabel(text, subtext = "", width = 512, height = 192, accent = "#73d
   });
 
   const sprite = new THREE.Sprite(material);
-  sprite.scale.set(width / 115, height / 115, 1);
+  
+  sprite.userData.labelAspect = width / height;
+  sprite.userData.labelBaseHeight = Math.max(0.55, Math.min(1.05, height / 180));
+sprite.scale.set(width / 115, height / 115, 1);
   sprite.userData.canvasLabel = true;
   return sprite;
 }
@@ -895,3 +900,6 @@ window.runtimeHelperBoundary = "VERIFRAX_OBSERVATORY_RUNTIME_HELPER_BOUNDARY";
 window.visualHierarchyRestoration = "VERIFRAX_OBSERVATORY_VISUAL_HIERARCHY_RESTORATION";
 
 window.visualHierarchyCollisionClose = "VERIFRAX_OBSERVATORY_VISUAL_HIERARCHY_COLLISION_CLOSE";
+
+
+window.labelAspectRestoration = "VERIFRAX_OBSERVATORY_LABEL_ASPECT_RESTORATION";
