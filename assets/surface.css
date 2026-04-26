@@ -618,3 +618,251 @@ body.vf-observatory-safe .surface-fallback-root{
   display:block;
 }
 
+/* BEGIN VCO TERMINAL INTERACTION COMMAND MACHINE */"
+end = "/* END VCO TERMINAL INTERACTION COMMAND MACHINE */
+
+/* VCO_TERMINAL_PANEL_CONTAINMENT_FORCE_START */
+/* VCO_TERMINAL_INTERACTION_COMMAND_MACHINE */
+/* VCO_PANEL_CONTAINMENT_BOUNDARY */
+/* panel_containment_css */
+
+.vco-terminal-runtime,
+.vco-terminal-runtime *{
+  box-sizing:border-box;
+}
+
+.vco-terminal-runtime{
+  position:relative;
+  isolation:isolate;
+  width:100%;
+  height:100vh;
+  min-height:720px;
+  overflow:hidden;
+  background:#02070b;
+  color:#eef7ff;
+}
+
+.vco-stage{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+}
+
+.vco-stage canvas{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.vco-topbar{
+  position:absolute;
+  z-index:40;
+  top:0;
+  left:0;
+  right:0;
+  height:76px;
+  pointer-events:auto;
+}
+
+.vco-hero{
+  position:absolute;
+  z-index:20;
+  top:122px;
+  left:38px;
+  width:min(520px,calc(100% - 76px));
+  pointer-events:none;
+}
+
+.vco-hero .vco-pills,
+.vco-pills,
+.vco-proofline,
+.vco-proofline button{
+  pointer-events:auto;
+}
+
+.vco-left,
+.vco-right,
+.vco-journey,
+.vco-inspector,
+.vco-command,
+.vco-command-box,
+.vco-command-list,
+.vco-status{
+  pointer-events:auto;
+}
+
+.vco-left{
+  position:absolute;
+  z-index:24;
+  left:20px;
+  bottom:136px;
+  width:360px;
+  max-height:calc(100vh - 260px);
+  display:grid;
+  gap:12px;
+  overflow:hidden;
+}
+
+.vco-right{
+  position:absolute;
+  z-index:24;
+  right:22px;
+  top:96px;
+  width:390px;
+  max-height:calc(100vh - 190px);
+  display:grid;
+  gap:12px;
+  overflow:hidden;
+}
+
+.vco-card{
+  min-width:0;
+  overflow:hidden;
+  contain:layout paint;
+}
+
+.vco-card,
+.vco-enterprise,
+.vco-hosts,
+.vco-stack{
+  max-width:100%;
+}
+
+.vco-enterprise{
+  max-height:485px;
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+
+.vco-hosts{
+  max-height:220px;
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+
+.vco-stack{
+  max-height:250px;
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+
+.vco-journey{
+  position:absolute;
+  z-index:45;
+  left:14px;
+  right:14px;
+  bottom:14px;
+  max-height:150px;
+  overflow:hidden;
+  pointer-events:auto;
+  contain:layout paint;
+}
+
+.vco-journey-grid{
+  display:grid;
+  grid-template-columns:repeat(9,minmax(96px,1fr));
+  gap:10px;
+  max-width:100%;
+  overflow:hidden;
+}
+
+.vco-journey-stage{
+  min-width:0;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.vco-inspector{
+  position:absolute;
+  z-index:60;
+  right:270px;
+  bottom:174px;
+  width:min(455px,calc(100vw - 42px));
+  max-height:min(420px,calc(100vh - 250px));
+  overflow:auto;
+  overscroll-behavior:contain;
+  contain:layout paint;
+}
+
+.vco-command{
+  position:absolute;
+  z-index:90;
+  inset:0;
+  display:grid;
+  place-items:start center;
+  padding-top:11vh;
+  overflow:hidden;
+  pointer-events:auto;
+}
+
+.vco-command[hidden]{
+  display:none !important;
+}
+
+.vco-command-box{
+  width:min(760px,calc(100vw - 34px));
+  max-height:78vh;
+  overflow:hidden;
+}
+
+.vco-command-list{
+  max-height:460px;
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+
+@media (max-width:900px){
+  .vco-terminal-runtime{
+    height:100svh;
+    min-height:680px;
+    overflow:hidden;
+  }
+
+  .vco-topbar{
+    height:74px;
+  }
+
+  .vco-hero{
+    top:108px;
+    left:18px;
+    width:calc(100% - 36px);
+  }
+
+  .vco-left{
+    left:14px;
+    bottom:190px;
+    width:260px;
+    max-height:calc(100svh - 360px);
+  }
+
+  .vco-right{
+    display:none;
+  }
+
+  .vco-stack{
+    display:none;
+  }
+
+  .vco-journey{
+    left:10px;
+    right:10px;
+    bottom:10px;
+    max-height:148px;
+    overflow:auto;
+  }
+
+  .vco-journey-grid{
+    grid-template-columns:repeat(2,minmax(130px,1fr));
+  }
+
+  .vco-inspector{
+    right:10px;
+    left:10px;
+    bottom:168px;
+    width:auto;
+    max-height:320px;
+  }
+}
+
+/* VCO_TERMINAL_PANEL_CONTAINMENT_FORCE_END */

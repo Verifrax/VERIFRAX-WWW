@@ -769,3 +769,44 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# BEGIN VCO TERMINAL CSS POSTPROCESS
+from pathlib import Path as _VcoPath
+
+def _vco_terminal_css_postprocess():
+    _p = _VcoPath("assets/surface.css")
+    if not _p.exists():
+        return
+    _css = _p.read_text()
+    _start = '/* BEGIN VCO TERMINAL INTERACTION COMMAND MACHINE */'
+    _end = '/* END VCO TERMINAL INTERACTION COMMAND MACHINE */'
+    _block = '/* BEGIN VCO TERMINAL INTERACTION COMMAND MACHINE */"\nend = "/* END VCO TERMINAL INTERACTION COMMAND MACHINE */'
+    if _start in _css and _end in _css:
+        _css = _css.split(_start)[0].rstrip() + "\n" + _block + "\n" + _css.split(_end, 1)[1].lstrip()
+    else:
+        _css = _css.rstrip() + "\n\n" + _block + "\n"
+    _p.write_text(_css)
+
+_vco_terminal_css_postprocess()
+# END VCO TERMINAL CSS POSTPROCESS
+
+# BEGIN VCO TERMINAL PANEL CONTAINMENT CSS FORCE
+from pathlib import Path as _VcoPanelPath
+
+def _vco_force_panel_containment_css():
+    _p = _VcoPanelPath("assets/surface.css")
+    if not _p.exists():
+        return
+    _css = _p.read_text()
+    _start = "/* VCO_TERMINAL_PANEL_CONTAINMENT_FORCE_START */"
+    _end = "/* VCO_TERMINAL_PANEL_CONTAINMENT_FORCE_END */"
+    _block = '/* VCO_TERMINAL_INTERACTION_COMMAND_MACHINE */\n/* VCO_PANEL_CONTAINMENT_BOUNDARY */\n/* panel_containment_css */\n\n.vco-terminal-runtime,\n.vco-terminal-runtime *{\n  box-sizing:border-box;\n}\n\n.vco-terminal-runtime{\n  position:relative;\n  isolation:isolate;\n  width:100%;\n  height:100vh;\n  min-height:720px;\n  overflow:hidden;\n  background:#02070b;\n  color:#eef7ff;\n}\n\n.vco-stage{\n  position:absolute;\n  inset:0;\n  z-index:0;\n  overflow:hidden;\n}\n\n.vco-stage canvas{\n  display:block;\n  width:100%;\n  height:100%;\n}\n\n.vco-topbar{\n  position:absolute;\n  z-index:40;\n  top:0;\n  left:0;\n  right:0;\n  height:76px;\n  pointer-events:auto;\n}\n\n.vco-hero{\n  position:absolute;\n  z-index:20;\n  top:122px;\n  left:38px;\n  width:min(520px,calc(100% - 76px));\n  pointer-events:none;\n}\n\n.vco-hero .vco-pills,\n.vco-pills,\n.vco-proofline,\n.vco-proofline button{\n  pointer-events:auto;\n}\n\n.vco-left,\n.vco-right,\n.vco-journey,\n.vco-inspector,\n.vco-command,\n.vco-command-box,\n.vco-command-list,\n.vco-status{\n  pointer-events:auto;\n}\n\n.vco-left{\n  position:absolute;\n  z-index:24;\n  left:20px;\n  bottom:136px;\n  width:360px;\n  max-height:calc(100vh - 260px);\n  display:grid;\n  gap:12px;\n  overflow:hidden;\n}\n\n.vco-right{\n  position:absolute;\n  z-index:24;\n  right:22px;\n  top:96px;\n  width:390px;\n  max-height:calc(100vh - 190px);\n  display:grid;\n  gap:12px;\n  overflow:hidden;\n}\n\n.vco-card{\n  min-width:0;\n  overflow:hidden;\n  contain:layout paint;\n}\n\n.vco-card,\n.vco-enterprise,\n.vco-hosts,\n.vco-stack{\n  max-width:100%;\n}\n\n.vco-enterprise{\n  max-height:485px;\n  overflow:auto;\n  overscroll-behavior:contain;\n}\n\n.vco-hosts{\n  max-height:220px;\n  overflow:auto;\n  overscroll-behavior:contain;\n}\n\n.vco-stack{\n  max-height:250px;\n  overflow:auto;\n  overscroll-behavior:contain;\n}\n\n.vco-journey{\n  position:absolute;\n  z-index:45;\n  left:14px;\n  right:14px;\n  bottom:14px;\n  max-height:150px;\n  overflow:hidden;\n  pointer-events:auto;\n  contain:layout paint;\n}\n\n.vco-journey-grid{\n  display:grid;\n  grid-template-columns:repeat(9,minmax(96px,1fr));\n  gap:10px;\n  max-width:100%;\n  overflow:hidden;\n}\n\n.vco-journey-stage{\n  min-width:0;\n  overflow:hidden;\n  cursor:pointer;\n}\n\n.vco-inspector{\n  position:absolute;\n  z-index:60;\n  right:270px;\n  bottom:174px;\n  width:min(455px,calc(100vw - 42px));\n  max-height:min(420px,calc(100vh - 250px));\n  overflow:auto;\n  overscroll-behavior:contain;\n  contain:layout paint;\n}\n\n.vco-command{\n  position:absolute;\n  z-index:90;\n  inset:0;\n  display:grid;\n  place-items:start center;\n  padding-top:11vh;\n  overflow:hidden;\n  pointer-events:auto;\n}\n\n.vco-command[hidden]{\n  display:none !important;\n}\n\n.vco-command-box{\n  width:min(760px,calc(100vw - 34px));\n  max-height:78vh;\n  overflow:hidden;\n}\n\n.vco-command-list{\n  max-height:460px;\n  overflow:auto;\n  overscroll-behavior:contain;\n}\n\n@media (max-width:900px){\n  .vco-terminal-runtime{\n    height:100svh;\n    min-height:680px;\n    overflow:hidden;\n  }\n\n  .vco-topbar{\n    height:74px;\n  }\n\n  .vco-hero{\n    top:108px;\n    left:18px;\n    width:calc(100% - 36px);\n  }\n\n  .vco-left{\n    left:14px;\n    bottom:190px;\n    width:260px;\n    max-height:calc(100svh - 360px);\n  }\n\n  .vco-right{\n    display:none;\n  }\n\n  .vco-stack{\n    display:none;\n  }\n\n  .vco-journey{\n    left:10px;\n    right:10px;\n    bottom:10px;\n    max-height:148px;\n    overflow:auto;\n  }\n\n  .vco-journey-grid{\n    grid-template-columns:repeat(2,minmax(130px,1fr));\n  }\n\n  .vco-inspector{\n    right:10px;\n    left:10px;\n    bottom:168px;\n    width:auto;\n    max-height:320px;\n  }\n}\n'
+    _wrapped = _start + "\n" + _block + "\n" + _end + "\n"
+    if _start in _css and _end in _css:
+        _css = _css.split(_start)[0].rstrip() + "\n\n" + _wrapped + _css.split(_end, 1)[1].lstrip()
+    else:
+        _css = _css.rstrip() + "\n\n" + _wrapped
+    _p.write_text(_css)
+
+_vco_force_panel_containment_css()
+# END VCO TERMINAL PANEL CONTAINMENT CSS FORCE
