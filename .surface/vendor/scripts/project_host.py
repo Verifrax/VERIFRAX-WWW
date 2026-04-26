@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import hashlib
 import json
+import re
 import sys
 from html import escape
 from pathlib import Path
@@ -40,6 +41,7 @@ def sha(path: Path) -> str:
 def ensure_asset(dest_dir: Path, css: str):
     asset_dir = dest_dir / "assets"
     asset_dir.mkdir(parents=True, exist_ok=True)
+    css = _vco_deep_repair_css(css)
     (asset_dir / "surface.css").write_text(css, encoding="utf-8")
 
 def render_observatory_gate(cfg):
@@ -790,6 +792,132 @@ def _vco_levelup_write_text(self, data, *args, **kwargs):
 
 _VCOPath.write_text = _vco_levelup_write_text
 # END VCO_PROJECTOR_CINEMATIC_LEVELUP
+
+
+def _vco_deep_repair_css_block():
+    return r"""
+/* BEGIN VCO OBSERVATORY DEEP REPAIR REAL3D COMMAND AUTHORITY */
+:root{
+  --vco-topbar-h:76px;
+  --vco-bottom-rail-h:128px;
+  --vco-blue:#78d9ff;
+  --vco-green:#a9ffd2;
+  --vco-line:rgba(127,210,255,.28);
+  --vco-line-strong:rgba(162,229,255,.54);
+}
+html,body{margin:0;min-height:100%;overflow-x:hidden;background:#02060a;color:#edf7ff}
+.oc-topbar{
+  position:sticky!important;top:0!important;z-index:80!important;min-height:var(--vco-topbar-h)!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 26px!important;
+  background:linear-gradient(180deg,rgba(1,5,10,.98),rgba(1,5,10,.82))!important;
+  border-bottom:1px solid rgba(127,210,255,.18)!important;backdrop-filter:blur(16px) saturate(1.2)!important
+}
+.oc-topbar nav{display:flex!important;gap:10px!important;flex-wrap:wrap!important;justify-content:flex-end!important}
+.oc-topbar a{
+  display:inline-flex!important;align-items:center!important;min-height:34px!important;padding:0 15px!important;border-radius:12px!important;
+  border:1px solid rgba(127,210,255,.34)!important;background:rgba(12,27,43,.76)!important;color:#eef7ff!important;text-decoration:none!important;font-weight:850!important
+}
+.observatory-webgl-runtime{
+  position:relative!important;width:100vw!important;height:calc(100vh - var(--vco-topbar-h))!important;min-height:780px!important;
+  overflow:hidden!important;isolation:isolate!important;background:#02060a!important
+}
+.observatory-webgl-runtime canvas{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;z-index:1!important;
+  filter:contrast(1.1) saturate(1.08) brightness(.98)!important
+}
+.oc-hero{
+  position:absolute!important;z-index:14!important;top:clamp(30px,5vh,72px)!important;left:28px!important;width:min(520px,38vw)!important;
+  pointer-events:none!important;text-shadow:0 10px 34px rgba(0,0,0,.78)!important
+}
+.oc-hero h2{margin:10px 0 12px!important;font-size:clamp(72px,7.6vw,142px)!important;line-height:.82!important;letter-spacing:-.08em!important;color:#fff!important}
+.oc-hero p{max-width:460px!important;font-size:clamp(15px,1.12vw,20px)!important;line-height:1.35!important;font-weight:850!important}
+.oc-left{
+  position:absolute!important;z-index:16!important;left:28px!important;bottom:calc(var(--vco-bottom-rail-h) + 28px)!important;
+  width:min(360px,22vw)!important;display:grid!important;gap:12px!important;max-height:42vh!important;overflow:hidden!important
+}
+.oc-right{
+  position:absolute!important;z-index:17!important;right:28px!important;top:calc(var(--vco-topbar-h) + 30px)!important;
+  width:min(370px,23vw)!important;max-height:calc(100vh - var(--vco-topbar-h) - var(--vco-bottom-rail-h) - 70px)!important;
+  overflow:auto!important;display:grid!important;gap:12px!important;scrollbar-width:thin!important
+}
+.oc-panel,.oc-left>*,.oc-right>*,.oc-inspector,.vco-deep-inspector,.vco-command-shell{
+  border:1px solid var(--vco-line)!important;border-radius:18px!important;
+  background:linear-gradient(180deg,rgba(10,20,32,.88),rgba(4,9,16,.84))!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.52),inset 0 1px 0 rgba(255,255,255,.05)!important;
+  backdrop-filter:blur(14px) saturate(1.16)!important
+}
+.oc-journey{
+  position:absolute!important;z-index:24!important;left:18px!important;right:18px!important;bottom:18px!important;
+  min-height:96px!important;max-height:128px!important;padding:14px 16px!important;border:1px solid var(--vco-line-strong)!important;
+  border-radius:20px!important;background:linear-gradient(180deg,rgba(5,12,20,.94),rgba(3,8,14,.90))!important;
+  box-shadow:0 -18px 70px rgba(0,0,0,.56),inset 0 1px 0 rgba(255,255,255,.05)!important;overflow:hidden!important
+}
+.oc-journey ol,[data-journey-list]{display:grid!important;grid-template-columns:repeat(9,minmax(96px,1fr))!important;gap:10px!important;margin:0!important;padding:0!important;list-style:none!important}
+.oc-journey li{
+  position:relative!important;min-height:58px!important;padding:11px 12px!important;border:1px solid rgba(127,210,255,.18)!important;
+  border-radius:14px!important;background:linear-gradient(180deg,rgba(12,22,34,.86),rgba(5,10,17,.80))!important;color:#e9f6ff!important;
+  cursor:pointer!important;overflow:hidden!important
+}
+.oc-journey li::after{
+  content:""!important;position:absolute!important;left:-50%!important;top:0!important;width:42%!important;height:100%!important;
+  background:linear-gradient(90deg,transparent,rgba(119,218,255,.22),transparent)!important;animation:vcoJourneySweep 5.2s linear infinite!important
+}
+.oc-journey li.is-active{border-color:rgba(153,236,255,.76)!important;box-shadow:0 0 0 1px rgba(153,236,255,.22),0 0 32px rgba(62,183,255,.25)!important}
+@keyframes vcoJourneySweep{0%{transform:translateX(0)}100%{transform:translateX(360%)}}
+.vco-deep-inspector{
+  position:fixed!important;z-index:120!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%) scale(.98)!important;
+  width:min(620px,calc(100vw - 42px))!important;max-height:min(620px,calc(100vh - 110px))!important;padding:22px!important;
+  opacity:0!important;pointer-events:none!important;overflow:auto!important;transition:opacity .16s ease,transform .16s ease!important
+}
+.vco-deep-inspector.is-open{opacity:1!important;pointer-events:auto!important;transform:translate(-50%,-50%) scale(1)!important}
+.vco-deep-close{
+  position:absolute!important;right:14px!important;top:12px!important;width:34px!important;height:34px!important;border-radius:999px!important;
+  border:1px solid rgba(127,210,255,.28)!important;background:rgba(8,17,28,.88)!important;color:#fff!important;cursor:pointer!important
+}
+.vco-deep-kicker{color:var(--vco-blue)!important;font:900 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;letter-spacing:.12em!important}
+.vco-deep-inspector h3{margin:8px 44px 6px 0!important;font-size:30px!important;line-height:1!important}
+.vco-deep-badge{
+  padding:10px 12px!important;border:1px solid rgba(169,255,210,.22)!important;border-radius:12px!important;
+  background:rgba(13,40,32,.42)!important;color:var(--vco-green)!important;font:900 12px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important
+}
+.vco-deep-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:18px!important;margin-top:18px!important}
+.vco-command-palette{
+  position:fixed!important;inset:0!important;z-index:140!important;display:grid!important;place-items:start center!important;padding-top:12vh!important;
+  background:rgba(0,4,8,.48)!important;opacity:0!important;pointer-events:none!important;backdrop-filter:blur(5px)!important;transition:opacity .14s ease!important
+}
+.vco-command-palette.is-open{opacity:1!important;pointer-events:auto!important}
+.vco-command-shell{width:min(760px,calc(100vw - 40px))!important;padding:14px!important}
+.vco-command-input{
+  width:100%!important;box-sizing:border-box!important;padding:16px 18px!important;border:1px solid rgba(127,210,255,.34)!important;
+  border-radius:14px!important;outline:none!important;background:rgba(1,7,13,.96)!important;color:#fff!important;
+  font:900 18px/1.2 ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif!important
+}
+.vco-command-list{display:grid!important;gap:8px!important;margin-top:12px!important;max-height:52vh!important;overflow:auto!important}
+.vco-command-row{
+  display:flex!important;justify-content:space-between!important;align-items:center!important;gap:18px!important;padding:13px 14px!important;
+  border:1px solid rgba(127,210,255,.16)!important;border-radius:12px!important;background:rgba(8,16,26,.78)!important;color:#eaf7ff!important;
+  cursor:pointer!important;text-align:left!important
+}
+.vco-command-row.is-active,.vco-command-row:hover{border-color:rgba(133,219,255,.68)!important;background:rgba(15,39,58,.88)!important}
+.vco-command-row em{color:var(--vco-blue)!important;font-style:normal!important;font:900 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;text-transform:uppercase!important}
+@media (max-width:1280px){.oc-right{width:330px!important}.oc-left{width:300px!important}.oc-hero{width:420px!important}.oc-hero h2{font-size:72px!important}}
+@media (max-width:980px){
+  .observatory-webgl-runtime{min-height:820px!important}
+  .oc-right,.oc-left{display:none!important}
+  .oc-hero{top:28px!important;left:18px!important;right:18px!important;width:auto!important}
+  .oc-hero h2{font-size:clamp(56px,15vw,88px)!important}
+  .oc-journey{left:8px!important;right:8px!important;bottom:8px!important;overflow:auto!important}
+  .oc-journey ol,[data-journey-list]{display:flex!important;min-width:900px!important}
+  .vco-deep-grid{grid-template-columns:1fr!important}
+}
+/* END VCO OBSERVATORY DEEP REPAIR REAL3D COMMAND AUTHORITY */
+"""
+
+def _vco_deep_repair_css(css):
+    import re
+    css = re.sub(r"/\* BEGIN VCO OBSERVATORY DEEP REPAIR REAL3D COMMAND AUTHORITY \*/[\s\S]*?/\* END VCO OBSERVATORY DEEP REPAIR REAL3D COMMAND AUTHORITY \*/", "", css)
+    return css.rstrip() + "\n\n" + _vco_deep_repair_css_block() + "\n"
+
 
 if __name__ == "__main__":
     main()
