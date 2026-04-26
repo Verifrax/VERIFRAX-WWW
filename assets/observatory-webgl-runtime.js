@@ -2,20 +2,18 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
 const DATA_URL = "data/verifrax-observatory.json";
 const ATTESTATION_URL = "data/projection-attestation.json";
-
 const FULL = "FULL_OBSERVATORY";
 const BLOCKED = "BLOCKED_PROJECTION";
 
 const palette = {
   void: 0x02060b,
-  basalt: 0x0b1118,
-  metal: 0x1d2733,
-  darkMetal: 0x101820,
+  basalt: 0x070c12,
+  metal: 0x1b2733,
+  darkMetal: 0x0d141c,
   blue: 0x73d0ff,
   blueDeep: 0x1f7fff,
   cyan: 0xa6e7ff,
   red: 0xff4e3d,
-  amber: 0xd3a84f,
   green: 0x36d17c,
   white: 0xeaf6ff,
   grey: 0x73808d
@@ -33,33 +31,52 @@ const chamberOrder = [
   "regressorium"
 ];
 
-function getContainer() {
-  return document.getElementById("observatory-webgl-runtime");
+function $(root, selector) {
+  return root.querySelector(selector);
 }
 
-function makeLabel(text, subtext = "", width = 512, height = 192) {
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function roundRect(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + width, y, x + width, y + height, radius);
+  ctx.arcTo(x + width, y + height, x, y + height, radius);
+  ctx.arcTo(x, y + height, x, y, radius);
+  ctx.arcTo(x, y, x + width, y, radius);
+  ctx.closePath();
+}
+
+function makeLabel(text, subtext = "", width = 512, height = 192, accent = "#73d0ff") {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  const ctx = canvas.getContext("2d");
 
+  const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, width, height);
-  ctx.fillStyle = "rgba(2, 7, 12, 0.78)";
-  ctx.strokeStyle = "rgba(115, 208, 255, 0.64)";
+
+  ctx.fillStyle = "rgba(2, 7, 12, 0.82)";
+  ctx.strokeStyle = "rgba(115, 208, 255, 0.62)";
   ctx.lineWidth = 3;
   roundRect(ctx, 10, 10, width - 20, height - 20, 18);
   ctx.fill();
   ctx.stroke();
 
-  ctx.fillStyle = "#ecf7ff";
-  ctx.font = "700 42px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+  ctx.fillStyle = "#edf8ff";
+  ctx.font = "800 42px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(text, width / 2, height / 2 - (subtext ? 22 : 0));
 
   if (subtext) {
-    ctx.fillStyle = "#9ecce8";
-    ctx.font = "500 25px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+    ctx.fillStyle = accent;
+    ctx.font = "700 24px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
     ctx.fillText(subtext, width / 2, height / 2 + 35);
   }
 
@@ -73,26 +90,13 @@ function makeLabel(text, subtext = "", width = 512, height = 192) {
   });
 
   const sprite = new THREE.Sprite(material);
-  sprite.scale.set(width / 110, height / 110, 1);
+  sprite.scale.set(width / 115, height / 115, 1);
   sprite.userData.canvasLabel = true;
   return sprite;
 }
 
-function roundRect(ctx, x, y, width, height, radius) {
-  ctx.beginPath();
-  ctx.moveTo(x + radius, y);
-  ctx.arcTo(x + width, y, x + width, y + height, radius);
-  ctx.arcTo(x + width, y + height, x, y + height, radius);
-  ctx.arcTo(x, y + height, x, y, radius);
-  ctx.arcTo(x, y, x + width, y, radius);
-  ctx.closePath();
-}
-
 function assertManifest(manifest, attestation) {
   const errors = [];
-
-  if (!manifest || typeof manifest !== "object") errors.push("manifest_missing");
-  if (!attestation || typeof attestation !== "object") errors.push("attestation_missing");
 
   if (manifest?.projection_type !== "DERIVED_PROJECTION") errors.push("projection_type_not_derived");
   if (manifest?.truth_warning !== "NOT_TRUTH_SOURCE") errors.push("truth_warning_missing");
@@ -105,19 +109,12 @@ function assertManifest(manifest, attestation) {
   if (admissorium && admissorium.visual_class !== "front_gate") errors.push("admissorium_not_front_gate");
   if (admissorium && admissorium.sovereign_chamber !== false) errors.push("admissorium_claims_chamber");
   if (admissorium && admissorium.truth_owner !== false) errors.push("admissorium_claims_truth");
-
   if (attestation?.render_permission !== FULL) errors.push("attestation_not_full");
 
   return errors;
 }
 
-function setSceneStatus(container, mode, message) {
-  container.dataset.observatoryRuntime = mode;
-  const status = container.querySelector("[data-runtime-status]");
-  if (status) status.textContent = message;
-}
-
-function createMaterial(color, emissive = 0x000000, intensity = 0.0, roughness = 0.64, metalness = 0.75) {
+function material(color, emissive = 0x000000, intensity = 0, roughness = 0.64, metalness = 0.76) {
   return new THREE.MeshStandardMaterial({
     color,
     emissive,
@@ -127,26 +124,28 @@ function createMaterial(color, emissive = 0x000000, intensity = 0.0, roughness =
   });
 }
 
-function addRing(scene, radius, tube, color, y = 0.02) {
-  const geometry = new THREE.TorusGeometry(radius, tube, 16, 192);
-  const material = createMaterial(color, color, 0.08, 0.5, 0.8);
-  const mesh = new THREE.Mesh(geometry, material);
+function polar(radius, angle, y = 0) {
+  return new THREE.Vector3(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
+}
+
+function addRing(scene, radius, tube, color, y = 0.02, intensity = 0.08) {
+  const mesh = new THREE.Mesh(
+    new THREE.TorusGeometry(radius, tube, 16, 220),
+    material(color, color, intensity, 0.48, 0.88)
+  );
   mesh.rotation.x = Math.PI / 2;
   mesh.position.y = y;
   scene.add(mesh);
   return mesh;
 }
 
-function polar(radius, angle, y = 0) {
-  return new THREE.Vector3(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
-}
-
-function createRail(scene, from, to, color = palette.blue) {
+function createRail(scene, from, to, color = palette.blue, thickness = 0.035) {
   const direction = new THREE.Vector3().subVectors(to, from);
   const length = direction.length();
-  const geometry = new THREE.CylinderGeometry(0.035, 0.035, length, 12, 1, true);
-  const material = createMaterial(color, color, 0.65, 0.35, 0.35);
-  const mesh = new THREE.Mesh(geometry, material);
+  const mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(thickness, thickness, length, 12, 1, true),
+    material(color, color, 0.72, 0.35, 0.38)
+  );
   const midpoint = new THREE.Vector3().addVectors(from, to).multiplyScalar(0.5);
   mesh.position.copy(midpoint);
   mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
@@ -154,72 +153,152 @@ function createRail(scene, from, to, color = palette.blue) {
   return mesh;
 }
 
+function setRuntimeStatus(container, mode, message) {
+  container.dataset.observatoryRuntime = mode;
+  const status = $(container, "[data-runtime-status]");
+  if (status) status.textContent = message;
+}
+
+function hydrateCommandSurface(container, manifest, attestation) {
+  const metrics = {
+    repos: manifest.repositories.length,
+    chambers: manifest.chambers.length,
+    hosts: manifest.hosts.length,
+    packages: manifest.packages?.length || 0,
+    products: manifest.enterprise_products?.length || 0,
+    projection: attestation.projection_id,
+    permission: attestation.render_permission
+  };
+
+  container.querySelectorAll("[data-count]").forEach((node) => {
+    const key = node.getAttribute("data-count");
+    node.textContent = metrics[key] ?? "—";
+  });
+
+  const stack = $(container, "[data-stack-list]");
+  if (stack) {
+    stack.innerHTML = chamberOrder.map((id, index) => {
+      const chamber = manifest.chambers.find((item) => item.id === id);
+      return `<li><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(chamber?.name || id)}</strong><em>${escapeHtml(chamber?.role || "")}</em></li>`;
+    }).join("");
+  }
+
+  const journey = $(container, "[data-journey-list]");
+  if (journey) {
+    journey.innerHTML = (manifest.journey || []).map((item, index) => {
+      return `<li><span>${index + 1}</span><strong>${escapeHtml(item.label)}</strong><em>${escapeHtml(item.maps_to || item.role)}</em></li>`;
+    }).join("");
+  }
+
+  const enterprise = $(container, "[data-enterprise-list]");
+  if (enterprise) {
+    enterprise.innerHTML = (manifest.enterprise_products || []).map((item) => {
+      return `<button type="button" data-enterprise="${escapeHtml(item.id)}"><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.maps_to)}</span><small>${escapeHtml(item.buyer_outcome)}</small></button>`;
+    }).join("");
+  }
+
+  const hostMap = $(container, "[data-host-list]");
+  if (hostMap) {
+    hostMap.innerHTML = (manifest.hosts || []).map((host) => {
+      return `<li><strong>${escapeHtml(host.label || host.id)}</strong><span>${escapeHtml(host.host)}</span></li>`;
+    }).join("");
+  }
+
+  const projection = $(container, "[data-projection-id]");
+  if (projection) projection.textContent = attestation.projection_id;
+
+  const permission = $(container, "[data-render-permission]");
+  if (permission) permission.textContent = attestation.render_permission;
+}
+
+function writeInspector(container, data) {
+  const inspector = $(container, "[data-runtime-inspector]");
+  if (!inspector) return;
+
+  const ownership = Array.isArray(data.owns) && data.owns.length
+    ? `<h4>Owns</h4><ul>${data.owns.slice(0, 5).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+    : "";
+
+  const notOwnership = Array.isArray(data.must_not_own) && data.must_not_own.length
+    ? `<h4>Must not own</h4><ul>${data.must_not_own.slice(0, 5).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+    : "";
+
+  inspector.innerHTML = `
+    <div class="oc-inspector-head">
+      <strong>${escapeHtml(data.name || data.id || "VERIFRAX OBJECT")}</strong>
+      <span>${escapeHtml(data.visual_class || "projection_object")}</span>
+    </div>
+    <p>${escapeHtml(data.role || data.question || "Bounded projection object.")}</p>
+    <code>${escapeHtml(data.warning || data.repo || data.owner_repo || "DERIVED_PROJECTION / NOT_TRUTH_SOURCE")}</code>
+    ${ownership}
+    ${notOwnership}
+  `;
+}
+
 function buildScene(container, manifest) {
-  const width = container.clientWidth || 1400;
-  const height = container.clientHeight || 760;
+  const stage = $(container, "[data-runtime-stage]");
+  const width = stage.clientWidth || container.clientWidth || 1600;
+  const height = stage.clientHeight || container.clientHeight || 900;
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: false,
     powerPreference: "high-performance"
   });
+
   renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
   renderer.setClearColor(palette.void, 1);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  const stage = container.querySelector("[data-runtime-stage]");
   stage.innerHTML = "";
   stage.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(palette.void, 0.024);
 
-  const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 300);
-  camera.position.set(0, 25, 38);
+  const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 320);
+  camera.position.set(0, 24, 38);
   camera.lookAt(0, 0, 0);
 
-  const ambient = new THREE.AmbientLight(0x9ecbff, 0.22);
-  scene.add(ambient);
+  scene.add(new THREE.AmbientLight(0x9ecbff, 0.20));
 
-  const key = new THREE.DirectionalLight(0xd8efff, 2.1);
-  key.position.set(-12, 28, 22);
+  const key = new THREE.DirectionalLight(0xd8efff, 2.0);
+  key.position.set(-13, 28, 24);
   key.castShadow = true;
   key.shadow.mapSize.width = 2048;
   key.shadow.mapSize.height = 2048;
   scene.add(key);
 
-  const coreLight = new THREE.PointLight(palette.blue, 12, 48, 1.7);
-  coreLight.position.set(0, 5, 0);
+  const coreLight = new THREE.PointLight(palette.blue, 12, 50, 1.7);
+  coreLight.position.set(0, 5.2, 0);
   scene.add(coreLight);
 
-  const redLight = new THREE.PointLight(palette.red, 5, 18, 2);
-  redLight.position.set(0, 2.2, 14.5);
+  const redLight = new THREE.PointLight(palette.red, 6, 20, 2);
+  redLight.position.set(0, 2.4, 14.9);
   scene.add(redLight);
 
-  const floorGeometry = new THREE.CylinderGeometry(28, 28, 0.5, 192);
-  const floorMaterial = createMaterial(palette.basalt, 0x02060b, 0.0, 0.88, 0.58);
-  const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-  floor.position.y = -0.28;
+  const floor = new THREE.Mesh(
+    new THREE.CylinderGeometry(30, 30, 0.55, 220),
+    material(palette.basalt, 0x02060b, 0, 0.9, 0.58)
+  );
+  floor.position.y = -0.32;
   floor.receiveShadow = true;
   scene.add(floor);
 
-  addRing(scene, 6.2, 0.055, palette.blue, 0.12);
-  addRing(scene, 11.6, 0.065, palette.blue, 0.13);
-  addRing(scene, 17.6, 0.07, palette.blueDeep, 0.14);
-  addRing(scene, 22.6, 0.08, palette.grey, 0.1);
+  addRing(scene, 6.2, 0.055, palette.blue, 0.12, 0.09);
+  addRing(scene, 11.8, 0.065, palette.blue, 0.13, 0.11);
+  addRing(scene, 17.8, 0.075, palette.blueDeep, 0.14, 0.10);
+  addRing(scene, 23.4, 0.08, palette.grey, 0.11, 0.04);
 
-  const chamberGroup = new THREE.Group();
-  const repoGroup = new THREE.Group();
-  const hostGroup = new THREE.Group();
-  const labelsGroup = new THREE.Group();
+  const labels = new THREE.Group();
   const selectable = [];
-  scene.add(chamberGroup, repoGroup, hostGroup, labelsGroup);
+  scene.add(labels);
 
   const coreBase = new THREE.Mesh(
-    new THREE.CylinderGeometry(2.45, 2.8, 1.25, 64),
-    createMaterial(palette.metal, palette.blue, 0.12, 0.52, 0.9)
+    new THREE.CylinderGeometry(2.45, 2.85, 1.25, 72),
+    material(palette.metal, palette.blue, 0.14, 0.50, 0.92)
   );
   coreBase.position.y = 0.62;
   coreBase.castShadow = true;
@@ -230,11 +309,11 @@ function buildScene(container, manifest) {
     new THREE.MeshStandardMaterial({
       color: palette.cyan,
       emissive: palette.blue,
-      emissiveIntensity: 1.35,
+      emissiveIntensity: 1.36,
       roughness: 0.16,
       metalness: 0.1,
       transparent: true,
-      opacity: 0.72
+      opacity: 0.74
     })
   );
   core.position.y = 3.0;
@@ -248,15 +327,15 @@ function buildScene(container, manifest) {
   scene.add(core);
   selectable.push(core);
 
-  const coreLabel = makeLabel("ACCEPTED TRUTH", "DERIVED PROJECTION");
+  const coreLabel = makeLabel("ACCEPTED TRUTH", "NOT TRUTH SOURCE", 640, 190);
   coreLabel.position.set(0, 1.38, 0.25);
-  labelsGroup.add(coreLabel);
+  labels.add(coreLabel);
 
-  const chamberRadius = 9.7;
-  const chamberGeometry = new THREE.CylinderGeometry(1.75, 2.05, 2.25, 64);
-  const chamberTopGeometry = new THREE.CylinderGeometry(2.1, 1.72, 0.44, 64);
-  const chamberMaterial = createMaterial(palette.metal, palette.blue, 0.11, 0.58, 0.86);
-  const chamberCapMaterial = createMaterial(palette.darkMetal, palette.blue, 0.06, 0.42, 0.94);
+  const chamberRadius = 9.8;
+  const chamberGeometry = new THREE.CylinderGeometry(1.75, 2.05, 2.25, 72);
+  const chamberTopGeometry = new THREE.CylinderGeometry(2.1, 1.72, 0.44, 72);
+  const chamberMat = material(palette.metal, palette.blue, 0.12, 0.56, 0.88);
+  const chamberTopMat = material(palette.darkMetal, palette.blue, 0.06, 0.42, 0.94);
 
   const orderedChambers = chamberOrder
     .map((id) => manifest.chambers.find((chamber) => chamber.id === id))
@@ -266,16 +345,16 @@ function buildScene(container, manifest) {
     const angle = -Math.PI / 2 + (index / orderedChambers.length) * Math.PI * 2;
     const p = polar(chamberRadius, angle, 1.15);
 
-    const body = new THREE.Mesh(chamberGeometry, chamberMaterial.clone());
-    body.position.copy(p);
+    const group = new THREE.Group();
+    const body = new THREE.Mesh(chamberGeometry, chamberMat.clone());
+    const cap = new THREE.Mesh(chamberTopGeometry, chamberTopMat.clone());
+
     body.castShadow = true;
     body.receiveShadow = true;
-
-    const cap = new THREE.Mesh(chamberTopGeometry, chamberCapMaterial.clone());
-    cap.position.set(p.x, p.y + 1.35, p.z);
     cap.castShadow = true;
+    cap.position.y = 1.35;
 
-    const group = new THREE.Group();
+    group.position.copy(p);
     group.add(body, cap);
     group.lookAt(0, 1.15, 0);
     group.userData = {
@@ -291,49 +370,49 @@ function buildScene(container, manifest) {
       truth_status: chamber.truth_status
     };
 
-    chamberGroup.add(group);
+    scene.add(group);
     selectable.push(group);
 
     const label = makeLabel(chamber.name, chamber.role, 560, 196);
     label.position.set(p.x, 3.25, p.z);
-    labelsGroup.add(label);
+    labels.add(label);
 
-    createRail(scene, new THREE.Vector3(0, 1.8, 0), new THREE.Vector3(p.x * 0.8, 1.8, p.z * 0.8), palette.blue);
+    createRail(scene, new THREE.Vector3(0, 1.85, 0), new THREE.Vector3(p.x * 0.82, 1.85, p.z * 0.82), palette.blue);
   });
 
-  const repoRadius = 19.5;
-  const repoGeometry = new THREE.BoxGeometry(0.65, 2.0, 0.65);
-  const repoMaterial = createMaterial(palette.darkMetal, palette.blue, 0.22, 0.36, 0.9);
-  const repoCount = manifest.repositories.length;
-  const repoMesh = new THREE.InstancedMesh(repoGeometry, repoMaterial, repoCount);
+  const repoRadius = 19.6;
+  const repoGeometry = new THREE.BoxGeometry(0.66, 2.05, 0.66);
+  const repoMat = material(palette.darkMetal, palette.blue, 0.24, 0.36, 0.9);
+  const repoMesh = new THREE.InstancedMesh(repoGeometry, repoMat, manifest.repositories.length);
   repoMesh.castShadow = true;
   repoMesh.receiveShadow = true;
 
-  const repoDummy = new THREE.Object3D();
+  const dummy = new THREE.Object3D();
   manifest.repositories.forEach((repo, index) => {
     if (repo.name === "ADMISSORIUM") return;
-    const angle = -Math.PI / 2 + (index / repoCount) * Math.PI * 2;
+    const angle = -Math.PI / 2 + (index / manifest.repositories.length) * Math.PI * 2;
     const p = polar(repoRadius, angle, 1.0);
-    repoDummy.position.copy(p);
-    repoDummy.rotation.y = -angle;
-    repoDummy.scale.set(1, repo.class === "sovereign-chamber" ? 1.25 : 1, 1);
-    repoDummy.updateMatrix();
-    repoMesh.setMatrixAt(index, repoDummy.matrix);
+    dummy.position.copy(p);
+    dummy.rotation.y = -angle;
+    dummy.scale.set(1, repo.class === "sovereign-chamber" ? 1.25 : 1, 1);
+    dummy.updateMatrix();
+    repoMesh.setMatrixAt(index, dummy.matrix);
   });
-  repoGroup.add(repoMesh);
+  scene.add(repoMesh);
 
   const repoLabel = makeLabel("35", "REPOSITORY PILLARS", 350, 160);
-  repoLabel.position.set(0, 4.1, -19.6);
-  labelsGroup.add(repoLabel);
+  repoLabel.position.set(0, 4.25, -19.8);
+  labels.add(repoLabel);
 
   const hostRadius = 23.2;
-  const hostGeometry = new THREE.BoxGeometry(1.0, 2.7, 0.48);
-  const hostMaterial = createMaterial(palette.metal, palette.cyan, 0.12, 0.48, 0.82);
+  const hostGeometry = new THREE.BoxGeometry(1.05, 2.75, 0.5);
+  const hostMat = material(palette.metal, palette.cyan, 0.14, 0.48, 0.82);
 
   manifest.hosts.forEach((host, index) => {
     const angle = -Math.PI / 2 + (index / manifest.hosts.length) * Math.PI * 2;
     const p = polar(hostRadius, angle, 1.35);
-    const gate = new THREE.Mesh(hostGeometry, hostMaterial.clone());
+
+    const gate = new THREE.Mesh(hostGeometry, hostMat.clone());
     gate.position.copy(p);
     gate.lookAt(0, 1.35, 0);
     gate.castShadow = true;
@@ -343,64 +422,49 @@ function buildScene(container, manifest) {
       visual_class: "host_gate",
       role: host.role,
       owner_repo: host.owner_repo,
-      must_not_be: host.must_not_be,
+      must_not_own: host.must_not_be,
       url: host.url
     };
-    hostGroup.add(gate);
+
+    scene.add(gate);
     selectable.push(gate);
 
     const label = makeLabel(host.label || host.id.toUpperCase(), "Boundary Gate", 360, 160);
     label.position.set(p.x, 3.45, p.z);
-    labelsGroup.add(label);
+    labels.add(label);
   });
 
   const gateBase = new THREE.Mesh(
-    new THREE.BoxGeometry(6.4, 3.2, 1.5),
-    createMaterial(palette.darkMetal, palette.red, 0.14, 0.55, 0.88)
+    new THREE.BoxGeometry(6.6, 3.25, 1.55),
+    material(palette.darkMetal, palette.red, 0.16, 0.55, 0.88)
   );
-  gateBase.position.set(0, 1.6, 14.35);
+  gateBase.position.set(0, 1.6, 14.55);
   gateBase.castShadow = true;
   gateBase.userData = {
     id: "admissorium",
     name: "ADMISSORIUM",
     visual_class: "front_gate",
     role: "admissibility enforcement implementation",
-    warning: "truth_owner=false / sovereign_chamber=false"
+    warning: "truth_owner=false / sovereign_chamber=false",
+    owns: ["admissibility enforcement", "materialization blocking", "quarantine routing"],
+    must_not_own: ["truth source", "accepted state", "sovereign chamber", "terminal recognition"]
   };
   scene.add(gateBase);
   selectable.push(gateBase);
 
-  const gateLabel = makeLabel("ADMISSORIUM", "Constitutional Border Control", 640, 180);
-  gateLabel.position.set(0, 4.05, 14.45);
-  labelsGroup.add(gateLabel);
+  const gateLabel = makeLabel("ADMISSORIUM", "Constitutional Border Control", 650, 180);
+  gateLabel.position.set(0, 4.05, 14.75);
+  labels.add(gateLabel);
 
-  const blockedLabel = makeLabel("CONTRADICTION DETECTED", "ENTRY DENIED", 540, 180);
-  blockedLabel.position.set(0, 2.05, 16.0);
-  labelsGroup.add(blockedLabel);
+  const denied = makeLabel("CONTRADICTION DETECTED", "ENTRY DENIED", 540, 180, "#ff8b7e");
+  denied.position.set(0, 2.05, 16.25);
+  labels.add(denied);
 
-  const statusLabel = makeLabel("35 REPOSITORIES. ONE CONSTITUTIONAL MACHINE.", "OPEN TRUTH BELOW. ENTERPRISE CONTROL ABOVE.", 1200, 210);
-  statusLabel.position.set(0, 2.6, 20.2);
-  labelsGroup.add(statusLabel);
+  const statusLabel = makeLabel("35 REPOSITORIES. ONE CONSTITUTIONAL MACHINE.", "OPEN TRUTH BELOW. ENTERPRISE CONTROL ABOVE.", 1220, 210);
+  statusLabel.position.set(0, 2.65, 20.2);
+  labels.add(statusLabel);
 
-  const inspector = container.querySelector("[data-runtime-inspector]");
-  function inspectObject(object) {
-    const data = object.userData || {};
-    if (!inspector) return;
-    inspector.innerHTML = `
-      <strong>${escapeHtml(data.name || data.id || "VERIFRAX OBJECT")}</strong>
-      <span>${escapeHtml(data.visual_class || "projection_object")}</span>
-      <p>${escapeHtml(data.role || data.question || "Bounded projection object.")}</p>
-      <small>${escapeHtml(data.warning || data.repo || data.owner_repo || "DERIVED_PROJECTION / NOT_TRUTH_SOURCE")}</small>
-    `;
-  }
-
-  function escapeHtml(value) {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;");
-  }
+  writeInspector(container, core.userData);
 
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
@@ -412,11 +476,11 @@ function buildScene(container, manifest) {
     raycaster.setFromCamera(pointer, camera);
 
     const hits = raycaster.intersectObjects(selectable, true);
-    if (hits.length) {
-      let object = hits[0].object;
-      while (object.parent && !object.userData?.id) object = object.parent;
-      inspectObject(object);
-    }
+    if (!hits.length) return;
+
+    let object = hits[0].object;
+    while (object.parent && !object.userData?.id) object = object.parent;
+    writeInspector(container, object.userData);
   });
 
   const clock = new THREE.Clock();
@@ -424,17 +488,17 @@ function buildScene(container, manifest) {
   function animate() {
     const t = clock.getElapsedTime();
 
-    const orbit = t * 0.055;
-    camera.position.x = Math.sin(orbit) * 31;
-    camera.position.z = Math.cos(orbit) * 38;
-    camera.position.y = 22 + Math.sin(t * 0.27) * 0.9;
-    camera.lookAt(0, 1.1, 0);
+    const orbit = t * 0.045;
+    camera.position.x = Math.sin(orbit) * 28;
+    camera.position.z = Math.cos(orbit) * 36;
+    camera.position.y = 20.5 + Math.sin(t * 0.22) * 0.85;
+    camera.lookAt(0, 1.35, 0);
 
     core.rotation.x += 0.003;
     core.rotation.y += 0.006;
     core.material.emissiveIntensity = 1.05 + Math.sin(t * 1.4) * 0.28;
 
-    labelsGroup.children.forEach((label) => label.lookAt(camera.position));
+    labels.children.forEach((label) => label.lookAt(camera.position));
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
@@ -442,26 +506,20 @@ function buildScene(container, manifest) {
 
   animate();
 
-  const resize = () => {
-    const nextWidth = container.clientWidth || width;
-    const nextHeight = container.clientHeight || height;
+  window.addEventListener("resize", () => {
+    const nextWidth = stage.clientWidth || container.clientWidth || width;
+    const nextHeight = stage.clientHeight || container.clientHeight || height;
     camera.aspect = nextWidth / nextHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(nextWidth, nextHeight);
-  };
-
-  window.addEventListener("resize", resize);
-
-  inspectObject(core);
-
-  return { scene, renderer, camera };
+  });
 }
 
 async function boot() {
-  const container = getContainer();
+  const container = document.getElementById("observatory-webgl-runtime");
   if (!container) return;
 
-  setSceneStatus(container, "loading", "Loading signed projection data.");
+  setRuntimeStatus(container, "loading", "Loading signed projection data.");
 
   try {
     const [manifestResponse, attestationResponse] = await Promise.all([
@@ -477,14 +535,15 @@ async function boot() {
     const errors = assertManifest(manifest, attestation);
 
     if (errors.length) {
-      setSceneStatus(container, BLOCKED, `Blocked projection: ${errors.join(", ")}`);
+      setRuntimeStatus(container, BLOCKED, `Blocked projection: ${errors.join(", ")}`);
       return;
     }
 
-    setSceneStatus(container, FULL, "FULL_OBSERVATORY: real WebGL constitutional projection active.");
+    hydrateCommandSurface(container, manifest, attestation);
+    setRuntimeStatus(container, FULL, "FULL_OBSERVATORY: signed WebGL constitutional projection active.");
     buildScene(container, manifest);
   } catch (error) {
-    setSceneStatus(container, BLOCKED, error instanceof Error ? error.message : String(error));
+    setRuntimeStatus(container, BLOCKED, error instanceof Error ? error.message : String(error));
   }
 }
 
