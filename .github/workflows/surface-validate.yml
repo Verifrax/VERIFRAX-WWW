@@ -15,5 +15,10 @@ jobs:
         run: python3 .surface/vendor/scripts/validate_host.py surface.host.json
       - name: Re-project surface
         run: python3 .surface/vendor/scripts/project_host.py .
+      - name: Verify Observatory runtime boot boundary
+        run: |
+          node --check assets/observatory-webgl-runtime.js
+          node scripts/check-observatory-attestation.mjs
+          node scripts/check-observatory-runtime-boot.mjs
       - name: Assert committed output is current
         run: git diff --exit-code -- . ':!README.md'
