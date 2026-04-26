@@ -1,47 +1,41 @@
 #!/usr/bin/env python3
+import hashlib
 import json
-import html
 import sys
+from html import escape
 from pathlib import Path
-
-ROOT_COPY = {
-    "root": "Canonical public entry for the VERIFRAX system.",
-    "tool": "Bounded public tool surface inside the VERIFRAX perimeter.",
-    "reference": "Canonical bounded reference surface inside the VERIFRAX perimeter."
-}
 
 CLASS_RULES = {
     "root": [
+        "One root. Many isolated surfaces.",
+        "Every host owns one function.",
+        "No host may absorb another host’s consequences.",
         "Navigation belongs here; execution does not.",
-        "Commercial or root framing may exist; authority, verification, proof publication, runtime and intake semantics may not collapse into this host.",
-        "One public root. Many isolated surfaces."
     ],
-    "tool": [
-        "One host. One active function.",
-        "Tool surfaces may expose operator or machine-adjacent affordances without claiming adjacent-host authority.",
-        "Execution, verification, intake, and status are not interchangeable."
+    "boundary": [
+        "This host is a bounded surface.",
+        "It may expose its assigned role only.",
+        "It may not claim adjacent authority.",
     ],
-    "reference": [
-        "Reference surfaces explain, publish, or preserve bounded material.",
-        "Reference is not execution. Reference is not authority issuance.",
-        "Archive, proof, docs, runtime reference, and enforcement reference stay distinct."
-    ]
 }
 
 READING_ORDER = [
-    ("Docs", "https://docs.verifrax.net"),
-    ("Proof", "https://proof.verifrax.net"),
-    ("Verify", "https://verify.verifrax.net"),
-    ("Authority", "https://auctoriseal.verifrax.net"),
-    ("Runtime", "https://corpiform.verifrax.net"),
-    ("Enforcement", "https://cicullis.verifrax.net"),
-    ("Archive", "https://sigillarium.verifrax.net"),
-    ("Apply", "https://apply.verifrax.net"),
-    ("Status", "https://status.verifrax.net"),
+    ("Docs", "https://docs.verifrax.net/"),
+    ("Proof", "https://proof.verifrax.net/"),
+    ("Verify", "https://verify.verifrax.net/"),
+    ("Authority", "https://auctoriseal.verifrax.net/"),
+    ("Runtime", "https://corpiform.verifrax.net/"),
+    ("Enforcement", "https://cicullis.verifrax.net/"),
+    ("Archive", "https://sigillarium.verifrax.net/"),
+    ("Apply", "https://apply.verifrax.net/"),
+    ("Status", "https://status.verifrax.net/"),
 ]
 
-def escape(s):
-    return html.escape(str(s), quote=True)
+def read_json(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+def sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
 
 def ensure_asset(dest_dir: Path, css: str):
     asset_dir = dest_dir / "assets"
@@ -71,6 +65,91 @@ def render_observatory_script(cfg):
         return ""
     return '  <script src="assets/observatory-render-gate.js" defer></script>\n'
 
+def render_observatory_webgl(cfg):
+    if not cfg.get("observatoryWebglRuntime"):
+        return ""
+    return """
+    <section id="observatory-webgl-runtime" class="observatory-webgl-runtime" aria-label="VERIFRAX Constitutional Observatory real WebGL runtime">
+      <div class="oc-stage" data-runtime-stage></div>
+
+      <header class="oc-topbar">
+        <div class="oc-brand">
+          <strong>VERIFRAX</strong>
+          <span>Constitutional Observatory</span>
+        </div>
+        <nav>
+          <a href="https://github.com/Verifrax">Repositories</a>
+          <a href="https://docs.verifrax.net">Documentation</a>
+          <a href="https://api.verifrax.net">API</a>
+          <a href="https://apply.verifrax.net">Apply</a>
+        </nav>
+      </header>
+
+      <section class="oc-hero">
+        <span>REAL WEBGL PROJECTION RUNTIME</span>
+        <h2>VERIFRAX</h2>
+        <p>35 repositories. 9 sovereign chambers. ADMISSORIUM at the border. Rendered from signed projection data.</p>
+        <div class="oc-hero-badges">
+          <code><b data-count="repos">35</b> repos live</code>
+          <code data-runtime-status>STATIC_FALLBACK</code>
+        </div>
+      </section>
+
+      <aside class="oc-left">
+        <section>
+          <h3>Live Object Graph Observatory</h3>
+          <dl>
+            <div><dt>Repositories</dt><dd><b data-count="repos">35</b></dd></div>
+            <div><dt>Chambers</dt><dd><b data-count="chambers">9</b></dd></div>
+            <div><dt>Hosts</dt><dd><b data-count="hosts">12</b></dd></div>
+            <div><dt>Packages</dt><dd><b data-count="packages">—</b></dd></div>
+          </dl>
+        </section>
+        <section>
+          <h3>Sovereign Stack Tower</h3>
+          <ol data-stack-list></ol>
+        </section>
+      </aside>
+
+      <aside class="oc-right">
+        <section>
+          <h3>Enterprise Control</h3>
+          <p>Control above the perimeter. Open truth below.</p>
+          <div class="oc-enterprise" data-enterprise-list></div>
+        </section>
+        <section>
+          <h3>Host Boundary Gates</h3>
+          <ul data-host-list></ul>
+        </section>
+      </aside>
+
+      <aside class="oc-inspector" data-runtime-inspector>
+        <div class="oc-inspector-head">
+          <strong>Projection inspector</strong>
+          <span>Click any object</span>
+        </div>
+        <p>Every visible object is subordinate to DERIVED_PROJECTION / NOT_TRUTH_SOURCE.</p>
+      </aside>
+
+      <footer class="oc-bottom">
+        <div class="oc-journey">
+          <h3>Artifact Journey</h3>
+          <ol data-journey-list></ol>
+        </div>
+        <div class="oc-proofline">
+          <span>Projection <b data-projection-id>loading</b></span>
+          <span>Render <b data-render-permission>STATIC_FALLBACK</b></span>
+          <span>DERIVED_PROJECTION / NOT_TRUTH_SOURCE</span>
+        </div>
+      </footer>
+    </section>
+"""
+
+def render_observatory_webgl_script(cfg):
+    if not cfg.get("observatoryWebglRuntime"):
+        return ""
+    return '  <script type="module" src="assets/observatory-webgl-runtime.js"></script>\n'
+
 def observatory_css(cfg):
     if not cfg.get("observatoryRenderGate"):
         return ""
@@ -84,317 +163,162 @@ def observatory_css(cfg):
   box-shadow:0 18px 60px rgba(0,0,0,.32);
   color:var(--vf-text,#edf2f7);
 }
-.observatory-gate-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-}
-.observatory-gate-kicker{
-  display:block;
-  margin-bottom:6px;
-  color:var(--vf-accent,#73d0ff);
-  font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  letter-spacing:.12em;
-}
-.observatory-gate-head strong{
-  font:700 18px/1.25 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-.observatory-gate-toggle{
-  appearance:none;
-  border:1px solid rgba(115,208,255,.32);
-  border-radius:999px;
-  padding:9px 13px;
-  background:rgba(115,208,255,.08);
-  color:var(--vf-text,#edf2f7);
-  font:700 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  cursor:pointer;
-}
-.observatory-gate-strip{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:12px;
-  color:var(--vf-text-soft,#b6c2cf);
-  font:600 11px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-.observatory-gate-strip span{
-  padding:7px 9px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:999px;
-  background:rgba(255,255,255,.035);
-}
-.observatory-gate-detail{
-  margin-top:16px;
-  padding-top:14px;
-  border-top:1px solid rgba(255,255,255,.09);
-  color:var(--vf-text-soft,#b6c2cf);
-}
-.observatory-gate-detail p{
-  margin:0 0 12px;
-}
-.observatory-gate-detail dl{
-  display:grid;
-  gap:6px;
-  margin:0;
-}
-.observatory-gate-check{
-  display:grid;
-  grid-template-columns:minmax(180px,260px) 1fr;
-  gap:10px;
-  padding:8px 10px;
-  border-radius:12px;
-  background:rgba(255,255,255,.035);
-}
-.observatory-gate-check dt,
-.observatory-gate-check dd{
-  margin:0;
-  font:600 11px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-.observatory-gate-check.is-pass dd{
-  color:#9ee6b8;
-}
-.observatory-gate-check.is-fail dd{
-  color:#ff9b9b;
-}
-body.vf-observatory-full .observatory-render-gate{
-  border-color:rgba(115,208,255,.42);
-}
-body.vf-observatory-safe .observatory-render-gate,
-body.vf-observatory-blocked .observatory-render-gate{
-  border-color:rgba(255,139,139,.46);
-}
-@media (max-width:720px){
-  .observatory-gate-head{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-  .observatory-gate-check{
-    grid-template-columns:1fr;
-  }
-}
+.observatory-gate-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.observatory-gate-kicker{display:block;margin-bottom:6px;color:var(--vf-accent,#73d0ff);font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em}
+.observatory-gate-head strong{font:700 18px/1.25 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.observatory-gate-toggle{appearance:none;border:1px solid rgba(115,208,255,.32);border-radius:999px;padding:9px 13px;background:rgba(115,208,255,.08);color:var(--vf-text,#edf2f7);font:700 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;cursor:pointer}
+.observatory-gate-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;color:var(--vf-text-soft,#b6c2cf);font:600 11px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.observatory-gate-strip span{padding:7px 9px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.035)}
+.observatory-gate-detail{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.09);color:var(--vf-text-soft,#b6c2cf)}
+.observatory-gate-detail p{margin:0 0 12px}
+.observatory-gate-detail dl{display:grid;gap:6px;margin:0}
+.observatory-gate-check{display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:10px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.035)}
+.observatory-gate-check dt,.observatory-gate-check dd{margin:0;font:600 11px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.observatory-gate-check.is-pass dd{color:#9ee6b8}
+.observatory-gate-check.is-fail dd{color:#ff9b9b}
+body.vf-observatory-full .observatory-render-gate{border-color:rgba(115,208,255,.42)}
+body.vf-observatory-safe .observatory-render-gate,body.vf-observatory-blocked .observatory-render-gate{border-color:rgba(255,139,139,.46)}
+@media (max-width:720px){.observatory-gate-head{align-items:flex-start;flex-direction:column}.observatory-gate-check{grid-template-columns:1fr}}
 """
-
-
-def render_observatory_webgl(cfg):
-    if not cfg.get("observatoryWebglRuntime"):
-        return ""
-    return """
-    <section id="observatory-webgl-runtime" class="observatory-webgl-runtime" aria-label="VERIFRAX Constitutional Observatory real WebGL runtime">
-      <div class="observatory-webgl-copy">
-        <span class="observatory-webgl-kicker">REAL WEBGL PROJECTION RUNTIME</span>
-        <h2>VERIFRAX Constitutional Observatory</h2>
-        <p>35 repositories. 9 chambers. ADMISSORIUM at the border. Rendered from signed projection data.</p>
-        <code data-runtime-status>STATIC_FALLBACK: waiting for runtime.</code>
-      </div>
-      <div class="observatory-webgl-stage" data-runtime-stage></div>
-      <aside class="observatory-webgl-inspector" data-runtime-inspector>
-        <strong>Projection inspector</strong>
-        <span>Click a chamber, host gate, core, or ADMISSORIUM gate.</span>
-        <p>Every visible object is subordinate to DERIVED_PROJECTION / NOT_TRUTH_SOURCE.</p>
-      </aside>
-    </section>
-"""
-
-def render_observatory_webgl_script(cfg):
-    if not cfg.get("observatoryWebglRuntime"):
-        return ""
-    return '  <script type="module" src="assets/observatory-webgl-runtime.js"></script>\n'
 
 def observatory_webgl_css(cfg):
     if not cfg.get("observatoryWebglRuntime"):
         return ""
     return r"""
 .observatory-webgl-runtime{
-  position:relative;
-  min-height:760px;
-  margin:28px 0 0;
-  border:1px solid rgba(115,208,255,.18);
-  border-radius:24px;
-  overflow:hidden;
-  background:#02060b;
-  box-shadow:0 30px 90px rgba(0,0,0,.44);
+  position:relative;width:min(100vw,calc(100vw - 24px));min-height:calc(100vh - 24px);
+  margin:0 0 34px calc(50% - 50vw + 12px);
+  border:1px solid rgba(115,208,255,.18);border-radius:0 0 28px 28px;overflow:hidden;
+  background:#02060b;box-shadow:0 36px 100px rgba(0,0,0,.55);
 }
-.observatory-webgl-stage{
-  position:absolute;
-  inset:0;
-}
-.observatory-webgl-stage canvas{
-  display:block;
-  width:100%;
-  height:100%;
-}
-.observatory-webgl-copy{
-  position:absolute;
-  z-index:2;
-  top:24px;
-  left:24px;
-  max-width:440px;
-  padding:18px;
-  border:1px solid rgba(255,255,255,.11);
-  border-radius:20px;
-  background:linear-gradient(180deg,rgba(2,8,14,.80),rgba(2,8,14,.52));
-  backdrop-filter:blur(10px);
-}
-.observatory-webgl-kicker{
-  display:block;
-  margin-bottom:10px;
-  color:#73d0ff;
-  font:800 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  letter-spacing:.14em;
-}
-.observatory-webgl-copy h2{
-  margin:0;
-  color:#f2f8ff;
-  font:800 clamp(28px,4vw,56px)/.95 Inter,ui-sans-serif,system-ui,sans-serif;
-  letter-spacing:-.05em;
-}
-.observatory-webgl-copy p{
-  margin:14px 0;
-  color:#b9c7d6;
-  font:500 15px/1.55 Inter,ui-sans-serif,system-ui,sans-serif;
-}
-.observatory-webgl-copy code{
-  display:inline-block;
-  padding:8px 10px;
-  border:1px solid rgba(115,208,255,.22);
-  border-radius:999px;
-  color:#9ee6b8;
-  background:rgba(115,208,255,.08);
-  font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-.observatory-webgl-inspector{
-  position:absolute;
-  z-index:2;
-  right:24px;
-  bottom:24px;
-  width:min(360px,calc(100% - 48px));
-  padding:16px;
-  border:1px solid rgba(115,208,255,.20);
-  border-radius:18px;
-  background:linear-gradient(180deg,rgba(2,8,14,.86),rgba(2,8,14,.62));
-  backdrop-filter:blur(10px);
-  color:#dcecff;
-}
-.observatory-webgl-inspector strong{
-  display:block;
-  margin-bottom:6px;
-  font:800 15px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-.observatory-webgl-inspector span{
-  display:block;
-  color:#73d0ff;
-  font:700 11px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-}
-.observatory-webgl-inspector p{
-  margin:10px 0 0;
-  color:#b9c7d6;
-  font:500 13px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;
-}
-.observatory-webgl-inspector small{
-  display:block;
-  margin-top:10px;
-  color:#9ee6b8;
-  font:700 11px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-@media (max-width:780px){
-  .observatory-webgl-runtime{
-    min-height:620px;
-  }
-  .observatory-webgl-copy{
-    left:14px;
-    right:14px;
-    top:14px;
-    max-width:none;
-  }
-  .observatory-webgl-inspector{
-    left:14px;
-    right:14px;
-    bottom:14px;
-    width:auto;
-  }
-}
+.oc-stage{position:absolute;inset:0;z-index:0}
+.oc-stage canvas{display:block;width:100%;height:100%}
+.oc-stage:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 48%,rgba(115,208,255,.08),transparent 32%),linear-gradient(90deg,rgba(0,0,0,.70),transparent 20%,transparent 78%,rgba(0,0,0,.75)),linear-gradient(180deg,rgba(0,0,0,.50),transparent 18%,transparent 72%,rgba(0,0,0,.72))}
+.oc-topbar,.oc-hero,.oc-left,.oc-right,.oc-inspector,.oc-bottom{position:absolute;z-index:2}
+.oc-topbar{top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(1,5,9,.82),rgba(1,5,9,.20));backdrop-filter:blur(12px)}
+.oc-brand{display:flex;gap:14px;align-items:baseline}
+.oc-brand strong{color:#f4f9ff;font:900 28px/1 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:.20em}
+.oc-brand span{color:#9fb4c7;font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase}
+.oc-topbar nav{display:flex;gap:22px}
+.oc-topbar a{color:#d5e4f4;text-decoration:none;font:700 13px/1 Inter,ui-sans-serif,system-ui,sans-serif}
+.oc-hero{top:118px;left:30px;width:min(450px,calc(100% - 60px))}
+.oc-hero span{color:#73d0ff;font:900 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.oc-hero h2{margin:12px 0 8px;color:#f3f8ff;font:900 clamp(52px,7vw,116px)/.82 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.07em}
+.oc-hero p{max-width:390px;color:#c4d1df;font:600 16px/1.5 Inter,ui-sans-serif,system-ui,sans-serif}
+.oc-hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.oc-hero code,.oc-proofline span{display:inline-flex;gap:8px;align-items:center;padding:9px 11px;border:1px solid rgba(115,208,255,.20);border-radius:999px;background:rgba(2,8,14,.68);color:#9ee6b8;font:800 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.oc-left{left:14px;bottom:138px;width:350px;display:grid;gap:12px}
+.oc-right{right:14px;top:92px;width:380px;display:grid;gap:12px}
+.oc-left section,.oc-right section,.oc-inspector,.oc-bottom{border:1px solid rgba(115,208,255,.15);border-radius:18px;background:linear-gradient(180deg,rgba(4,13,22,.82),rgba(3,8,14,.64));backdrop-filter:blur(12px);box-shadow:0 18px 56px rgba(0,0,0,.34)}
+.oc-left section,.oc-right section{padding:14px}
+.oc-left h3,.oc-right h3,.oc-bottom h3{margin:0 0 10px;color:#e8f5ff;font:900 12px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.08em}
+.oc-left dl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}
+.oc-left dl div{padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035)}
+.oc-left dt{color:#8fa5b9;font:800 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase}
+.oc-left dd{margin:5px 0 0;color:#eaf6ff;font:900 18px/1 Inter,ui-sans-serif,system-ui,sans-serif}
+.oc-left ol,.oc-right ul,.oc-journey ol{display:grid;gap:5px;margin:0;padding:0;list-style:none}
+.oc-left li{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:center;color:#dcecff;font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.oc-left li span,.oc-journey li span{color:#73d0ff}
+.oc-left li em{color:#8fa5b9;font-style:normal}
+.oc-right p{margin:0 0 12px;color:#aebed0;font:600 13px/1.45 Inter,ui-sans-serif,system-ui,sans-serif}
+.oc-enterprise{display:grid;gap:9px}
+.oc-enterprise button{appearance:none;text-align:left;padding:12px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04);color:#edf8ff}
+.oc-enterprise strong{display:block;margin-bottom:4px;font:900 14px/1.2 Inter,ui-sans-serif,system-ui,sans-serif}
+.oc-enterprise span{display:block;color:#73d0ff;font:800 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase}
+.oc-enterprise small{display:block;margin-top:5px;color:#9fafbf;font:600 12px/1.35 Inter,ui-sans-serif,system-ui,sans-serif}
+.oc-right li{display:flex;justify-content:space-between;gap:12px;color:#dcecff;font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.oc-right li span{color:#73d0ff}
+.oc-inspector{right:408px;bottom:138px;width:380px;padding:14px;color:#dcecff}
+.oc-inspector-head{display:flex;justify-content:space-between;gap:12px}
+.oc-inspector strong{color:#f2f8ff;font:900 13px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.oc-inspector span{color:#73d0ff;font:800 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase}
+.oc-inspector p{margin:10px 0;color:#b8c7d6;font:600 12px/1.45 Inter,ui-sans-serif,system-ui,sans-serif}
+.oc-inspector code{display:block;padding:8px;border-radius:10px;color:#9ee6b8;background:rgba(115,208,255,.08);font:800 10px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.oc-inspector h4{margin:10px 0 6px;color:#eaf6ff;font:900 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase}
+.oc-inspector ul{margin:0;padding-left:16px;color:#9fafbf;font:600 11px/1.35 Inter,ui-sans-serif,system-ui,sans-serif}
+.oc-bottom{left:14px;right:14px;bottom:14px;padding:12px}
+.oc-journey ol{grid-template-columns:repeat(9,minmax(0,1fr));gap:8px}
+.oc-journey li{min-height:54px;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035);color:#dcecff}
+.oc-journey strong{display:block;font:900 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.oc-journey em{display:block;margin-top:4px;color:#8fa5b9;font:700 9px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-style:normal}
+.oc-proofline{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+@media (max-width:1200px){.oc-left,.oc-right,.oc-inspector{position:relative;inset:auto;width:auto;margin:12px 14px}.oc-left,.oc-right{display:grid;grid-template-columns:1fr}.observatory-webgl-runtime{min-height:1160px}.oc-bottom{position:relative;left:auto;right:auto;bottom:auto;margin:12px 14px 14px}}
+@media (max-width:780px){.oc-topbar nav,.oc-left,.oc-right{display:none}.oc-hero{top:90px;left:16px;right:16px}.oc-hero h2{font-size:54px}.oc-inspector{margin-top:720px}.oc-journey ol{grid-template-columns:1fr 1fr}}
 """
-
 
 def render(cfg, surface_sha):
     host = cfg["host"]
     host_class = cfg["hostClass"]
-    title = cfg["title"]
-    repo = cfg["repo"]
-    repo_url = f"https://github.com/Verifrax/{repo}"
-    description = cfg["description"]
     role = cfg["role"]
-    deploy_mode = cfg["deployMode"]
+    deploy_mode = cfg.get("deployMode", "static-root")
+
     adjacent = cfg.get("adjacentHosts", {})
     adjacent_rows = "\n".join(
-        f'<li class="row"><span class="label">{escape(label)}</span><span class="value"><a href="{escape(url)}">{escape(url.replace("https://", ""))}</a></span></li>'
-        for label, url in adjacent.items()
+        f"<dt>{escape(str(k))}</dt><dd><a href=\"https://{escape(str(v))}/\">{escape(str(v))}</a></dd>"
+        for k, v in adjacent.items()
     )
-    rules = "\n".join(f"<li>{escape(item)}</li>" for item in CLASS_RULES[host_class])
+
+    rules = "\n".join(f"<li>{escape(item)}</li>" for item in CLASS_RULES.get(host_class, CLASS_RULES["boundary"]))
     reading = "\n".join(f'<a class="pill" href="{escape(url)}">{escape(label)}</a>' for label, url in READING_ORDER)
     deploy_note = "Static public host." if deploy_mode == "static-root" else "Preview-only surface projection. Live host stays outside GitHub Pages."
+
     observatory_gate = render_observatory_gate(cfg)
     observatory_script = render_observatory_script(cfg)
-    observatory_webgl = render_observatory_webgl(cfg)
+    observatory_webgl_all = render_observatory_webgl(cfg)
+    observatory_webgl = "" if cfg.get("observatoryFirstViewport") else observatory_webgl_all
+    observatory_webgl_lead = observatory_webgl_all if cfg.get("observatoryFirstViewport") else ""
     observatory_webgl_script = render_observatory_webgl_script(cfg)
+
     return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{escape(title)}</title>
-  <meta name="description" content="{escape(description)}">
-  <link rel="canonical" href="{escape(host if host.endswith("/") else host + "/")}">
+  <title>VERIFRAX</title>
+  <meta name="description" content="Canonical public entry for the VERIFRAX system. Root surface only.">
+  <link rel="canonical" href="{escape(host)}/">
   <link rel="stylesheet" href="assets/surface.css">
 </head>
 <body>
-  <main class="wrap">
-    <div class="kicker">VERIFRAX / {escape(role)}</div>
-    <h1>{escape(title)}</h1>
-    <p class="lead">{escape(description)}</p>
-    <p class="copy">{escape(ROOT_COPY[host_class])}</p>
-    <div class="rule"></div>
+  <main class="surface stack">
+{observatory_webgl_lead}
+    <div class="surface-id">VERIFRAX / {escape(role)}</div>
+    <h1 class="surface-title">VERIFRAX</h1>
+    <p class="surface-role">Canonical public entry for the VERIFRAX system.</p>
+    <p class="surface-boundary">This surface is the public root only. It presents entry and routing only. It does not issue authority, execute governed actions, verify published material, publish proof, serve archive/reference, or accept intake.</p>
 
-    <section class="grid two">
-      <article class="card">
-        <h2>System map</h2>
-        <ul class="list">
-          {adjacent_rows}
-        </ul>
-      </article>
+    <div class="divider"></div>
 
-      <article class="card">
-        <h2>Host contract</h2>
-        <p>{escape(deploy_note)}</p>
-        <ul>
-          {rules}
-        </ul>
-      </article>
+    <section class="panel">
+      <h2>System map</h2>
+      <dl class="kv">
+        {adjacent_rows}
+      </dl>
     </section>
 
-    <section class="card" style="margin-top:28px">
-      <h2>Surface authority</h2>
-      <ul class="list">
-        <li class="row"><span class="label">Host</span><span class="value"><code>{escape(host)}</code></span></li>
-        <li class="row"><span class="label">Repository</span><span class="value"><a href="{escape(repo_url)}">{escape(repo)}</a></span></li>
-        <li class="row"><span class="label">Host class</span><span class="value"><code>{escape(host_class)}</code></span></li>
-        <li class="row"><span class="label">Surface role</span><span class="value"><code>{escape(role)}</code></span></li>
-        <li class="row"><span class="label">Projection source</span><span class="value"><code>VERIFRAX-SURFACE@{escape(surface_sha[:12])}</code></span></li>
+    <section class="panel">
+      <h2>Root contract</h2>
+      <ul class="list-tight">
+        {rules}
       </ul>
-      <p class="note">Form comes from the surface authority. Host purpose and content stay owned by the host repository.</p>
     </section>
 
-    <section class="card" style="margin-top:28px">
+    <section class="panel">
+      <h2>Host authority</h2>
+      <p>Host <code>{escape(host)}</code></p>
+      <p>Repository <a href="https://github.com/Verifrax/VERIFRAX-WWW">VERIFRAX-WWW</a></p>
+      <p>Host class <code>{escape(host_class)}</code></p>
+      <p>Projection source <code>VERIFRAX-SURFACE@{surface_sha}</code></p>
+      <p>{deploy_note}</p>
+    </section>
+
+    <section class="panel">
       <h2>Reading order</h2>
-      <div class="pills">{reading}</div>
+      <div class="links">
+        {reading}
+      </div>
     </section>
 
-    <div class="footer">
-      Generated from <code>surface.host.json</code> by the vendored VERIFRAX-SURFACE projector.
-    </div>
 {observatory_webgl}
 {observatory_gate}
   </main>
@@ -403,27 +327,22 @@ def render(cfg, surface_sha):
 """
 
 def main():
-    repo_root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd()
-    cfg_path = repo_root / "surface.host.json"
-    if not cfg_path.exists():
-        raise SystemExit(f"missing config: {cfg_path}")
-    cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
-    surface_sha = (repo_root / ".surface" / "SURFACE_SHA").read_text(encoding="utf-8").strip() if (repo_root / ".surface" / "SURFACE_SHA").exists() else "unknown"
+    repo_root = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
+    cfg = read_json(repo_root / "surface.host.json")
+    surface_sha = sha(repo_root / ".surface" / "vendor" / "scripts" / "project_host.py")
 
     shell_css = (repo_root / ".surface" / "vendor" / "shell" / "base.css").read_text(encoding="utf-8")
     tokens_css = (repo_root / ".surface" / "vendor" / "tokens" / "surface.css").read_text(encoding="utf-8")
     css = tokens_css + "\n\n" + shell_css + "\n\n" + observatory_css(cfg) + "\n\n" + observatory_webgl_css(cfg)
 
-    if cfg["deployMode"] == "static-root":
-        out_dir = repo_root
-    else:
-        out_dir = repo_root / "surface-preview"
-
+    out_dir = repo_root if cfg.get("deployMode") == "static-root" else repo_root / "public"
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    html = render(cfg, surface_sha)
+    (out_dir / "index.html").write_text(html, encoding="utf-8")
+    (out_dir / "404.html").write_text(html, encoding="utf-8")
     ensure_asset(out_dir, css)
-    html_doc = render(cfg, surface_sha)
-    (out_dir / "index.html").write_text(html_doc, encoding="utf-8")
-    (out_dir / "404.html").write_text(html_doc.replace("<h1>", "<h1>404 — ", 1), encoding="utf-8")
+    print(f"ok: {cfg['role']}")
 
 if __name__ == "__main__":
     main()

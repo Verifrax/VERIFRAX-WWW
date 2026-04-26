@@ -19,5 +19,6 @@
     "Status": "https://status.verifrax.net"
   },
   "observatoryRenderGate": true,
-  "observatoryWebglRuntime": true
+  "observatoryWebglRuntime": true,
+  "observatoryFirstViewport": true
 }
