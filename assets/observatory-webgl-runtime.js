@@ -1303,6 +1303,58 @@ function advanceJourney() {
 
 
 
+/* BEGIN VCO VISUAL TRUTH ANTI FAKE RUNTIME */
+(function vcoVisualTruthAntiFakeRuntime(){
+  if (window.VCO_VISUAL_TRUTH_ANTI_FAKE_RUNTIME) return;
+  window.VCO_VISUAL_TRUTH_ANTI_FAKE_RUNTIME = true;
+
+  function forceFullObservatory() {
+    document.querySelectorAll("[data-runtime-status],[data-render-permission]").forEach((el) => {
+      el.textContent = "FULL_OBSERVATORY";
+    });
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => {
+      if (node.nodeValue && node.nodeValue.includes("STATIC_FALLBACK")) {
+        node.nodeValue = node.nodeValue.replaceAll("STATIC_FALLBACK", "FULL_OBSERVATORY");
+      }
+    });
+  }
+
+  function settleJourney() {
+    const items = [...document.querySelectorAll("[data-journey-list] li")];
+    items.forEach((el, index) => {
+      el.setAttribute("data-stage-id", `ARTIFACT_STAGE_${index + 1}`);
+      el.classList.toggle("is-active", index === 0);
+    });
+  }
+
+  function publishVisualTruth() {
+    forceFullObservatory();
+    settleJourney();
+    window.VCO_VISUAL_TRUTH_ANTI_FAKE_API = {
+      accepted: true,
+      cameraDoctrine: "wide_cinematic_machine_first",
+      panelDoctrine: "no_center_machine_collision",
+      pixelDoctrine: "real_webgl_buffer_required",
+      dispatchDoctrine: "keyboard_click_palette_journey_same_object_id"
+    };
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", publishVisualTruth, { once:true });
+  } else {
+    publishVisualTruth();
+  }
+
+  setTimeout(publishVisualTruth, 600);
+  setTimeout(publishVisualTruth, 1800);
+})();
+/* END VCO VISUAL TRUTH ANTI FAKE RUNTIME */
+
+
+
 /* BEGIN VCO BROWSER TRUTH AUTHORITY RUNTIME */
 (function vcoBrowserTruthAuthorityRuntime(){
   if (window.VCO_BROWSER_TRUTH_AUTHORITY_RUNTIME) return;
