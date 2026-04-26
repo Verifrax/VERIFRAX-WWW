@@ -1305,6 +1305,12 @@ function advanceJourney() {
 })();
 /* END VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */
 
+
+
+
+
+
+
 /* BEGIN VCO REAL3D ANTI TOY RUNTIME AUTHORITY */
 function vcoMakeBrushedAuthorityTexture(THREE) {
   const canvas = document.createElement("canvas");
