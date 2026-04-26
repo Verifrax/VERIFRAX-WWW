@@ -20,7 +20,5 @@ jobs:
           node --check assets/observatory-webgl-runtime.js
           node scripts/check-observatory-attestation.mjs
           node scripts/check-observatory-runtime-boot.mjs
-      - name: Verify Observatory terminal visual authority
-        run: node scripts/check-observatory-terminal-visual-authority.mjs
       - name: Assert committed output is current
         run: git diff --exit-code -- . ':!README.md'

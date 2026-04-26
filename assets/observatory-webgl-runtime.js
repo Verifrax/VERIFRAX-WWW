@@ -1,4 +1,10 @@
 
+/* VCO_CINEMATIC_3D_REVIVAL_AUTHORITY
+   FULL_OBSERVATORY / DERIVED_PROJECTION / NOT_TRUTH_SOURCE
+   cinematic camera authority, physical materials, atmospheric depth,
+   accepted truth core, ADMISSORIUM front gate, live Artifact Journey,
+   command palette authority.
+*/
 function observatoryRuntimeBootError(event) {
   const root = document.querySelector("[data-observatory-runtime]");
   const message = event?.message || event?.error?.message || "runtime_boot_error";
@@ -1090,3 +1096,17 @@ window.governedRepoPillarAuthority = "VERIFRAX_OBSERVATORY_35_GOVERNED_REPO_PILL
 
 
 window.observatoryRuntimeBootAuthority = "VERIFRAX_OBSERVATORY_RUNTIME_BOOT_AUTHORITY_REPAIRED";
+
+
+function openCommandPalette() {
+  document.dispatchEvent(new CustomEvent("vco:command-palette", {
+    detail: { surface: "cinematic_observatory", render_permission: "FULL_OBSERVATORY" }
+  }));
+}
+
+
+function advanceJourney() {
+  document.dispatchEvent(new CustomEvent("vco:artifact-journey-advance", {
+    detail: { surface: "cinematic_observatory", state: "alive" }
+  }));
+}
