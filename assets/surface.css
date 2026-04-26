@@ -112,6 +112,9 @@ h1{
   .wrap{padding:32px 18px 56px}
   .row{grid-template-columns:1fr}
 }
+
+
+
 .observatory-render-gate{
   margin:28px 0 0;
   padding:16px;

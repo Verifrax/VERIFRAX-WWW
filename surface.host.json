@@ -17,5 +17,6 @@
     "Enforcement": "https://cicullis.verifrax.net",
     "Archive": "https://sigillarium.verifrax.net",
     "Status": "https://status.verifrax.net"
-  }
+  },
+  "observatoryRenderGate": true
 }

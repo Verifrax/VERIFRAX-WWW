@@ -48,6 +48,134 @@ def ensure_asset(dest_dir: Path, css: str):
     asset_dir.mkdir(parents=True, exist_ok=True)
     (asset_dir / "surface.css").write_text(css, encoding="utf-8")
 
+def render_observatory_gate(cfg):
+    if not cfg.get("observatoryRenderGate"):
+        return ""
+    return """
+    <section id="observatory-render-gate" class="observatory-render-gate" aria-label="VERIFRAX Observatory render permission">
+      <div class="observatory-gate-head">
+        <div>
+          <span class="observatory-gate-kicker">VERIFRAX CONSTITUTIONAL OBSERVATORY</span>
+          <strong>Render permission: STATIC_FALLBACK</strong>
+        </div>
+      </div>
+      <div class="observatory-gate-strip">
+        <span>PROJECTION: unloaded</span>
+        <span>WARNING: DERIVED_PROJECTION / NOT_TRUTH_SOURCE</span>
+      </div>
+    </section>
+"""
+
+def render_observatory_script(cfg):
+    if not cfg.get("observatoryRenderGate"):
+        return ""
+    return '  <script src="assets/observatory-render-gate.js" defer></script>\n'
+
+def observatory_css(cfg):
+    if not cfg.get("observatoryRenderGate"):
+        return ""
+    return r"""
+.observatory-render-gate{
+  margin:28px 0 0;
+  padding:16px;
+  border:1px solid rgba(115,208,255,.22);
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(8,14,24,.88),rgba(5,9,15,.96));
+  box-shadow:0 18px 60px rgba(0,0,0,.32);
+  color:var(--vf-text,#edf2f7);
+}
+.observatory-gate-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.observatory-gate-kicker{
+  display:block;
+  margin-bottom:6px;
+  color:var(--vf-accent,#73d0ff);
+  font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.12em;
+}
+.observatory-gate-head strong{
+  font:700 18px/1.25 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.observatory-gate-toggle{
+  appearance:none;
+  border:1px solid rgba(115,208,255,.32);
+  border-radius:999px;
+  padding:9px 13px;
+  background:rgba(115,208,255,.08);
+  color:var(--vf-text,#edf2f7);
+  font:700 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  cursor:pointer;
+}
+.observatory-gate-strip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+  color:var(--vf-text-soft,#b6c2cf);
+  font:600 11px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.observatory-gate-strip span{
+  padding:7px 9px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  background:rgba(255,255,255,.035);
+}
+.observatory-gate-detail{
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.09);
+  color:var(--vf-text-soft,#b6c2cf);
+}
+.observatory-gate-detail p{
+  margin:0 0 12px;
+}
+.observatory-gate-detail dl{
+  display:grid;
+  gap:6px;
+  margin:0;
+}
+.observatory-gate-check{
+  display:grid;
+  grid-template-columns:minmax(180px,260px) 1fr;
+  gap:10px;
+  padding:8px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.035);
+}
+.observatory-gate-check dt,
+.observatory-gate-check dd{
+  margin:0;
+  font:600 11px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.observatory-gate-check.is-pass dd{
+  color:#9ee6b8;
+}
+.observatory-gate-check.is-fail dd{
+  color:#ff9b9b;
+}
+body.vf-observatory-full .observatory-render-gate{
+  border-color:rgba(115,208,255,.42);
+}
+body.vf-observatory-safe .observatory-render-gate,
+body.vf-observatory-blocked .observatory-render-gate{
+  border-color:rgba(255,139,139,.46);
+}
+@media (max-width:720px){
+  .observatory-gate-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .observatory-gate-check{
+    grid-template-columns:1fr;
+  }
+}
+"""
+
+
 def render(cfg, surface_sha):
     host = cfg["host"]
     host_class = cfg["hostClass"]
@@ -65,6 +193,8 @@ def render(cfg, surface_sha):
     rules = "\n".join(f"<li>{escape(item)}</li>" for item in CLASS_RULES[host_class])
     reading = "\n".join(f'<a class="pill" href="{escape(url)}">{escape(label)}</a>' for label, url in READING_ORDER)
     deploy_note = "Static public host." if deploy_mode == "static-root" else "Preview-only surface projection. Live host stays outside GitHub Pages."
+    observatory_gate = render_observatory_gate(cfg)
+    observatory_script = render_observatory_script(cfg)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -120,8 +250,9 @@ def render(cfg, surface_sha):
     <div class="footer">
       Generated from <code>surface.host.json</code> by the vendored VERIFRAX-SURFACE projector.
     </div>
+{observatory_gate}
   </main>
-</body>
+{observatory_script}</body>
 </html>
 """
 
@@ -135,7 +266,7 @@ def main():
 
     shell_css = (repo_root / ".surface" / "vendor" / "shell" / "base.css").read_text(encoding="utf-8")
     tokens_css = (repo_root / ".surface" / "vendor" / "tokens" / "surface.css").read_text(encoding="utf-8")
-    css = tokens_css + "\n\n" + shell_css
+    css = tokens_css + "\n\n" + shell_css + "\n\n" + observatory_css(cfg)
 
     if cfg["deployMode"] == "static-root":
         out_dir = repo_root
