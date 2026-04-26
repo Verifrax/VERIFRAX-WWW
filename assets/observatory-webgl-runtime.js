@@ -134,6 +134,47 @@ function assertManifest(manifest, attestation) {
   return errors;
 }
 
+
+function createAuthorityBlock(width, height, depth, mat, capMat) {
+  const group = new THREE.Group();
+
+  const body = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), mat.clone());
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(width * 1.08, height * 0.08, depth * 1.08), capMat.clone());
+  const base = new THREE.Mesh(new THREE.BoxGeometry(width * 1.14, height * 0.10, depth * 1.14), capMat.clone());
+
+  body.castShadow = true;
+  body.receiveShadow = true;
+  cap.castShadow = true;
+  cap.receiveShadow = true;
+  base.castShadow = true;
+  base.receiveShadow = true;
+
+  cap.position.y = height * 0.54;
+  base.position.y = -height * 0.54;
+
+  group.add(body, cap, base);
+  return group;
+}
+
+function addGlowColumn(scene, x, z, h, color, intensity = 0.58) {
+  const geometry = new THREE.CylinderGeometry(0.055, 0.055, h, 14);
+  const columnMaterial = new THREE.MeshStandardMaterial({
+    color,
+    emissive: color,
+    emissiveIntensity: intensity,
+    transparent: true,
+    opacity: 0.62,
+    roughness: 0.18,
+    metalness: 0.18
+  });
+
+  const mesh = new THREE.Mesh(geometry, columnMaterial);
+  mesh.position.set(x, h / 2, z);
+  scene.add(mesh);
+  return mesh;
+}
+
+
 function material(color, emissive = 0x000000, intensity = 0, roughness = 0.64, metalness = 0.76) {
   return new THREE.MeshStandardMaterial({
     color,
@@ -824,3 +865,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 window.materialAuthorityPass = "VERIFRAX_OBSERVATORY_MATERIAL_AUTHORITY_PASS";
+
+
+window.runtimeHelperBoundary = "VERIFRAX_OBSERVATORY_RUNTIME_HELPER_BOUNDARY";
