@@ -1,0 +1,386 @@
+[
+  {
+    "id": "www",
+    "host": "www.verifrax.net",
+    "label": "WWW",
+    "role": "public root and commercial entry",
+    "owner_repo": "Verifrax/VERIFRAX-WWW",
+    "must_not_be": [
+      "execution",
+      "proof publication",
+      "authority",
+      "archive root",
+      "intake"
+    ],
+    "url": "https://www.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 0,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "api",
+    "host": "api.verifrax.net",
+    "label": "API",
+    "role": "execution host boundary",
+    "owner_repo": "Verifrax/VERIFRAX-API",
+    "must_not_be": [
+      "proof publication",
+      "verification authority",
+      "constitutional law",
+      "intake"
+    ],
+    "url": "https://api.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 1,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "proof",
+    "host": "proof.verifrax.net",
+    "label": "PROOF",
+    "role": "proof publication",
+    "owner_repo": "Verifrax/proof",
+    "must_not_be": [
+      "verification",
+      "authority",
+      "execution",
+      "intake"
+    ],
+    "url": "https://proof.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 2,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "verify",
+    "host": "verify.verifrax.net",
+    "label": "VERIFY",
+    "role": "public verification",
+    "owner_repo": "Verifrax/VERIFRAX-verify",
+    "must_not_be": [
+      "proof publication",
+      "authority",
+      "execution",
+      "intake"
+    ],
+    "url": "https://verify.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 3,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "docs",
+    "host": "docs.verifrax.net",
+    "label": "DOCS",
+    "role": "reference documentation",
+    "owner_repo": "Verifrax/VERIFRAX-DOCS",
+    "must_not_be": [
+      "current truth of record",
+      "authority",
+      "verification",
+      "proof publication"
+    ],
+    "url": "https://docs.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 4,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "apply",
+    "host": "apply.verifrax.net",
+    "label": "APPLY",
+    "role": "intake",
+    "owner_repo": "Verifrax/apply",
+    "must_not_be": [
+      "proof",
+      "verification",
+      "authority",
+      "execution"
+    ],
+    "url": "https://apply.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 5,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "status",
+    "host": "status.verifrax.net",
+    "label": "STATUS",
+    "role": "status publication",
+    "owner_repo": "Verifrax/VERIFRAX-STATUS",
+    "must_not_be": [
+      "current truth of record",
+      "proof",
+      "verification",
+      "authority"
+    ],
+    "url": "https://status.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 6,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "auctoriseal",
+    "host": "auctoriseal.verifrax.net",
+    "label": "AUCTORISEAL",
+    "role": "authority reference",
+    "owner_repo": "Verifrax/AUCTORISEAL",
+    "must_not_be": [
+      "execution",
+      "verification",
+      "proof publication",
+      "accepted state"
+    ],
+    "url": "https://auctoriseal.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 7,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "corpiform",
+    "host": "corpiform.verifrax.net",
+    "label": "CORPIFORM",
+    "role": "runtime reference",
+    "owner_repo": "Verifrax/CORPIFORM",
+    "must_not_be": [
+      "authority issuance",
+      "verification",
+      "proof publication",
+      "accepted state"
+    ],
+    "url": "https://corpiform.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 8,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "cicullis",
+    "host": "cicullis.verifrax.net",
+    "label": "CICULLIS",
+    "role": "enforcement reference",
+    "owner_repo": "Verifrax/cicullis",
+    "must_not_be": [
+      "truth source",
+      "authority issuance",
+      "execution runtime",
+      "verification"
+    ],
+    "url": "https://cicullis.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 9,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "sigillarium",
+    "host": "sigillarium.verifrax.net",
+    "label": "SIGILLARIUM",
+    "role": "archive/reference",
+    "owner_repo": "Verifrax/SIGILLARIUM",
+    "must_not_be": [
+      "proof primary host",
+      "verification",
+      "authority",
+      "execution"
+    ],
+    "url": "https://sigillarium.verifrax.net",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 10,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  },
+  {
+    "id": "github",
+    "host": "github.com/Verifrax",
+    "label": "GITHUB",
+    "role": "public repository perimeter",
+    "owner_repo": "Verifrax/.github",
+    "must_not_be": [
+      "accepted state",
+      "constitutional law",
+      "private enterprise control"
+    ],
+    "url": "https://github.com/Verifrax",
+    "visual_class": "host_gate",
+    "status": "live",
+    "position": 11,
+    "render_right": {
+      "mode": "HOST_GATE",
+      "allowed": true,
+      "reason": [
+        "host_role_declared",
+        "owner_repo_bound",
+        "not_role_clauses_declared",
+        "route_available"
+      ],
+      "downgrade_if": [
+        "missing_owner_repo",
+        "missing_role",
+        "missing_not_role_clauses"
+      ]
+    }
+  }
+]

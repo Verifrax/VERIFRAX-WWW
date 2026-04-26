@@ -1,0 +1,47 @@
+[
+  {
+    "id": "authority-governance",
+    "name": "Authority Governance Platform",
+    "maps_to": "AUCTORISEAL",
+    "paid_layer": true,
+    "public_truth_layer": false,
+    "buyer_outcome": "Who was allowed to authorize this action, under what scope, and with what audit trail?",
+    "cta": "Book a demo"
+  },
+  {
+    "id": "deterministic-workflow",
+    "name": "Deterministic Workflow Infrastructure",
+    "maps_to": "CORPIFORM",
+    "paid_layer": true,
+    "public_truth_layer": false,
+    "buyer_outcome": "What ran, under which authority, with which receipt, and with what reproducible boundary?",
+    "cta": "Book a demo"
+  },
+  {
+    "id": "ci-governance",
+    "name": "CI Governance Layer",
+    "maps_to": "cicullis",
+    "paid_layer": true,
+    "public_truth_layer": false,
+    "buyer_outcome": "What changes were allowed to pass, under which rules, and which gates prevented illegitimate mutation?",
+    "cta": "Book a demo"
+  },
+  {
+    "id": "verification-platform",
+    "name": "Verification Authority Platform",
+    "maps_to": "VERIFRAX + VERIFRAX-API",
+    "paid_layer": true,
+    "public_truth_layer": false,
+    "buyer_outcome": "What verified, under which public rules, and how can we integrate that verification into risk, compliance, and machine workflows?",
+    "cta": "Book a demo"
+  },
+  {
+    "id": "artifact-certification",
+    "name": "Artifact Certification Platform",
+    "maps_to": "SIGILLARIUM",
+    "paid_layer": true,
+    "public_truth_layer": false,
+    "buyer_outcome": "How are certified artifacts issued, surfaced, and referenced without collapsing proof, verification, and archive roles?",
+    "cta": "Book a demo"
+  }
+]
