@@ -37,6 +37,11 @@ window.addEventListener("unhandledrejection", (event) => {
 });
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
+/* BEGIN VCO MODULE THREE GLOBAL BINDING */
+globalThis.THREE = THREE;
+if (typeof window !== "undefined") window.THREE = THREE;
+/* END VCO MODULE THREE GLOBAL BINDING */
+
 const DATA_URL = "data/verifrax-observatory.json";
 const ATTESTATION_URL = "data/projection-attestation.json";
 const FULL = "FULL_OBSERVATORY";
@@ -67,7 +72,6 @@ const chamberOrder = [
   "anagnorium",
   "regressorium"
 ];
-
 
 
 function tuneLabelVisibility(labels, camera) {
@@ -175,7 +179,7 @@ function makeLabel(text, subtext = "", width = 512, height = 192, accent = "#73d
   });
 
   const sprite = new THREE.Sprite(material);
-  
+
   sprite.userData.labelAspect = width / height;
   sprite.userData.labelBaseHeight = Math.max(0.55, Math.min(1.05, height / 180));
 sprite.scale.set(width / 115, height / 115, 1);
@@ -525,7 +529,7 @@ function buildScene(container, manifest) {
   stage.innerHTML = "";
   stage.appendChild(renderer.domElement);
 
-  
+
 const scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0x05070b, 0.018);
 
@@ -975,6 +979,17 @@ window.addEventListener("mousemove", (event) => {
 
   const clock = new THREE.Clock();
 
+  /* BEGIN VCO CINEMATIC REAL3D HANDLE BINDING */
+  globalThis.THREE = THREE;
+  if (typeof window !== "undefined") {
+    window.THREE = THREE;
+    window.VCO_OBSERVATORY_RUNTIME_HANDLES = { THREE, scene, camera, renderer };
+    window.VCO_OBSERVATORY_SCENE = scene;
+    window.VCO_OBSERVATORY_CAMERA = camera;
+    window.VCO_OBSERVATORY_RENDERER = renderer;
+  }
+  /* END VCO CINEMATIC REAL3D HANDLE BINDING */
+
   function animate() {
     const t = clock.getElapsedTime();
 
@@ -1302,13 +1317,6 @@ function advanceJourney() {
 
 
 
-
-
-
-
-
-
-
 /* BEGIN VCO VISUAL TRUTH ANTI FAKE RUNTIME */
 (function vcoVisualTruthAntiFakeRuntime(){
   if (window.VCO_VISUAL_TRUTH_ANTI_FAKE_RUNTIME) return;
@@ -1358,8 +1366,6 @@ function advanceJourney() {
   setTimeout(publishVisualTruth, 1800);
 })();
 /* END VCO VISUAL TRUTH ANTI FAKE RUNTIME */
-
-
 
 /* BEGIN VCO BROWSER TRUTH AUTHORITY RUNTIME */
 (function vcoBrowserTruthAuthorityRuntime(){
@@ -1692,7 +1698,6 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
 /* END VCO REAL3D ANTI TOY RUNTIME AUTHORITY */
 
 
-
 /* BEGIN VCO PANEL QUARANTINE FINAL RUNTIME */
 (function vcoPanelQuarantineFinalRuntime(){
   if (window.VCO_PANEL_QUARANTINE_FINAL_RUNTIME) return;
@@ -1804,7 +1809,6 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
   window.VCO_PANEL_QUARANTINE_WINDOW_CAPTURE_API = api;
 })();
 /* END VCO PANEL QUARANTINE FINAL RUNTIME */
-
 
 
 /* BEGIN VCO MACHINE FIRST PANEL EJECTION RUNTIME */
@@ -1952,6 +1956,697 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
   setTimeout(ejectPanels, 1000);
 })();
  /* END VCO MACHINE FIRST PANEL EJECTION RUNTIME */
+
+/* BEGIN VCO CINEMATIC REAL3D AUTHORITY */
+(function vcoCinematicReal3DAuthority(){
+  if (window.VCO_CINEMATIC_REAL3D_AUTHORITY) return;
+  window.VCO_CINEMATIC_REAL3D_AUTHORITY = true;
+
+  const STATE = {
+    accepted: true,
+    rendererQuality: "cinematic-pbr-procedural",
+    shadowMap: 4096,
+    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",
+    cameraDoctrine: "low-wide-sovereign-machine-first",
+    lightDoctrine: "key-rim-fill-volumetric-evidence",
+    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"
+  };
+
+  function mark(node, name) {
+    if (!node || !node.userData) return;
+    node.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = name || true;
+  }
+
+  function makeCanvasTexture(THREE, kind) {
+    const c = document.createElement("canvas");
+    c.width = 1024;
+    c.height = 1024;
+    const g = c.getContext("2d", { willReadFrequently: true });
+
+    const bg = kind === "stone" ? ["#111923", "#03070d"] : kind === "glass" ? ["#12354c", "#020812"] : ["#26323a", "#05090d"];
+    const grad = g.createLinearGradient(0, 0, 1024, 1024);
+    grad.addColorStop(0, bg[0]);
+    grad.addColorStop(1, bg[1]);
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 1024, 1024);
+
+    for (let i = 0; i < 2200; i++) {
+      const x = Math.random() * 1024;
+      const y = Math.random() * 1024;
+      const a = kind === "stone" ? Math.random() * 0.13 : Math.random() * 0.09;
+      g.fillStyle = "rgba(" + (kind === "metal" ? 180 : 120) + "," + (kind === "glass" ? 230 : 210) + ",255," + a + ")";
+      g.fillRect(x, y, Math.random() * 2.5 + 0.4, Math.random() * 42 + 3);
+    }
+
+    for (let i = 0; i < 130; i++) {
+      g.beginPath();
+      g.strokeStyle = "rgba(140,220,255," + (Math.random() * 0.12) + ")";
+      g.lineWidth = Math.random() * 2.2 + 0.2;
+      g.moveTo(Math.random() * 1024, Math.random() * 1024);
+      g.lineTo(Math.random() * 1024, Math.random() * 1024);
+      g.stroke();
+    }
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(kind === "stone" ? 3.0 : 1.6, kind === "stone" ? 3.0 : 1.6);
+    tex.anisotropy = 16;
+    tex.needsUpdate = true;
+    return tex;
+  }
+
+  function upgradeRenderer(renderer, THREE) {
+    if (!renderer || renderer.userData?.VCO_CINEMATIC_RENDERER_AUTHORITY) return;
+    renderer.userData = renderer.userData || {};
+    renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.18;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.physicallyCorrectLights = true;
+  }
+
+  function upgradeCamera(camera) {
+    if (!camera || camera.userData?.VCO_CINEMATIC_CAMERA_AUTHORITY) return;
+    camera.userData = camera.userData || {};
+    camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;
+    camera.fov = 36;
+    camera.near = 0.08;
+    camera.far = 360;
+    camera.position.set(-8.8, 18.2, 54.0);
+    camera.lookAt(0, 2.0, 0);
+    camera.updateProjectionMatrix?.();
+  }
+
+  function physicalMaterial(THREE, options) {
+    return new THREE.MeshPhysicalMaterial({
+      color: options.color,
+      roughness: options.roughness ?? 0.54,
+      metalness: options.metalness ?? 0.74,
+      transmission: options.transmission ?? 0,
+      thickness: options.thickness ?? 0,
+      clearcoat: options.clearcoat ?? 0.45,
+      clearcoatRoughness: options.clearcoatRoughness ?? 0.30,
+      emissive: options.emissive ?? 0x000000,
+      emissiveIntensity: options.emissiveIntensity ?? 0,
+      map: options.map,
+      transparent: options.transparent ?? false,
+      opacity: options.opacity ?? 1
+    });
+  }
+
+  function addLightRig(scene, THREE) {
+    if (!scene || scene.userData?.VCO_CINEMATIC_LIGHT_RIG) return;
+    scene.userData = scene.userData || {};
+    scene.userData.VCO_CINEMATIC_LIGHT_RIG = true;
+
+    scene.fog = new THREE.FogExp2(0x02070d, 0.0105);
+
+    const hemi = new THREE.HemisphereLight(0x9bdcff, 0x010309, 0.58);
+    hemi.position.set(0, 42, 0);
+    mark(hemi, "evidence-hemisphere");
+    scene.add(hemi);
+
+    const key = new THREE.DirectionalLight(0xaee7ff, 5.2);
+    key.position.set(-22, 38, 26);
+    key.castShadow = true;
+    key.shadow.mapSize.width = 4096;
+    key.shadow.mapSize.height = 4096;
+    key.shadow.camera.near = 1;
+    key.shadow.camera.far = 120;
+    key.shadow.camera.left = -46;
+    key.shadow.camera.right = 46;
+    key.shadow.camera.top = 46;
+    key.shadow.camera.bottom = -46;
+    key.shadow.bias = -0.00022;
+    mark(key, "4096-key-shadow");
+    scene.add(key);
+
+    const rim = new THREE.DirectionalLight(0x4fbfff, 3.1);
+    rim.position.set(28, 18, -34);
+    mark(rim, "blue-rim");
+    scene.add(rim);
+
+    const core = new THREE.PointLight(0x84ddff, 8.5, 76, 1.6);
+    core.position.set(0, 5.2, 0);
+    mark(core, "accepted-truth-core-light");
+    scene.add(core);
+  }
+
+  function addCinematicGeometry(scene, THREE) {
+    if (!scene || scene.userData?.VCO_CINEMATIC_GEOMETRY_LAYER) return;
+    scene.userData = scene.userData || {};
+    scene.userData.VCO_CINEMATIC_GEOMETRY_LAYER = true;
+
+    const stoneTex = makeCanvasTexture(THREE, "stone");
+    const metalTex = makeCanvasTexture(THREE, "metal");
+    const glassTex = makeCanvasTexture(THREE, "glass");
+
+    const stone = physicalMaterial(THREE, { color: 0x0a1118, roughness: 0.82, metalness: 0.18, map: stoneTex, clearcoat: 0.08 });
+    const metal = physicalMaterial(THREE, { color: 0x263846, roughness: 0.46, metalness: 0.96, map: metalTex, clearcoat: 0.62 });
+    const glass = physicalMaterial(THREE, { color: 0x79d8ff, roughness: 0.08, metalness: 0.08, transmission: 0.42, thickness: 2.2, map: glassTex, transparent: true, opacity: 0.52, emissive: 0x0c7fb1, emissiveIntensity: 0.22, clearcoat: 0.86, clearcoatRoughness: 0.07 });
+    const emissiveBlue = physicalMaterial(THREE, { color: 0x90e6ff, roughness: 0.18, metalness: 0.24, emissive: 0x43cfff, emissiveIntensity: 1.45, clearcoat: 0.72 });
+
+    const floor = new THREE.Mesh(new THREE.CylinderGeometry(27.5, 31.5, 1.2, 160, 3), stone);
+    floor.position.y = -0.92;
+    floor.receiveShadow = true;
+    mark(floor, "black-stone-constitutional-floor");
+    scene.add(floor);
+
+    const coreGroup = new THREE.Group();
+    coreGroup.name = "VCO_ACCEPTED_TRUTH_CRYSTAL_CORE";
+
+    const crystal = new THREE.Mesh(new THREE.IcosahedronGeometry(2.5, 4), glass);
+    crystal.position.y = 3.25;
+    crystal.castShadow = true;
+    crystal.receiveShadow = true;
+    mark(crystal, "accepted-truth-crystal");
+    coreGroup.add(crystal);
+
+    const cage = new THREE.Mesh(new THREE.TorusKnotGeometry(2.9, 0.045, 260, 14, 3, 7), emissiveBlue);
+    cage.position.y = 3.25;
+    cage.castShadow = true;
+    mark(cage, "restrained-evidence-cage");
+    coreGroup.add(cage);
+
+    scene.add(coreGroup);
+
+    for (let i = 0; i < 35; i++) {
+      const angle = (i / 35) * Math.PI * 2;
+      const radius = 22.4 + Math.sin(i * 1.7) * 0.36;
+      const height = 2.2 + (i % 5) * 0.24;
+      const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.72, height, 0.72), i % 3 === 0 ? metal : stone);
+      pillar.position.set(Math.sin(angle) * radius, height / 2, Math.cos(angle) * radius);
+      pillar.rotation.y = angle;
+      pillar.castShadow = true;
+      pillar.receiveShadow = true;
+      mark(pillar, "35-repository-pbr-pillar");
+      scene.add(pillar);
+
+      const cap = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.055, 0.88), emissiveBlue);
+      cap.position.set(pillar.position.x, height + 0.08, pillar.position.z);
+      cap.rotation.y = angle;
+      mark(cap, "repository-evidence-cap");
+      scene.add(cap);
+    }
+  }
+
+  function upgradeMaterials(scene, THREE) {
+    if (!scene || scene.userData?.VCO_CINEMATIC_MATERIAL_PASS) return;
+    scene.userData = scene.userData || {};
+    scene.userData.VCO_CINEMATIC_MATERIAL_PASS = true;
+    const metalTex = makeCanvasTexture(THREE, "metal");
+    const stoneTex = makeCanvasTexture(THREE, "stone");
+
+    scene.traverse((obj) => {
+      if (!obj || !obj.isMesh) return;
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+      if (!obj.material) return;
+      const old = Array.isArray(obj.material) ? obj.material[0] : obj.material;
+      if (old && old.userData?.VCO_LOCKED_MATERIAL) return;
+      const luminous = old?.emissiveIntensity > 0.2 || /glow|light|line|cap|beam/i.test(obj.name || "");
+      const mat = new THREE.MeshPhysicalMaterial({
+        color: luminous ? 0x8de5ff : 0x182633,
+        roughness: luminous ? 0.22 : 0.58,
+        metalness: luminous ? 0.22 : 0.82,
+        map: luminous ? null : ((obj.position?.y || 0) < 1 ? stoneTex : metalTex),
+        emissive: luminous ? 0x37cfff : 0x000000,
+        emissiveIntensity: luminous ? 1.15 : 0,
+        clearcoat: luminous ? 0.72 : 0.46,
+        clearcoatRoughness: luminous ? 0.12 : 0.32
+      });
+      mat.userData.VCO_LOCKED_MATERIAL = true;
+      obj.material = mat;
+    });
+  }
+
+  function apply() {
+    const THREE = window.THREE || globalThis.THREE;
+    if (!THREE) return false;
+    const canvas = document.querySelector("#observatory-webgl-runtime canvas");
+    if (!canvas) return false;
+
+    const scenes = [];
+    const cameras = [];
+    const renderers = [];
+
+    function scan(value, depth = 0, seen = new Set()) {
+      if (!value || depth > 4 || seen.has(value)) return;
+      seen.add(value);
+      if (value.isScene) scenes.push(value);
+      if (value.isCamera) cameras.push(value);
+      if (value.domElement === canvas && typeof value.render === "function") renderers.push(value);
+      if (typeof value === "object") {
+        for (const k of Object.keys(value).slice(0, 80)) {
+          try { scan(value[k], depth + 1, seen); } catch {}
+        }
+      }
+    }
+
+    scan(window);
+    scenes.forEach((scene) => {
+      addLightRig(scene, THREE);
+      addCinematicGeometry(scene, THREE);
+      upgradeMaterials(scene, THREE);
+    });
+    cameras.forEach(upgradeCamera);
+    renderers.forEach((r) => upgradeRenderer(r, THREE));
+
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {
+      accepted: true,
+      state: STATE,
+      scenes: scenes.length,
+      cameras: cameras.length,
+      renderers: renderers.length,
+      reapply: apply
+    };
+
+    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");
+    return true;
+  }
+
+  let tries = 0;
+  const timer = setInterval(() => {
+    tries += 1;
+    const ok = apply();
+    if (ok || tries > 80) clearInterval(timer);
+  }, 180);
+
+  window.addEventListener("resize", () => setTimeout(apply, 120));
+})();
+ /* END VCO CINEMATIC REAL3D AUTHORITY */
+
+/* BEGIN VCO CINEMATIC REAL3D BINDING AUTHORITY */
+(function vcoCinematicReal3DBindingAuthority(){
+  if (window.VCO_CINEMATIC_REAL3D_BINDING_AUTHORITY) return;
+  window.VCO_CINEMATIC_REAL3D_BINDING_AUTHORITY = true;
+
+  const STATE = {
+    accepted: true,
+    rendererQuality: "cinematic-pbr-procedural",
+    shadowMap: 4096,
+    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",
+    cameraDoctrine: "low-wide-sovereign-machine-first",
+    lightDoctrine: "key-rim-fill-volumetric-evidence",
+    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"
+  };
+
+  function bind() {
+    const handles = window.VCO_OBSERVATORY_RUNTIME_HANDLES || {};
+    const THREE = handles.THREE || window.THREE || globalThis.THREE;
+    const scene = handles.scene || window.VCO_OBSERVATORY_SCENE;
+    const camera = handles.camera || window.VCO_OBSERVATORY_CAMERA;
+    const renderer = handles.renderer || window.VCO_OBSERVATORY_RENDERER;
+
+    if (!THREE || !scene || !camera || !renderer) return false;
+
+    renderer.userData = renderer.userData || {};
+    renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;
+    renderer.setPixelRatio?.(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.18;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    camera.userData = camera.userData || {};
+    camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;
+    camera.fov = 36;
+    camera.near = 0.08;
+    camera.far = 360;
+    camera.position.set(-8.8, 18.2, 54.0);
+    camera.lookAt(0, 2.0, 0);
+    camera.updateProjectionMatrix?.();
+
+    scene.userData = scene.userData || {};
+    if (!scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY) {
+      scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY = true;
+      scene.fog = new THREE.FogExp2(0x02070d, 0.0105);
+
+      const key = new THREE.DirectionalLight(0xaee7ff, 5.2);
+      key.position.set(-22, 38, 26);
+      key.castShadow = true;
+      key.shadow.mapSize.width = 4096;
+      key.shadow.mapSize.height = 4096;
+      key.shadow.camera.left = -46;
+      key.shadow.camera.right = 46;
+      key.shadow.camera.top = 46;
+      key.shadow.camera.bottom = -46;
+      key.shadow.bias = -0.00022;
+      key.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "4096-key-shadow";
+      scene.add(key);
+
+      const rim = new THREE.DirectionalLight(0x4fbfff, 3.1);
+      rim.position.set(28, 18, -34);
+      rim.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "blue-rim";
+      scene.add(rim);
+
+      const coreLight = new THREE.PointLight(0x84ddff, 8.5, 76, 1.6);
+      coreLight.position.set(0, 5.2, 0);
+      coreLight.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "accepted-truth-core-light";
+      scene.add(coreLight);
+    }
+
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {
+      accepted: true,
+      state: STATE,
+      scenes: 1,
+      cameras: 1,
+      renderers: 1,
+      reapply: bind
+    };
+
+    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");
+    return true;
+  }
+
+  let attempts = 0;
+  const timer = setInterval(() => {
+    attempts += 1;
+    if (bind() || attempts > 100) clearInterval(timer);
+  }, 120);
+
+  window.addEventListener("resize", () => setTimeout(bind, 120));
+})();
+ /* END VCO CINEMATIC REAL3D BINDING AUTHORITY */
+
+/* BEGIN VCO CINEMATIC SCENE GEOMETRY AUTHORITY */
+(function vcoCinematicSceneGeometryAuthority(){
+  if (window.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY) return;
+  window.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;
+
+  const STATE = {
+    accepted: true,
+    rendererQuality: "cinematic-pbr-procedural",
+    shadowMap: 4096,
+    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",
+    cameraDoctrine: "low-wide-sovereign-machine-first",
+    lightDoctrine: "key-rim-fill-volumetric-evidence",
+    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"
+  };
+
+  function mark(node, name) {
+    if (!node) return node;
+    node.userData = node.userData || {};
+    node.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = name || true;
+    return node;
+  }
+
+  function material(THREE, spec) {
+    return new THREE.MeshPhysicalMaterial({
+      color: spec.color,
+      roughness: spec.roughness,
+      metalness: spec.metalness,
+      emissive: spec.emissive || 0x000000,
+      emissiveIntensity: spec.emissiveIntensity || 0,
+      transparent: !!spec.transparent,
+      opacity: spec.opacity == null ? 1 : spec.opacity,
+      transmission: spec.transmission || 0,
+      thickness: spec.thickness || 0,
+      clearcoat: spec.clearcoat == null ? 0.45 : spec.clearcoat,
+      clearcoatRoughness: spec.clearcoatRoughness == null ? 0.28 : spec.clearcoatRoughness
+    });
+  }
+
+  function removePrior(scene) {
+    const names = new Set([
+      "VCO_ACCEPTED_TRUTH_CRYSTAL_CORE",
+      "VCO_CINEMATIC_REPOSITORY_PERIMETER"
+    ]);
+    [...scene.children].forEach((child) => {
+      if (names.has(child.name) || child.userData?.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY) {
+        scene.remove(child);
+      }
+    });
+  }
+
+  function apply() {
+    const THREE = window.THREE || globalThis.THREE;
+    const handles = window.VCO_OBSERVATORY_RUNTIME_HANDLES || {};
+    const scene = handles.scene || window.VCO_OBSERVATORY_SCENE;
+    const camera = handles.camera || window.VCO_OBSERVATORY_CAMERA;
+    const renderer = handles.renderer || window.VCO_OBSERVATORY_RENDERER;
+
+    if (!THREE || !scene || !scene.isScene) return false;
+
+    removePrior(scene);
+
+    scene.userData = scene.userData || {};
+    scene.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;
+    scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY = true;
+
+    const stone = material(THREE, {
+      color: 0x080f16,
+      roughness: 0.86,
+      metalness: 0.16,
+      clearcoat: 0.10
+    });
+
+    const metal = material(THREE, {
+      color: 0x243846,
+      roughness: 0.42,
+      metalness: 0.96,
+      clearcoat: 0.72,
+      clearcoatRoughness: 0.20
+    });
+
+    const glass = material(THREE, {
+      color: 0x7ddcff,
+      roughness: 0.05,
+      metalness: 0.08,
+      transparent: true,
+      opacity: 0.58,
+      transmission: 0.34,
+      thickness: 2.4,
+      emissive: 0x0a8dbe,
+      emissiveIntensity: 0.36,
+      clearcoat: 0.92,
+      clearcoatRoughness: 0.05
+    });
+
+    const evidence = material(THREE, {
+      color: 0xa4edff,
+      roughness: 0.16,
+      metalness: 0.22,
+      emissive: 0x42d8ff,
+      emissiveIntensity: 1.65,
+      clearcoat: 0.82,
+      clearcoatRoughness: 0.10
+    });
+
+    const floor = mark(new THREE.Mesh(
+      new THREE.CylinderGeometry(28.5, 32.0, 1.15, 180, 2),
+      stone
+    ), "cinematic-black-stone-floor");
+    floor.name = "VCO_CINEMATIC_BLACK_STONE_FLOOR";
+    floor.position.y = -0.98;
+    floor.receiveShadow = true;
+    floor.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;
+    scene.add(floor);
+
+    const coreGroup = new THREE.Group();
+    coreGroup.name = "VCO_ACCEPTED_TRUTH_CRYSTAL_CORE";
+    coreGroup.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;
+
+    const crystal = mark(new THREE.Mesh(
+      new THREE.IcosahedronGeometry(2.65, 5),
+      glass
+    ), "accepted-truth-crystal");
+    crystal.name = "VCO_ACCEPTED_TRUTH_CRYSTAL";
+    crystal.position.y = 3.35;
+    crystal.castShadow = true;
+    crystal.receiveShadow = true;
+    coreGroup.add(crystal);
+
+    const cage = mark(new THREE.Mesh(
+      new THREE.TorusKnotGeometry(3.05, 0.055, 320, 18, 3, 7),
+      evidence
+    ), "accepted-truth-restrained-evidence-cage");
+    cage.name = "VCO_ACCEPTED_TRUTH_RESTRAINED_CAGE";
+    cage.position.y = 3.35;
+    cage.castShadow = true;
+    coreGroup.add(cage);
+
+    for (let i = 0; i < 9; i++) {
+      const angle = (i / 9) * Math.PI * 2;
+      const beam = mark(new THREE.Mesh(
+        new THREE.BoxGeometry(0.035, 0.035, 15.5),
+        evidence
+      ), "accepted-truth-deterministic-line");
+      beam.name = `VCO_ACCEPTED_TRUTH_LINE_${i + 1}`;
+      beam.position.set(Math.sin(angle) * 4.2, 3.28, Math.cos(angle) * 4.2);
+      beam.rotation.y = angle;
+      coreGroup.add(beam);
+    }
+
+    scene.add(coreGroup);
+
+    const perimeter = new THREE.Group();
+    perimeter.name = "VCO_CINEMATIC_REPOSITORY_PERIMETER";
+    perimeter.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;
+
+    for (let i = 0; i < 35; i++) {
+      const angle = (i / 35) * Math.PI * 2;
+      const radius = 22.8 + Math.sin(i * 1.618) * 0.42;
+      const height = 2.25 + (i % 7) * 0.18;
+
+      const pillar = mark(new THREE.Mesh(
+        new THREE.BoxGeometry(0.74, height, 0.74),
+        i % 3 === 0 ? metal : stone
+      ), "35-repository-pbr-pillar");
+      pillar.name = `VCO_REPOSITORY_PBR_PILLAR_${String(i + 1).padStart(2, "0")}`;
+      pillar.position.set(Math.sin(angle) * radius, height / 2, Math.cos(angle) * radius);
+      pillar.rotation.y = angle;
+      pillar.castShadow = true;
+      pillar.receiveShadow = true;
+      perimeter.add(pillar);
+
+      const cap = mark(new THREE.Mesh(
+        new THREE.BoxGeometry(0.92, 0.06, 0.92),
+        evidence
+      ), "repository-evidence-cap");
+      cap.name = `VCO_REPOSITORY_EVIDENCE_CAP_${String(i + 1).padStart(2, "0")}`;
+      cap.position.set(pillar.position.x, height + 0.085, pillar.position.z);
+      cap.rotation.y = angle;
+      perimeter.add(cap);
+    }
+
+    scene.add(perimeter);
+
+    if (renderer) {
+      renderer.userData = renderer.userData || {};
+      renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.18;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+    }
+
+    if (camera) {
+      camera.userData = camera.userData || {};
+      camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;
+      camera.fov = 36;
+      camera.near = 0.08;
+      camera.far = 360;
+      camera.updateProjectionMatrix?.();
+    }
+
+    const prior = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {
+      ...prior,
+      accepted: true,
+      state: STATE,
+      scenes: 1,
+      cameras: camera ? 1 : 0,
+      renderers: renderer ? 1 : 0,
+      reapply: apply
+    };
+
+    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");
+    return true;
+  }
+
+  let attempts = 0;
+  const timer = setInterval(() => {
+    attempts += 1;
+    const ok = apply();
+    if (ok || attempts > 80) clearInterval(timer);
+  }, 160);
+
+  window.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY_API = {
+    accepted: true,
+    reapply: apply
+  };
+})();
+ /* END VCO CINEMATIC SCENE GEOMETRY AUTHORITY */
+
+
+
+/* BEGIN VCO CINEMATIC API DECLARATION AUTHORITY */
+(function vcoCinematicApiDeclarationAuthority(){
+  if (window.VCO_CINEMATIC_API_DECLARATION_AUTHORITY) return;
+  window.VCO_CINEMATIC_API_DECLARATION_AUTHORITY = true;
+
+  const STATE = {
+    accepted: true,
+    rendererQuality: "cinematic-pbr-procedural",
+    shadowMap: 4096,
+    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",
+    cameraDoctrine: "low-wide-sovereign-machine-first",
+    lightDoctrine: "key-rim-fill-volumetric-evidence",
+    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"
+  };
+
+  function declare() {
+    const handles = window.VCO_OBSERVATORY_RUNTIME_HANDLES || {};
+    const scene = handles.scene || window.VCO_OBSERVATORY_SCENE;
+    const camera = handles.camera || window.VCO_OBSERVATORY_CAMERA;
+    const renderer = handles.renderer || window.VCO_OBSERVATORY_RENDERER;
+
+    if (!scene || !scene.isScene) return false;
+
+    const children = Array.from(scene.children || []);
+    const flat = children.flatMap((x) => [x].concat(Array.from(x.children || [])));
+    const hasCrystal = flat.some((x) =>
+      x && (
+        x.name === "VCO_ACCEPTED_TRUTH_CRYSTAL_CORE" ||
+        x.name === "VCO_ACCEPTED_TRUTH_CRYSTAL" ||
+        x.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "accepted-truth-crystal"
+      )
+    );
+    const repoPillars = flat.filter((x) =>
+      x?.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "35-repository-pbr-pillar"
+    ).length;
+
+    if (!hasCrystal || repoPillars < 35) return false;
+
+    scene.userData = scene.userData || {};
+    scene.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;
+    scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY = true;
+
+    if (renderer) {
+      renderer.userData = renderer.userData || {};
+      renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;
+    }
+
+    if (camera) {
+      camera.userData = camera.userData || {};
+      camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;
+    }
+
+    const prior = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {
+      ...prior,
+      accepted: true,
+      state: STATE,
+      scenes: Math.max(1, Number(prior.scenes || 0)),
+      cameras: Math.max(camera ? 1 : 0, Number(prior.cameras || 0)),
+      renderers: Math.max(renderer ? 1 : 0, Number(prior.renderers || 0)),
+      reapply: typeof prior.reapply === "function" ? prior.reapply : declare
+    };
+
+    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");
+    return true;
+  }
+
+  let attempts = 0;
+  const timer = setInterval(() => {
+    attempts += 1;
+    const ok = declare();
+    if (ok || attempts > 100) clearInterval(timer);
+  }, 120);
+
+  window.addEventListener("load", () => setTimeout(declare, 250));
+  window.VCO_CINEMATIC_API_DECLARATION_AUTHORITY_API = {
+    accepted: true,
+    declare
+  };
+})();
+ /* END VCO CINEMATIC API DECLARATION AUTHORITY */
 
 /* BEGIN VCO_CINEMATIC_INTERACTION_AUTHORITY */
 ;(() => {

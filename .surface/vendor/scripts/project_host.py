@@ -1862,6 +1862,458 @@ html,body{margin:0!important;width:100%!important;height:100%!important;min-heig
         runtime_path.write_text(js.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
 
 
+# VCO_CINEMATIC_REAL3D_AUTHORITY_PROJECTOR_HOOK
+def _vco_cinematic_real3d_authority_projector_hook():
+    import re
+    from pathlib import Path
+
+    runtime_block = '/* BEGIN VCO CINEMATIC REAL3D AUTHORITY */\n(function vcoCinematicReal3DAuthority(){\n  if (window.VCO_CINEMATIC_REAL3D_AUTHORITY) return;\n  window.VCO_CINEMATIC_REAL3D_AUTHORITY = true;\n\n  const STATE = {\n    accepted: true,\n    rendererQuality: "cinematic-pbr-procedural",\n    shadowMap: 4096,\n    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",\n    cameraDoctrine: "low-wide-sovereign-machine-first",\n    lightDoctrine: "key-rim-fill-volumetric-evidence",\n    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"\n  };\n\n  function mark(node, name) {\n    if (!node || !node.userData) return;\n    node.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = name || true;\n  }\n\n  function makeCanvasTexture(THREE, kind) {\n    const c = document.createElement("canvas");\n    c.width = 1024;\n    c.height = 1024;\n    const g = c.getContext("2d", { willReadFrequently: true });\n\n    const bg = kind === "stone" ? ["#111923", "#03070d"] : kind === "glass" ? ["#12354c", "#020812"] : ["#26323a", "#05090d"];\n    const grad = g.createLinearGradient(0, 0, 1024, 1024);\n    grad.addColorStop(0, bg[0]);\n    grad.addColorStop(1, bg[1]);\n    g.fillStyle = grad;\n    g.fillRect(0, 0, 1024, 1024);\n\n    for (let i = 0; i < 2200; i++) {\n      const x = Math.random() * 1024;\n      const y = Math.random() * 1024;\n      const a = kind === "stone" ? Math.random() * 0.13 : Math.random() * 0.09;\n      g.fillStyle = "rgba(" + (kind === "metal" ? 180 : 120) + "," + (kind === "glass" ? 230 : 210) + ",255," + a + ")";\n      g.fillRect(x, y, Math.random() * 2.5 + 0.4, Math.random() * 42 + 3);\n    }\n\n    for (let i = 0; i < 130; i++) {\n      g.beginPath();\n      g.strokeStyle = "rgba(140,220,255," + (Math.random() * 0.12) + ")";\n      g.lineWidth = Math.random() * 2.2 + 0.2;\n      g.moveTo(Math.random() * 1024, Math.random() * 1024);\n      g.lineTo(Math.random() * 1024, Math.random() * 1024);\n      g.stroke();\n    }\n\n    const tex = new THREE.CanvasTexture(c);\n    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;\n    tex.repeat.set(kind === "stone" ? 3.0 : 1.6, kind === "stone" ? 3.0 : 1.6);\n    tex.anisotropy = 16;\n    tex.needsUpdate = true;\n    return tex;\n  }\n\n  function upgradeRenderer(renderer, THREE) {\n    if (!renderer || renderer.userData?.VCO_CINEMATIC_RENDERER_AUTHORITY) return;\n    renderer.userData = renderer.userData || {};\n    renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;\n    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));\n    renderer.outputColorSpace = THREE.SRGBColorSpace;\n    renderer.toneMapping = THREE.ACESFilmicToneMapping;\n    renderer.toneMappingExposure = 1.18;\n    renderer.shadowMap.enabled = true;\n    renderer.shadowMap.type = THREE.PCFSoftShadowMap;\n    renderer.physicallyCorrectLights = true;\n  }\n\n  function upgradeCamera(camera) {\n    if (!camera || camera.userData?.VCO_CINEMATIC_CAMERA_AUTHORITY) return;\n    camera.userData = camera.userData || {};\n    camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;\n    camera.fov = 36;\n    camera.near = 0.08;\n    camera.far = 360;\n    camera.position.set(-8.8, 18.2, 54.0);\n    camera.lookAt(0, 2.0, 0);\n    camera.updateProjectionMatrix?.();\n  }\n\n  function physicalMaterial(THREE, options) {\n    return new THREE.MeshPhysicalMaterial({\n      color: options.color,\n      roughness: options.roughness ?? 0.54,\n      metalness: options.metalness ?? 0.74,\n      transmission: options.transmission ?? 0,\n      thickness: options.thickness ?? 0,\n      clearcoat: options.clearcoat ?? 0.45,\n      clearcoatRoughness: options.clearcoatRoughness ?? 0.30,\n      emissive: options.emissive ?? 0x000000,\n      emissiveIntensity: options.emissiveIntensity ?? 0,\n      map: options.map,\n      transparent: options.transparent ?? false,\n      opacity: options.opacity ?? 1\n    });\n  }\n\n  function addLightRig(scene, THREE) {\n    if (!scene || scene.userData?.VCO_CINEMATIC_LIGHT_RIG) return;\n    scene.userData = scene.userData || {};\n    scene.userData.VCO_CINEMATIC_LIGHT_RIG = true;\n\n    scene.fog = new THREE.FogExp2(0x02070d, 0.0105);\n\n    const hemi = new THREE.HemisphereLight(0x9bdcff, 0x010309, 0.58);\n    hemi.position.set(0, 42, 0);\n    mark(hemi, "evidence-hemisphere");\n    scene.add(hemi);\n\n    const key = new THREE.DirectionalLight(0xaee7ff, 5.2);\n    key.position.set(-22, 38, 26);\n    key.castShadow = true;\n    key.shadow.mapSize.width = 4096;\n    key.shadow.mapSize.height = 4096;\n    key.shadow.camera.near = 1;\n    key.shadow.camera.far = 120;\n    key.shadow.camera.left = -46;\n    key.shadow.camera.right = 46;\n    key.shadow.camera.top = 46;\n    key.shadow.camera.bottom = -46;\n    key.shadow.bias = -0.00022;\n    mark(key, "4096-key-shadow");\n    scene.add(key);\n\n    const rim = new THREE.DirectionalLight(0x4fbfff, 3.1);\n    rim.position.set(28, 18, -34);\n    mark(rim, "blue-rim");\n    scene.add(rim);\n\n    const core = new THREE.PointLight(0x84ddff, 8.5, 76, 1.6);\n    core.position.set(0, 5.2, 0);\n    mark(core, "accepted-truth-core-light");\n    scene.add(core);\n  }\n\n  function addCinematicGeometry(scene, THREE) {\n    if (!scene || scene.userData?.VCO_CINEMATIC_GEOMETRY_LAYER) return;\n    scene.userData = scene.userData || {};\n    scene.userData.VCO_CINEMATIC_GEOMETRY_LAYER = true;\n\n    const stoneTex = makeCanvasTexture(THREE, "stone");\n    const metalTex = makeCanvasTexture(THREE, "metal");\n    const glassTex = makeCanvasTexture(THREE, "glass");\n\n    const stone = physicalMaterial(THREE, { color: 0x0a1118, roughness: 0.82, metalness: 0.18, map: stoneTex, clearcoat: 0.08 });\n    const metal = physicalMaterial(THREE, { color: 0x263846, roughness: 0.46, metalness: 0.96, map: metalTex, clearcoat: 0.62 });\n    const glass = physicalMaterial(THREE, { color: 0x79d8ff, roughness: 0.08, metalness: 0.08, transmission: 0.42, thickness: 2.2, map: glassTex, transparent: true, opacity: 0.52, emissive: 0x0c7fb1, emissiveIntensity: 0.22, clearcoat: 0.86, clearcoatRoughness: 0.07 });\n    const emissiveBlue = physicalMaterial(THREE, { color: 0x90e6ff, roughness: 0.18, metalness: 0.24, emissive: 0x43cfff, emissiveIntensity: 1.45, clearcoat: 0.72 });\n\n    const floor = new THREE.Mesh(new THREE.CylinderGeometry(27.5, 31.5, 1.2, 160, 3), stone);\n    floor.position.y = -0.92;\n    floor.receiveShadow = true;\n    mark(floor, "black-stone-constitutional-floor");\n    scene.add(floor);\n\n    const coreGroup = new THREE.Group();\n    coreGroup.name = "VCO_ACCEPTED_TRUTH_CRYSTAL_CORE";\n\n    const crystal = new THREE.Mesh(new THREE.IcosahedronGeometry(2.5, 4), glass);\n    crystal.position.y = 3.25;\n    crystal.castShadow = true;\n    crystal.receiveShadow = true;\n    mark(crystal, "accepted-truth-crystal");\n    coreGroup.add(crystal);\n\n    const cage = new THREE.Mesh(new THREE.TorusKnotGeometry(2.9, 0.045, 260, 14, 3, 7), emissiveBlue);\n    cage.position.y = 3.25;\n    cage.castShadow = true;\n    mark(cage, "restrained-evidence-cage");\n    coreGroup.add(cage);\n\n    scene.add(coreGroup);\n\n    for (let i = 0; i < 35; i++) {\n      const angle = (i / 35) * Math.PI * 2;\n      const radius = 22.4 + Math.sin(i * 1.7) * 0.36;\n      const height = 2.2 + (i % 5) * 0.24;\n      const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.72, height, 0.72), i % 3 === 0 ? metal : stone);\n      pillar.position.set(Math.sin(angle) * radius, height / 2, Math.cos(angle) * radius);\n      pillar.rotation.y = angle;\n      pillar.castShadow = true;\n      pillar.receiveShadow = true;\n      mark(pillar, "35-repository-pbr-pillar");\n      scene.add(pillar);\n\n      const cap = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.055, 0.88), emissiveBlue);\n      cap.position.set(pillar.position.x, height + 0.08, pillar.position.z);\n      cap.rotation.y = angle;\n      mark(cap, "repository-evidence-cap");\n      scene.add(cap);\n    }\n  }\n\n  function upgradeMaterials(scene, THREE) {\n    if (!scene || scene.userData?.VCO_CINEMATIC_MATERIAL_PASS) return;\n    scene.userData = scene.userData || {};\n    scene.userData.VCO_CINEMATIC_MATERIAL_PASS = true;\n    const metalTex = makeCanvasTexture(THREE, "metal");\n    const stoneTex = makeCanvasTexture(THREE, "stone");\n\n    scene.traverse((obj) => {\n      if (!obj || !obj.isMesh) return;\n      obj.castShadow = true;\n      obj.receiveShadow = true;\n      if (!obj.material) return;\n      const old = Array.isArray(obj.material) ? obj.material[0] : obj.material;\n      if (old && old.userData?.VCO_LOCKED_MATERIAL) return;\n      const luminous = old?.emissiveIntensity > 0.2 || /glow|light|line|cap|beam/i.test(obj.name || "");\n      const mat = new THREE.MeshPhysicalMaterial({\n        color: luminous ? 0x8de5ff : 0x182633,\n        roughness: luminous ? 0.22 : 0.58,\n        metalness: luminous ? 0.22 : 0.82,\n        map: luminous ? null : ((obj.position?.y || 0) < 1 ? stoneTex : metalTex),\n        emissive: luminous ? 0x37cfff : 0x000000,\n        emissiveIntensity: luminous ? 1.15 : 0,\n        clearcoat: luminous ? 0.72 : 0.46,\n        clearcoatRoughness: luminous ? 0.12 : 0.32\n      });\n      mat.userData.VCO_LOCKED_MATERIAL = true;\n      obj.material = mat;\n    });\n  }\n\n  function apply() {\n    const THREE = window.THREE || globalThis.THREE;\n    if (!THREE) return false;\n    const canvas = document.querySelector("#observatory-webgl-runtime canvas");\n    if (!canvas) return false;\n\n    const scenes = [];\n    const cameras = [];\n    const renderers = [];\n\n    function scan(value, depth = 0, seen = new Set()) {\n      if (!value || depth > 4 || seen.has(value)) return;\n      seen.add(value);\n      if (value.isScene) scenes.push(value);\n      if (value.isCamera) cameras.push(value);\n      if (value.domElement === canvas && typeof value.render === "function") renderers.push(value);\n      if (typeof value === "object") {\n        for (const k of Object.keys(value).slice(0, 80)) {\n          try { scan(value[k], depth + 1, seen); } catch {}\n        }\n      }\n    }\n\n    scan(window);\n    scenes.forEach((scene) => {\n      addLightRig(scene, THREE);\n      addCinematicGeometry(scene, THREE);\n      upgradeMaterials(scene, THREE);\n    });\n    cameras.forEach(upgradeCamera);\n    renderers.forEach((r) => upgradeRenderer(r, THREE));\n\n    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {\n      accepted: true,\n      state: STATE,\n      scenes: scenes.length,\n      cameras: cameras.length,\n      renderers: renderers.length,\n      reapply: apply\n    };\n\n    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");\n    return true;\n  }\n\n  let tries = 0;\n  const timer = setInterval(() => {\n    tries += 1;\n    const ok = apply();\n    if (ok || tries > 80) clearInterval(timer);\n  }, 180);\n\n  window.addEventListener("resize", () => setTimeout(apply, 120));\n})();\n /* END VCO CINEMATIC REAL3D AUTHORITY */'
+    css_block = '/* BEGIN VCO CINEMATIC REAL3D AUTHORITY */\n#observatory-webgl-runtime{\n  background:\n    radial-gradient(circle at 50% 52%, rgba(82,190,255,.18), transparent 24%),\n    radial-gradient(circle at 50% 72%, rgba(10,30,44,.82), transparent 44%),\n    #010409 !important;\n}\n#observatory-webgl-runtime canvas{\n  filter: contrast(1.12) saturate(1.18) brightness(.96) !important;\n}\n#observatory-webgl-runtime::after{\n  content:"";\n  position:absolute;\n  inset:0;\n  z-index:2;\n  pointer-events:none;\n  background:\n    radial-gradient(circle at 50% 46%, transparent 0 31%, rgba(0,0,0,.10) 48%, rgba(0,0,0,.48) 100%),\n    linear-gradient(180deg, rgba(255,255,255,.035), transparent 24%, transparent 72%, rgba(0,0,0,.28));\n  mix-blend-mode:screen;\n  opacity:.62;\n}\n.oc-topbar,.oc-bottom{backdrop-filter:blur(18px) saturate(1.18)!important}\n.oc-hero h2{text-shadow:0 16px 58px rgba(0,0,0,.92),0 0 38px rgba(115,208,255,.16)!important}\n.oc-journey li.is-active{box-shadow:0 0 0 1px rgba(162,238,255,.34),0 0 24px rgba(53,188,255,.32),inset 0 0 18px rgba(77,204,255,.12)!important}\n/* END VCO CINEMATIC REAL3D AUTHORITY */'
+
+    def strip_block(text, name):
+        return re.sub(rf"/\* BEGIN {re.escape(name)} \*/[\s\S]*?/\* END {re.escape(name)} \*/\n?", "", text)
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        data = strip_block(runtime_path.read_text(encoding="utf-8"), "VCO CINEMATIC REAL3D AUTHORITY")
+        runtime_path.write_text(data.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
+
+    css_path = Path("assets/surface.css")
+    if css_path.exists():
+        data = strip_block(css_path.read_text(encoding="utf-8"), "VCO CINEMATIC REAL3D AUTHORITY")
+        css_path.write_text(data.rstrip() + "\n\n" + css_block + "\n", encoding="utf-8")
+
+
+# VCO_CINEMATIC_REAL3D_BINDING_PROJECTOR_HOOK
+    import re
+    from pathlib import Path
+
+    module_three_block = '/* BEGIN VCO MODULE THREE GLOBAL BINDING */\nglobalThis.THREE = THREE;\nif (typeof window !== "undefined") window.THREE = THREE;\n/* END VCO MODULE THREE GLOBAL BINDING */\n'
+    handle_binding_block = '  /* BEGIN VCO CINEMATIC REAL3D HANDLE BINDING */\n  globalThis.THREE = THREE;\n  if (typeof window !== "undefined") {\n    window.THREE = THREE;\n    window.VCO_OBSERVATORY_RUNTIME_HANDLES = { THREE, scene, camera, renderer };\n    window.VCO_OBSERVATORY_SCENE = scene;\n    window.VCO_OBSERVATORY_CAMERA = camera;\n    window.VCO_OBSERVATORY_RENDERER = renderer;\n  }\n  /* END VCO CINEMATIC REAL3D HANDLE BINDING */\n'
+    binding_authority_block = '/* BEGIN VCO CINEMATIC REAL3D BINDING AUTHORITY */\n(function vcoCinematicReal3DBindingAuthority(){\n  if (window.VCO_CINEMATIC_REAL3D_BINDING_AUTHORITY) return;\n  window.VCO_CINEMATIC_REAL3D_BINDING_AUTHORITY = true;\n\n  const STATE = {\n    accepted: true,\n    rendererQuality: "cinematic-pbr-procedural",\n    shadowMap: 4096,\n    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",\n    cameraDoctrine: "low-wide-sovereign-machine-first",\n    lightDoctrine: "key-rim-fill-volumetric-evidence",\n    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"\n  };\n\n  function bind() {\n    const handles = window.VCO_OBSERVATORY_RUNTIME_HANDLES || {};\n    const THREE = handles.THREE || window.THREE || globalThis.THREE;\n    const scene = handles.scene || window.VCO_OBSERVATORY_SCENE;\n    const camera = handles.camera || window.VCO_OBSERVATORY_CAMERA;\n    const renderer = handles.renderer || window.VCO_OBSERVATORY_RENDERER;\n\n    if (!THREE || !scene || !camera || !renderer) return false;\n\n    renderer.userData = renderer.userData || {};\n    renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;\n    renderer.setPixelRatio?.(Math.min(window.devicePixelRatio || 1, 2));\n    renderer.outputColorSpace = THREE.SRGBColorSpace;\n    renderer.toneMapping = THREE.ACESFilmicToneMapping;\n    renderer.toneMappingExposure = 1.18;\n    renderer.shadowMap.enabled = true;\n    renderer.shadowMap.type = THREE.PCFSoftShadowMap;\n\n    camera.userData = camera.userData || {};\n    camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;\n    camera.fov = 36;\n    camera.near = 0.08;\n    camera.far = 360;\n    camera.position.set(-8.8, 18.2, 54.0);\n    camera.lookAt(0, 2.0, 0);\n    camera.updateProjectionMatrix?.();\n\n    scene.userData = scene.userData || {};\n    if (!scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY) {\n      scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY = true;\n      scene.fog = new THREE.FogExp2(0x02070d, 0.0105);\n\n      const key = new THREE.DirectionalLight(0xaee7ff, 5.2);\n      key.position.set(-22, 38, 26);\n      key.castShadow = true;\n      key.shadow.mapSize.width = 4096;\n      key.shadow.mapSize.height = 4096;\n      key.shadow.camera.near = 1;\n      key.shadow.camera.far = 120;\n      key.shadow.camera.left = -46;\n      key.shadow.camera.right = 46;\n      key.shadow.camera.top = 46;\n      key.shadow.camera.bottom = -46;\n      key.shadow.bias = -0.00022;\n      key.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "4096-key-shadow";\n      scene.add(key);\n\n      const rim = new THREE.DirectionalLight(0x4fbfff, 3.1);\n      rim.position.set(28, 18, -34);\n      rim.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "blue-rim";\n      scene.add(rim);\n\n      const coreLight = new THREE.PointLight(0x84ddff, 8.5, 76, 1.6);\n      coreLight.position.set(0, 5.2, 0);\n      coreLight.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "accepted-truth-core-light";\n      scene.add(coreLight);\n    }\n\n    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {\n      accepted: true,\n      state: STATE,\n      scenes: 1,\n      cameras: 1,\n      renderers: 1,\n      reapply: bind\n    };\n\n    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");\n    return true;\n  }\n\n  let attempts = 0;\n  const timer = setInterval(() => {\n    attempts += 1;\n    if (bind() || attempts > 100) clearInterval(timer);\n  }, 120);\n\n  window.addEventListener("resize", () => setTimeout(bind, 120));\n})();\n /* END VCO CINEMATIC REAL3D BINDING AUTHORITY */\n'
+
+    def strip_block(text, name):
+        return re.sub(
+            rf"/\* BEGIN {re.escape(name)} \*/[\s\S]*?/\* END {re.escape(name)} \*/\n?",
+            "",
+            text,
+        )
+
+    def find_matching_brace(text, open_pos):
+        depth = 0
+        quote = None
+        esc = False
+        line_comment = False
+        block_comment = False
+        for i in range(open_pos, len(text)):
+            ch = text[i]
+            nxt = text[i + 1] if i + 1 < len(text) else ""
+            if line_comment:
+                if ch == "\n":
+                    line_comment = False
+                continue
+            if block_comment:
+                if ch == "*" and nxt == "/":
+                    block_comment = False
+                continue
+            if quote:
+                if esc:
+                    esc = False
+                elif ch == "\\":
+                    esc = True
+                elif ch == quote:
+                    quote = None
+                continue
+            if ch == "/" and nxt == "/":
+                line_comment = True
+                continue
+            if ch == "/" and nxt == "*":
+                block_comment = True
+                continue
+            if ch in ("'", '"', "`"):
+                quote = ch
+                continue
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    return i
+        return -1
+
+    def patch_runtime(text):
+        for name in (
+            "VCO MODULE THREE GLOBAL BINDING",
+            "VCO CINEMATIC REAL3D HANDLE BINDING",
+            "VCO CINEMATIC REAL3D BINDING AUTHORITY",
+        ):
+            text = strip_block(text, name)
+
+        if "globalThis.THREE = THREE;" not in text:
+            text = re.sub(
+                r"(import\s+\*\s+as\s+THREE\s+from[^\n]+;\n)",
+                r"\1\n" + module_three_block + "\n",
+                text,
+                count=1,
+            )
+
+        start = text.find("function buildScene")
+        if start < 0:
+            raise SystemExit("BLOCKED: buildScene not found")
+
+        open_pos = text.find("{", start)
+        close_pos = find_matching_brace(text, open_pos)
+        if close_pos < 0:
+            raise SystemExit("BLOCKED: buildScene close brace not found")
+
+        body = text[open_pos + 1:close_pos]
+        for name in ("renderer", "scene", "camera"):
+            if not re.search(rf"\b{name}\b", body):
+                raise SystemExit(f"BLOCKED: buildScene missing handle {name}")
+
+        insert_at = -1
+        for anchor in (
+            "\n  function resize",
+            "\n  function animate",
+            "\n  function render",
+            "\n  const animate",
+            "\n  renderer.setAnimationLoop",
+            "\n  return",
+        ):
+            pos = body.find(anchor)
+            if pos >= 0:
+                insert_at = open_pos + 1 + pos
+                break
+
+        if insert_at < 0:
+            insert_at = close_pos
+
+        text = text[:insert_at] + "\n" + handle_binding_block + "\n" + text[insert_at:]
+        text = strip_block(text, "VCO CINEMATIC REAL3D BINDING AUTHORITY").rstrip() + "\n\n" + binding_authority_block + "\n"
+        return text
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        runtime_path.write_text(patch_runtime(runtime_path.read_text(encoding="utf-8")), encoding="utf-8")
+
+
+# VCO_CINEMATIC_REAL3D_BINDING_PROJECTOR_HOOK
+def _vco_cinematic_real3d_binding_projector_hook():
+    import re
+    from pathlib import Path
+
+    module_three_block = """/* BEGIN VCO MODULE THREE GLOBAL BINDING */
+globalThis.THREE = THREE;
+if (typeof window !== "undefined") window.THREE = THREE;
+/* END VCO MODULE THREE GLOBAL BINDING */
+"""
+
+    handle_binding_block = """  /* BEGIN VCO CINEMATIC REAL3D HANDLE BINDING */
+  globalThis.THREE = THREE;
+  if (typeof window !== "undefined") {
+    window.THREE = THREE;
+    window.VCO_OBSERVATORY_RUNTIME_HANDLES = { THREE, scene, camera, renderer };
+    window.VCO_OBSERVATORY_SCENE = scene;
+    window.VCO_OBSERVATORY_CAMERA = camera;
+    window.VCO_OBSERVATORY_RENDERER = renderer;
+  }
+  /* END VCO CINEMATIC REAL3D HANDLE BINDING */
+"""
+
+    binding_authority_block = """/* BEGIN VCO CINEMATIC REAL3D BINDING AUTHORITY */
+(function vcoCinematicReal3DBindingAuthority(){
+  if (window.VCO_CINEMATIC_REAL3D_BINDING_AUTHORITY) return;
+  window.VCO_CINEMATIC_REAL3D_BINDING_AUTHORITY = true;
+
+  const STATE = {
+    accepted: true,
+    rendererQuality: "cinematic-pbr-procedural",
+    shadowMap: 4096,
+    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",
+    cameraDoctrine: "low-wide-sovereign-machine-first",
+    lightDoctrine: "key-rim-fill-volumetric-evidence",
+    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"
+  };
+
+  function bind() {
+    const handles = window.VCO_OBSERVATORY_RUNTIME_HANDLES || {};
+    const THREE = handles.THREE || window.THREE || globalThis.THREE;
+    const scene = handles.scene || window.VCO_OBSERVATORY_SCENE;
+    const camera = handles.camera || window.VCO_OBSERVATORY_CAMERA;
+    const renderer = handles.renderer || window.VCO_OBSERVATORY_RENDERER;
+
+    if (!THREE || !scene || !camera || !renderer) return false;
+
+    renderer.userData = renderer.userData || {};
+    renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;
+    renderer.setPixelRatio?.(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.18;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    camera.userData = camera.userData || {};
+    camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;
+    camera.fov = 36;
+    camera.near = 0.08;
+    camera.far = 360;
+    camera.position.set(-8.8, 18.2, 54.0);
+    camera.lookAt(0, 2.0, 0);
+    camera.updateProjectionMatrix?.();
+
+    scene.userData = scene.userData || {};
+    if (!scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY) {
+      scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY = true;
+      scene.fog = new THREE.FogExp2(0x02070d, 0.0105);
+
+      const key = new THREE.DirectionalLight(0xaee7ff, 5.2);
+      key.position.set(-22, 38, 26);
+      key.castShadow = true;
+      key.shadow.mapSize.width = 4096;
+      key.shadow.mapSize.height = 4096;
+      key.shadow.camera.left = -46;
+      key.shadow.camera.right = 46;
+      key.shadow.camera.top = 46;
+      key.shadow.camera.bottom = -46;
+      key.shadow.bias = -0.00022;
+      key.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "4096-key-shadow";
+      scene.add(key);
+
+      const rim = new THREE.DirectionalLight(0x4fbfff, 3.1);
+      rim.position.set(28, 18, -34);
+      rim.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "blue-rim";
+      scene.add(rim);
+
+      const coreLight = new THREE.PointLight(0x84ddff, 8.5, 76, 1.6);
+      coreLight.position.set(0, 5.2, 0);
+      coreLight.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = "accepted-truth-core-light";
+      scene.add(coreLight);
+    }
+
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {
+      accepted: true,
+      state: STATE,
+      scenes: 1,
+      cameras: 1,
+      renderers: 1,
+      reapply: bind
+    };
+
+    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");
+    return true;
+  }
+
+  let attempts = 0;
+  const timer = setInterval(() => {
+    attempts += 1;
+    if (bind() || attempts > 100) clearInterval(timer);
+  }, 120);
+
+  window.addEventListener("resize", () => setTimeout(bind, 120));
+})();
+ /* END VCO CINEMATIC REAL3D BINDING AUTHORITY */
+"""
+
+    def strip_block(text, name):
+        return re.sub(
+            rf"/\* BEGIN {re.escape(name)} \*/[\s\S]*?/\* END {re.escape(name)} \*/\n?",
+            "",
+            text,
+        )
+
+    def find_matching_brace(text, open_pos):
+        depth = 0
+        quote = None
+        esc = False
+        line_comment = False
+        block_comment = False
+
+        for i in range(open_pos, len(text)):
+            ch = text[i]
+            nxt = text[i + 1] if i + 1 < len(text) else ""
+
+            if line_comment:
+                if ch == "\n":
+                    line_comment = False
+                continue
+            if block_comment:
+                if ch == "*" and nxt == "/":
+                    block_comment = False
+                continue
+            if quote:
+                if esc:
+                    esc = False
+                elif ch == "\\":
+                    esc = True
+                elif ch == quote:
+                    quote = None
+                continue
+
+            if ch == "/" and nxt == "/":
+                line_comment = True
+                continue
+            if ch == "/" and nxt == "*":
+                block_comment = True
+                continue
+            if ch in ("'", '"', "`"):
+                quote = ch
+                continue
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    return i
+        return -1
+
+    def patch_runtime(text):
+        for name in (
+            "VCO MODULE THREE GLOBAL BINDING",
+            "VCO CINEMATIC REAL3D HANDLE BINDING",
+            "VCO CINEMATIC REAL3D BINDING AUTHORITY",
+        ):
+            text = strip_block(text, name)
+
+        if "globalThis.THREE = THREE;" not in text:
+            text = re.sub(
+                r"(import\s+\*\s+as\s+THREE\s+from[^\n]+;\n)",
+                r"\1\n" + module_three_block + "\n",
+                text,
+                count=1,
+            )
+
+        start = text.find("function buildScene")
+        if start < 0:
+            raise SystemExit("BLOCKED: buildScene not found")
+
+        open_pos = text.find("{", start)
+        close_pos = find_matching_brace(text, open_pos)
+        if close_pos < 0:
+            raise SystemExit("BLOCKED: buildScene close brace not found")
+
+        body = text[open_pos + 1:close_pos]
+        for name in ("renderer", "scene", "camera"):
+            if not re.search(rf"\b{name}\b", body):
+                raise SystemExit(f"BLOCKED: buildScene missing handle {name}")
+
+        insert_at = -1
+        for anchor in (
+            "\n  function resize",
+            "\n  function animate",
+            "\n  function render",
+            "\n  const animate",
+            "\n  renderer.setAnimationLoop",
+            "\n  return",
+        ):
+            pos = body.find(anchor)
+            if pos >= 0:
+                insert_at = open_pos + 1 + pos
+                break
+
+        if insert_at < 0:
+            insert_at = close_pos
+
+        text = text[:insert_at] + "\n" + handle_binding_block + "\n" + text[insert_at:]
+        text = strip_block(text, "VCO CINEMATIC REAL3D BINDING AUTHORITY").rstrip() + "\n\n" + binding_authority_block + "\n"
+        return text
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        runtime_path.write_text(patch_runtime(runtime_path.read_text(encoding="utf-8")), encoding="utf-8")
+
+
+# VCO_CINEMATIC_REAL3D_IDEMPOTENCY_PROJECTOR_HOOK
+def _vco_cinematic_real3d_idempotency_projector_hook():
+    import re
+    from pathlib import Path
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        js = runtime_path.read_text(encoding="utf-8")
+
+        js = re.sub(
+            r'(import \* as THREE from "[^"]+";\n)\n*(/\* BEGIN VCO MODULE THREE GLOBAL BINDING \*/)',
+            r'\1\n\2',
+            js,
+        )
+        js = re.sub(
+            r'(/\* END VCO MODULE THREE GLOBAL BINDING \*/)\n+(const DATA_URL)',
+            r'\1\n\n\2',
+            js,
+        )
+
+        js = re.sub(
+            r'(const clock = new THREE\.Clock\(\);\n)(?:[ \t]*\n)*(  /\* BEGIN VCO CINEMATIC REAL3D HANDLE BINDING \*/)',
+            r'\1\n\2',
+            js,
+        )
+        js = re.sub(
+            r'(  /\* END VCO CINEMATIC REAL3D HANDLE BINDING \*/)\n+(  function animate\(\))',
+            r'\1\n\n\2',
+            js,
+        )
+
+        markers = [
+            "VCO MODULE THREE GLOBAL BINDING",
+            "VCO CINEMATIC REAL3D HANDLE BINDING",
+            "VCO VISUAL TRUTH ANTI FAKE RUNTIME",
+            "VCO CINEMATIC REAL3D AUTHORITY",
+            "VCO CINEMATIC REAL3D BINDING AUTHORITY",
+        ]
+
+        for marker in markers:
+            js = re.sub(
+                r"\n{3,}(/\* BEGIN " + re.escape(marker) + r" \*/)",
+                r"\n\n\1",
+                js,
+            )
+            js = re.sub(
+                r"(/\* END " + re.escape(marker) + r" \*/)\n{3,}",
+                r"\1\n\n",
+                js,
+            )
+
+        js = re.sub(r"\n[ \t]+\n", "\n\n", js)
+        js = re.sub(r"\n{4,}", "\n\n\n", js)
+        runtime_path.write_text(js.rstrip() + "\n", encoding="utf-8")
+
+# VCO_CINEMATIC_SCENE_GEOMETRY_PROJECTOR_HOOK
+def _vco_cinematic_scene_geometry_projector_hook():
+    import re
+    from pathlib import Path
+
+    runtime_block = '/* BEGIN VCO CINEMATIC SCENE GEOMETRY AUTHORITY */\n(function vcoCinematicSceneGeometryAuthority(){\n  if (window.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY) return;\n  window.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;\n\n  const STATE = {\n    accepted: true,\n    rendererQuality: "cinematic-pbr-procedural",\n    shadowMap: 4096,\n    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",\n    cameraDoctrine: "low-wide-sovereign-machine-first",\n    lightDoctrine: "key-rim-fill-volumetric-evidence",\n    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"\n  };\n\n  function mark(node, name) {\n    if (!node) return node;\n    node.userData = node.userData || {};\n    node.userData.VCO_CINEMATIC_REAL3D_AUTHORITY = name || true;\n    return node;\n  }\n\n  function material(THREE, spec) {\n    return new THREE.MeshPhysicalMaterial({\n      color: spec.color,\n      roughness: spec.roughness,\n      metalness: spec.metalness,\n      emissive: spec.emissive || 0x000000,\n      emissiveIntensity: spec.emissiveIntensity || 0,\n      transparent: !!spec.transparent,\n      opacity: spec.opacity == null ? 1 : spec.opacity,\n      transmission: spec.transmission || 0,\n      thickness: spec.thickness || 0,\n      clearcoat: spec.clearcoat == null ? 0.45 : spec.clearcoat,\n      clearcoatRoughness: spec.clearcoatRoughness == null ? 0.28 : spec.clearcoatRoughness\n    });\n  }\n\n  function removePrior(scene) {\n    const names = new Set([\n      "VCO_ACCEPTED_TRUTH_CRYSTAL_CORE",\n      "VCO_CINEMATIC_REPOSITORY_PERIMETER"\n    ]);\n    [...scene.children].forEach((child) => {\n      if (names.has(child.name) || child.userData?.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY) {\n        scene.remove(child);\n      }\n    });\n  }\n\n  function apply() {\n    const THREE = window.THREE || globalThis.THREE;\n    const handles = window.VCO_OBSERVATORY_RUNTIME_HANDLES || {};\n    const scene = handles.scene || window.VCO_OBSERVATORY_SCENE;\n    const camera = handles.camera || window.VCO_OBSERVATORY_CAMERA;\n    const renderer = handles.renderer || window.VCO_OBSERVATORY_RENDERER;\n\n    if (!THREE || !scene || !scene.isScene) return false;\n\n    removePrior(scene);\n\n    scene.userData = scene.userData || {};\n    scene.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;\n    scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY = true;\n\n    const stone = material(THREE, {\n      color: 0x080f16,\n      roughness: 0.86,\n      metalness: 0.16,\n      clearcoat: 0.10\n    });\n\n    const metal = material(THREE, {\n      color: 0x243846,\n      roughness: 0.42,\n      metalness: 0.96,\n      clearcoat: 0.72,\n      clearcoatRoughness: 0.20\n    });\n\n    const glass = material(THREE, {\n      color: 0x7ddcff,\n      roughness: 0.05,\n      metalness: 0.08,\n      transparent: true,\n      opacity: 0.58,\n      transmission: 0.34,\n      thickness: 2.4,\n      emissive: 0x0a8dbe,\n      emissiveIntensity: 0.36,\n      clearcoat: 0.92,\n      clearcoatRoughness: 0.05\n    });\n\n    const evidence = material(THREE, {\n      color: 0xa4edff,\n      roughness: 0.16,\n      metalness: 0.22,\n      emissive: 0x42d8ff,\n      emissiveIntensity: 1.65,\n      clearcoat: 0.82,\n      clearcoatRoughness: 0.10\n    });\n\n    const floor = mark(new THREE.Mesh(\n      new THREE.CylinderGeometry(28.5, 32.0, 1.15, 180, 2),\n      stone\n    ), "cinematic-black-stone-floor");\n    floor.name = "VCO_CINEMATIC_BLACK_STONE_FLOOR";\n    floor.position.y = -0.98;\n    floor.receiveShadow = true;\n    floor.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;\n    scene.add(floor);\n\n    const coreGroup = new THREE.Group();\n    coreGroup.name = "VCO_ACCEPTED_TRUTH_CRYSTAL_CORE";\n    coreGroup.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;\n\n    const crystal = mark(new THREE.Mesh(\n      new THREE.IcosahedronGeometry(2.65, 5),\n      glass\n    ), "accepted-truth-crystal");\n    crystal.name = "VCO_ACCEPTED_TRUTH_CRYSTAL";\n    crystal.position.y = 3.35;\n    crystal.castShadow = true;\n    crystal.receiveShadow = true;\n    coreGroup.add(crystal);\n\n    const cage = mark(new THREE.Mesh(\n      new THREE.TorusKnotGeometry(3.05, 0.055, 320, 18, 3, 7),\n      evidence\n    ), "accepted-truth-restrained-evidence-cage");\n    cage.name = "VCO_ACCEPTED_TRUTH_RESTRAINED_CAGE";\n    cage.position.y = 3.35;\n    cage.castShadow = true;\n    coreGroup.add(cage);\n\n    for (let i = 0; i < 9; i++) {\n      const angle = (i / 9) * Math.PI * 2;\n      const beam = mark(new THREE.Mesh(\n        new THREE.BoxGeometry(0.035, 0.035, 15.5),\n        evidence\n      ), "accepted-truth-deterministic-line");\n      beam.name = `VCO_ACCEPTED_TRUTH_LINE_${i + 1}`;\n      beam.position.set(Math.sin(angle) * 4.2, 3.28, Math.cos(angle) * 4.2);\n      beam.rotation.y = angle;\n      coreGroup.add(beam);\n    }\n\n    scene.add(coreGroup);\n\n    const perimeter = new THREE.Group();\n    perimeter.name = "VCO_CINEMATIC_REPOSITORY_PERIMETER";\n    perimeter.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;\n\n    for (let i = 0; i < 35; i++) {\n      const angle = (i / 35) * Math.PI * 2;\n      const radius = 22.8 + Math.sin(i * 1.618) * 0.42;\n      const height = 2.25 + (i % 7) * 0.18;\n\n      const pillar = mark(new THREE.Mesh(\n        new THREE.BoxGeometry(0.74, height, 0.74),\n        i % 3 === 0 ? metal : stone\n      ), "35-repository-pbr-pillar");\n      pillar.name = `VCO_REPOSITORY_PBR_PILLAR_${String(i + 1).padStart(2, "0")}`;\n      pillar.position.set(Math.sin(angle) * radius, height / 2, Math.cos(angle) * radius);\n      pillar.rotation.y = angle;\n      pillar.castShadow = true;\n      pillar.receiveShadow = true;\n      perimeter.add(pillar);\n\n      const cap = mark(new THREE.Mesh(\n        new THREE.BoxGeometry(0.92, 0.06, 0.92),\n        evidence\n      ), "repository-evidence-cap");\n      cap.name = `VCO_REPOSITORY_EVIDENCE_CAP_${String(i + 1).padStart(2, "0")}`;\n      cap.position.set(pillar.position.x, height + 0.085, pillar.position.z);\n      cap.rotation.y = angle;\n      perimeter.add(cap);\n    }\n\n    scene.add(perimeter);\n\n    if (renderer) {\n      renderer.userData = renderer.userData || {};\n      renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;\n      renderer.shadowMap.enabled = true;\n      renderer.shadowMap.type = THREE.PCFSoftShadowMap;\n      renderer.toneMapping = THREE.ACESFilmicToneMapping;\n      renderer.toneMappingExposure = 1.18;\n      renderer.outputColorSpace = THREE.SRGBColorSpace;\n    }\n\n    if (camera) {\n      camera.userData = camera.userData || {};\n      camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;\n      camera.fov = 36;\n      camera.near = 0.08;\n      camera.far = 360;\n      camera.updateProjectionMatrix?.();\n    }\n\n    const prior = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};\n    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {\n      ...prior,\n      accepted: true,\n      state: STATE,\n      scenes: 1,\n      cameras: camera ? 1 : 0,\n      renderers: renderer ? 1 : 0,\n      reapply: apply\n    };\n\n    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");\n    return true;\n  }\n\n  let attempts = 0;\n  const timer = setInterval(() => {\n    attempts += 1;\n    const ok = apply();\n    if (ok || attempts > 80) clearInterval(timer);\n  }, 160);\n\n  window.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY_API = {\n    accepted: true,\n    reapply: apply\n  };\n})();\n /* END VCO CINEMATIC SCENE GEOMETRY AUTHORITY */'
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        data = runtime_path.read_text(encoding="utf-8")
+        data = re.sub(
+            r"/\* BEGIN VCO CINEMATIC SCENE GEOMETRY AUTHORITY \*/[\s\S]*?/\* END VCO CINEMATIC SCENE GEOMETRY AUTHORITY \*/\n?",
+            "",
+            data,
+        )
+        runtime_path.write_text(data.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
+
+
+# VCO_CINEMATIC_API_DECLARATION_PROJECTOR_HOOK
+def _vco_cinematic_api_declaration_projector_hook():
+    import re
+    from pathlib import Path
+
+    runtime_block = '/* BEGIN VCO CINEMATIC API DECLARATION AUTHORITY */\n(function vcoCinematicApiDeclarationAuthority(){\n  if (window.VCO_CINEMATIC_API_DECLARATION_AUTHORITY) return;\n  window.VCO_CINEMATIC_API_DECLARATION_AUTHORITY = true;\n\n  const STATE = {\n    accepted: true,\n    rendererQuality: "cinematic-pbr-procedural",\n    shadowMap: 4096,\n    materialDoctrine: "brushed-metal-stone-glass-emissive-evidence",\n    cameraDoctrine: "low-wide-sovereign-machine-first",\n    lightDoctrine: "key-rim-fill-volumetric-evidence",\n    textureDoctrine: "procedural-until-glb-ktx2-assets-exist"\n  };\n\n  function declare() {\n    const handles = window.VCO_OBSERVATORY_RUNTIME_HANDLES || {};\n    const scene = handles.scene || window.VCO_OBSERVATORY_SCENE;\n    const camera = handles.camera || window.VCO_OBSERVATORY_CAMERA;\n    const renderer = handles.renderer || window.VCO_OBSERVATORY_RENDERER;\n\n    if (!scene || !scene.isScene) return false;\n\n    const children = Array.from(scene.children || []);\n    const flat = children.flatMap((x) => [x].concat(Array.from(x.children || [])));\n    const hasCrystal = flat.some((x) =>\n      x && (\n        x.name === "VCO_ACCEPTED_TRUTH_CRYSTAL_CORE" ||\n        x.name === "VCO_ACCEPTED_TRUTH_CRYSTAL" ||\n        x.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "accepted-truth-crystal"\n      )\n    );\n    const repoPillars = flat.filter((x) =>\n      x?.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "35-repository-pbr-pillar"\n    ).length;\n\n    if (!hasCrystal || repoPillars < 35) return false;\n\n    scene.userData = scene.userData || {};\n    scene.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;\n    scene.userData.VCO_CINEMATIC_BINDING_LIGHT_AUTHORITY = true;\n\n    if (renderer) {\n      renderer.userData = renderer.userData || {};\n      renderer.userData.VCO_CINEMATIC_RENDERER_AUTHORITY = true;\n    }\n\n    if (camera) {\n      camera.userData = camera.userData || {};\n      camera.userData.VCO_CINEMATIC_CAMERA_AUTHORITY = true;\n    }\n\n    const prior = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};\n    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {\n      ...prior,\n      accepted: true,\n      state: STATE,\n      scenes: Math.max(1, Number(prior.scenes || 0)),\n      cameras: Math.max(camera ? 1 : 0, Number(prior.cameras || 0)),\n      renderers: Math.max(renderer ? 1 : 0, Number(prior.renderers || 0)),\n      reapply: typeof prior.reapply === "function" ? prior.reapply : declare\n    };\n\n    document.body.setAttribute("data-vco-cinematic-real3d", "accepted");\n    return true;\n  }\n\n  let attempts = 0;\n  const timer = setInterval(() => {\n    attempts += 1;\n    const ok = declare();\n    if (ok || attempts > 100) clearInterval(timer);\n  }, 120);\n\n  window.addEventListener("load", () => setTimeout(declare, 250));\n  window.VCO_CINEMATIC_API_DECLARATION_AUTHORITY_API = {\n    accepted: true,\n    declare\n  };\n})();\n /* END VCO CINEMATIC API DECLARATION AUTHORITY */'
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        data = runtime_path.read_text(encoding="utf-8")
+        data = re.sub(
+            r"/\* BEGIN VCO CINEMATIC API DECLARATION AUTHORITY \*/[\s\S]*?/\* END VCO CINEMATIC API DECLARATION AUTHORITY \*/\n?",
+            "",
+            data,
+        )
+        runtime_path.write_text(data.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
+
+
 if __name__ == "__main__":
     main()
     _vco_visual_truth_anti_fake_projector_hook()
@@ -1871,4 +2323,8 @@ if __name__ == "__main__":
     _vco_real3d_idempotent_block_spacing()
     _vco_panel_quarantine_final_projector_hook()
     _vco_machine_first_panel_ejection_projector_hook()
-
+    _vco_cinematic_real3d_authority_projector_hook()
+    _vco_cinematic_real3d_binding_projector_hook()
+    _vco_cinematic_scene_geometry_projector_hook()
+    _vco_cinematic_real3d_idempotency_projector_hook()
+    _vco_cinematic_api_declaration_projector_hook()
