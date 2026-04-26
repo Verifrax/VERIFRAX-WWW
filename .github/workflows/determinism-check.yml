@@ -101,5 +101,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          git clean -ffd .surface/vendor/scripts/__pycache__ || true
           test -z "$(git status --porcelain=v1)"
           git diff --exit-code
