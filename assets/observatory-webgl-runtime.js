@@ -1,3 +1,35 @@
+
+function observatoryRuntimeBootError(event) {
+  const root = document.querySelector("[data-observatory-runtime]");
+  const message = event?.message || event?.error?.message || "runtime_boot_error";
+
+  if (!root) {
+    window.observatoryRuntimeBootFailure = message;
+    return;
+  }
+
+  try {
+    if (typeof setRuntimeStatus === "function") {
+      setRuntimeStatus(root, "BLOCKED_PROJECTION", message);
+    }
+  } catch (_) {
+    root.setAttribute("data-render-permission", "BLOCKED_PROJECTION");
+  }
+
+  const status = root.querySelector("[data-runtime-status]");
+  if (status) status.textContent = message;
+
+  root.classList.add("is-runtime-blocked");
+  window.observatoryRuntimeBootFailure = message;
+}
+
+window.addEventListener("error", observatoryRuntimeBootError);
+window.addEventListener("unhandledrejection", (event) => {
+  observatoryRuntimeBootError({
+    message: event?.reason?.message || String(event?.reason || "unhandled_runtime_rejection")
+  });
+});
+
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 const DATA_URL = "data/verifrax-observatory.json";
@@ -405,7 +437,7 @@ function createGovernedRepoPillar(repo, index, total, radius, labels, selectable
   return group;
 }
 
-function createAdmissoriumRepoGate(repo, labels, selectable) {
+function createAdmissoriumRepoGate(scene, repo, labels, selectable) {
   const group = new THREE.Group();
 
   const gateMat = material(0x1a0d0d, palette.red, 0.34, 0.48, 0.84);
@@ -782,7 +814,7 @@ function buildScene(container, manifest) {
 
   const admissoriumRepo = governedRepos.find((repo) => repo.name === "ADMISSORIUM");
   if (admissoriumRepo) {
-    createAdmissoriumRepoGate(admissoriumRepo, labels, selectable);
+    createAdmissoriumRepoGate(scene, admissoriumRepo, labels, selectable);
   }
 
   const repoLabel = makeLabel("35 GOVERNED REPOSITORIES", "34 perimeter pillars + ADMISSORIUM front gate", 820, 190);
@@ -991,6 +1023,7 @@ async function boot() {
     hydrateCommandSurface(container, manifest, attestation);
     setRuntimeStatus(container, FULL, "FULL_OBSERVATORY: signed WebGL constitutional projection active.");
     buildScene(container, manifest);
+    window.observatorySceneBoot = { rendered: true, repositories: manifest.repositories.length, chambers: manifest.chambers.length, renderPermission: attestation.render_permission };
   } catch (error) {
     setRuntimeStatus(container, BLOCKED, error instanceof Error ? error.message : String(error));
   }
@@ -1036,3 +1069,6 @@ window.panelContainmentBoundary = "VERIFRAX_OBSERVATORY_PANEL_CONTAINMENT_BOUNDA
 
 
 window.governedRepoPillarAuthority = "VERIFRAX_OBSERVATORY_35_GOVERNED_REPO_PILLAR_AUTHORITY";
+
+
+window.observatoryRuntimeBootAuthority = "VERIFRAX_OBSERVATORY_RUNTIME_BOOT_AUTHORITY_REPAIRED";
