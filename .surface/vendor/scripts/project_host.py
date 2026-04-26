@@ -1482,6 +1482,386 @@ html,body{margin:0!important;width:100%!important;min-height:100%!important;over
         js = strip_blocks(runtime_path.read_text(encoding="utf-8"))
         runtime_path.write_text(js.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
 
+
+
+# VCO_MACHINE_FIRST_PANEL_EJECTION_PROJECTOR_HOOK
+def _vco_machine_first_panel_ejection_projector_hook():
+    import re
+    from pathlib import Path
+
+    css_block = r"""/* BEGIN VCO MACHINE FIRST PANEL EJECTION */
+html,body{margin:0!important;width:100%!important;height:100%!important;min-height:100%!important;overflow:hidden!important;background:#02050a!important;color:#edf7ff!important}
+.surface.stack{width:100vw!important;height:100vh!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#02050a!important}
+#static-root-contract,.surface-fallback-root,.observatory-render-gate{display:none!important}
+
+.observatory-webgl-runtime{
+  position:relative!important;
+  width:100vw!important;
+  height:100vh!important;
+  min-height:100vh!important;
+  max-height:100vh!important;
+  margin:0!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#02050a!important;
+}
+.oc-stage,.observatory-webgl-runtime canvas{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  display:block!important;
+  z-index:0!important;
+}
+.observatory-webgl-runtime:before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.44),transparent 18%,transparent 82%,rgba(0,0,0,.44)),
+    linear-gradient(180deg,rgba(0,0,0,.16),transparent 20%,transparent 82%,rgba(0,0,0,.42)),
+    radial-gradient(circle at 52% 50%,rgba(105,212,255,.10),transparent 27%)!important;
+}
+
+/* Top chrome only. */
+.oc-topbar{
+  position:absolute!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  height:58px!important;
+  min-height:58px!important;
+  padding:0 24px!important;
+  z-index:30!important;
+  background:linear-gradient(180deg,rgba(0,5,10,.94),rgba(0,5,10,.34),rgba(0,5,10,0))!important;
+  border-bottom:1px solid rgba(120,217,255,.14)!important;
+}
+.oc-brand strong{font-size:22px!important;letter-spacing:.24em!important}
+.oc-brand span{font-size:9px!important}
+.oc-topbar nav{display:flex!important;gap:8px!important}
+.oc-topbar a{min-height:30px!important;padding:0 12px!important;border-radius:10px!important;font-size:11px!important}
+
+/* Brand may not be clipped. */
+.oc-hero{
+  position:absolute!important;
+  top:78px!important;
+  left:24px!important;
+  width:min(438px,30vw)!important;
+  max-width:min(438px,30vw)!important;
+  max-height:210px!important;
+  overflow:visible!important;
+  z-index:8!important;
+  pointer-events:none!important;
+}
+.oc-hero span{font-size:9px!important;letter-spacing:.16em!important}
+.oc-hero h2{
+  margin:8px 0 10px!important;
+  width:100%!important;
+  max-width:none!important;
+  overflow:visible!important;
+  white-space:nowrap!important;
+  font-size:clamp(54px,5.15vw,74px)!important;
+  line-height:.82!important;
+  letter-spacing:-.082em!important;
+}
+.oc-hero p{
+  max-width:410px!important;
+  font-size:14px!important;
+  line-height:1.24!important;
+}
+.oc-hero-badges{gap:7px!important;margin-top:10px!important}
+.oc-hero code{padding:6px 8px!important;font-size:9px!important}
+
+/* Hard rule: no permanent side panels in the machine viewport. */
+.oc-left,.oc-right{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  width:0!important;
+  height:0!important;
+  max-width:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+}
+
+/* Inspector is machine state, not a panel. Keep DOM text for audits, make visual footprint zero. */
+.oc-inspector,.vco-deep-inspector{
+  position:absolute!important;
+  right:0!important;
+  bottom:0!important;
+  width:1px!important;
+  height:1px!important;
+  max-width:1px!important;
+  max-height:1px!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  z-index:1!important;
+}
+
+/* Artifact rail is allowed, but only as a thin instrument strip. */
+.oc-bottom{
+  position:absolute!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:10px!important;
+  width:min(780px,calc(100vw - 48px))!important;
+  height:58px!important;
+  max-height:58px!important;
+  padding:7px!important;
+  overflow:hidden!important;
+  transform:translateX(-50%)!important;
+  z-index:12!important;
+  pointer-events:auto!important;
+  background:linear-gradient(180deg,rgba(4,13,21,.78),rgba(1,5,10,.90))!important;
+  border:1px solid rgba(120,217,255,.18)!important;
+  border-radius:16px!important;
+  box-shadow:0 18px 60px rgba(0,0,0,.42)!important;
+}
+.oc-bottom h3{font-size:8px!important;margin:0 0 4px!important}
+.oc-proofline{display:none!important}
+.oc-journey{height:40px!important;max-height:40px!important;overflow:hidden!important}
+.oc-journey ol,[data-journey-list]{
+  display:grid!important;
+  grid-template-columns:repeat(9,minmax(46px,1fr))!important;
+  gap:4px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+.oc-journey li{
+  height:28px!important;
+  min-height:28px!important;
+  max-height:28px!important;
+  padding:4px!important;
+  border-radius:8px!important;
+  overflow:hidden!important;
+}
+.oc-journey strong{font-size:7px!important}
+.oc-journey em,.oc-journey small{display:none!important}
+.oc-journey li.is-active{
+  border-color:rgba(155,236,255,.95)!important;
+  box-shadow:0 0 0 1px rgba(155,236,255,.26),0 0 24px rgba(65,190,255,.22)!important;
+}
+
+/* Command palette is the only large panel, and only when requested. */
+.vco-command-palette:not(.is-open),.vco-command:not(.is-open){display:none!important}
+.vco-command-palette.is-open,.vco-command.is-open{
+  opacity:1!important;
+  pointer-events:auto!important;
+  position:fixed!important;
+  inset:0!important;
+  z-index:80!important;
+  display:grid!important;
+  place-items:center!important;
+  background:rgba(0,4,8,.58)!important;
+}
+.vco-command-shell{
+  width:min(620px,calc(100vw - 44px))!important;
+  max-height:min(560px,calc(100vh - 80px))!important;
+  overflow:auto!important;
+}
+
+@media (max-width:980px){
+  .oc-hero{top:76px!important;left:16px!important;width:min(420px,calc(100vw - 32px))!important;max-width:min(420px,calc(100vw - 32px))!important}
+  .oc-hero h2{font-size:clamp(48px,12vw,72px)!important}
+  .oc-bottom{width:calc(100vw - 20px)!important;bottom:8px!important}
+}
+@media (max-height:720px){
+  .oc-hero{top:70px!important}
+  .oc-bottom{height:46px!important;max-height:46px!important}
+}
+/* END VCO MACHINE FIRST PANEL EJECTION */"""
+
+    runtime_block = r"""/* BEGIN VCO MACHINE FIRST PANEL EJECTION RUNTIME */
+(function vcoMachineFirstPanelEjectionRuntime(){
+  if (window.VCO_MACHINE_FIRST_PANEL_EJECTION_RUNTIME) return;
+  window.VCO_MACHINE_FIRST_PANEL_EJECTION_RUNTIME = true;
+
+  const CHAMBERS = [
+    "SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL",
+    "CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"
+  ];
+
+  function clean(value) {
+    return String(value || "")
+      .replace(/^\d+/, "")
+      .replace(/ADMISSIBILITYADMISSORIUM/i, "ADMISSORIUM")
+      .replace(/AUTHORITYAUCTORISEAL/i, "AUCTORISEAL")
+      .replace(/EXECUTIONCORPIFORM/i, "CORPIFORM")
+      .replace(/RECEIPTCORPIFORM/i, "CORPIFORM_RECEIPT")
+      .replace(/RECOGNITIONANAGNORIUM/i, "ANAGNORIUM")
+      .replace(/RECOURSEREGRESSORIUM/i, "REGRESSORIUM")
+      .replace(/PERMANENCESIGILLARIUM/i, "SIGILLARIUM")
+      .replace(/[^A-Z0-9_:-]/g, "")
+      .trim();
+  }
+
+  function inspector() {
+    let el = document.querySelector("[data-runtime-inspector]");
+    if (!el) {
+      el = document.createElement("aside");
+      el.className = "oc-inspector";
+      el.setAttribute("data-runtime-inspector", "");
+      document.getElementById("observatory-webgl-runtime")?.appendChild(el);
+    }
+    return el;
+  }
+
+  function ejectPanels() {
+    document.querySelectorAll(".oc-left,.oc-right,.vco-deep-inspector,.vco-object-inspector").forEach((el) => {
+      el.setAttribute("aria-hidden", "true");
+      el.classList.remove("is-open");
+    });
+  }
+
+  function publish(raw, mode = "open") {
+    const objectId = clean(raw) || "CANVAS_OBJECT_GRAPH";
+    document.body.setAttribute("data-vco-last-dispatch", objectId);
+
+    const el = inspector();
+    el.innerHTML = `
+      <div class="oc-inspector-head">
+        <strong>${objectId}</strong>
+        <span>${String(mode).toUpperCase()} · ${Date.now()}</span>
+      </div>
+      <p>Machine-first dispatch resolved <code>${objectId}</code>.</p>
+    `;
+
+    document.dispatchEvent(new CustomEvent("vco:object-dispatch", {
+      detail: { objectId, mode, authority: "VCO_MACHINE_FIRST_PANEL_EJECTION_RUNTIME", at: Date.now() }
+    }));
+
+    ejectPanels();
+    return objectId;
+  }
+
+  function closeCommandSurfaces() {
+    document.querySelectorAll(".vco-command-palette,.vco-command").forEach((el) => el.classList.remove("is-open"));
+    if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName || "")) document.activeElement.blur();
+  }
+
+  function advanceJourney() {
+    const items = [...document.querySelectorAll("[data-journey-list] li")];
+    if (!items.length) return;
+    const current = items.findIndex((el) => el.classList.contains("is-active"));
+    const next = (current + 1 + items.length) % items.length;
+    items.forEach((el, index) => {
+      el.classList.toggle("is-active", index === next);
+      el.setAttribute("data-stage-id", `ARTIFACT_STAGE_${index + 1}`);
+    });
+    publish(`ARTIFACT_STAGE_${next + 1}`, "journey");
+  }
+
+  window.addEventListener("keydown", (event) => {
+    const key = event.key;
+    if (/^[1-9]$/.test(key)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      closeCommandSurfaces();
+      publish(CHAMBERS[Number(key) - 1], "open");
+      return;
+    }
+
+    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
+    if (typing) return;
+
+    if (key === "ArrowRight" || key === "ArrowLeft") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      advanceJourney();
+      return;
+    }
+  }, true);
+
+  window.addEventListener("pointerdown", (event) => {
+    const runtime = document.getElementById("observatory-webgl-runtime");
+    if (!runtime || !runtime.contains(event.target)) return;
+
+    const explicit = event.target.closest("[data-object-id],[data-stage-id],[data-vco-command]");
+    if (explicit) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish(
+        explicit.getAttribute("data-object-id") ||
+        explicit.getAttribute("data-stage-id") ||
+        explicit.getAttribute("data-vco-command"),
+        "open"
+      );
+      return;
+    }
+
+    if (event.target.matches("canvas")) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish("CANVAS_OBJECT_GRAPH", "click");
+    }
+  }, true);
+
+  const api = {
+    dispatchClean: publish,
+    dispatchObjectIntent: publish,
+    dispatchPanelQuarantine: publish,
+    ejectPanels,
+    lastDispatch: () => document.body.getAttribute("data-vco-last-dispatch"),
+    accepted: true,
+    authority: "VCO_MACHINE_FIRST_PANEL_EJECTION_RUNTIME"
+  };
+
+  window.VCO_MACHINE_FIRST_PANEL_EJECTION_API = api;
+  window.VCO_PANEL_QUARANTINE_API = api;
+  window.VCO_PANEL_QUARANTINE_FINAL_API = api;
+  window.VCO_PANEL_QUARANTINE_REAL_FIX_API = api;
+
+  ejectPanels();
+  setTimeout(ejectPanels, 250);
+  setTimeout(ejectPanels, 1000);
+})();
+ /* END VCO MACHINE FIRST PANEL EJECTION RUNTIME */"""
+
+    def strip_named(text):
+        names = [
+            "VCO MACHINE FIRST PANEL EJECTION",
+            "VCO MACHINE FIRST PANEL EJECTION RUNTIME",
+        ]
+        for name in names:
+            text = re.sub(
+                rf"/\* BEGIN {re.escape(name)} \*/[\s\S]*?/\* END {re.escape(name)} \*/\n?",
+                "",
+                text,
+            )
+        return text
+
+    css_path = Path("assets/surface.css")
+    if css_path.exists():
+        css = strip_named(css_path.read_text(encoding="utf-8"))
+        css_path.write_text(css.rstrip() + "\n\n" + css_block + "\n", encoding="utf-8")
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        js = strip_named(runtime_path.read_text(encoding="utf-8"))
+        js = re.sub(
+            r"new THREE\.WebGLRenderer\(\{\s*([^}]*?)\s*\}\)",
+            lambda m: "new THREE.WebGLRenderer({ " + (
+                m.group(1).strip().rstrip(",") + ', preserveDrawingBuffer: true, antialias: true, alpha: false, powerPreference: "high-performance"'
+                if "preserveDrawingBuffer" not in m.group(1)
+                else m.group(1).strip()
+            ) + " })",
+            js,
+            count=1,
+        )
+        runtime_path.write_text(js.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
+
+
 if __name__ == "__main__":
     main()
     _vco_visual_truth_anti_fake_projector_hook()
@@ -1490,3 +1870,5 @@ if __name__ == "__main__":
     _vco_real3d_hardening_post_project()
     _vco_real3d_idempotent_block_spacing()
     _vco_panel_quarantine_final_projector_hook()
+    _vco_machine_first_panel_ejection_projector_hook()
+
