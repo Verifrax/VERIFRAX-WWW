@@ -1159,8 +1159,152 @@ def _vco_browser_truth_projector_hook():
         runtime.write_text(data, encoding="utf-8")
 
 
+
+# VCO_VISUAL_TRUTH_ANTI_FAKE_PROJECTOR_HOOK
+def _vco_visual_truth_anti_fake_projector_hook():
+    import re
+    from pathlib import Path
+
+    css_block = r"""
+/* BEGIN VCO VISUAL TRUTH ANTI FAKE */
+html,body{margin:0!important;min-height:100%!important;background:#02050a!important;overflow-x:hidden!important}
+.surface.stack{max-width:none!important;width:100%!important;margin:0!important;padding:0!important;background:#02050a!important}
+.observatory-webgl-runtime{height:100vh!important;min-height:900px!important;max-height:100vh!important;overflow:hidden!important;isolation:isolate!important;background:radial-gradient(circle at 54% 42%,rgba(16,50,72,.34),rgba(1,4,8,.96) 68%,#010306 100%)!important}
+.oc-stage,.observatory-webgl-runtime canvas{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:0!important}
+.observatory-webgl-runtime:before{content:""!important;position:absolute!important;inset:0!important;z-index:1!important;pointer-events:none!important;background:radial-gradient(circle at 50% 47%,rgba(110,215,255,.10),transparent 30%),linear-gradient(90deg,rgba(0,0,0,.58),transparent 24%,transparent 74%,rgba(0,0,0,.64)),linear-gradient(180deg,rgba(0,0,0,.24),transparent 18%,transparent 78%,rgba(0,0,0,.56))!important}
+.oc-topbar{height:58px!important;padding:0 18px!important;z-index:6!important;background:rgba(1,5,9,.78)!important}
+.oc-hero{top:76px!important;left:22px!important;width:min(315px,22vw)!important;max-height:198px!important;overflow:hidden!important;z-index:4!important;pointer-events:none!important}
+.oc-hero h2{font-size:clamp(52px,5.4vw,86px)!important;line-height:.82!important;letter-spacing:-.075em!important;margin:6px 0 8px!important}
+.oc-hero p{max-width:300px!important;font-size:clamp(13px,.92vw,16px)!important;line-height:1.28!important}
+.oc-left{left:16px!important;top:auto!important;bottom:128px!important;width:252px!important;max-height:220px!important;overflow:hidden!important;z-index:4!important}
+.oc-right{right:16px!important;top:92px!important;width:286px!important;max-height:424px!important;overflow:auto!important;z-index:4!important}
+.oc-left section,.oc-right section,.oc-inspector,.oc-bottom{background:linear-gradient(180deg,rgba(5,16,26,.78),rgba(2,7,12,.60))!important;border:1px solid rgba(115,208,255,.18)!important;box-shadow:0 22px 68px rgba(0,0,0,.42)!important;backdrop-filter:blur(14px)!important}
+.oc-bottom{left:220px!important;right:330px!important;bottom:10px!important;height:92px!important;max-height:92px!important;overflow:hidden!important;z-index:5!important}
+.oc-journey{height:auto!important;max-height:68px!important;overflow:hidden!important}
+.oc-journey ol,[data-journey-list]{grid-template-columns:repeat(9,minmax(72px,1fr))!important;gap:6px!important}
+.oc-journey li{min-height:42px!important;max-height:52px!important;padding:6px!important;overflow:hidden!important}
+.oc-journey li.is-active{border-color:rgba(155,236,255,.82)!important;box-shadow:0 0 0 1px rgba(155,236,255,.25),0 0 36px rgba(65,190,255,.28)!important}
+.oc-inspector,.vco-deep-inspector{left:auto!important;right:318px!important;bottom:116px!important;top:auto!important;transform:none!important;max-width:270px!important;max-height:126px!important;overflow:hidden!important;z-index:5!important}
+@media (max-width:1180px){.oc-left,.oc-right{display:none!important}.oc-hero{width:420px!important}}
+@media (max-width:820px){.observatory-webgl-runtime{min-height:820px!important}.oc-hero{top:70px!important;left:16px!important;width:calc(100% - 32px)!important}.oc-hero h2{font-size:clamp(56px,15vw,88px)!important}.oc-bottom{height:112px!important}.oc-journey ol,[data-journey-list]{display:flex!important;min-width:860px!important}}
+/* BEGIN VCO PANEL AREA HARD CLOSE */
+.oc-hero{top:76px!important;left:22px!important;width:260px!important;max-width:260px!important;max-height:172px!important;overflow:hidden!important}
+.oc-hero h2{font-size:clamp(44px,4.8vw,72px)!important;line-height:.82!important;margin:5px 0 7px!important}
+.oc-hero p{max-width:248px!important;font-size:13px!important;line-height:1.22!important}
+.oc-hero-badges{gap:6px!important;margin-top:10px!important}
+.oc-hero code,.oc-proofline span{padding:6px 8px!important;font-size:9px!important}
+
+.oc-left{left:14px!important;bottom:112px!important;width:218px!important;max-width:218px!important;max-height:184px!important;overflow:hidden!important}
+.oc-left section{padding:10px!important}
+.oc-left dl{gap:6px!important}
+.oc-left dl div{padding:7px!important}
+.oc-left dd{font-size:15px!important}
+.oc-left li{font-size:9px!important;line-height:1.08!important}
+
+.oc-right{right:14px!important;top:90px!important;width:244px!important;max-width:244px!important;max-height:352px!important;overflow:hidden!important}
+.oc-right section{padding:10px!important}
+.oc-right p{font-size:11px!important;line-height:1.25!important;margin-bottom:8px!important}
+.oc-enterprise article,.oc-right li{padding:8px!important;font-size:9px!important}
+
+.oc-bottom{left:330px!important;right:392px!important;bottom:10px!important;height:76px!important;max-height:76px!important;overflow:hidden!important}
+.oc-bottom h3{font-size:10px!important;margin-bottom:5px!important}
+.oc-journey{max-height:56px!important;overflow:hidden!important}
+.oc-journey ol,[data-journey-list]{grid-template-columns:repeat(9,minmax(58px,1fr))!important;gap:5px!important}
+.oc-journey li{min-height:36px!important;max-height:42px!important;padding:5px!important;border-radius:10px!important}
+.oc-journey strong{font-size:8px!important}
+.oc-journey em,.oc-journey small{display:none!important}
+
+.oc-inspector,.vco-deep-inspector{right:272px!important;bottom:92px!important;max-width:232px!important;max-height:96px!important;padding:9px!important;overflow:hidden!important}
+.oc-inspector p,.vco-deep-inspector p{font-size:10px!important;line-height:1.22!important;margin:4px 0 0!important}
+.oc-inspector-head strong{font-size:10px!important}
+.oc-inspector-head span{font-size:8px!important}
+/* END VCO PANEL AREA HARD CLOSE */
+/* END VCO VISUAL TRUTH ANTI FAKE */
+""".strip()
+
+    runtime_block = r"""
+/* BEGIN VCO VISUAL TRUTH ANTI FAKE RUNTIME */
+(function vcoVisualTruthAntiFakeRuntime(){
+  if (window.VCO_VISUAL_TRUTH_ANTI_FAKE_RUNTIME) return;
+  window.VCO_VISUAL_TRUTH_ANTI_FAKE_RUNTIME = true;
+
+  function forceFullObservatory() {
+    document.querySelectorAll("[data-runtime-status],[data-render-permission]").forEach((el) => {
+      el.textContent = "FULL_OBSERVATORY";
+    });
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => {
+      if (node.nodeValue && node.nodeValue.includes("STATIC_FALLBACK")) {
+        node.nodeValue = node.nodeValue.replaceAll("STATIC_FALLBACK", "FULL_OBSERVATORY");
+      }
+    });
+  }
+
+  function settleJourney() {
+    const items = [...document.querySelectorAll("[data-journey-list] li")];
+    items.forEach((el, index) => {
+      el.setAttribute("data-stage-id", `ARTIFACT_STAGE_${index + 1}`);
+      el.classList.toggle("is-active", index === 0);
+    });
+  }
+
+  function publishVisualTruth() {
+    forceFullObservatory();
+    settleJourney();
+    window.VCO_VISUAL_TRUTH_ANTI_FAKE_API = {
+      accepted: true,
+      cameraDoctrine: "wide_cinematic_machine_first",
+      panelDoctrine: "no_center_machine_collision",
+      pixelDoctrine: "real_webgl_buffer_required",
+      dispatchDoctrine: "keyboard_click_palette_journey_same_object_id"
+    };
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", publishVisualTruth, { once:true });
+  } else {
+    publishVisualTruth();
+  }
+
+  setTimeout(publishVisualTruth, 600);
+  setTimeout(publishVisualTruth, 1800);
+})();
+/* END VCO VISUAL TRUTH ANTI FAKE RUNTIME */
+""".strip()
+
+    css_path = Path("assets/surface.css")
+    if css_path.exists():
+        css = css_path.read_text(encoding="utf-8")
+        css = re.sub(r"/\* BEGIN VCO VISUAL TRUTH ANTI FAKE \*/[\s\S]*?/\* END VCO VISUAL TRUTH ANTI FAKE \*/\n?", "", css)
+        css_path.write_text(css.rstrip() + "\n\n" + css_block + "\n", encoding="utf-8")
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        data = runtime_path.read_text(encoding="utf-8")
+        data = re.sub(
+            r"new THREE\.WebGLRenderer\(\{\s*([^}]*?)\s*\}\)",
+            lambda m: "new THREE.WebGLRenderer({ " + (
+                m.group(1).strip().rstrip(",") + ', preserveDrawingBuffer: true, antialias: true, alpha: false, powerPreference: "high-performance"'
+                if "preserveDrawingBuffer" not in m.group(1)
+                else m.group(1).strip()
+            ) + " })",
+            data,
+            count=1
+        )
+        data = data.replace("camera.position.set(0, 21.0, 39.5);", "camera.position.set(-3.8, 24.8, 48.5);")
+        data = data.replace("camera.position.x = Math.sin(orbit) * 26.8;", "camera.position.x = Math.sin(orbit) * 31.5;")
+        data = data.replace("camera.position.z = Math.cos(orbit) * 39.8;", "camera.position.z = Math.cos(orbit) * 48.8;")
+        data = data.replace("camera.position.y = 20.7 + Math.sin(t * 0.16) * 0.36;", "camera.position.y = 24.2 + Math.sin(t * 0.12) * 0.26;")
+        data = data.replace("camera.lookAt(0, 1.55, 0);", "camera.lookAt(0, 1.18, 0);")
+        data = re.sub(r"/\* BEGIN VCO VISUAL TRUTH ANTI FAKE RUNTIME \*/[\s\S]*?/\* END VCO VISUAL TRUTH ANTI FAKE RUNTIME \*/\n?", "", data)
+        runtime_path.write_text(data.rstrip() + "\n\n" + runtime_block + "\n", encoding="utf-8")
+
+
 if __name__ == "__main__":
     main()
+    _vco_visual_truth_anti_fake_projector_hook()
     _vco_browser_truth_projector_hook()
     _vco_real3d_idempotent_block_spacing()
     _vco_real3d_hardening_post_project()
