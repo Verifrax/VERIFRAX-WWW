@@ -212,14 +212,14 @@ def observatory_webgl_css(cfg):
 .oc-brand span{color:#9fb4c7;font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase}
 .oc-topbar nav{display:flex;gap:22px}
 .oc-topbar a{color:#d5e4f4;text-decoration:none;font:700 13px/1 Inter,ui-sans-serif,system-ui,sans-serif}
-.oc-hero{top:116px;left:34px;width:min(470px,calc(100% - 68px))}
+.oc-hero{top:104px;left:34px;width:min(430px,calc(100% - 68px))}
 .oc-hero span{color:#73d0ff;font:900 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
-.oc-hero h2{margin:12px 0 8px;color:#f3f8ff;font:900 clamp(52px,7vw,116px)/.82 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.07em}
+.oc-hero h2{margin:12px 0 8px;color:#f3f8ff;font:900 clamp(46px,6.2vw,104px)/.84 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.07em}
 .oc-hero p{max-width:390px;color:#c4d1df;font:600 16px/1.5 Inter,ui-sans-serif,system-ui,sans-serif}
 .oc-hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .oc-hero code,.oc-proofline span{display:inline-flex;gap:8px;align-items:center;padding:9px 11px;border:1px solid rgba(115,208,255,.20);border-radius:999px;background:rgba(2,8,14,.68);color:#9ee6b8;font:800 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-.oc-left{left:18px;bottom:144px;width:360px;display:grid;gap:12px}
-.oc-right{right:18px;top:92px;width:390px;display:grid;gap:12px}
+.oc-left{left:18px;bottom:150px;width:338px;display:grid;gap:10px}
+.oc-right{right:18px;top:88px;width:374px;display:grid;gap:10px}
 .oc-left section,.oc-right section,.oc-inspector,.oc-bottom{border:1px solid rgba(115,208,255,.15);border-radius:18px;background:linear-gradient(180deg,rgba(4,13,22,.82),rgba(3,8,14,.64));backdrop-filter:blur(12px);box-shadow:0 18px 56px rgba(0,0,0,.34)}
 .oc-left section,.oc-right section{padding:14px}
 .oc-left h3,.oc-right h3,.oc-bottom h3{margin:0 0 10px;color:#e8f5ff;font:900 12px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.08em}
@@ -247,9 +247,9 @@ def observatory_webgl_css(cfg):
 .oc-inspector code{display:block;padding:8px;border-radius:10px;color:#9ee6b8;background:rgba(115,208,255,.08);font:800 10px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .oc-inspector h4{margin:10px 0 6px;color:#eaf6ff;font:900 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase}
 .oc-inspector ul{margin:0;padding-left:16px;color:#9fafbf;font:600 11px/1.35 Inter,ui-sans-serif,system-ui,sans-serif}
-.oc-bottom{left:14px;right:14px;bottom:14px;padding:12px}
+.oc-bottom{left:14px;right:14px;bottom:12px;padding:10px}
 .oc-journey ol{grid-template-columns:repeat(9,minmax(0,1fr));gap:8px}
-.oc-journey li{min-height:54px;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035);color:#dcecff}
+.oc-journey li{min-height:48px;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035);color:#dcecff}
 .oc-journey strong{display:block;font:900 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .oc-journey em{display:block;margin-top:4px;color:#8fa5b9;font:700 9px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-style:normal}
 .oc-proofline{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}

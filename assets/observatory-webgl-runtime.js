@@ -32,6 +32,20 @@ const chamberOrder = [
 ];
 
 
+
+function tuneLabelVisibility(labels, camera) {
+  labels.children.forEach((label) => {
+    const d = label.position.distanceTo(camera.position);
+    const near = d < 18;
+    const far = d > 42;
+    label.scale.setScalar(near ? 0.58 : far ? 0.42 : 0.50);
+    if (label.material) {
+      label.material.opacity = near ? 0.84 : far ? 0.42 : 0.64;
+      label.material.transparent = true;
+    }
+  });
+}
+
 function markObservatoryDominant(renderPermission) {
   document.body.dataset.observatoryRenderPermission = renderPermission || "STATIC_FALLBACK";
   document.body.classList.toggle("vf-observatory-command-dominant", renderPermission === "FULL_OBSERVATORY");
@@ -267,9 +281,9 @@ function buildScene(container, manifest) {
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(palette.void, 0.018);
 
-  const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 360);
-  camera.position.set(0, 18.5, 34);
-  camera.lookAt(0, 1.2, 0);
+  const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 420);
+  camera.position.set(0, 24.0, 46.0);
+  camera.lookAt(0, 1.15, 0);
 
   scene.add(new THREE.AmbientLight(0x9ecbff, 0.13));
 
@@ -388,6 +402,26 @@ function buildScene(container, manifest) {
   perimeterShadow.position.y = 0.018;
   scene.add(perimeterShadow);
 
+  const compositionAuthorityGrid = new THREE.Group();
+  const gridMat = new THREE.LineBasicMaterial({
+    color: 0x1c3448,
+    transparent: true,
+    opacity: 0.18
+  });
+  for (let i = -28; i <= 28; i += 2) {
+    const gx = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(i, 0.035, -30),
+      new THREE.Vector3(i, 0.035, 30)
+    ]);
+    const gz = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-30, 0.035, i),
+      new THREE.Vector3(30, 0.035, i)
+    ]);
+    compositionAuthorityGrid.add(new THREE.Line(gx, gridMat));
+    compositionAuthorityGrid.add(new THREE.Line(gz, gridMat));
+  }
+  scene.add(compositionAuthorityGrid);
+
   const evidenceBeads = [];
   const beadGeometry = new THREE.SphereGeometry(0.075, 16, 8);
   const beadMat = material(palette.cyan, palette.blue, 1.1, 0.15, 0.26);
@@ -437,7 +471,7 @@ function buildScene(container, manifest) {
   coreLabel.position.set(0, 1.38, 0.25);
   labels.add(coreLabel);
 
-  const chamberRadius = 9.8;
+  const chamberRadius = 10.6;
   const chamberGeometry = new THREE.CylinderGeometry(1.86, 2.16, 2.45, 96);
   const chamberTopGeometry = new THREE.CylinderGeometry(2.24, 1.82, 0.50, 96);
   const chamberPlinthGeometry = new THREE.CylinderGeometry(2.52, 2.78, 0.42, 96);
@@ -512,7 +546,7 @@ function buildScene(container, manifest) {
     createRail(scene, new THREE.Vector3(0, 1.85, 0), new THREE.Vector3(p.x * 0.82, 1.85, p.z * 0.82), palette.blue);
   });
 
-  const repoRadius = 19.6;
+  const repoRadius = 22.8;
   const repoGeometry = new THREE.BoxGeometry(0.58, 2.28, 0.58);
   const repoCapGeometry = new THREE.BoxGeometry(0.74, 0.16, 0.74);
   const repoMat = material(palette.darkMetal, palette.blue, 0.28, 0.32, 0.92);
@@ -545,7 +579,7 @@ function buildScene(container, manifest) {
   scene.add(repoCapMesh);
 
   const repoLabel = makeLabel("35", "GOVERNED REPOSITORY PERIMETER", 520, 170);
-  repoLabel.position.set(0, 4.55, -20.35);
+  repoLabel.position.set(0, 4.60, -23.35);
   labels.add(repoLabel);
 
   const hostRadius = 23.2;
@@ -602,12 +636,12 @@ function buildScene(container, manifest) {
     material(0x210908, palette.red, 0.52, 0.36, 0.72)
   );
 
-  gateBase.position.set(0, 1.6, 14.55);
-  gateArch.position.set(0, 3.22, 14.74);
+  gateBase.position.set(0, 1.45, 16.85);
+  gateArch.position.set(0, 3.06, 17.04);
   gateArch.rotation.z = Math.PI;
-  gateBarA.position.set(-1.15, 1.28, 15.43);
-  gateBarB.position.set(1.15, 1.28, 15.43);
-  gateWarningPlate.position.set(0, 1.42, 15.46);
+  gateBarA.position.set(-1.15, 1.18, 17.73);
+  gateBarB.position.set(1.15, 1.18, 17.73);
+  gateWarningPlate.position.set(0, 1.32, 17.76);
 
   gateBase.castShadow = true;
   gateGroup.add(gateBase, gateArch, gateBarA, gateBarB, gateWarningPlate);
@@ -632,7 +666,7 @@ function buildScene(container, manifest) {
   labels.add(denied);
 
   const statusLabel = makeLabel("35 REPOSITORIES. ONE CONSTITUTIONAL MACHINE.", "OPEN TRUTH BELOW. ENTERPRISE CONTROL ABOVE. DERIVED PROJECTION.", 1340, 220);
-  statusLabel.position.set(0, 2.82, 20.65);
+  statusLabel.position.set(0, 2.78, 23.15);
   labels.add(statusLabel);
 
   writeInspector(container, core.userData);
@@ -660,10 +694,10 @@ function buildScene(container, manifest) {
     const t = clock.getElapsedTime();
 
     const orbit = t * 0.028;
-    camera.position.x = Math.sin(orbit) * 25.5;
-    camera.position.z = Math.cos(orbit) * 34.0;
-    camera.position.y = 17.6 + Math.sin(t * 0.16) * 0.55;
-    camera.lookAt(0, 1.65, 0);
+    camera.position.x = Math.sin(orbit) * 30.5;
+    camera.position.z = Math.cos(orbit) * 45.5;
+    camera.position.y = 23.2 + Math.sin(t * 0.16) * 0.48;
+    camera.lookAt(0, 1.20, 0);
 
     core.rotation.x += 0.0022;
     core.rotation.y += 0.0048;
@@ -682,6 +716,7 @@ function buildScene(container, manifest) {
     });
 
     labels.children.forEach((label) => label.lookAt(camera.position));
+    tuneLabelVisibility(labels, camera);
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
