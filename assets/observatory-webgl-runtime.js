@@ -1306,6 +1306,9 @@ function advanceJourney() {
 
 
 
+
+
+
 /* BEGIN VCO VISUAL TRUTH ANTI FAKE RUNTIME */
 (function vcoVisualTruthAntiFakeRuntime(){
   if (window.VCO_VISUAL_TRUTH_ANTI_FAKE_RUNTIME) return;
@@ -1801,6 +1804,154 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
   window.VCO_PANEL_QUARANTINE_WINDOW_CAPTURE_API = api;
 })();
 /* END VCO PANEL QUARANTINE FINAL RUNTIME */
+
+
+
+/* BEGIN VCO MACHINE FIRST PANEL EJECTION RUNTIME */
+(function vcoMachineFirstPanelEjectionRuntime(){
+  if (window.VCO_MACHINE_FIRST_PANEL_EJECTION_RUNTIME) return;
+  window.VCO_MACHINE_FIRST_PANEL_EJECTION_RUNTIME = true;
+
+  const CHAMBERS = [
+    "SYNTAGMARIUM","ORBISTIUM","CONSONORIUM","TACHYRIUM","AUCTORISEAL",
+    "CORPIFORM","VERIFRAX","ANAGNORIUM","REGRESSORIUM"
+  ];
+
+  function clean(value) {
+    return String(value || "")
+      .replace(/^\d+/, "")
+      .replace(/ADMISSIBILITYADMISSORIUM/i, "ADMISSORIUM")
+      .replace(/AUTHORITYAUCTORISEAL/i, "AUCTORISEAL")
+      .replace(/EXECUTIONCORPIFORM/i, "CORPIFORM")
+      .replace(/RECEIPTCORPIFORM/i, "CORPIFORM_RECEIPT")
+      .replace(/RECOGNITIONANAGNORIUM/i, "ANAGNORIUM")
+      .replace(/RECOURSEREGRESSORIUM/i, "REGRESSORIUM")
+      .replace(/PERMANENCESIGILLARIUM/i, "SIGILLARIUM")
+      .replace(/[^A-Z0-9_:-]/g, "")
+      .trim();
+  }
+
+  function inspector() {
+    let el = document.querySelector("[data-runtime-inspector]");
+    if (!el) {
+      el = document.createElement("aside");
+      el.className = "oc-inspector";
+      el.setAttribute("data-runtime-inspector", "");
+      document.getElementById("observatory-webgl-runtime")?.appendChild(el);
+    }
+    return el;
+  }
+
+  function ejectPanels() {
+    document.querySelectorAll(".oc-left,.oc-right,.vco-deep-inspector,.vco-object-inspector").forEach((el) => {
+      el.setAttribute("aria-hidden", "true");
+      el.classList.remove("is-open");
+    });
+  }
+
+  function publish(raw, mode = "open") {
+    const objectId = clean(raw) || "CANVAS_OBJECT_GRAPH";
+    document.body.setAttribute("data-vco-last-dispatch", objectId);
+
+    const el = inspector();
+    el.innerHTML = `
+      <div class="oc-inspector-head">
+        <strong>${objectId}</strong>
+        <span>${String(mode).toUpperCase()} · ${Date.now()}</span>
+      </div>
+      <p>Machine-first dispatch resolved <code>${objectId}</code>.</p>
+    `;
+
+    document.dispatchEvent(new CustomEvent("vco:object-dispatch", {
+      detail: { objectId, mode, authority: "VCO_MACHINE_FIRST_PANEL_EJECTION_RUNTIME", at: Date.now() }
+    }));
+
+    ejectPanels();
+    return objectId;
+  }
+
+  function closeCommandSurfaces() {
+    document.querySelectorAll(".vco-command-palette,.vco-command").forEach((el) => el.classList.remove("is-open"));
+    if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName || "")) document.activeElement.blur();
+  }
+
+  function advanceJourney() {
+    const items = [...document.querySelectorAll("[data-journey-list] li")];
+    if (!items.length) return;
+    const current = items.findIndex((el) => el.classList.contains("is-active"));
+    const next = (current + 1 + items.length) % items.length;
+    items.forEach((el, index) => {
+      el.classList.toggle("is-active", index === next);
+      el.setAttribute("data-stage-id", `ARTIFACT_STAGE_${index + 1}`);
+    });
+    publish(`ARTIFACT_STAGE_${next + 1}`, "journey");
+  }
+
+  window.addEventListener("keydown", (event) => {
+    const key = event.key;
+    if (/^[1-9]$/.test(key)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      closeCommandSurfaces();
+      publish(CHAMBERS[Number(key) - 1], "open");
+      return;
+    }
+
+    const typing = /INPUT|TEXTAREA|SELECT/.test(event.target?.tagName || "");
+    if (typing) return;
+
+    if (key === "ArrowRight" || key === "ArrowLeft") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      advanceJourney();
+      return;
+    }
+  }, true);
+
+  window.addEventListener("pointerdown", (event) => {
+    const runtime = document.getElementById("observatory-webgl-runtime");
+    if (!runtime || !runtime.contains(event.target)) return;
+
+    const explicit = event.target.closest("[data-object-id],[data-stage-id],[data-vco-command]");
+    if (explicit) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish(
+        explicit.getAttribute("data-object-id") ||
+        explicit.getAttribute("data-stage-id") ||
+        explicit.getAttribute("data-vco-command"),
+        "open"
+      );
+      return;
+    }
+
+    if (event.target.matches("canvas")) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      publish("CANVAS_OBJECT_GRAPH", "click");
+    }
+  }, true);
+
+  const api = {
+    dispatchClean: publish,
+    dispatchObjectIntent: publish,
+    dispatchPanelQuarantine: publish,
+    ejectPanels,
+    lastDispatch: () => document.body.getAttribute("data-vco-last-dispatch"),
+    accepted: true,
+    authority: "VCO_MACHINE_FIRST_PANEL_EJECTION_RUNTIME"
+  };
+
+  window.VCO_MACHINE_FIRST_PANEL_EJECTION_API = api;
+  window.VCO_PANEL_QUARANTINE_API = api;
+  window.VCO_PANEL_QUARANTINE_FINAL_API = api;
+  window.VCO_PANEL_QUARANTINE_REAL_FIX_API = api;
+
+  ejectPanels();
+  setTimeout(ejectPanels, 250);
+  setTimeout(ejectPanels, 1000);
+})();
+ /* END VCO MACHINE FIRST PANEL EJECTION RUNTIME */
 
 /* BEGIN VCO_CINEMATIC_INTERACTION_AUTHORITY */
 ;(() => {

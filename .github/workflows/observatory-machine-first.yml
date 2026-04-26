@@ -1,0 +1,31 @@
+name: Observatory Machine First
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  machine-first:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser runtime
+        run: |
+          npm init -y >/dev/null 2>&1 || true
+          npm install --no-save playwright >/dev/null
+          npx playwright install --with-deps chromium
+      - name: Project surface
+        run: |
+          python3 .surface/vendor/scripts/project_host.py
+          python3 .surface/vendor/scripts/project_host.py
+      - name: Serve and assert machine-first viewport
+        run: |
+          python3 -m http.server 4176 >/tmp/verifrax-www-machine-first-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          sleep 2
+          node scripts/check-observatory-machine-first.cjs http://127.0.0.1:4176/

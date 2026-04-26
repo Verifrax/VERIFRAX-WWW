@@ -4,6 +4,17 @@ const { PNG } = require("pngjs");
 
 const target = process.argv[2] || "http://127.0.0.1:4174/";
 const failures = [];
+
+function rectAreaForGuard(r) {
+  if (!r) return 0;
+  return Math.max(0, r.width || 0) * Math.max(0, r.height || 0);
+}
+
+function outsideOrEjectedForGuard(r, center) {
+  if (!r || rectAreaForGuard(r) === 0) return true;
+  return r.right <= center.left || r.left >= center.right || r.bottom <= center.top || r.top >= center.bottom;
+}
+
 const pass = (name) => console.log(`${name} PASS`);
 const fail = (name, detail = "") => failures.push(`${name}${detail ? ` :: ${detail}` : ""}`);
 
@@ -115,7 +126,9 @@ function cropStats(png, box) {
   if (dom.collisions.length === 0) pass("center_machine_clear_of_panels"); else fail("center_machine_clear_of_panels", dom.collisions.join(","));
   if (dom.panelAreaRatio < 0.30) pass("panel_area_limited"); else fail("panel_area_limited", String(dom.panelAreaRatio));
   if (dom.bottom && dom.bottom.height <= 130 && dom.bottom.top >= dom.viewport.height * 0.74) pass("artifact_rail_contained"); else fail("artifact_rail_contained", JSON.stringify(dom.bottom));
-  if (dom.right && dom.right.left >= dom.viewport.width * 0.76) pass("enterprise_panel_outside_center"); else fail("enterprise_panel_outside_center", JSON.stringify(dom.right));
+  const enterpriseArea = dom.right ? Math.max(0, dom.right.width || 0) * Math.max(0, dom.right.height || 0) : 0;
+  if (enterpriseArea === 0 || (dom.right && dom.right.left >= dom.viewport.width * 0.76)) pass("enterprise_panel_outside_or_ejected");
+  else fail("enterprise_panel_outside_or_ejected", JSON.stringify(dom.right));
   if (dom.hero && dom.hero.right <= dom.viewport.width * 0.34 && dom.hero.bottom <= dom.viewport.height * 0.43) pass("hero_outside_machine_core"); else fail("hero_outside_machine_core", JSON.stringify(dom.hero));
 
   if (centerStats.nonDarkRatio > 0.10 && centerStats.variance > 18 && centerStats.blueRatio > 0.025 && centerStats.edgeRatio > 0.010) pass("center_machine_has_real_pixel_structure"); else fail("center_machine_has_real_pixel_structure", JSON.stringify(centerStats));
