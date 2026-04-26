@@ -280,17 +280,41 @@ function buildScene(container, manifest) {
   scene.add(redLight);
 
   const floor = new THREE.Mesh(
-    new THREE.CylinderGeometry(30, 30, 0.55, 220),
-    material(palette.basalt, 0x02060b, 0, 0.9, 0.58)
+    new THREE.CylinderGeometry(30, 30, 0.55, 256),
+    material(palette.basalt, 0x02060b, 0, 0.94, 0.62)
   );
   floor.position.y = -0.32;
   floor.receiveShadow = true;
   scene.add(floor);
 
-  addRing(scene, 6.2, 0.055, palette.blue, 0.12, 0.09);
-  addRing(scene, 11.8, 0.065, palette.blue, 0.13, 0.11);
-  addRing(scene, 17.8, 0.075, palette.blueDeep, 0.14, 0.10);
-  addRing(scene, 23.4, 0.08, palette.grey, 0.11, 0.04);
+  const floorDisc = new THREE.Mesh(
+    new THREE.RingGeometry(3.4, 29.4, 256, 8),
+    new THREE.MeshStandardMaterial({
+      color: 0x050b12,
+      emissive: 0x0a2034,
+      emissiveIntensity: 0.18,
+      roughness: 0.86,
+      metalness: 0.42,
+      side: THREE.DoubleSide
+    })
+  );
+  floorDisc.rotation.x = -Math.PI / 2;
+  floorDisc.position.y = -0.02;
+  scene.add(floorDisc);
+
+  for (let i = 0; i < 72; i += 1) {
+    const angle = (i / 72) * Math.PI * 2;
+    const a = polar(5.0, angle, 0.04);
+    const b = polar(28.0, angle, 0.04);
+    createRail(scene, a, b, i % 9 === 0 ? palette.blue : 0x132538, i % 9 === 0 ? 0.018 : 0.008);
+  }
+
+  addRing(scene, 4.6, 0.035, palette.blue, 0.13, 0.14);
+  addRing(scene, 6.2, 0.055, palette.blue, 0.14, 0.16);
+  addRing(scene, 11.8, 0.065, palette.blue, 0.15, 0.18);
+  addRing(scene, 17.8, 0.075, palette.blueDeep, 0.16, 0.16);
+  addRing(scene, 23.4, 0.08, palette.grey, 0.12, 0.05);
+  addRing(scene, 26.6, 0.045, palette.blue, 0.12, 0.06);
 
   const labels = new THREE.Group();
   const selectable = [];
@@ -332,10 +356,23 @@ function buildScene(container, manifest) {
   labels.add(coreLabel);
 
   const chamberRadius = 9.8;
-  const chamberGeometry = new THREE.CylinderGeometry(1.75, 2.05, 2.25, 72);
-  const chamberTopGeometry = new THREE.CylinderGeometry(2.1, 1.72, 0.44, 72);
-  const chamberMat = material(palette.metal, palette.blue, 0.12, 0.56, 0.88);
-  const chamberTopMat = material(palette.darkMetal, palette.blue, 0.06, 0.42, 0.94);
+  const chamberGeometry = new THREE.CylinderGeometry(1.86, 2.16, 2.45, 96);
+  const chamberTopGeometry = new THREE.CylinderGeometry(2.24, 1.82, 0.50, 96);
+  const chamberPlinthGeometry = new THREE.CylinderGeometry(2.52, 2.78, 0.42, 96);
+  const chamberGlowGeometry = new THREE.CylinderGeometry(2.0, 2.0, 2.52, 96, 1, true);
+  const chamberMat = material(palette.metal, palette.blue, 0.15, 0.52, 0.92);
+  const chamberTopMat = material(palette.darkMetal, palette.blue, 0.09, 0.38, 0.96);
+  const chamberPlinthMat = material(0x101822, palette.blue, 0.08, 0.62, 0.90);
+  const chamberGlowMat = new THREE.MeshStandardMaterial({
+    color: 0x0b2030,
+    emissive: palette.blue,
+    emissiveIntensity: 0.34,
+    transparent: true,
+    opacity: 0.22,
+    roughness: 0.18,
+    metalness: 0.2,
+    side: THREE.DoubleSide
+  });
 
   const orderedChambers = chamberOrder
     .map((id) => manifest.chambers.find((chamber) => chamber.id === id))
@@ -346,16 +383,29 @@ function buildScene(container, manifest) {
     const p = polar(chamberRadius, angle, 1.15);
 
     const group = new THREE.Group();
+    const plinth = new THREE.Mesh(chamberPlinthGeometry, chamberPlinthMat.clone());
     const body = new THREE.Mesh(chamberGeometry, chamberMat.clone());
+    const glow = new THREE.Mesh(chamberGlowGeometry, chamberGlowMat.clone());
     const cap = new THREE.Mesh(chamberTopGeometry, chamberTopMat.clone());
+    const crown = new THREE.Mesh(
+      new THREE.TorusGeometry(2.08, 0.045, 12, 96),
+      material(palette.blue, palette.blue, 0.45, 0.28, 0.82)
+    );
 
+    plinth.position.y = -1.08;
+    body.position.y = 0.10;
+    glow.position.y = 0.10;
+    cap.position.y = 1.60;
+    crown.position.y = 1.88;
+    crown.rotation.x = Math.PI / 2;
+
+    plinth.castShadow = true;
     body.castShadow = true;
     body.receiveShadow = true;
     cap.castShadow = true;
-    cap.position.y = 1.35;
 
     group.position.copy(p);
-    group.add(body, cap);
+    group.add(plinth, body, glow, cap, crown);
     group.lookAt(0, 1.15, 0);
     group.userData = {
       id: chamber.id,
@@ -381,24 +431,36 @@ function buildScene(container, manifest) {
   });
 
   const repoRadius = 19.6;
-  const repoGeometry = new THREE.BoxGeometry(0.66, 2.05, 0.66);
-  const repoMat = material(palette.darkMetal, palette.blue, 0.24, 0.36, 0.9);
+  const repoGeometry = new THREE.BoxGeometry(0.58, 2.28, 0.58);
+  const repoCapGeometry = new THREE.BoxGeometry(0.74, 0.16, 0.74);
+  const repoMat = material(palette.darkMetal, palette.blue, 0.28, 0.32, 0.92);
+  const repoCapMat = material(0x182636, palette.cyan, 0.38, 0.26, 0.88);
   const repoMesh = new THREE.InstancedMesh(repoGeometry, repoMat, manifest.repositories.length);
+  const repoCapMesh = new THREE.InstancedMesh(repoCapGeometry, repoCapMat, manifest.repositories.length);
   repoMesh.castShadow = true;
   repoMesh.receiveShadow = true;
+  repoCapMesh.castShadow = true;
 
   const dummy = new THREE.Object3D();
+  const capDummy = new THREE.Object3D();
   manifest.repositories.forEach((repo, index) => {
     if (repo.name === "ADMISSORIUM") return;
     const angle = -Math.PI / 2 + (index / manifest.repositories.length) * Math.PI * 2;
-    const p = polar(repoRadius, angle, 1.0);
+    const p = polar(repoRadius, angle, 1.12);
     dummy.position.copy(p);
     dummy.rotation.y = -angle;
-    dummy.scale.set(1, repo.class === "sovereign-chamber" ? 1.25 : 1, 1);
+    dummy.scale.set(1, repo.class === "sovereign-chamber" ? 1.28 : 1, 1);
     dummy.updateMatrix();
     repoMesh.setMatrixAt(index, dummy.matrix);
+
+    capDummy.position.set(p.x, p.y + 1.23 * dummy.scale.y, p.z);
+    capDummy.rotation.y = -angle;
+    capDummy.scale.copy(dummy.scale);
+    capDummy.updateMatrix();
+    repoCapMesh.setMatrixAt(index, capDummy.matrix);
   });
   scene.add(repoMesh);
+  scene.add(repoCapMesh);
 
   const repoLabel = makeLabel("35", "REPOSITORY PILLARS", 350, 160);
   repoLabel.position.set(0, 4.25, -19.8);
@@ -429,17 +491,45 @@ function buildScene(container, manifest) {
     scene.add(gate);
     selectable.push(gate);
 
+    const lintel = new THREE.Mesh(
+      new THREE.BoxGeometry(1.28, 0.18, 0.62),
+      material(0x172536, palette.cyan, 0.34, 0.28, 0.88)
+    );
+    lintel.position.set(p.x, p.y + 1.50, p.z);
+    lintel.lookAt(0, p.y + 1.50, 0);
+    scene.add(lintel);
+
     const label = makeLabel(host.label || host.id.toUpperCase(), "Boundary Gate", 360, 160);
     label.position.set(p.x, 3.45, p.z);
     labels.add(label);
   });
 
+  const gateGroup = new THREE.Group();
   const gateBase = new THREE.Mesh(
-    new THREE.BoxGeometry(6.6, 3.25, 1.55),
-    material(palette.darkMetal, palette.red, 0.16, 0.55, 0.88)
+    new THREE.BoxGeometry(6.8, 3.35, 1.62),
+    material(palette.darkMetal, palette.red, 0.18, 0.54, 0.90)
   );
+  const gateArch = new THREE.Mesh(
+    new THREE.TorusGeometry(2.55, 0.18, 18, 96, Math.PI),
+    material(0x1a222c, palette.blue, 0.20, 0.42, 0.92)
+  );
+  const gateBarA = new THREE.Mesh(new THREE.BoxGeometry(0.20, 2.8, 0.22), material(0x0c1218, palette.red, 0.20, 0.48, 0.86));
+  const gateBarB = gateBarA.clone();
+  const gateWarningPlate = new THREE.Mesh(
+    new THREE.BoxGeometry(3.9, 1.0, 0.16),
+    material(0x210908, palette.red, 0.52, 0.36, 0.72)
+  );
+
   gateBase.position.set(0, 1.6, 14.55);
+  gateArch.position.set(0, 3.22, 14.74);
+  gateArch.rotation.z = Math.PI;
+  gateBarA.position.set(-1.15, 1.28, 15.43);
+  gateBarB.position.set(1.15, 1.28, 15.43);
+  gateWarningPlate.position.set(0, 1.42, 15.46);
+
   gateBase.castShadow = true;
+  gateGroup.add(gateBase, gateArch, gateBarA, gateBarB, gateWarningPlate);
+  scene.add(gateGroup);
   gateBase.userData = {
     id: "admissorium",
     name: "ADMISSORIUM",
@@ -449,7 +539,6 @@ function buildScene(container, manifest) {
     owns: ["admissibility enforcement", "materialization blocking", "quarantine routing"],
     must_not_own: ["truth source", "accepted state", "sovereign chamber", "terminal recognition"]
   };
-  scene.add(gateBase);
   selectable.push(gateBase);
 
   const gateLabel = makeLabel("ADMISSORIUM", "Constitutional Border Control", 650, 180);
