@@ -326,9 +326,9 @@ function buildScene(container, manifest) {
     new THREE.MeshStandardMaterial({
       color: 0x050b12,
       emissive: 0x0a2034,
-      emissiveIntensity: 0.18,
-      roughness: 0.86,
-      metalness: 0.42,
+      emissiveIntensity: 0.28,
+      roughness: 0.78,
+      metalness: 0.54,
       side: THREE.DoubleSide
     })
   );
@@ -388,6 +388,12 @@ function buildScene(container, manifest) {
     }
   }
   scene.add(wallGroup);
+
+  for (let i = 0; i < 36; i += 1) {
+    const angle = (i / 36) * Math.PI * 2;
+    const p = polar(24.35, angle, 0);
+    addGlowColumn(scene, p.x, p.z, i % 3 === 0 ? 2.65 : 1.85, palette.blue, i % 3 === 0 ? 0.72 : 0.48);
+  }
 
   const perimeterShadow = new THREE.Mesh(
     new THREE.RingGeometry(20.2, 29.7, 256, 1),
@@ -521,6 +527,13 @@ function buildScene(container, manifest) {
     cap.castShadow = true;
 
     group.position.copy(p);
+    const sideGuardA = createAuthorityBlock(0.18, 1.35, 0.38, chamberPlinthMat, chamberTopMat);
+    const sideGuardB = createAuthorityBlock(0.18, 1.35, 0.38, chamberPlinthMat, chamberTopMat);
+    sideGuardA.position.set(-2.16, 0.16, 0);
+    sideGuardB.position.set(2.16, 0.16, 0);
+    const nameRail = createAuthorityBlock(2.65, 0.45, 0.22, chamberTopMat, chamberPlinthMat);
+    nameRail.position.set(0, 0.35, 1.98);
+    group.add(sideGuardA, sideGuardB, nameRail);
     group.add(plinth, body, glow, cap, crown);
     group.lookAt(0, 1.15, 0);
     group.userData = {
@@ -644,6 +657,29 @@ function buildScene(container, manifest) {
   gateWarningPlate.position.set(0, 1.32, 17.76);
 
   gateBase.castShadow = true;
+
+  const redContainment = new THREE.Mesh(
+    new THREE.PlaneGeometry(8.8, 5.6),
+    new THREE.MeshStandardMaterial({
+      color: palette.redDeep,
+      emissive: palette.red,
+      emissiveIntensity: 0.52,
+      transparent: true,
+      opacity: 0.23,
+      roughness: 0.45,
+      metalness: 0.12,
+      side: THREE.DoubleSide
+    })
+  );
+  redContainment.position.set(0, 1.12, 18.16);
+  redContainment.rotation.x = -0.18;
+  gateGroup.add(redContainment);
+
+  const thresholdA = createRail(scene, new THREE.Vector3(-3.8, 0.12, 18.4), new THREE.Vector3(3.8, 0.12, 18.4), palette.red, 0.72);
+  const thresholdB = createRail(scene, new THREE.Vector3(-2.4, 0.15, 19.1), new THREE.Vector3(2.4, 0.15, 19.1), palette.red, 0.46);
+  thresholdA.name = "ADMISSORIUM threshold denial rail";
+  thresholdB.name = "ADMISSORIUM contradiction containment rail";
+
   gateGroup.add(gateBase, gateArch, gateBarA, gateBarB, gateWarningPlate);
   scene.add(gateGroup);
   gateBase.userData = {
@@ -785,3 +821,6 @@ window.addEventListener("DOMContentLoaded", () => {
   window.setTimeout(apply, 500);
   window.setTimeout(apply, 1500);
 });
+
+
+window.materialAuthorityPass = "VERIFRAX_OBSERVATORY_MATERIAL_AUTHORITY_PASS";
