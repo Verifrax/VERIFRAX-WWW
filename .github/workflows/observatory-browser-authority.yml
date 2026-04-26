@@ -1,0 +1,35 @@
+name: Observatory Browser Authority
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-authority:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reproject committed surface
+        run: python3 .surface/vendor/scripts/project_host.py
+      - name: Verify committed output is current
+        run: git diff --exit-code -- . ':!README.md'
+      - name: Install Playwright outside repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          PW=/tmp/vco-playwright
+          npm install --prefix "$PW" playwright
+          "$PW/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Run browser truth authority audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 >/tmp/verifrax-www-http.log 2>&1 &
+          sleep 2
+          NODE_PATH=/tmp/vco-playwright/node_modules node scripts/check-observatory-browser-authority.cjs http://127.0.0.1:4173/
