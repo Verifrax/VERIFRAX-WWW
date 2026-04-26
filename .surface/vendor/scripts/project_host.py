@@ -212,9 +212,9 @@ def observatory_webgl_css(cfg):
 .oc-brand span{color:#9fb4c7;font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase}
 .oc-topbar nav{display:flex;gap:22px}
 .oc-topbar a{color:#d5e4f4;text-decoration:none;font:700 13px/1 Inter,ui-sans-serif,system-ui,sans-serif}
-.oc-hero{top:104px;left:34px;width:min(430px,calc(100% - 68px))}
+.oc-hero{top:88px;left:34px;width:min(430px,calc(100% - 68px))}
 .oc-hero span{color:#73d0ff;font:900 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
-.oc-hero h2{margin:12px 0 8px;color:#f3f8ff;font:900 clamp(46px,6.2vw,104px)/.84 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.07em}
+.oc-hero h2{margin:10px 0 8px;color:#f3f8ff;font:900 clamp(42px,5.7vw,94px)/.86 Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.07em}
 .oc-hero p{max-width:390px;color:#c4d1df;font:600 16px/1.5 Inter,ui-sans-serif,system-ui,sans-serif}
 .oc-hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .oc-hero code,.oc-proofline span{display:inline-flex;gap:8px;align-items:center;padding:9px 11px;border:1px solid rgba(115,208,255,.20);border-radius:999px;background:rgba(2,8,14,.68);color:#9ee6b8;font:800 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -254,6 +254,75 @@ def observatory_webgl_css(cfg):
 .oc-journey em{display:block;margin-top:4px;color:#8fa5b9;font:700 9px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-style:normal}
 .oc-proofline{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 @media (max-width:1200px){.oc-left,.oc-right,.oc-inspector{position:relative;inset:auto;width:auto;margin:12px 14px}.oc-left,.oc-right{display:grid;grid-template-columns:1fr}.observatory-webgl-runtime{min-height:1160px}.oc-bottom{position:relative;left:auto;right:auto;bottom:auto;margin:12px 14px 14px}}
+/* VERIFRAX_OBSERVATORY_COLLISION_REPAIR_CSS */
+
+/* Observatory collision repair: first viewport remains dominant without covering inspector content. */
+html,body{overflow-x:hidden}
+.observatory-webgl-runtime{
+  contain:layout paint;
+}
+.oc-stage{
+  min-height:calc(100vh - 8px);
+}
+.oc-left{
+  max-height:calc(100vh - 270px);
+  overflow:hidden;
+}
+.oc-left .oc-panel{
+  backdrop-filter:blur(18px);
+}
+.oc-left .oc-stack-list{
+  max-height:188px;
+  overflow:hidden;
+}
+.oc-right{
+  max-height:calc(100vh - 170px);
+  overflow:auto;
+  scrollbar-width:thin;
+}
+.oc-inspector{
+  right:320px;
+  bottom:150px;
+  width:min(420px,28vw);
+  max-height:32vh;
+  overflow:auto;
+  z-index:8;
+}
+.oc-bottom{
+  z-index:12;
+  max-height:142px;
+  overflow:hidden;
+}
+.oc-journey ol{
+  grid-template-columns:repeat(9,minmax(120px,1fr));
+}
+.oc-journey li{
+  min-height:44px;
+  padding:10px 12px;
+}
+.oc-journey small{
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.oc-topbar{
+  z-index:16;
+}
+.oc-hero{
+  z-index:7;
+}
+@media (max-width:1180px){
+  .oc-inspector{right:18px;bottom:154px;width:380px}
+  .oc-right{display:none}
+}
+@media (max-width:780px){
+  .oc-inspector{display:none}
+  .oc-left{display:none}
+  .oc-bottom{max-height:154px;overflow:auto}
+  .oc-journey ol{grid-template-columns:1fr 1fr}
+}
+
 @media (max-width:780px){.oc-topbar nav,.oc-left,.oc-right{display:none}.oc-hero{top:90px;left:16px;right:16px}.oc-hero h2{font-size:54px}.oc-inspector{margin-top:720px}.oc-journey ol{grid-template-columns:1fr 1fr}}
 
 .surface-fallback-root{

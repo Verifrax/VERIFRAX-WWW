@@ -36,13 +36,35 @@ const chamberOrder = [
 function tuneLabelVisibility(labels, camera) {
   labels.children.forEach((label) => {
     const d = label.position.distanceTo(camera.position);
-    const near = d < 18;
-    const far = d > 42;
-    label.scale.setScalar(near ? 0.58 : far ? 0.42 : 0.50);
-    if (label.material) {
-      label.material.opacity = near ? 0.84 : far ? 0.42 : 0.64;
-      label.material.transparent = true;
+    const isCore = label.userData && label.userData.visualWeight === "core";
+    const isChamber = label.userData && label.userData.visualWeight === "chamber";
+    const isHost = label.userData && label.userData.visualWeight === "host";
+
+    let scale = 0.62;
+    let opacity = 0.78;
+
+    if (isCore) {
+      scale = 0.72;
+      opacity = 0.96;
+    } else if (isChamber) {
+      scale = d < 22 ? 0.72 : d > 44 ? 0.56 : 0.66;
+      opacity = d > 48 ? 0.68 : 0.90;
+    } else if (isHost) {
+      scale = d > 42 ? 0.46 : 0.52;
+      opacity = d > 42 ? 0.48 : 0.68;
+    } else {
+      scale = d > 44 ? 0.50 : 0.58;
+      opacity = d > 44 ? 0.58 : 0.76;
     }
+
+    label.scale.setScalar(scale);
+    if (label.material) {
+      label.material.opacity = opacity;
+      label.material.transparent = true;
+      label.material.depthTest = false;
+      label.material.depthWrite = false;
+    }
+    label.renderOrder = isCore ? 90 : isChamber ? 80 : isHost ? 60 : 70;
   });
 }
 
@@ -320,15 +342,15 @@ function buildScene(container, manifest) {
   stage.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(palette.void, 0.018);
+  scene.fog = new THREE.FogExp2(palette.void, 0.013);
 
-  const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 420);
-  camera.position.set(0, 24.0, 46.0);
+  const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 420);
+  camera.position.set(0, 21.0, 39.5);
   camera.lookAt(0, 1.15, 0);
 
-  scene.add(new THREE.AmbientLight(0x9ecbff, 0.13));
+  scene.add(new THREE.AmbientLight(0x9ecbff, 0.18));
 
-  const hemi = new THREE.HemisphereLight(0x9ecbff, 0x02060b, 0.46);
+  const hemi = new THREE.HemisphereLight(0x9ecbff, 0x02060b, 0.58);
   scene.add(hemi);
 
   const key = new THREE.DirectionalLight(0xd8efff, 2.45);
@@ -771,10 +793,10 @@ function buildScene(container, manifest) {
     const t = clock.getElapsedTime();
 
     const orbit = t * 0.028;
-    camera.position.x = Math.sin(orbit) * 30.5;
-    camera.position.z = Math.cos(orbit) * 45.5;
-    camera.position.y = 23.2 + Math.sin(t * 0.16) * 0.48;
-    camera.lookAt(0, 1.20, 0);
+    camera.position.x = Math.sin(orbit) * 26.8;
+    camera.position.z = Math.cos(orbit) * 39.8;
+    camera.position.y = 20.7 + Math.sin(t * 0.16) * 0.36;
+    camera.lookAt(0, 1.55, 0);
 
     core.rotation.x += 0.0022;
     core.rotation.y += 0.0048;
@@ -868,3 +890,8 @@ window.materialAuthorityPass = "VERIFRAX_OBSERVATORY_MATERIAL_AUTHORITY_PASS";
 
 
 window.runtimeHelperBoundary = "VERIFRAX_OBSERVATORY_RUNTIME_HELPER_BOUNDARY";
+
+
+window.visualHierarchyRestoration = "VERIFRAX_OBSERVATORY_VISUAL_HIERARCHY_RESTORATION";
+
+window.visualHierarchyCollisionClose = "VERIFRAX_OBSERVATORY_VISUAL_HIERARCHY_COLLISION_CLOSE";
