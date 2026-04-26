@@ -28,15 +28,22 @@ jobs:
           set -euo pipefail
           rm -rf dist
           mkdir -p dist
-          cp public/index.html dist/index.html
-          cp public/404.html dist/404.html
+          cp index.html dist/index.html
+          cp 404.html dist/404.html
           cp public/CNAME dist/CNAME
-          cp -R surface-system dist/surface-system
+          cp -R assets dist/assets
+          cp -R data dist/data
           test -f dist/index.html
           test -f dist/404.html
           test -f dist/CNAME
-          test -f dist/surface-system/shell/base.css
+          test -f dist/assets/surface.css
+          test -f dist/assets/observatory-render-gate.js
+          test -f dist/data/verifrax-observatory.json
+          test -f dist/data/projection-attestation.json
           grep -Fx "www.verifrax.net" dist/CNAME
+          grep -q "observatory-render-gate" dist/index.html
+          grep -q "assets/observatory-render-gate.js" dist/index.html
+          grep -q "DERIVED_PROJECTION" dist/data/verifrax-observatory.json
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
