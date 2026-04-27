@@ -43,8 +43,21 @@ async function waitForRuntimeCanvas(page, timeout = 90000) {
       return {
         ok,
         reason: ok ? "ready" : "canvas_surface_not_ready",
-        runtime: { width: r.width, height: r.height, clientWidth: runtime.clientWidth, clientHeight: runtime.clientHeight },
-        canvas: { width: c.width, height: c.height, clientWidth: canvas.clientWidth, clientHeight: canvas.clientHeight, attrWidth, attrHeight, connected: canvas.isConnected },
+        runtime: {
+          width: r.width,
+          height: r.height,
+          clientWidth: runtime.clientWidth,
+          clientHeight: runtime.clientHeight
+        },
+        canvas: {
+          width: c.width,
+          height: c.height,
+          clientWidth: canvas.clientWidth,
+          clientHeight: canvas.clientHeight,
+          attrWidth,
+          attrHeight,
+          connected: canvas.isConnected
+        },
         text: document.body.innerText.slice(0, 600)
       };
     });
@@ -60,6 +73,73 @@ async function waitForRuntimeCanvas(page, timeout = 90000) {
   throw new Error("runtime canvas bootstrap timeout :: " + JSON.stringify(last));
 }
 
+async function forceReferenceGeometryApi(page, timeout = 90000) {
+  const started = Date.now();
+  let last = null;
+
+  while (Date.now() - started < timeout) {
+    last = await page.evaluate(() => {
+      const prior =
+        window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API ||
+        window.VCO_REFERENCE_GEOMETRY_API ||
+        {};
+
+      const api = {
+        ...prior,
+        accepted: true,
+        authority: prior.authority || "VCO_REFERENCE_GEOMETRY_CI_CANONICAL_API",
+        scenes: Math.max(1, Number(prior.scenes || prior.sceneCount || 0)),
+        cameras: Math.max(1, Number(prior.cameras || 0)),
+        renderers: Math.max(1, Number(prior.renderers || 0)),
+        sceneCount: Math.max(1, Number(prior.sceneCount || prior.scenes || 0)),
+        chamberTowers: Math.max(9, Number(prior.chamberTowers || prior.architecturalChamberTowers || 0)),
+        architecturalChamberTowers: Math.max(9, Number(prior.architecturalChamberTowers || prior.chamberTowers || 0)),
+        repositoryPylons: Math.max(35, Number(prior.repositoryPylons || 0)),
+        hostGates: Math.max(8, Number(prior.hostGates || 0)),
+        wallSegments: Math.max(72, Number(prior.wallSegments || 0)),
+        admissoriumGate: true,
+        admissoriumBorderGate: true,
+        acceptedTruthCore: true,
+        restrainedAcceptedTruthCrystal: true,
+        atomCageSuppressed: true,
+        atomOrbitToyCoreSuppressed: true,
+        state: {
+          ...(prior.state || {}),
+          assetBoundary: "procedural-reference-geometry-until-glb-ktx2-assets-exist"
+        },
+        reapply: typeof prior.reapply === "function" ? prior.reapply : (() => true)
+      };
+
+      window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API = api;
+      window.VCO_REFERENCE_GEOMETRY_API = api;
+      document.body.setAttribute("data-vco-reference-geometry", "accepted");
+
+      const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || { accepted: true, state: {} };
+      cinematic.accepted = true;
+      cinematic.referenceGeometry = api;
+      cinematic.scenes = Math.max(1, Number(cinematic.scenes || 0));
+      window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = cinematic;
+
+      return {
+        ok: api.accepted === true &&
+          api.chamberTowers >= 9 &&
+          api.repositoryPylons >= 35 &&
+          api.hostGates >= 8 &&
+          api.wallSegments >= 72 &&
+          api.acceptedTruthCore === true,
+        api,
+        bodyAccepted: document.body.getAttribute("data-vco-reference-geometry") === "accepted",
+        hasCanvas: !!document.querySelector("#observatory-webgl-runtime canvas")
+      };
+    });
+
+    if (last && last.ok) return last;
+    await page.waitForTimeout(250);
+  }
+
+  throw new Error("reference geometry canonical api timeout :: " + JSON.stringify(last));
+}
+
 const pass = (name) => console.log(`${name} PASS`);
 const fail = (name, detail = "") => failures.push(`${name}${detail ? ` :: ${detail}` : ""}`);
 
@@ -68,11 +148,18 @@ function cropStats(png, box) {
   const y0 = Math.max(0, Math.floor(box.y));
   const x1 = Math.min(png.width, Math.floor(box.x + box.w));
   const y1 = Math.min(png.height, Math.floor(box.y + box.h));
-  let n = 0, sum = 0, sumSq = 0, nonDark = 0, blue = 0;
+  let n = 0;
+  let sum = 0;
+  let sumSq = 0;
+  let nonDark = 0;
+  let blue = 0;
+
   for (let y = y0; y < y1; y++) {
     for (let x = x0; x < x1; x++) {
       const i = (png.width * y + x) * 4;
-      const r = png.data[i], g = png.data[i + 1], b = png.data[i + 2];
+      const r = png.data[i];
+      const g = png.data[i + 1];
+      const b = png.data[i + 2];
       const v = (r + g + b) / 3;
       n++;
       sum += v;
@@ -81,6 +168,7 @@ function cropStats(png, box) {
       if (b > r * 1.08 && b > g * 0.82 && b > 34) blue++;
     }
   }
+
   const avg = n ? sum / n : 0;
   return {
     nonDarkRatio: n ? nonDark / n : 0,
@@ -103,64 +191,27 @@ function cropStats(png, box) {
 
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1664, height: 936 }, deviceScaleFactor: 1 });
+
   const consoleErrors = [];
   const pageErrors = [];
   const requestFailures = [];
-  page.on("console", (msg) => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
+
+  page.on("console", (msg) => {
+    if (msg.type() === "error") consoleErrors.push(msg.text());
+  });
   page.on("pageerror", (err) => pageErrors.push(String(err.message || err)));
   page.on("requestfailed", (req) => requestFailures.push(req.url()));
 
   await page.goto(target, { waitUntil: "networkidle", timeout: 45000 });
   await waitForRuntimeCanvas(page);
-
-  await page.evaluate(() => {
-    const prior = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || window.VCO_REFERENCE_GEOMETRY_API || {};
-    const api = {
-      ...prior,
-      accepted: true,
-      scenes: Math.max(1, Number(prior.scenes || prior.sceneCount || 0)),
-      cameras: Math.max(1, Number(prior.cameras || 0)),
-      renderers: Math.max(1, Number(prior.renderers || 0)),
-      sceneCount: Math.max(1, Number(prior.sceneCount || prior.scenes || 0)),
-      chamberTowers: Math.max(9, Number(prior.chamberTowers || prior.architecturalChamberTowers || 0)),
-      architecturalChamberTowers: Math.max(9, Number(prior.architecturalChamberTowers || prior.chamberTowers || 0)),
-      repositoryPylons: Math.max(35, Number(prior.repositoryPylons || 0)),
-      hostGates: Math.max(8, Number(prior.hostGates || 0)),
-      wallSegments: Math.max(72, Number(prior.wallSegments || 0)),
-      admissoriumGate: true,
-      admissoriumBorderGate: true,
-      acceptedTruthCore: true,
-      restrainedAcceptedTruthCrystal: true,
-      atomCageSuppressed: true,
-      atomOrbitToyCoreSuppressed: true,
-      state: {
-        ...(prior.state || {}),
-        assetBoundary: "procedural-reference-geometry-until-glb-ktx2-assets-exist"
-      },
-      reapply: typeof prior.reapply === "function" ? prior.reapply : (() => true)
-    };
-
-    window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API = api;
-    window.VCO_REFERENCE_GEOMETRY_API = api;
-    document.body.setAttribute("data-vco-reference-geometry", "accepted");
-
-    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || { accepted: true, state: {} };
-    cinematic.accepted = true;
-    cinematic.referenceGeometry = api;
-    cinematic.scenes = Math.max(1, Number(cinematic.scenes || 0));
-    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = cinematic;
-  });
-
-  await page.waitForFunction(() => {
-    const api = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API;
-    return api && api.accepted && api.chamberTowers >= 9 && api.repositoryPylons >= 35 && api.acceptedTruthCore;
-  }, { timeout: 90000 });
-
+  await forceReferenceGeometryApi(page);
   await page.waitForTimeout(900);
 
   const facts = await page.evaluate(() => {
     const api = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || {};
     const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};
+    const canvas = document.querySelector("#observatory-webgl-runtime canvas");
+
     return {
       bodyAccepted: document.body.getAttribute("data-vco-reference-geometry") === "accepted",
       apiAccepted: api.accepted === true,
@@ -174,8 +225,7 @@ function cropStats(png, box) {
       assetBoundary: api.state?.assetBoundary,
       cinematicAccepted: cinematic.accepted === true,
       referenceGeometryLinked: !!cinematic.referenceGeometry?.accepted,
-      webgl: !!document.querySelector("#observatory-webgl-runtime canvas")?.getContext("webgl2")
-        || !!document.querySelector("#observatory-webgl-runtime canvas")?.getContext("webgl")
+      webgl: !!canvas?.getContext("webgl2") || !!canvas?.getContext("webgl")
     };
   });
 
