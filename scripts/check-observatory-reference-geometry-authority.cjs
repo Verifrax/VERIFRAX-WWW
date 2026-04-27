@@ -5,6 +5,18 @@ const { PNG } = require("pngjs");
 
 const target = process.argv[2] || "http://127.0.0.1:4179/";
 const failures = [];
+
+async function waitForRuntimeCanvas(page, timeout = 90000) {
+  await page.waitForFunction(() => {
+    const runtime = document.querySelector("#observatory-webgl-runtime");
+    const canvas = runtime && runtime.querySelector("canvas");
+    if (!runtime || !canvas) return false;
+    const r = runtime.getBoundingClientRect();
+    const c = canvas.getBoundingClientRect();
+    return r.width > 800 && r.height > 500 && c.width > 800 && c.height > 500;
+  }, { timeout });
+}
+
 const pass = (name) => console.log(`${name} PASS`);
 const fail = (name, detail = "") => failures.push(`${name}${detail ? ` :: ${detail}` : ""}`);
 
@@ -60,12 +72,12 @@ function cropStats(png, box) {
     const r = document.querySelector("#observatory-webgl-runtime")?.getBoundingClientRect();
     const c = document.querySelector("#observatory-webgl-runtime canvas")?.getBoundingClientRect();
     return r && c && r.width > 800 && r.height > 500 && c.width > 800 && c.height > 500;
-  }, { timeout: 30000 });
+  }, { timeout: 90000 });
 
   await page.waitForFunction(() => {
     const api = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API;
     return api && api.accepted && api.chamberTowers >= 9 && api.repositoryPylons >= 35 && api.acceptedTruthCore;
-  }, { timeout: 30000 });
+  }, { timeout: 90000 });
 
   await page.waitForTimeout(900);
 

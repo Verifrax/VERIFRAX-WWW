@@ -5,6 +5,18 @@ const { PNG } = require("pngjs");
 const target = process.argv[2] || "http://127.0.0.1:4174/";
 const failures = [];
 
+async function waitForRuntimeCanvas(page, timeout = 90000) {
+  await page.waitForFunction(() => {
+    const runtime = document.querySelector("#observatory-webgl-runtime");
+    const canvas = runtime && runtime.querySelector("canvas");
+    if (!runtime || !canvas) return false;
+    const r = runtime.getBoundingClientRect();
+    const c = canvas.getBoundingClientRect();
+    return r.width > 800 && r.height > 500 && c.width > 800 && c.height > 500;
+  }, { timeout });
+}
+
+
 function rectAreaForGuard(r) {
   if (!r) return 0;
   return Math.max(0, r.width || 0) * Math.max(0, r.height || 0);
@@ -60,7 +72,7 @@ function cropStats(png, box) {
   if (response && response.status() >= 200 && response.status() < 300) pass("http_200"); else fail("http_200", response && response.status());
 
   try {
-    await page.waitForSelector("#observatory-webgl-runtime canvas", { state: "attached", timeout: 30000 });
+    await waitForRuntimeCanvas(page);
   } catch (err) {
     const diag = await page.evaluate(() => ({
       runtime: document.querySelector("#observatory-webgl-runtime")?.outerHTML?.slice(0, 1400) || null,

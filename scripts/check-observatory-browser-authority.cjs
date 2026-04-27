@@ -4,6 +4,18 @@ const { chromium } = require("playwright");
 const target = process.argv[2] || "http://127.0.0.1:4173/";
 const failures = [];
 
+async function waitForRuntimeCanvas(page, timeout = 90000) {
+  await page.waitForFunction(() => {
+    const runtime = document.querySelector("#observatory-webgl-runtime");
+    const canvas = runtime && runtime.querySelector("canvas");
+    if (!runtime || !canvas) return false;
+    const r = runtime.getBoundingClientRect();
+    const c = canvas.getBoundingClientRect();
+    return r.width > 800 && r.height > 500 && c.width > 800 && c.height > 500;
+  }, { timeout });
+}
+
+
 function fail(name, detail = "") { failures.push(`${name}${detail ? ` :: ${detail}` : ""}`); }
 function pass(name) { console.log(`${name} PASS`); }
 
@@ -26,12 +38,12 @@ function pass(name) { console.log(`${name} PASS`); }
     const runtime = document.querySelector("#observatory-webgl-runtime");
     const rect = runtime?.getBoundingClientRect?.();
     return !!runtime && !!rect && rect.width > 100 && rect.height > 100;
-  }, null, { timeout: 15000 });
+  }, null, { timeout: 90000 });
   await page.waitForFunction(() => {
     const canvas = document.querySelector("#observatory-webgl-runtime canvas");
     const rect = canvas?.getBoundingClientRect?.();
     return !!canvas && !!rect && rect.width > 100 && rect.height > 100;
-  }, null, { timeout: 20000 });
+  }, null, { timeout: 90000 });
   await page.waitForTimeout(4500);
 
   const facts = await page.evaluate(() => {

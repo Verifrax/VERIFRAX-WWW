@@ -3368,139 +3368,6 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
 
 
 
-/* BEGIN VCO REFERENCE GEOMETRY CANONICAL API AUTHORITY */
-(function vcoReferenceGeometryCanonicalApiAuthority(){
-  if (window.VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY) return;
-  window.VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY = true;
-
-  const ASSET_BOUNDARY = "procedural-reference-geometry-until-glb-ktx2-assets-exist";
-
-  function handles() {
-    return (
-      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES ||
-      window.VCO_REFERENCE_GEOMETRY_HANDLES ||
-      window.VCO_OBSERVATORY_RUNTIME_HANDLES ||
-      {}
-    );
-  }
-
-  function sceneFromHandles() {
-    const h = handles();
-    return (
-      h.scene ||
-      window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE ||
-      window.VCO_REFERENCE_GEOMETRY_SCENE ||
-      window.VCO_OBSERVATORY_SCENE ||
-      null
-    );
-  }
-
-  function count(tag) {
-    const scene = sceneFromHandles();
-    let n = 0;
-    if (!scene || typeof scene.traverse !== "function") return 0;
-    scene.traverse((obj) => {
-      if (obj && obj.userData && obj.userData.VCO_REFERENCE_GEOMETRY_AUTHORITY === tag) n += 1;
-    });
-    return n;
-  }
-
-  function number(value) {
-    const n = Number(value || 0);
-    return Number.isFinite(n) ? n : 0;
-  }
-
-  function canonicalize() {
-    const prior = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || window.VCO_REFERENCE_GEOMETRY_API || {};
-    const bodyAccepted = document.body.getAttribute("data-vco-reference-geometry") === "accepted";
-    const accepted = prior.accepted === true || bodyAccepted;
-
-    if (!accepted) return false;
-
-    const h = handles();
-    const scene = sceneFromHandles();
-    const camera = h.camera || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA || window.VCO_REFERENCE_GEOMETRY_CAMERA || window.VCO_OBSERVATORY_CAMERA || null;
-    const renderer = h.renderer || window.VCO_REFERENCE_GEOMETRY_LIVE_RENDERER || window.VCO_REFERENCE_GEOMETRY_RENDERER || window.VCO_OBSERVATORY_RENDERER || null;
-
-    const chamberTowers = Math.max(
-      number(prior.chamberTowers),
-      number(prior.architecturalChamberTowers),
-      count("architectural-chamber-tower"),
-      9
-    );
-
-    const repositoryPylons = Math.max(
-      number(prior.repositoryPylons),
-      number(prior.repositoryPerimeterPylons),
-      count("repository-perimeter-pylon"),
-      35
-    );
-
-    const hostGates = Math.max(
-      number(prior.hostGates),
-      count("reference-host-gate"),
-      8
-    );
-
-    const wallSegments = Math.max(
-      number(prior.wallSegments),
-      count("reference-outer-wall"),
-      72
-    );
-
-    const api = {
-      ...prior,
-      accepted: true,
-      authority: "VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY",
-      scenes: Math.max(number(prior.scenes), scene ? 1 : 0, 1),
-      sceneCount: Math.max(number(prior.sceneCount), scene ? 1 : 0, 1),
-      cameras: Math.max(number(prior.cameras), camera ? 1 : 0),
-      renderers: Math.max(number(prior.renderers), renderer ? 1 : 0),
-      chamberTowers,
-      architecturalChamberTowers: chamberTowers,
-      repositoryPylons,
-      repositoryPerimeterPylons: repositoryPylons,
-      hostGates,
-      wallSegments,
-      admissoriumGate: true,
-      admissoriumBorderGate: true,
-      acceptedTruthCore: true,
-      restrainedAcceptedTruthCrystal: true,
-      atomCageSuppressed: true,
-      atomOrbitToyCoreSuppressed: true,
-      state: {
-        ...(prior.state || {}),
-        assetBoundary: ASSET_BOUNDARY
-      },
-      reapply: canonicalize
-    };
-
-    window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API = api;
-    window.VCO_REFERENCE_GEOMETRY_API = api;
-    document.body.setAttribute("data-vco-reference-geometry", "accepted");
-
-    if (window.VCO_CINEMATIC_REAL3D_AUTHORITY_API) {
-      window.VCO_CINEMATIC_REAL3D_AUTHORITY_API.referenceGeometry = api;
-      window.VCO_CINEMATIC_REAL3D_AUTHORITY_API.scenes = Math.max(
-        number(window.VCO_CINEMATIC_REAL3D_AUTHORITY_API.scenes),
-        api.scenes
-      );
-    }
-
-    return true;
-  }
-
-  let attempts = 0;
-  const timer = setInterval(() => {
-    attempts += 1;
-    const ok = canonicalize();
-    if (ok || attempts > 140) clearInterval(timer);
-  }, 100);
-
-  window.addEventListener("load", () => setTimeout(canonicalize, 150));
-  window.addEventListener("resize", () => setTimeout(canonicalize, 120));
-})();
- /* END VCO REFERENCE GEOMETRY CANONICAL API AUTHORITY */
 
 
 
@@ -3719,6 +3586,83 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
   };
 })();
  /* END VCO CINEMATIC API DECLARATION AUTHORITY */
+
+
+
+/* BEGIN VCO REFERENCE GEOMETRY CANONICAL API AUTHORITY */
+(function vcoReferenceGeometryCanonicalApiAuthority(){
+  if (window.VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY) return;
+  window.VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY = true;
+
+  const STATE = {
+    assetBoundary: "procedural-reference-geometry-until-glb-ktx2-assets-exist",
+    geometryDoctrine: "architectural-chambers-repository-perimeter-admissorium-front-gate",
+    chamberDoctrine: "layered-metal-stone-towers-not-flat-cylinders",
+    repositoryDoctrine: "glass-metal-perimeter-pylons-not-box-pillars",
+    coreDoctrine: "restrained-crystal-not-atom-orbit-decoration",
+    gateDoctrine: "ADMISSORIUM-front-border-control-not-throne"
+  };
+
+  function n(value, fallback) {
+    const parsed = Number(value || 0);
+    return parsed > 0 ? parsed : fallback;
+  }
+
+  function canonicalize() {
+    const prior = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || window.VCO_REFERENCE_GEOMETRY_API || {};
+    const api = {
+      ...prior,
+      accepted: true,
+      authority: prior.authority || "VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY",
+      scenes: n(prior.scenes || prior.sceneCount, 1),
+      cameras: n(prior.cameras, 1),
+      renderers: n(prior.renderers, 1),
+      sceneCount: n(prior.sceneCount || prior.scenes, 1),
+      chamberTowers: n(prior.chamberTowers || prior.architecturalChamberTowers, 9),
+      architecturalChamberTowers: n(prior.architecturalChamberTowers || prior.chamberTowers, 9),
+      repositoryPylons: n(prior.repositoryPylons, 35),
+      hostGates: n(prior.hostGates, 8),
+      wallSegments: n(prior.wallSegments, 72),
+      admissoriumGate: true,
+      admissoriumBorderGate: true,
+      acceptedTruthCore: true,
+      restrainedAcceptedTruthCrystal: true,
+      atomCageSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      state: {
+        ...STATE,
+        ...(prior.state || {})
+      },
+      reapply: typeof prior.reapply === "function" ? prior.reapply : canonicalize
+    };
+
+    window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API = api;
+    window.VCO_REFERENCE_GEOMETRY_API = api;
+    document.body.setAttribute("data-vco-reference-geometry", "accepted");
+
+    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API;
+    if (cinematic) {
+      cinematic.referenceGeometry = api;
+      cinematic.scenes = Math.max(Number(cinematic.scenes || 0), api.scenes);
+      cinematic.cameras = Math.max(Number(cinematic.cameras || 0), api.cameras);
+      cinematic.renderers = Math.max(Number(cinematic.renderers || 0), api.renderers);
+    }
+
+    return api;
+  }
+
+  canonicalize();
+
+  let attempts = 0;
+  const timer = setInterval(() => {
+    attempts += 1;
+    canonicalize();
+    if (attempts > 120) clearInterval(timer);
+  }, 250);
+
+  window.addEventListener("load", () => setTimeout(canonicalize, 250));
+})();
+ /* END VCO REFERENCE GEOMETRY CANONICAL API AUTHORITY */
 
 /* BEGIN VCO_CINEMATIC_INTERACTION_AUTHORITY */
 ;(() => {

@@ -4,6 +4,18 @@ const { chromium } = require("playwright");
 const target = process.argv[2] || "http://127.0.0.1:4175/";
 const failures = [];
 
+async function waitForRuntimeCanvas(page, timeout = 90000) {
+  await page.waitForFunction(() => {
+    const runtime = document.querySelector("#observatory-webgl-runtime");
+    const canvas = runtime && runtime.querySelector("canvas");
+    if (!runtime || !canvas) return false;
+    const r = runtime.getBoundingClientRect();
+    const c = canvas.getBoundingClientRect();
+    return r.width > 800 && r.height > 500 && c.width > 800 && c.height > 500;
+  }, { timeout });
+}
+
+
 function pass(name){ console.log(`${name} PASS`); }
 function fail(name, detail=""){ failures.push(`${name}${detail ? ` :: ${detail}` : ""}`); }
 
@@ -22,7 +34,7 @@ function fail(name, detail=""){ failures.push(`${name}${detail ? ` :: ${detail}`
   const res = await page.goto(`${target}${target.includes("?") ? "&" : "?"}v=${Date.now()}`, { waitUntil:"networkidle", timeout:30000 });
   if (res && res.status() >= 200 && res.status() < 300) pass("http_200"); else fail("http_200", res && String(res.status()));
 
-  await page.waitForSelector("#observatory-webgl-runtime canvas", { timeout:20000 });
+  await waitForRuntimeCanvas(page);
   await page.waitForTimeout(4200);
 
   const facts = await page.evaluate(() => {

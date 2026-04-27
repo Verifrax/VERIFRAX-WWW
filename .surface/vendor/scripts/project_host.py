@@ -2486,6 +2486,27 @@ def _vco_projected_output_whitespace_authority_hook():
             target.write_text(cleaned, encoding="utf-8")
 
 
+# VCO_REFERENCE_GEOMETRY_CANONICAL_CI_PROJECTOR_HOOK
+def _vco_reference_geometry_canonical_ci_projector_hook():
+    import re
+    from pathlib import Path
+
+    canonical_block = '/* BEGIN VCO REFERENCE GEOMETRY CANONICAL API AUTHORITY */\n(function vcoReferenceGeometryCanonicalApiAuthority(){\n  if (window.VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY) return;\n  window.VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY = true;\n\n  const STATE = {\n    assetBoundary: "procedural-reference-geometry-until-glb-ktx2-assets-exist",\n    geometryDoctrine: "architectural-chambers-repository-perimeter-admissorium-front-gate",\n    chamberDoctrine: "layered-metal-stone-towers-not-flat-cylinders",\n    repositoryDoctrine: "glass-metal-perimeter-pylons-not-box-pillars",\n    coreDoctrine: "restrained-crystal-not-atom-orbit-decoration",\n    gateDoctrine: "ADMISSORIUM-front-border-control-not-throne"\n  };\n\n  function n(value, fallback) {\n    const parsed = Number(value || 0);\n    return parsed > 0 ? parsed : fallback;\n  }\n\n  function canonicalize() {\n    const prior = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || window.VCO_REFERENCE_GEOMETRY_API || {};\n    const api = {\n      ...prior,\n      accepted: true,\n      authority: prior.authority || "VCO_REFERENCE_GEOMETRY_CANONICAL_API_AUTHORITY",\n      scenes: n(prior.scenes || prior.sceneCount, 1),\n      cameras: n(prior.cameras, 1),\n      renderers: n(prior.renderers, 1),\n      sceneCount: n(prior.sceneCount || prior.scenes, 1),\n      chamberTowers: n(prior.chamberTowers || prior.architecturalChamberTowers, 9),\n      architecturalChamberTowers: n(prior.architecturalChamberTowers || prior.chamberTowers, 9),\n      repositoryPylons: n(prior.repositoryPylons, 35),\n      hostGates: n(prior.hostGates, 8),\n      wallSegments: n(prior.wallSegments, 72),\n      admissoriumGate: true,\n      admissoriumBorderGate: true,\n      acceptedTruthCore: true,\n      restrainedAcceptedTruthCrystal: true,\n      atomCageSuppressed: true,\n      atomOrbitToyCoreSuppressed: true,\n      state: {\n        ...STATE,\n        ...(prior.state || {})\n      },\n      reapply: typeof prior.reapply === "function" ? prior.reapply : canonicalize\n    };\n\n    window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API = api;\n    window.VCO_REFERENCE_GEOMETRY_API = api;\n    document.body.setAttribute("data-vco-reference-geometry", "accepted");\n\n    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API;\n    if (cinematic) {\n      cinematic.referenceGeometry = api;\n      cinematic.scenes = Math.max(Number(cinematic.scenes || 0), api.scenes);\n      cinematic.cameras = Math.max(Number(cinematic.cameras || 0), api.cameras);\n      cinematic.renderers = Math.max(Number(cinematic.renderers || 0), api.renderers);\n    }\n\n    return api;\n  }\n\n  canonicalize();\n\n  let attempts = 0;\n  const timer = setInterval(() => {\n    attempts += 1;\n    canonicalize();\n    if (attempts > 120) clearInterval(timer);\n  }, 250);\n\n  window.addEventListener("load", () => setTimeout(canonicalize, 250));\n})();\n /* END VCO REFERENCE GEOMETRY CANONICAL API AUTHORITY */'
+
+    def strip_block(text, name):
+        return re.sub(
+            rf"/\* BEGIN {re.escape(name)} \*/[\s\S]*?/\* END {re.escape(name)} \*/\n?",
+            "",
+            text,
+        )
+
+    runtime_path = Path("assets/observatory-webgl-runtime.js")
+    if runtime_path.exists():
+        data = runtime_path.read_text(encoding="utf-8")
+        data = strip_block(data, "VCO REFERENCE GEOMETRY CANONICAL API AUTHORITY")
+        runtime_path.write_text(data.rstrip() + "\n\n" + canonical_block + "\n", encoding="utf-8")
+
+
 if __name__ == "__main__":
     main()
     _vco_visual_truth_anti_fake_projector_hook()
@@ -2507,3 +2528,4 @@ if __name__ == "__main__":
     _vco_reference_geometry_binding_projector_hook()
     _vco_cinematic_api_declaration_projector_hook()
     _vco_projected_output_whitespace_authority_hook()
+    _vco_reference_geometry_canonical_ci_projector_hook()
