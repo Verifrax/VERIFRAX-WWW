@@ -1,0 +1,30 @@
+name: Observatory Institutional Render Authority
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'midiakiasat/**'
+
+permissions:
+  contents: read
+
+jobs:
+  institutional-render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser dependencies
+        run: |
+          set -euo pipefail
+          npm_config_yes=true npx playwright install --with-deps chromium
+          npm_config_yes=true npm install --no-save playwright pngjs
+      - name: Verify institutional render authority
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4188 >/tmp/verifrax-www-institutional-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          sleep 2
+          NODE_PATH="$PWD/node_modules" node scripts/check-observatory-institutional-render-authority.cjs http://127.0.0.1:4188/
