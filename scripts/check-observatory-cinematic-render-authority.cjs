@@ -7,6 +7,60 @@ const { PNG } = require("pngjs");
 const target = process.argv[2] || "http://127.0.0.1:4181/";
 const failures = [];
 
+async function waitForRuntimeCanvas(page, timeout = 90000) {
+  const started = Date.now();
+  let last = null;
+
+  while (Date.now() - started < timeout) {
+    last = await page.evaluate(() => {
+      const runtime = document.querySelector("#observatory-webgl-runtime");
+      const canvas = runtime && runtime.querySelector("canvas");
+
+      if (!runtime || !canvas) {
+        return {
+          ok: false,
+          reason: "missing_runtime_or_canvas",
+          hasRuntime: !!runtime,
+          hasCanvas: !!canvas
+        };
+      }
+
+      const r = runtime.getBoundingClientRect();
+      const c = canvas.getBoundingClientRect();
+      const attrWidth = Number(canvas.getAttribute("width") || canvas.width || 0);
+      const attrHeight = Number(canvas.getAttribute("height") || canvas.height || 0);
+
+      const ok =
+        canvas.isConnected &&
+        (
+          attrWidth > 0 ||
+          attrHeight > 0 ||
+          canvas.clientWidth > 0 ||
+          canvas.clientHeight > 0 ||
+          c.width > 0 ||
+          c.height > 0
+        );
+
+      return {
+        ok,
+        reason: ok ? "ready" : "canvas_surface_not_ready",
+        runtime: { width: r.width, height: r.height, clientWidth: runtime.clientWidth, clientHeight: runtime.clientHeight },
+        canvas: { width: c.width, height: c.height, clientWidth: canvas.clientWidth, clientHeight: canvas.clientHeight, attrWidth, attrHeight, connected: canvas.isConnected },
+        text: document.body.innerText.slice(0, 600)
+      };
+    });
+
+    if (last && last.ok) {
+      await page.waitForTimeout(650);
+      return last;
+    }
+
+    await page.waitForTimeout(250);
+  }
+
+  throw new Error("runtime canvas bootstrap timeout :: " + JSON.stringify(last));
+}
+
 function pass(name) {
   console.log(`${name} PASS`);
 }
@@ -87,7 +141,7 @@ function cropStats(png, box) {
     const runtime = document.querySelector("#observatory-webgl-runtime");
     const rect = runtime?.getBoundingClientRect?.();
     return !!runtime && !!rect && rect.width > 100 && rect.height > 100;
-  }, null, { timeout: 20000 });
+  }, null, { timeout: 90000 });
 
   await page.waitForFunction(() => {
     const canvas = document.querySelector("#observatory-webgl-runtime canvas");

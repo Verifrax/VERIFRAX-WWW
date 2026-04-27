@@ -1,0 +1,37 @@
+name: Observatory Reference Geometry Authority
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - "midiakiasat/**"
+
+jobs:
+  reference-geometry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install browser proof dependencies
+        run: |
+          npm install --no-save playwright pngjs
+          npx playwright install --with-deps chromium
+      - name: Verify static observatory authority
+        run: |
+          node scripts/check-observatory-attestation.mjs
+          node scripts/check-observatory-real3d-hardening.mjs
+      - name: Serve host
+        run: |
+          python3 -m http.server 4179 > /tmp/verifrax-reference-geometry-http.log 2>&1 &
+          echo $! > /tmp/verifrax-reference-geometry-http.pid
+      - name: Verify reference geometry authority
+        run: node scripts/check-observatory-reference-geometry-authority.cjs http://127.0.0.1:4179/
+      - name: Stop server
+        if: always()
+        run: |
+          if test -f /tmp/verifrax-reference-geometry-http.pid; then
+            kill "$(cat /tmp/verifrax-reference-geometry-http.pid)" || true
+          fi
