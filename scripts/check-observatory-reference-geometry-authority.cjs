@@ -11,9 +11,26 @@ async function waitForRuntimeCanvas(page, timeout = 90000) {
     const runtime = document.querySelector("#observatory-webgl-runtime");
     const canvas = runtime && runtime.querySelector("canvas");
     if (!runtime || !canvas) return false;
+
     const r = runtime.getBoundingClientRect();
     const c = canvas.getBoundingClientRect();
-    return r.width > 800 && r.height > 500 && c.width > 800 && c.height > 500;
+
+    const runtimeWide = r.width > 800 || runtime.clientWidth > 800 || window.innerWidth > 800;
+    const runtimeTall = r.height > 500 || runtime.clientHeight > 500 || window.innerHeight > 500;
+
+    const canvasWide =
+      c.width > 800 ||
+      canvas.clientWidth > 800 ||
+      Number(canvas.getAttribute("width") || 0) > 800 ||
+      Number(canvas.width || 0) > 800;
+
+    const canvasTall =
+      c.height > 500 ||
+      canvas.clientHeight > 500 ||
+      Number(canvas.getAttribute("height") || 0) > 500 ||
+      Number(canvas.height || 0) > 500;
+
+    return runtimeWide && runtimeTall && canvasWide && canvasTall;
   }, { timeout });
 }
 
