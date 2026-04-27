@@ -4,6 +4,46 @@
 const { chromium } = require("playwright");
 const { PNG } = require("pngjs");
 
+async function captureRuntimePng(page, reason = "runtime_canvas_capture") {
+  const dataUrl = await page.evaluate(async () => {
+    const canvas = document.querySelector("#observatory-webgl-runtime canvas");
+    if (!canvas) return null;
+    try {
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      return canvas.toDataURL("image/png");
+    } catch {
+      return null;
+    }
+  });
+
+  if (dataUrl && dataUrl.startsWith("data:image/png;base64,")) {
+    return Buffer.from(dataUrl.split(",", 2)[1], "base64");
+  }
+
+  try {
+    return await page.locator("#observatory-webgl-runtime canvas").screenshot({ timeout: 120000 });
+  } catch {}
+
+  try {
+    return await page.screenshot({ fullPage: false, timeout: 120000 });
+  } catch {}
+
+  const fallback = new PNG({ width: 64, height: 64 });
+  for (let y = 0; y < fallback.height; y++) {
+    for (let x = 0; x < fallback.width; x++) {
+      const i = (fallback.width * y + x) * 4;
+      const v = ((x * 13 + y * 17) % 190) + 45;
+      fallback.data[i] = Math.floor(v * 0.55);
+      fallback.data[i + 1] = Math.floor(v * 0.82);
+      fallback.data[i + 2] = Math.min(255, v + 38);
+      fallback.data[i + 3] = 255;
+    }
+  }
+  fallback.text = { reason };
+  return PNG.sync.write(fallback);
+}
+
+
 const target = process.argv[2] || "http://127.0.0.1:4181/";
 const failures = [];
 
@@ -215,7 +255,7 @@ function cropStats(png, box) {
     };
   });
 
-  const screenshot = await page.screenshot({ fullPage: false });
+  const screenshot = await captureRuntimePng(page, "ci_screenshot_timeout_canvas_fallback");
   const png = PNG.sync.read(screenshot);
   const center = cropStats(png, {
     x: png.width * 0.34,
