@@ -1073,6 +1073,26 @@ html,body{margin:0!important;width:100%!important;height:100%!important;min-heig
 .oc-journey li.is-active{box-shadow:0 0 0 1px rgba(162,238,255,.34),0 0 24px rgba(53,188,255,.32),inset 0 0 18px rgba(77,204,255,.12)!important}
 /* END VCO CINEMATIC REAL3D AUTHORITY */
 
+
+
+/* BEGIN VCO REFERENCE GEOMETRY AUTHORITY */
+#observatory-webgl-runtime canvas{
+  filter: contrast(1.18) saturate(1.22) brightness(.91) !important;
+}
+#observatory-webgl-runtime::after{
+  background:
+    radial-gradient(circle at 50% 48%, transparent 0 28%, rgba(0,0,0,.12) 46%, rgba(0,0,0,.58) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.026), transparent 26%, transparent 72%, rgba(0,0,0,.34)) !important;
+  opacity:.72 !important;
+}
+.oc-hero{
+  mix-blend-mode:normal !important;
+}
+.oc-hero h2{
+  text-shadow:0 18px 70px rgba(0,0,0,.96),0 0 46px rgba(130,220,255,.12)!important;
+}
+/* END VCO REFERENCE GEOMETRY AUTHORITY */
+
 /* BEGIN VCO CINEMATIC COMMAND KEYBOARD CLICK AUTHORITY */
 .vco-command{
   position:fixed;
