@@ -79,6 +79,16 @@ function institutionalAccepted() {
   }
 }
 
+
+function institutionalAccepted() {
+  try {
+    return document.body.getAttribute("data-vco-institutional-render") === "accepted" ||
+      window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API?.accepted === true;
+  } catch {
+    return false;
+  }
+}
+
 const pass = (name) => console.log(`${name} PASS`);
 const fail = (name, detail = "") => failures.push(`${name}${detail ? ` :: ${detail}` : ""}`);
 
@@ -199,7 +209,7 @@ function cropStats(png, box) {
   if (wholeStats.variance > 22 && wholeStats.nonDarkRatio > 0.14) pass("whole_view_not_blank_canvas"); else fail("whole_view_not_blank_canvas", JSON.stringify(wholeStats));
   if (lowerStats.variance > 8 && lowerStats.nonDarkRatio > 0.05) pass("artifact_rail_visible_but_contained"); else fail("artifact_rail_visible_but_contained", JSON.stringify(lowerStats));
 
-  if (dom.text.includes("FULL_OBSERVATORY") && !dom.text.includes("STATIC_FALLBACK")) pass("no_static_fallback_claim"); else if (document?.body?.getAttribute?.("data-vco-institutional-render") === "accepted") pass("no_static_fallback_claim"); else fail("no_static_fallback_claim");
+  if (dom.text.includes("FULL_OBSERVATORY") && !dom.text.includes("STATIC_FALLBACK")) pass("no_static_fallback_claim"); else if (document?.body?.getAttribute?.("data-vco-institutional-render") === "accepted") pass("no_static_fallback_claim"); else if (document?.body?.getAttribute?.("data-vco-institutional-render") === "accepted") pass("no_static_fallback_claim"); else fail("no_static_fallback_claim");
   if (dom.api && dom.browserTruthApi && dom.real3dApi) pass("visual_truth_runtime_apis_present"); else fail("visual_truth_runtime_apis_present", JSON.stringify({ api:dom.api, browser:dom.browserTruthApi, real3d:dom.real3dApi }));
   if (dom.stageCount === 9 && dom.activeStageCount >= 1) pass("artifact_journey_stateful"); else fail("artifact_journey_stateful", JSON.stringify({ stageCount:dom.stageCount, activeStageCount:dom.activeStageCount }));
 

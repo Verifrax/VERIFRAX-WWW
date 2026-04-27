@@ -27,4 +27,4 @@ jobs:
           pid=$!
           trap 'kill $pid || true' EXIT
           sleep 2
-          NODE_PATH="$PWD/node_modules" NODE_PATH=/tmp/vco-institutional-render/node_modules node scripts/check-observatory-institutional-render-authority.cjs http://127.0.0.1:4188/
+          NODE_PATH="$PWD/node_modules" NODE_PATH=/tmp/vco-institutional-render/node_modules NODE_PATH=/tmp/vco-institutional-render/node_modules node scripts/check-observatory-institutional-render-authority.cjs http://127.0.0.1:4188/
