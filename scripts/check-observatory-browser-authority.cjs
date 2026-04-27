@@ -5,24 +5,57 @@ const target = process.argv[2] || "http://127.0.0.1:4173/";
 const failures = [];
 
 async function waitForRuntimeCanvas(page, timeout = 90000) {
-  await page.waitForFunction(() => {
-    const runtime = document.querySelector("#observatory-webgl-runtime");
-    const canvas = runtime && runtime.querySelector("canvas");
-    if (!runtime || !canvas || !canvas.isConnected) return false;
+  const started = Date.now();
+  let last = null;
 
-    const attrWidth = Number(canvas.getAttribute("width") || canvas.width || 0);
-    const attrHeight = Number(canvas.getAttribute("height") || canvas.height || 0);
+  while (Date.now() - started < timeout) {
+    last = await page.evaluate(() => {
+      const runtime = document.querySelector("#observatory-webgl-runtime");
+      const canvas = runtime && runtime.querySelector("canvas");
 
-    return (
-      attrWidth > 0 ||
-      attrHeight > 0 ||
-      canvas.clientWidth > 0 ||
-      canvas.clientHeight > 0 ||
-      typeof canvas.getContext === "function"
-    );
-  }, { timeout });
+      if (!runtime || !canvas) {
+        return {
+          ok: false,
+          reason: "missing_runtime_or_canvas",
+          hasRuntime: !!runtime,
+          hasCanvas: !!canvas
+        };
+      }
 
-  await page.waitForTimeout(650);
+      const r = runtime.getBoundingClientRect();
+      const c = canvas.getBoundingClientRect();
+      const attrWidth = Number(canvas.getAttribute("width") || canvas.width || 0);
+      const attrHeight = Number(canvas.getAttribute("height") || canvas.height || 0);
+
+      const ok =
+        canvas.isConnected &&
+        (
+          attrWidth > 0 ||
+          attrHeight > 0 ||
+          canvas.clientWidth > 0 ||
+          canvas.clientHeight > 0 ||
+          c.width > 0 ||
+          c.height > 0
+        );
+
+      return {
+        ok,
+        reason: ok ? "ready" : "canvas_surface_not_ready",
+        runtime: { width: r.width, height: r.height, clientWidth: runtime.clientWidth, clientHeight: runtime.clientHeight },
+        canvas: { width: c.width, height: c.height, clientWidth: canvas.clientWidth, clientHeight: canvas.clientHeight, attrWidth, attrHeight, connected: canvas.isConnected },
+        text: document.body.innerText.slice(0, 600)
+      };
+    });
+
+    if (last && last.ok) {
+      await page.waitForTimeout(650);
+      return last;
+    }
+
+    await page.waitForTimeout(250);
+  }
+
+  throw new Error("runtime canvas bootstrap timeout :: " + JSON.stringify(last));
 }
 
 function fail(name, detail = "") { failures.push(`${name}${detail ? ` :: ${detail}` : ""}`); }
