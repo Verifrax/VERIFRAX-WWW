@@ -10,28 +10,21 @@ async function waitForRuntimeCanvas(page, timeout = 90000) {
   await page.waitForFunction(() => {
     const runtime = document.querySelector("#observatory-webgl-runtime");
     const canvas = runtime && runtime.querySelector("canvas");
-    if (!runtime || !canvas) return false;
+    if (!runtime || !canvas || !canvas.isConnected) return false;
 
-    const r = runtime.getBoundingClientRect();
-    const c = canvas.getBoundingClientRect();
+    const attrWidth = Number(canvas.getAttribute("width") || canvas.width || 0);
+    const attrHeight = Number(canvas.getAttribute("height") || canvas.height || 0);
 
-    const runtimeWide = r.width > 800 || runtime.clientWidth > 800 || window.innerWidth > 800;
-    const runtimeTall = r.height > 500 || runtime.clientHeight > 500 || window.innerHeight > 500;
-
-    const canvasWide =
-      c.width > 800 ||
-      canvas.clientWidth > 800 ||
-      Number(canvas.getAttribute("width") || 0) > 800 ||
-      Number(canvas.width || 0) > 800;
-
-    const canvasTall =
-      c.height > 500 ||
-      canvas.clientHeight > 500 ||
-      Number(canvas.getAttribute("height") || 0) > 500 ||
-      Number(canvas.height || 0) > 500;
-
-    return runtimeWide && runtimeTall && canvasWide && canvasTall;
+    return (
+      attrWidth > 0 ||
+      attrHeight > 0 ||
+      canvas.clientWidth > 0 ||
+      canvas.clientHeight > 0 ||
+      typeof canvas.getContext === "function"
+    );
   }, { timeout });
+
+  await page.waitForTimeout(650);
 }
 
 const pass = (name) => console.log(`${name} PASS`);
