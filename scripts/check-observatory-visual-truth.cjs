@@ -3,43 +3,29 @@ const { chromium } = require("playwright");
 const { PNG } = require("pngjs");
 
 async function captureRuntimePng(page, reason = "runtime_canvas_capture") {
-  const dataUrl = await page.evaluate(async () => {
+  const base64 = await page.evaluate(async (captureReason) => {
     const canvas = document.querySelector("#observatory-webgl-runtime canvas");
     if (!canvas) return null;
+
     try {
-      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-      return canvas.toDataURL("image/png");
+      const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+      if (gl && typeof gl.finish === "function") gl.finish();
+    } catch {}
+
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+    try {
+      return canvas.toDataURL("image/png").replace(/^data:image\/png;base64,/, "");
     } catch {
       return null;
     }
-  });
+  }, reason);
 
-  if (dataUrl && dataUrl.startsWith("data:image/png;base64,")) {
-    return Buffer.from(dataUrl.split(",", 2)[1], "base64");
-  }
-
-  try {
-    return await page.locator("#observatory-webgl-runtime canvas").screenshot({ timeout: 120000 });
-  } catch {}
-
-  try {
-    return await page.screenshot({ fullPage: false, timeout: 120000 });
-  } catch {}
-
-  const fallback = new PNG({ width: 64, height: 64 });
-  for (let y = 0; y < fallback.height; y++) {
-    for (let x = 0; x < fallback.width; x++) {
-      const i = (fallback.width * y + x) * 4;
-      const v = ((x * 13 + y * 17) % 190) + 45;
-      fallback.data[i] = Math.floor(v * 0.55);
-      fallback.data[i + 1] = Math.floor(v * 0.82);
-      fallback.data[i + 2] = Math.min(255, v + 38);
-      fallback.data[i + 3] = 255;
-    }
-  }
-  fallback.text = { reason };
-  return PNG.sync.write(fallback);
+  if (!base64) throw new Error(`[CANVAS_CAPTURE_FAILED] ${reason}`);
+  return Buffer.from(base64, "base64");
 }
+
+
 
 
 const target = process.argv[2] || "http://127.0.0.1:4174/";
@@ -228,7 +214,7 @@ function cropStats(png, box) {
     };
   });
 
-  const screenshot = await page.screenshot({ fullPage:false });
+  const screenshot = await captureRuntimePng(page, "ci_screenshot_timeout_canvas_fallback");
   const png = PNG.sync.read(screenshot);
 
   const centerStats = cropStats(png, { x: png.width * 0.36, y: png.height * 0.18, w: png.width * 0.28, h: png.height * 0.55 });
@@ -285,7 +271,7 @@ function cropStats(png, box) {
   if (pageErrors.length === 0) pass("page_error_zero"); else fail("page_error_zero", pageErrors.join(" | ").slice(0,500));
   if (failedRequests.length === 0) pass("request_failure_zero"); else fail("request_failure_zero", failedRequests.join(" | ").slice(0,500));
 
-  await page.screenshot({ path:"/tmp/verifrax-visual-truth-anti-fake.png", fullPage:false });
+  require("fs").writeFileSync("/tmp/verifrax-visual-truth-anti-fake.png", await captureRuntimePng(page, "ci_debug_canvas_capture"));
   await browser.close();
 
   if (failures.length) {
