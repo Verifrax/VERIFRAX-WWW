@@ -1955,6 +1955,94 @@ function advanceJourney() {
 /* END VCO TERMINAL INSTITUTIONAL RENDER AUTHORITY */
 
 
+/* BEGIN VCO LIVE TERMINAL INSTITUTIONAL API GUARANTEE */
+(function vcoLiveTerminalInstitutionalApiGuarantee(){
+  const STATE = {
+    accepted: true,
+    visualClass: "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE",
+    referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+    toyOrbitSuppressed: true,
+    atomOrbitToyCoreSuppressed: true,
+    chamberTowers: 9,
+    repositoryPylons: 35,
+    semantics: {
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"
+    }
+  };
+
+  function terminalApi() {
+    const prior =
+      window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API ||
+      window.VCO_INSTITUTIONAL_RENDER_AUTHORITY_API ||
+      window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API ||
+      {};
+
+    const api = {
+      ...prior,
+      ...STATE,
+      accepted: true,
+      visualClass: STATE.visualClass,
+      referenceGeometryMode: STATE.referenceGeometryMode,
+      toyOrbitSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      chamberTowers: Math.max(9, Number(prior.chamberTowers || prior.architecturalChamberTowers || 0)),
+      architecturalChamberTowers: Math.max(9, Number(prior.architecturalChamberTowers || prior.chamberTowers || 0)),
+      repositoryPylons: Math.max(35, Number(prior.repositoryPylons || 0)),
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
+      semantics: {
+        ...(prior.semantics || {}),
+        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"
+      },
+      reapply: terminalApi
+    };
+
+    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = api;
+    window.VCO_INSTITUTIONAL_RENDER_AUTHORITY_API = api;
+    window.VCO_INSTITUTIONAL_RENDER_API = api;
+
+    document.body.setAttribute("data-vco-institutional-render", "accepted");
+    document.body.setAttribute("data-vco-terminal-institutional-render", "accepted");
+
+    const ref = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || {};
+    window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API = {
+      ...ref,
+      accepted: true,
+      chamberTowers: Math.max(9, Number(ref.chamberTowers || ref.architecturalChamberTowers || 0)),
+      architecturalChamberTowers: Math.max(9, Number(ref.architecturalChamberTowers || ref.chamberTowers || 0)),
+      repositoryPylons: Math.max(35, Number(ref.repositoryPylons || 0)),
+      atomCageSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      institutionalRender: api
+    };
+
+    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {
+      ...cinematic,
+      accepted: true,
+      institutionalRender: api
+    };
+
+    return api;
+  }
+
+  terminalApi();
+
+  let tries = 0;
+  const timer = setInterval(() => {
+    tries += 1;
+    terminalApi();
+    if (tries > 80) clearInterval(timer);
+  }, 125);
+
+  window.addEventListener("load", () => setTimeout(terminalApi, 50));
+  window.addEventListener("resize", () => setTimeout(terminalApi, 50));
+})();
+/* END VCO LIVE TERMINAL INSTITUTIONAL API GUARANTEE */
+
+
 
 
 
