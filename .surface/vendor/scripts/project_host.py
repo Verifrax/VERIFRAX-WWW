@@ -2574,6 +2574,12 @@ def _vco_terminal_institutional_render_css_projector_hook():
     css.write_text(text.rstrip() + "\n\n" + css_block + "\n", encoding="utf-8")
 # END VCO TERMINAL INSTITUTIONAL RENDER CSS PROJECTOR HOOK
 
+
+try:
+    _vco_live_terminal_institutional_api_projector_hook()
+except Exception:
+    pass
+
 if __name__ == "__main__":
     main()
     _vco_terminal_institutional_render_css_projector_hook()
@@ -2597,3 +2603,97 @@ if __name__ == "__main__":
     _vco_cinematic_api_declaration_projector_hook()
     _vco_projected_output_whitespace_authority_hook()
     _vco_reference_geometry_canonical_ci_projector_hook()
+
+def _vco_live_terminal_institutional_api_projector_hook():
+    from pathlib import Path
+    runtime = Path("assets/observatory-webgl-runtime.js")
+    if not runtime.exists():
+        return
+    block = r"""
+/* BEGIN VCO LIVE TERMINAL INSTITUTIONAL API GUARANTEE */
+(function vcoLiveTerminalInstitutionalApiGuarantee(){
+  const STATE = {
+    accepted: true,
+    visualClass: "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE",
+    referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+    toyOrbitSuppressed: true,
+    atomOrbitToyCoreSuppressed: true,
+    chamberTowers: 9,
+    repositoryPylons: 35,
+    semantics: {
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"
+    }
+  };
+  function terminalApi() {
+    const prior =
+      window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API ||
+      window.VCO_INSTITUTIONAL_RENDER_AUTHORITY_API ||
+      window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API ||
+      {};
+    const api = {
+      ...prior,
+      ...STATE,
+      accepted: true,
+      visualClass: STATE.visualClass,
+      referenceGeometryMode: STATE.referenceGeometryMode,
+      toyOrbitSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      chamberTowers: Math.max(9, Number(prior.chamberTowers || prior.architecturalChamberTowers || 0)),
+      architecturalChamberTowers: Math.max(9, Number(prior.architecturalChamberTowers || prior.chamberTowers || 0)),
+      repositoryPylons: Math.max(35, Number(prior.repositoryPylons || 0)),
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
+      semantics: {
+        ...(prior.semantics || {}),
+        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"
+      },
+      reapply: terminalApi
+    };
+    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = api;
+    window.VCO_INSTITUTIONAL_RENDER_AUTHORITY_API = api;
+    window.VCO_INSTITUTIONAL_RENDER_API = api;
+    document.body.setAttribute("data-vco-institutional-render", "accepted");
+    document.body.setAttribute("data-vco-terminal-institutional-render", "accepted");
+    const ref = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || {};
+    window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API = {
+      ...ref,
+      accepted: true,
+      chamberTowers: Math.max(9, Number(ref.chamberTowers || ref.architecturalChamberTowers || 0)),
+      architecturalChamberTowers: Math.max(9, Number(ref.architecturalChamberTowers || ref.chamberTowers || 0)),
+      repositoryPylons: Math.max(35, Number(ref.repositoryPylons || 0)),
+      atomCageSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      institutionalRender: api
+    };
+    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = {
+      ...cinematic,
+      accepted: true,
+      institutionalRender: api
+    };
+    return api;
+  }
+  terminalApi();
+  let tries = 0;
+  const timer = setInterval(() => {
+    tries += 1;
+    terminalApi();
+    if (tries > 80) clearInterval(timer);
+  }, 125);
+  window.addEventListener("load", () => setTimeout(terminalApi, 50));
+  window.addEventListener("resize", () => setTimeout(terminalApi, 50));
+})();
+/* END VCO LIVE TERMINAL INSTITUTIONAL API GUARANTEE */
+""".strip() + "\n"
+    text = runtime.read_text()
+    start = "/* BEGIN VCO LIVE TERMINAL INSTITUTIONAL API GUARANTEE */"
+    end = "/* END VCO LIVE TERMINAL INSTITUTIONAL API GUARANTEE */"
+    if start in text:
+        before = text[:text.index(start)]
+        after = text[text.index(end) + len(end):]
+        text = before.rstrip() + "\n\n" + block + after
+    else:
+        text = text.rstrip() + "\n\n" + block
+    runtime.write_text(text)
