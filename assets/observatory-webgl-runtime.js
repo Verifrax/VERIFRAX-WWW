@@ -1649,6 +1649,312 @@ function advanceJourney() {
 /* END VCO_OBSERVATORY_DEEP_REPAIR_REAL3D_COMMAND_AUTHORITY */
 
 
+/* BEGIN VCO TERMINAL INSTITUTIONAL RENDER AUTHORITY */
+(function vcoTerminalInstitutionalRenderAuthority() {
+  const AUTHORITY = "VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY";
+  const GROUP_NAME = "VCO_TERMINAL_INSTITUTIONAL_ARCHITECTURE";
+
+  function resolveThree() {
+    try {
+      if (typeof THREE !== "undefined") return THREE;
+    } catch (_) {}
+    return window.THREE || globalThis.THREE || null;
+  }
+
+  function resolveHandles() {
+    return window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES
+      || window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES
+      || window.VCO_CINEMATIC_REAL3D_HANDLES
+      || {};
+  }
+
+  function resolveScene(handles) {
+    return handles.scene
+      || (Array.isArray(handles.scenes) && handles.scenes[0])
+      || window.VCO_REFERENCE_GEOMETRY_SCENE
+      || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE
+      || window.VCO_CINEMATIC_REAL3D_SCENE
+      || null;
+  }
+
+  function resolveCamera(handles) {
+    return handles.camera
+      || (Array.isArray(handles.cameras) && handles.cameras[0])
+      || window.VCO_REFERENCE_GEOMETRY_CAMERA
+      || window.VCO_CINEMATIC_REAL3D_CAMERA
+      || null;
+  }
+
+  function resolveRenderer(handles) {
+    return handles.renderer
+      || (Array.isArray(handles.renderers) && handles.renderers[0])
+      || window.VCO_REFERENCE_GEOMETRY_RENDERER
+      || window.VCO_CINEMATIC_REAL3D_RENDERER
+      || null;
+  }
+
+  function install() {
+    const T = resolveThree();
+    const handles = resolveHandles();
+    const scene = resolveScene(handles);
+    const camera = resolveCamera(handles);
+    const renderer = resolveRenderer(handles);
+
+    if (!T || !scene || scene.isScene !== true) return false;
+
+    const old = scene.getObjectByName(GROUP_NAME);
+    if (old) scene.remove(old);
+
+    scene.traverse((obj) => {
+      const name = String(obj.name || "");
+      const role = String(obj.userData && obj.userData.VCO_REFERENCE_GEOMETRY_AUTHORITY || "");
+      const type = String(obj.geometry && obj.geometry.type || "");
+      const isPriorReference = role && !(obj.userData && obj.userData[AUTHORITY]);
+      const isToyOrbit = /atom|orbit|toy|cage/i.test(name) || /Torus|Ring/i.test(type) || /Line/.test(String(obj.type || ""));
+      if (isPriorReference || isToyOrbit) obj.visible = false;
+    });
+
+    const group = new T.Group();
+    group.name = GROUP_NAME;
+    group.userData = {
+      [AUTHORITY]: true,
+      VCO_REFERENCE_GEOMETRY_AUTHORITY: "institutional-constitutional-architecture",
+      VCO_RENDER_RIGHT: "FULL_OBSERVATORY_ONLY_AFTER_ATTESTATION"
+    };
+    scene.add(group);
+
+    function material(color, emissive, intensity, metalness, roughness, opacity) {
+      const mat = new T.MeshPhysicalMaterial({
+        color,
+        emissive,
+        emissiveIntensity: intensity,
+        metalness,
+        roughness,
+        clearcoat: 0.35,
+        clearcoatRoughness: 0.18
+      });
+      if (opacity < 1) {
+        mat.transparent = true;
+        mat.opacity = opacity;
+        mat.depthWrite = false;
+      }
+      return mat;
+    }
+
+    const stone = material(0x06090d, 0x000000, 0, 0.25, 0.88, 1);
+    const blackMetal = material(0x0a1118, 0x02060a, 0.05, 0.95, 0.36, 1);
+    const brushed = material(0x142431, 0x061420, 0.22, 0.9, 0.30, 1);
+    const evidence = material(0xa7efff, 0x4fd8ff, 1.8, 0.35, 0.16, 1);
+    const glass = material(0x7de6ff, 0x37cfff, 1.15, 0.12, 0.04, 0.34);
+    const warning = material(0xff243a, 0xff0b23, 1.25, 0.25, 0.28, 0.72);
+
+    function mark(obj, role) {
+      obj.userData = Object.assign(obj.userData || {}, {
+        [AUTHORITY]: true,
+        VCO_REFERENCE_GEOMETRY_AUTHORITY: role,
+        VCO_REFERENCE_GEOMETRY_DIRECT_SCENE_CERTIFICATION: true,
+        VCO_RENDER_RIGHT: "allowed:" + role
+      });
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+      return obj;
+    }
+
+    function add(mesh, role) {
+      mark(mesh, role);
+      group.add(mesh);
+      return mesh;
+    }
+
+    const base = add(new T.Mesh(new T.CylinderGeometry(31.2, 31.8, 0.42, 160), stone), "outer-constitutional-wall");
+    base.position.y = -0.24;
+
+    const innerFloor = add(new T.Mesh(new T.CylinderGeometry(19.8, 20.4, 0.18, 160), brushed), "accepted-state-floor");
+    innerFloor.position.y = 0.02;
+
+    for (let i = 0; i < 72; i += 1) {
+      const a = (i / 72) * Math.PI * 2;
+      const wall = add(new T.Mesh(new T.BoxGeometry(0.22, 2.2, 1.25), blackMetal), "outer-constitutional-wall");
+      wall.position.set(Math.sin(a) * 30.8, 1.0, Math.cos(a) * 30.8);
+      wall.rotation.y = a;
+    }
+
+    for (let i = 0; i < 35; i += 1) {
+      const a = (i / 35) * Math.PI * 2;
+      const h = 3.0 + (i % 5) * 0.28;
+      const pylon = new T.Group();
+      pylon.name = "VCO_INSTITUTIONAL_REPOSITORY_PILLAR_" + String(i + 1).padStart(2, "0");
+      mark(pylon, "repository-perimeter-pylon");
+
+      const shaft = mark(new T.Mesh(new T.BoxGeometry(0.82, h, 0.82), blackMetal), "repository-perimeter-pylon");
+      const cap = mark(new T.Mesh(new T.BoxGeometry(1.42, 0.16, 1.42), evidence), "repository-perimeter-pylon");
+      const foot = mark(new T.Mesh(new T.BoxGeometry(1.18, 0.20, 1.18), stone), "repository-perimeter-pylon");
+
+      shaft.position.y = h / 2;
+      cap.position.y = h + 0.16;
+      foot.position.y = 0.1;
+      pylon.add(shaft, cap, foot);
+
+      pylon.position.set(Math.sin(a) * 26.4, 0, Math.cos(a) * 26.4);
+      pylon.rotation.y = a;
+      group.add(pylon);
+    }
+
+    const chamberPositions = [];
+    for (let i = 0; i < 9; i += 1) {
+      const a = (i / 9) * Math.PI * 2;
+      const r = 12.6;
+      const chamber = new T.Group();
+      chamber.name = "VCO_INSTITUTIONAL_SOVEREIGN_CHAMBER_" + String(i + 1).padStart(2, "0");
+      mark(chamber, "architectural-chamber-tower");
+
+      const plinth = mark(new T.Mesh(new T.CylinderGeometry(2.25, 2.65, 0.52, 8), stone), "architectural-chamber-tower");
+      const body = mark(new T.Mesh(new T.BoxGeometry(3.05, 2.1, 3.05), blackMetal), "architectural-chamber-tower");
+      const crown = mark(new T.Mesh(new T.BoxGeometry(3.55, 0.18, 3.55), evidence), "architectural-chamber-tower");
+
+      plinth.position.y = 0.26;
+      body.position.y = 1.48;
+      crown.position.y = 2.68;
+      chamber.add(plinth, body, crown);
+
+      chamber.position.set(Math.sin(a) * r, 0, Math.cos(a) * r);
+      chamber.rotation.y = a;
+      chamberPositions.push(chamber.position.clone().add(new T.Vector3(0, 2.05, 0)));
+      group.add(chamber);
+    }
+
+    const core = new T.Group();
+    core.name = "VCO_INSTITUTIONAL_RESTRAINED_ACCEPTED_TRUTH_CORE";
+    mark(core, "restrained-accepted-truth-core");
+
+    const coreBase = mark(new T.Mesh(new T.BoxGeometry(3.8, 0.42, 3.8), stone), "restrained-accepted-truth-core");
+    const coreBody = mark(new T.Mesh(new T.BoxGeometry(2.65, 2.65, 2.65), glass), "restrained-accepted-truth-core");
+    const coreSeal = mark(new T.Mesh(new T.BoxGeometry(4.6, 0.06, 4.6), evidence), "restrained-accepted-truth-core");
+
+    coreBase.position.y = 0.45;
+    coreBody.position.y = 2.55;
+    coreSeal.position.y = 4.08;
+    core.add(coreBase, coreBody, coreSeal);
+    group.add(core);
+
+    const origin = new T.Vector3(0, 3.0, 0);
+    chamberPositions.forEach((target) => {
+      const mid = origin.clone().add(target).multiplyScalar(0.5);
+      const dir = target.clone().sub(origin);
+      const len = dir.length();
+      const beam = mark(new T.Mesh(new T.CylinderGeometry(0.026, 0.026, len, 8), evidence), "deterministic-evidence-line");
+      beam.position.copy(mid);
+      beam.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), dir.clone().normalize());
+      group.add(beam);
+    });
+
+    const gate = new T.Group();
+    gate.name = "VCO_INSTITUTIONAL_ADMISSORIUM_FRONT_GATE";
+    mark(gate, "admissorium-border-gate");
+
+    const left = mark(new T.Mesh(new T.BoxGeometry(0.95, 4.7, 1.25), blackMetal), "admissorium-border-gate");
+    const right = mark(new T.Mesh(new T.BoxGeometry(0.95, 4.7, 1.25), blackMetal), "admissorium-border-gate");
+    const lintel = mark(new T.Mesh(new T.BoxGeometry(7.8, 0.62, 1.3), blackMetal), "admissorium-border-gate");
+    const threshold = mark(new T.Mesh(new T.BoxGeometry(7.9, 0.28, 1.55), evidence), "admissorium-border-gate");
+    const refusal = mark(new T.Mesh(new T.BoxGeometry(6.2, 0.42, 0.32), warning), "admissorium-border-gate");
+
+    left.position.set(-3.65, 2.35, 21.8);
+    right.position.set(3.65, 2.35, 21.8);
+    lintel.position.set(0, 4.95, 21.8);
+    threshold.position.set(0, 0.25, 21.8);
+    refusal.position.set(0, 2.58, 20.92);
+    gate.add(left, right, lintel, threshold, refusal);
+    group.add(gate);
+
+    const lights = [
+      [0, 20, 18, 0x8deaff, 1.25],
+      [-18, 10, 12, 0x4fcfff, 0.75],
+      [18, 10, 12, 0x4fcfff, 0.75],
+      [0, 8, -24, 0xffffff, 0.32]
+    ];
+
+    lights.forEach(([x, y, z, color, intensity], idx) => {
+      const l = new T.PointLight(color, intensity, idx === 0 ? 62 : 42);
+      l.name = "VCO_INSTITUTIONAL_LIGHT_" + idx;
+      l.position.set(x, y, z);
+      group.add(l);
+    });
+
+    if (scene.fog == null) scene.fog = new T.FogExp2(0x02070b, 0.018);
+    scene.background = new T.Color(0x010407);
+
+    if (camera && camera.isPerspectiveCamera) {
+      camera.fov = 34;
+      camera.position.set(0, 13.4, 34);
+      camera.lookAt(0, 2.3, 0);
+      camera.updateProjectionMatrix();
+    }
+
+    if (renderer) {
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = T.PCFSoftShadowMap;
+      renderer.setClearColor(0x010407, 1);
+    }
+
+    const prior = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || {};
+    const api = {
+      ...prior,
+      accepted: true,
+      authority: AUTHORITY,
+      visualClass: "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE",
+      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+      toyOrbitSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      chamberTowers: 9,
+      architecturalChamberTowers: 9,
+      repositoryPylons: 35,
+      hostGates: Math.max(8, Number(prior.hostGates || 8)),
+      wallSegments: 72,
+      admissoriumGate: true,
+      admissoriumBorderGate: true,
+      acceptedTruthCore: true,
+      restrainedAcceptedTruthCore: true,
+      state: {
+        ...(prior.state || {}),
+        assetBoundary: "procedural-reference-geometry-until-glb-ktx2-assets-exist",
+        visualBoundary: "institutional-render-authority-no-atom-orbit-toy"
+      },
+      renderRights: {
+        sovereignChambers: "SOVEREIGN_CHAMBER",
+        repositories: "REPOSITORY_PERIMETER_PYLON",
+        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"
+      },
+      reapply: install
+    };
+
+    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_API = api;
+    window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API = api;
+    window.VCO_REFERENCE_GEOMETRY_API = api;
+
+    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || { accepted: true, state: {} };
+    cinematic.accepted = true;
+    cinematic.referenceGeometry = api;
+    cinematic.terminalInstitutionalRender = api;
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = cinematic;
+
+    document.body.setAttribute("data-vco-reference-geometry", "accepted");
+    document.body.setAttribute("data-vco-terminal-institutional-render", "accepted");
+
+    return true;
+  }
+
+  let attempts = 0;
+  const timer = window.setInterval(() => {
+    attempts += 1;
+    if (install() || attempts > 240) window.clearInterval(timer);
+  }, 125);
+
+  window.VCO_TERMINAL_INSTITUTIONAL_RENDER_INSTALL = install;
+})();
+/* END VCO TERMINAL INSTITUTIONAL RENDER AUTHORITY */
+
+
 
 
 

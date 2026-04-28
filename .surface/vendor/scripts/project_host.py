@@ -2507,8 +2507,76 @@ def _vco_reference_geometry_canonical_ci_projector_hook():
         runtime_path.write_text(data.rstrip() + "\n\n" + canonical_block + "\n", encoding="utf-8")
 
 
+
+# BEGIN VCO TERMINAL INSTITUTIONAL RENDER CSS PROJECTOR HOOK
+def _vco_terminal_institutional_render_css_projector_hook():
+    import re
+    from pathlib import Path
+
+    name = "VCO TERMINAL INSTITUTIONAL RENDER AUTHORITY CSS"
+    css_block = """/* BEGIN VCO TERMINAL INSTITUTIONAL RENDER AUTHORITY CSS */
+#observatory-webgl-runtime{
+  background:#010409!important;
+}
+#observatory-webgl-runtime canvas{
+  filter:contrast(1.16) saturate(.86) brightness(.82)!important;
+}
+#observatory-webgl-runtime::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(70,180,220,.13), transparent 22%),
+    radial-gradient(circle at 50% 66%, rgba(0,0,0,.08), rgba(0,0,0,.52) 76%),
+    linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.42));
+}
+#observatory-webgl-runtime::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.40), transparent 20%, transparent 80%, rgba(0,0,0,.42)),
+    linear-gradient(180deg, rgba(0,0,0,.22), transparent 28%, rgba(0,0,0,.30));
+  mix-blend-mode:multiply;
+}
+.oc-hero h2{
+  text-shadow:0 18px 80px rgba(0,0,0,.96)!important;
+}
+.oc-topbar,
+.oc-bottom,
+.oc-left,
+.oc-right{
+  backdrop-filter:blur(20px) saturate(.82)!important;
+}
+[data-vco-institutional-render="accepted"] .oc-stage canvas{
+  image-rendering:auto!important;
+}
+[data-vco-institutional-render="accepted"] .oc-journey{
+  box-shadow:0 0 0 1px rgba(140,220,255,.18),0 20px 80px rgba(0,0,0,.70)!important;
+}
+/* END VCO TERMINAL INSTITUTIONAL RENDER AUTHORITY CSS */
+"""
+
+    css = Path("assets/surface.css")
+    if not css.exists():
+        return
+
+    text = css.read_text(encoding="utf-8")
+    text = re.sub(
+        rf"/\* BEGIN {re.escape(name)} \*/[\s\S]*?/\* END {re.escape(name)} \*/\n*",
+        "",
+        text,
+    )
+    css.write_text(text.rstrip() + "\n\n" + css_block + "\n", encoding="utf-8")
+# END VCO TERMINAL INSTITUTIONAL RENDER CSS PROJECTOR HOOK
+
 if __name__ == "__main__":
     main()
+    _vco_terminal_institutional_render_css_projector_hook()
     _vco_visual_truth_anti_fake_projector_hook()
     _vco_browser_truth_projector_hook()
     _vco_real3d_idempotent_block_spacing()

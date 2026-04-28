@@ -4,6 +4,32 @@
 const { chromium } = require("playwright");
 const { PNG } = require("pngjs");
 
+async function captureRuntimePng(page, reason = "runtime_canvas_capture") {
+  const base64 = await page.evaluate(async (captureReason) => {
+    const canvas = document.querySelector("#observatory-webgl-runtime canvas");
+    if (!canvas) return null;
+
+    try {
+      const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+      if (gl && typeof gl.finish === "function") gl.finish();
+    } catch {}
+
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+    try {
+      return canvas.toDataURL("image/png").replace(/^data:image\/png;base64,/, "");
+    } catch {
+      return null;
+    }
+  }, reason);
+
+  if (!base64) throw new Error(`[CANVAS_CAPTURE_FAILED] ${reason}`);
+  return Buffer.from(base64, "base64");
+}
+
+
+
+
 const target = process.argv[2] || "http://127.0.0.1:4181/";
 const failures = [];
 
@@ -215,7 +241,7 @@ function cropStats(png, box) {
     };
   });
 
-  const screenshot = await page.screenshot({ fullPage: false });
+  const screenshot = await captureRuntimePng(page, "ci_screenshot_timeout_canvas_fallback");
   const png = PNG.sync.read(screenshot);
   const center = cropStats(png, {
     x: png.width * 0.34,
