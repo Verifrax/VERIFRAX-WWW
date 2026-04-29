@@ -290,8 +290,8 @@ function cropStats(png, box) {
       : { nonDarkRatio: 0, variance: 0, blueRatio: 0, fallback: canvasProof };
   }
 
-  if ((facts.bodyAccepted && facts.apiAccepted && facts.webgl) || (center.nonDarkRatio > 0.10 && center.variance > 50 && center.blueRatio > 0.025)) pass("center_reference_geometry_pixel_proof"); else fail("center_reference_geometry_pixel_proof", JSON.stringify(center));
-  if ((facts.bodyAccepted && facts.apiAccepted && facts.webgl) || (perimeter.nonDarkRatio > 0.06 && perimeter.variance > 50 && perimeter.blueRatio > 0.020)) pass("perimeter_reference_geometry_pixel_proof"); else fail("perimeter_reference_geometry_pixel_proof", JSON.stringify(perimeter));
+  if (center.nonDarkRatio > 0.18 && center.variance > 180 && center.blueRatio > 0.035) pass("center_reference_geometry_pixel_proof"); else fail("center_reference_geometry_pixel_proof", JSON.stringify(center));
+  if (perimeter.nonDarkRatio > 0.20 && perimeter.variance > 160 && perimeter.blueRatio > 0.028) pass("perimeter_reference_geometry_pixel_proof"); else fail("perimeter_reference_geometry_pixel_proof", JSON.stringify(perimeter));
 
   if (!consoleErrors.length) pass("console_error_zero"); else fail("console_error_zero", consoleErrors.slice(0, 5).join(" | "));
   if (!pageErrors.length) pass("page_error_zero"); else fail("page_error_zero", pageErrors.slice(0, 5).join(" | "));

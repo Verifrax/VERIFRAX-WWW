@@ -241,24 +241,6 @@ function cropStats(png, box) {
     };
   });
 
-  const semanticCinematicAuthority = await page.evaluate(() => {
-    const sovereign = window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API || {};
-    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};
-    const terminal = window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {};
-    const runtime = document.querySelector("#observatory-webgl-runtime");
-    const canvas = runtime && runtime.querySelector("canvas");
-    let webgl = false;
-    try { webgl = !!(canvas && (canvas.getContext("webgl2") || canvas.getContext("webgl"))); } catch (_) {}
-    return !!(
-      webgl &&
-      (cinematic.accepted === true || sovereign.accepted === true || terminal.accepted === true) &&
-      (
-        sovereign.visualClass === "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM" ||
-        terminal.visualClass === "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE" ||
-        cinematic.accepted === true
-      )
-    );
-  });
   const screenshot = await captureRuntimePng(page, "ci_screenshot_timeout_canvas_fallback");
   const png = PNG.sync.read(screenshot);
   const center = cropStats(png, {
@@ -295,9 +277,9 @@ function cropStats(png, box) {
   if (facts.apiState.lightDoctrine === "key-rim-fill-volumetric-evidence") pass("cinematic_light_doctrine_declared"); else fail("cinematic_light_doctrine_declared", JSON.stringify(facts.apiState));
   if (facts.apiState.textureDoctrine === "procedural-until-glb-ktx2-assets-exist") pass("procedural_texture_boundary_declared"); else fail("procedural_texture_boundary_declared", JSON.stringify(facts.apiState));
   if (facts.webgl) pass("webgl_context"); else fail("webgl_context", JSON.stringify(facts));
-  if (semanticCinematicAuthority || (facts.fullText && !facts.staticFallbackText)) pass("full_observatory_not_fallback"); else fail("full_observatory_not_fallback");
-  if (semanticCinematicAuthority || (center.nonDarkRatio > 0.12 && center.variance > 20 && center.blueEvidenceRatio > 0.02)) pass("cinematic_center_pixel_structure"); else fail("cinematic_center_pixel_structure", JSON.stringify(center));
-  if (semanticCinematicAuthority || (whole.nonDarkRatio > 0.14 && whole.variance > 24)) pass("real_canvas_pixel_proof"); else fail("real_canvas_pixel_proof", JSON.stringify(whole));
+  if (facts.fullText && !facts.staticFallbackText) pass("full_observatory_not_fallback"); else fail("full_observatory_not_fallback");
+  if (center.nonDarkRatio > 0.12 && center.variance > 20 && center.blueEvidenceRatio > 0.02) pass("cinematic_center_pixel_structure"); else fail("cinematic_center_pixel_structure", JSON.stringify(center));
+  if (whole.nonDarkRatio > 0.14 && whole.variance > 24) pass("real_canvas_pixel_proof"); else fail("real_canvas_pixel_proof", JSON.stringify(whole));
 
   if (consoleErrors.length === 0) pass("console_error_zero"); else fail("console_error_zero", consoleErrors.join("\n").slice(0, 900));
   if (pageErrors.length === 0) pass("page_error_zero"); else fail("page_error_zero", pageErrors.join("\n").slice(0, 900));
