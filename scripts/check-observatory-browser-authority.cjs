@@ -177,37 +177,7 @@ function pass(name) { console.log(`${name} PASS`); }
   if (facts.webgl) pass("webgl_context"); else fail("webgl_context");
   if (facts.runtimeRect && facts.runtimeRect.height >= facts.viewport.height * 0.82) pass("first_viewport_dominance"); else fail("first_viewport_dominance", JSON.stringify(facts.runtimeRect));
   if (facts.canvasRect && facts.canvasRect.width >= facts.viewport.width * 0.98 && facts.canvasRect.height >= facts.runtimeRect.height * 0.92) pass("canvas_fills_runtime"); else fail("canvas_fills_runtime", JSON.stringify(facts.canvasRect));
-  const semanticCanvasAuthority = await page.evaluate(() => {
-    const runtime = document.querySelector("#observatory-webgl-runtime");
-    const canvas = runtime && runtime.querySelector("canvas");
-    const sovereign = window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API || {};
-    const terminal = window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {};
-    const institutional = window.VCO_INSTITUTIONAL_RENDER_AUTHORITY_API || {};
-    const reference = window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API || {};
-    const bodyAccepted =
-      document.body.getAttribute("data-vco-sovereign-institutional-visual-authority") === "accepted" ||
-      document.body.getAttribute("data-vco-institutional-render-authority") === "accepted" ||
-      document.body.getAttribute("data-vco-reference-geometry") === "accepted";
-    const apiAccepted =
-      sovereign.accepted === true ||
-      terminal.accepted === true ||
-      institutional.accepted === true ||
-      reference.accepted === true;
-    const semantic =
-      sovereign.visualClass === "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM" ||
-      terminal.visualClass === "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE" ||
-      institutional.visualClass === "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE" ||
-      sovereign.admissorium === "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE" ||
-      terminal.admissorium === "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE";
-    let webgl = false;
-    try {
-      webgl = !!(canvas && (canvas.getContext("webgl2") || canvas.getContext("webgl")));
-    } catch (_) {
-      webgl = false;
-    }
-    return !!(runtime && canvas && webgl && (apiAccepted || bodyAccepted) && semantic);
-  });
-  if (semanticCanvasAuthority) pass("non_blank_real_canvas"); else if (facts.pixel.ok && facts.pixel.nonDarkRatio > 0.08 && facts.pixel.variance > 15 && facts.pixel.avg > 4) pass("non_blank_real_canvas"); else fail("non_blank_real_canvas", JSON.stringify(facts.pixel));
+  if (facts.pixel.ok && facts.pixel.nonDarkRatio > 0.08 && facts.pixel.variance > 15 && facts.pixel.avg > 4) pass("non_blank_real_canvas"); else fail("non_blank_real_canvas", JSON.stringify(facts.pixel));
   if (facts.collisions.length === 0) pass("center_machine_not_panel_blocked"); else fail("center_machine_not_panel_blocked", facts.collisions.join(","));
   if (facts.renderPermissionText && !facts.staticFallbackText) pass("full_observatory_not_fallback"); else fail("full_observatory_not_fallback", `FULL=${facts.renderPermissionText} STATIC=${facts.staticFallbackText}`);
   if (facts.doubleHttps.length === 0) pass("no_double_https_links"); else fail("no_double_https_links", facts.doubleHttps.join(","));

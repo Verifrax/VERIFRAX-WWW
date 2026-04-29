@@ -143,8 +143,8 @@ async function waitForInstitutionalAuthority(page, timeout = 90000) {
   const center = cropStats(png, { x: png.width * 0.30, y: png.height * 0.22, w: png.width * 0.40, h: png.height * 0.52 });
   const frontGate = cropStats(png, { x: png.width * 0.36, y: png.height * 0.56, w: png.width * 0.28, h: png.height * 0.18 });
 
-  if ((facts.accepted && facts.bodyAccepted && facts.canvasPresent && facts.visualClass === "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE") || (center.nonDarkRatio > 0.08 && center.variance > 50)) pass("institutional_center_pixel_proof"); else fail("institutional_center_pixel_proof", JSON.stringify(center));
-  if ((facts.accepted && facts.canvasPresent && facts.admissorium === "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE" && facts.acceptedTruth === "RESTRAINED_CORE_NOT_THRONE") || ((frontGate.redRatio > 0.0005 || frontGate.blueRatio > 0.20) && frontGate.nonDarkRatio > 0.04)) pass("admissorium_refusal_gate_pixel_proof"); else fail("admissorium_refusal_gate_pixel_proof", JSON.stringify(frontGate));
+  if (center.nonDarkRatio > 0.16 && center.variance > 130 && center.blueRatio > 0.025) pass("institutional_center_pixel_proof"); else fail("institutional_center_pixel_proof", JSON.stringify(center));
+  if (((frontGate.redRatio > 0.0005) || (frontGate.blueRatio > 0.60)) && frontGate.nonDarkRatio > 0.08 && frontGate.variance > 100) pass("admissorium_refusal_gate_pixel_proof"); else fail("admissorium_refusal_gate_pixel_proof", JSON.stringify(frontGate));
 
   const actionableConsoleErrors = consoleErrors.filter((text) => {
     const t = String(text || "");
