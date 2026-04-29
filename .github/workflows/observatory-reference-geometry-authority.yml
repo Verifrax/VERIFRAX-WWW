@@ -18,7 +18,7 @@ jobs:
       - name: Install browser proof dependencies
         run: |
           npm install --no-save playwright pngjs
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
       - name: Verify static observatory authority
         run: |
           node scripts/check-observatory-attestation.mjs

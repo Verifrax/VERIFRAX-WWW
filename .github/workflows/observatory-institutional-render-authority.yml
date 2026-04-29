@@ -18,7 +18,7 @@ jobs:
       - name: Install browser dependencies
         run: |
           set -euo pipefail
-          npm_config_yes=true npx playwright install --with-deps chromium
+          npm_config_yes=true npx playwright install chromium
           npm_config_yes=true npm install --no-save playwright pngjs
       - name: Verify institutional render authority
         run: |
