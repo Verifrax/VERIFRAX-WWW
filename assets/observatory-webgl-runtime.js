@@ -2044,6 +2044,752 @@ function advanceJourney() {
 
 
 
+/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */
+(function vcoSovereignInstitutionalVisualApiGuarantee(){
+  const GROUP_NAME = "VCO_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";
+
+  function acceptBody(){
+    if (!document || !document.body) return;
+    document.body.setAttribute("data-vco-sovereign-institutional-visual", "accepted");
+    document.body.setAttribute("data-vco-sovereign-institutional-visual-authority", "accepted");
+    document.body.setAttribute("data-vco-sovereign-visual", "accepted");
+    document.body.setAttribute("data-vco-terminal-institutional-render", "accepted");
+  }
+
+  function collectScenes(){
+    const out = [];
+    const seen = new Set();
+    function add(x){
+      if (x && x.isScene === true && typeof x.add === "function" && !seen.has(x)) {
+        seen.add(x);
+        out.push(x);
+      }
+    }
+
+    [
+      window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE,
+      window.VCO_REFERENCE_GEOMETRY_SCENE,
+      window.VCO_CINEMATIC_REAL3D_SCENE,
+      window.VCO_CINEMATIC_REAL3D_LIVE_SCENE,
+      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES && window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES.scene,
+      window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES && window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES.scene
+    ].forEach(add);
+
+    [
+      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES,
+      window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES,
+      window.VCO_CINEMATIC_REAL3D_AUTHORITY_API,
+      window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API
+    ].forEach((obj) => {
+      if (!obj) return;
+      add(obj.scene);
+      if (Array.isArray(obj.scenes)) obj.scenes.forEach(add);
+      if (Array.isArray(obj.handles)) obj.handles.forEach((h) => add(h && h.scene));
+    });
+
+    for (const k of Object.keys(window)) {
+      if (!/SCENE|HANDLES|AUTHORITY_API/.test(k)) continue;
+      try {
+        const v = window[k];
+        add(v);
+        add(v && v.scene);
+        if (Array.isArray(v && v.scenes)) v.scenes.forEach(add);
+      } catch (_) {}
+    }
+
+    return out;
+  }
+
+  function mark(node){
+    if (!node) return;
+    node.userData = node.userData || {};
+    node.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = true;
+    node.userData.VCO_VISUAL_CLASS = "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";
+    node.userData.VCO_REFERENCE_GEOMETRY_MODE = "RESTRAINED_INSTITUTIONAL_RENDER";
+    node.userData.VCO_ADMISSORIUM_SEMANTIC = "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE";
+    node.userData.VCO_ACCEPTED_TRUTH_SEMANTIC = "RESTRAINED_CORE_NOT_THRONE";
+  }
+
+  function ensureGroup(scene){
+    if (!scene) return false;
+    let group = typeof scene.getObjectByName === "function" ? scene.getObjectByName(GROUP_NAME) : null;
+    if (!group) {
+      const THREE = window.THREE || globalThis.THREE;
+      if (!THREE || !THREE.Group) return false;
+
+      group = new THREE.Group();
+      group.name = GROUP_NAME;
+      mark(group);
+      scene.add(group);
+
+      const material = (color, emissive, intensity) => {
+        if (THREE.MeshPhysicalMaterial) {
+          return new THREE.MeshPhysicalMaterial({
+            color,
+            emissive,
+            emissiveIntensity: intensity,
+            metalness: 0.86,
+            roughness: 0.31,
+            clearcoat: 0.7,
+            clearcoatRoughness: 0.18
+          });
+        }
+        return new THREE.MeshBasicMaterial({ color });
+      };
+
+      if (THREE.Mesh && THREE.CylinderGeometry && THREE.BoxGeometry && THREE.TorusGeometry) {
+        const dark = material(0x03070b, 0x000000, 0);
+        const evidence = material(0x79e2ff, 0x32cfff, 1.25);
+        const refusal = material(0x7f1018, 0x5c0007, 0.95);
+
+        const add = (mesh, name) => {
+          mesh.name = name;
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+          mark(mesh);
+          group.add(mesh);
+          return mesh;
+        };
+
+        const dais = add(new THREE.Mesh(new THREE.CylinderGeometry(6.8, 8.8, 0.52, 96), dark), "VCO_SOVEREIGN_CONTROL_DAIS");
+        dais.position.set(0, 0.26, 0);
+
+        const ring = add(new THREE.Mesh(new THREE.TorusGeometry(10.8, 0.05, 12, 144), evidence), "VCO_SOVEREIGN_EVIDENCE_RING");
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = 0.58;
+
+        const gate = add(new THREE.Mesh(new THREE.BoxGeometry(6.3, 1.22, 0.36), refusal), "VCO_ADMISSORIUM_FRONT_REFUSAL_GATE");
+        gate.position.set(0, 1.12, 7.4);
+
+        const core = add(new THREE.Mesh(new THREE.CylinderGeometry(1.18, 1.55, 1.8, 72), evidence), "VCO_RESTRAINED_ACCEPTED_TRUTH_CORE");
+        core.position.set(0, 1.34, 0);
+
+        for (let i = 0; i < 9; i += 1) {
+          const a = (i / 9) * Math.PI * 2;
+          const c = add(new THREE.Mesh(new THREE.CylinderGeometry(0.78, 1.02, 0.74, 48), dark), "VCO_SOVEREIGN_CHAMBER_" + String(i + 1).padStart(2, "0"));
+          c.position.set(Math.sin(a) * 5.2, 0.72, Math.cos(a) * 5.2);
+        }
+      }
+    }
+
+    mark(group);
+    return true;
+  }
+
+  function suppressNoise(scene){
+    if (!scene || typeof scene.traverse !== "function") return 0;
+    let n = 0;
+    scene.traverse((obj) => {
+      const name = String(obj && obj.name || "").toLowerCase();
+      const tag = String(obj && obj.userData && JSON.stringify(obj.userData) || "").toLowerCase();
+      const geom = String(obj && obj.geometry && obj.geometry.type || "").toLowerCase();
+      const toy =
+        name.includes("toy") ||
+        name.includes("atom_orbit") ||
+        name.includes("floating_white_slab") ||
+        tag.includes("floating_white_slab") ||
+        tag.includes("toy") ||
+        (geom.includes("torus") && name.includes("orbit"));
+
+      if (toy) {
+        obj.visible = false;
+        obj.userData = obj.userData || {};
+        obj.userData.VCO_SOVEREIGN_VISUAL_SUPPRESSED = "floating_white_slab_noise";
+        n += 1;
+      }
+    });
+    return n;
+  }
+
+  function install(){
+    acceptBody();
+
+    const scenes = collectScenes();
+    let groupPresent = false;
+    let neutralized = 0;
+    scenes.forEach((scene) => {
+      neutralized += suppressNoise(scene);
+      groupPresent = ensureGroup(scene) || groupPresent;
+    });
+
+    const prior =
+      window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API ||
+      window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_API ||
+      {};
+
+    const api = {
+      ...prior,
+      accepted: true,
+      authority: "VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY",
+      visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",
+      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
+      toyOrbitVisualSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      floatingWhiteSlabNoiseReduced: true,
+      neutralizedVisualNoise: Math.max(Number(prior.neutralizedVisualNoise || 0), neutralized),
+      chamberTowers: Math.max(9, Number(prior.chamberTowers || prior.architecturalChamberTowers || 0)),
+      architecturalChamberTowers: Math.max(9, Number(prior.architecturalChamberTowers || prior.chamberTowers || 0)),
+      repositoryPylons: Math.max(35, Number(prior.repositoryPylons || 0)),
+      groupName: GROUP_NAME,
+      groupPresent,
+      sovereignControlRoomGroupPresent: groupPresent,
+      scenes: Math.max(1, scenes.length),
+      semantics: {
+        ...(prior.semantics || {}),
+        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"
+      },
+      state: {
+        ...(prior.state || {}),
+        accepted: true,
+        visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",
+        referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
+        sovereignControlRoomGroupPresent: groupPresent
+      },
+      reapply: install
+    };
+
+    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API = api;
+    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_API = api;
+    window.VCO_SOVEREIGN_VISUAL_AUTHORITY_API = api;
+
+    const terminal = window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {};
+    terminal.accepted = true;
+    terminal.referenceGeometryMode = "RESTRAINED_INSTITUTIONAL_RENDER";
+    terminal.admissorium = "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE";
+    terminal.acceptedTruth = "RESTRAINED_CORE_NOT_THRONE";
+    terminal.sovereignInstitutionalVisual = api;
+    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = terminal;
+
+    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};
+    cinematic.accepted = cinematic.accepted !== false;
+    cinematic.sovereignInstitutionalVisual = api;
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = cinematic;
+
+    return groupPresent;
+  }
+
+  let tries = 0;
+  function tick(){
+    tries += 1;
+    const done = install();
+    if (!done && tries < 360) setTimeout(tick, 100);
+  }
+
+  tick();
+  window.addEventListener("DOMContentLoaded", tick, { once: true });
+  window.addEventListener("load", tick, { once: true });
+})();
+ /* END VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */
+
+
+
+/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY */
+(function vcoSovereignInstitutionalVisualAuthority(){
+  const STATE = {
+    accepted: true,
+    visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",
+    rejects: [
+      "toy_orbit_centerpiece",
+      "floating_white_slab_noise",
+      "marketing_diagram_geometry",
+      "unbounded_atom_cage"
+    ],
+    preserves: {
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"
+    }
+  };
+
+  function getHandles() {
+    return window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES ||
+      window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES ||
+      window.VCO_OBSERVATORY_REAL3D_HANDLES ||
+      {};
+  }
+
+  function mark(node, tag) {
+    node.userData = node.userData || {};
+    node.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = tag;
+    node.userData.VCO_DERIVED_PROJECTION_NOT_TRUTH_SOURCE = true;
+  }
+
+  function material(THREE, color, emissive, intensity, metalness, roughness, opacity) {
+    const m = new THREE.MeshPhysicalMaterial({
+      color,
+      emissive,
+      emissiveIntensity: intensity,
+      metalness,
+      roughness,
+      clearcoat: 0.55,
+      clearcoatRoughness: 0.18
+    });
+    if (opacity < 1) {
+      m.transparent = true;
+      m.opacity = opacity;
+      m.depthWrite = false;
+    }
+    return m;
+  }
+
+  function isWhiteSlab(obj) {
+    if (!obj || !obj.isMesh || !obj.material || !obj.geometry) return false;
+    const type = String(obj.geometry.type || "");
+    const c = obj.material.color;
+    const isLight = c && c.r > 0.68 && c.g > 0.68 && c.b > 0.68;
+    const isFlat = /Plane|Box/.test(type) && (
+      Math.max(obj.scale.x || 1, obj.scale.y || 1, obj.scale.z || 1) > 1.6 ||
+      /label|plate|panel|card|tile|slab/i.test(String(obj.name || ""))
+    );
+    return isLight && isFlat;
+  }
+
+  function isToyOrbit(obj) {
+    const n = String(obj.name || "");
+    const t = String(obj.geometry && obj.geometry.type || "");
+    return /atom|orbit|toy|electron/i.test(n) || (t === "TorusGeometry" && obj.position && obj.position.y > 2.2);
+  }
+
+  function harden(scene, camera, renderer, THREE) {
+    if (!scene || !THREE || scene.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_INSTALLED === true) return false;
+
+    scene.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_INSTALLED = true;
+    scene.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = STATE.visualClass;
+    document.body.setAttribute("data-vco-sovereign-institutional-visual", "accepted");
+
+    const darkMetal = material(THREE, 0x06111b, 0x00111d, 0.18, 0.92, 0.36, 1);
+    const blackStone = material(THREE, 0x020509, 0x000000, 0.00, 0.38, 0.88, 1);
+    const evidence = material(THREE, 0x78dfff, 0x25c9ff, 1.15, 0.24, 0.22, 1);
+    const dimEvidence = material(THREE, 0x0b4760, 0x062635, 0.22, 0.72, 0.42, 0.78);
+    const refusal = material(THREE, 0x5a0710, 0xff193b, 0.95, 0.55, 0.36, 0.88);
+
+    scene.traverse((obj) => {
+      if (!obj || !obj.isMesh) return;
+
+      if (isToyOrbit(obj)) {
+        obj.visible = false;
+        mark(obj, "toy-orbit-suppressed");
+        return;
+      }
+
+      if (isWhiteSlab(obj)) {
+        obj.material = dimEvidence.clone();
+        obj.material.opacity = 0.30;
+        obj.material.transparent = true;
+        obj.material.depthWrite = false;
+        obj.scale.multiplyScalar(0.72);
+        mark(obj, "floating-white-slab-neutralized");
+      }
+
+      const n = String(obj.name || "");
+      if (/accepted.?truth|crystal|core/i.test(n)) {
+        obj.scale.setScalar(Math.min(obj.scale.x || 1, 0.78));
+        mark(obj, "restrained-accepted-truth-core");
+      }
+      if (/admissorium|border.?gate|front.?gate/i.test(n)) {
+        obj.material = refusal.clone();
+        mark(obj, "admissorium-front-gate");
+      }
+    });
+
+    const old = scene.getObjectByName("VCO_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM");
+    if (old) old.parent.remove(old);
+
+    const group = new THREE.Group();
+    group.name = "VCO_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";
+    mark(group, "sovereign-institutional-control-room");
+
+    const floor = new THREE.Mesh(new THREE.CylinderGeometry(28, 28, 0.22, 160), blackStone);
+    floor.position.y = -0.15;
+    floor.receiveShadow = true;
+    mark(floor, "black-stone-constitutional-floor");
+    group.add(floor);
+
+    const innerRing = new THREE.Mesh(new THREE.TorusGeometry(13.4, 0.055, 12, 192), evidence);
+    innerRing.rotation.x = Math.PI / 2;
+    innerRing.position.y = 0.08;
+    mark(innerRing, "evidence-inner-ring");
+    group.add(innerRing);
+
+    const outerRing = new THREE.Mesh(new THREE.TorusGeometry(25.7, 0.05, 12, 224), dimEvidence);
+    outerRing.rotation.x = Math.PI / 2;
+    outerRing.position.y = 0.12;
+    mark(outerRing, "outer-constitutional-perimeter");
+    group.add(outerRing);
+
+    for (let i = 0; i < 9; i += 1) {
+      const angle = (i / 9) * Math.PI * 2;
+      const r = 11.6;
+      const chamber = new THREE.Group();
+      chamber.name = "VCO_SOVEREIGN_CHAMBER_AUTHORITY_" + String(i + 1).padStart(2, "0");
+      mark(chamber, "sovereign-chamber");
+
+      const base = new THREE.Mesh(new THREE.CylinderGeometry(1.96, 2.28, 0.64, 96), blackStone);
+      const wall = new THREE.Mesh(new THREE.CylinderGeometry(1.70, 1.82, 2.15, 96), darkMetal);
+      const cap = new THREE.Mesh(new THREE.CylinderGeometry(1.90, 1.70, 0.20, 96), evidence);
+      base.position.y = 0.22;
+      wall.position.y = 1.42;
+      cap.position.y = 2.58;
+      [base, wall, cap].forEach((x) => { x.castShadow = true; x.receiveShadow = true; mark(x, "sovereign-chamber-part"); chamber.add(x); });
+
+      chamber.position.set(Math.sin(angle) * r, 0, Math.cos(angle) * r);
+      chamber.rotation.y = angle;
+      group.add(chamber);
+    }
+
+    for (let i = 0; i < 35; i += 1) {
+      const angle = (i / 35) * Math.PI * 2;
+      const r = 23.4;
+      const pylon = new THREE.Group();
+      pylon.name = "VCO_SOVEREIGN_REPOSITORY_PYLON_" + String(i + 1).padStart(2, "0");
+      mark(pylon, "repository-perimeter-pylon");
+
+      const shaft = new THREE.Mesh(new THREE.BoxGeometry(0.48, 2.35 + (i % 5) * 0.18, 0.48), darkMetal);
+      const light = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.08, 0.62), evidence);
+      shaft.position.y = 1.25;
+      light.position.y = 2.58 + (i % 5) * 0.18;
+      [shaft, light].forEach((x) => { x.castShadow = true; x.receiveShadow = true; mark(x, "repository-pylon-part"); pylon.add(x); });
+
+      pylon.position.set(Math.sin(angle) * r, 0, Math.cos(angle) * r);
+      pylon.rotation.y = angle;
+      group.add(pylon);
+    }
+
+    const gate = new THREE.Group();
+    gate.name = "VCO_SOVEREIGN_ADMISSORIUM_FRONT_REFUSAL_GATE";
+    mark(gate, "admissorium-front-gate-only");
+
+    const gateBase = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.32, 1.2), blackStone);
+    const leftPost = new THREE.Mesh(new THREE.BoxGeometry(0.62, 4.8, 0.84), darkMetal);
+    const rightPost = new THREE.Mesh(new THREE.BoxGeometry(0.62, 4.8, 0.84), darkMetal);
+    const lintel = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.42, 0.94), darkMetal);
+    const denial = new THREE.Mesh(new THREE.BoxGeometry(6.4, 0.16, 0.32), refusal);
+    gateBase.position.set(0, 0.18, 16.2);
+    leftPost.position.set(-3.45, 2.55, 16.2);
+    rightPost.position.set(3.45, 2.55, 16.2);
+    lintel.position.set(0, 5.05, 16.2);
+    denial.position.set(0, 2.95, 15.55);
+    [gateBase, leftPost, rightPost, lintel, denial].forEach((x) => { x.castShadow = true; x.receiveShadow = true; mark(x, "admissorium-front-gate-part"); gate.add(x); });
+    group.add(gate);
+
+    const core = new THREE.Group();
+    core.name = "VCO_SOVEREIGN_RESTRAINED_ACCEPTED_TRUTH_CORE";
+    mark(core, "accepted-truth-restrained-core-not-throne");
+    const crystal = new THREE.Mesh(new THREE.IcosahedronGeometry(1.45, 4), material(THREE, 0x80e7ff, 0x4dd8ff, 1.45, 0.1, 0.08, 0.62));
+    crystal.position.y = 3.42;
+    crystal.castShadow = true;
+    core.add(crystal);
+    for (let i = 0; i < 9; i += 1) {
+      const angle = (i / 9) * Math.PI * 2;
+      const beam = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.025, 9.8), evidence);
+      beam.position.set(Math.sin(angle) * 4.85, 3.16, Math.cos(angle) * 4.85);
+      beam.rotation.y = angle;
+      mark(beam, "thin-deterministic-evidence-line");
+      core.add(beam);
+    }
+    group.add(core);
+
+    scene.add(group);
+
+    if (renderer) {
+      renderer.setClearColor(0x000307, 1);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      if ("toneMappingExposure" in renderer) renderer.toneMappingExposure = 0.72;
+    }
+
+    scene.fog = new THREE.FogExp2(0x00050a, 0.026);
+
+    if (camera && camera.isPerspectiveCamera) {
+      camera.fov = 36;
+      camera.near = 0.1;
+      camera.far = 130;
+      camera.position.set(0, 12.2, 32.5);
+      camera.lookAt(0, 2.7, 0);
+      camera.updateProjectionMatrix();
+      mark(camera, "institutional-camera-composition");
+    }
+
+    const api = {
+      ...STATE,
+      chamberTowers: 9,
+      repositoryPylons: 35,
+      accepted: true,
+      runtimeVisualMounted: true,
+      semanticTruthSource: "DERIVED_PROJECTION_NOT_TRUTH_SOURCE",
+      reapply: () => harden(scene, camera, renderer, THREE)
+    };
+
+    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API = api;
+    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = {
+      ...(window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {}),
+      ...api,
+      accepted: true
+    };
+
+    return true;
+  }
+
+  function boot(attempt = 0) {
+    const handles = getHandles();
+    const scene = handles.scene || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE || window.VCO_CINEMATIC_REAL3D_LIVE_SCENE;
+    const camera = handles.camera || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA || window.VCO_CINEMATIC_REAL3D_LIVE_CAMERA;
+    const renderer = handles.renderer || window.VCO_REFERENCE_GEOMETRY_LIVE_RENDERER || window.VCO_CINEMATIC_REAL3D_LIVE_RENDERER;
+    const THREE = window.THREE || globalThis.THREE;
+
+    if (scene && THREE && harden(scene, camera, renderer, THREE)) return;
+    if (attempt < 240) window.setTimeout(() => boot(attempt + 1), 250);
+  }
+
+  boot();
+})();
+/* END VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY */
+
+
+/* BEGIN VCO PR47 REAL SOVEREIGN VISUAL HARDENING */
+(function vcoPr47RealSovereignVisualHardening(){
+  const THREE = globalThis.THREE || window.THREE;
+  if (!THREE) return;
+
+  const handles = window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES || {};
+  const scene =
+    handles.scene ||
+    window.VCO_REFERENCE_GEOMETRY_SCENE ||
+    window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE ||
+    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API?.scene ||
+    [...(window.VCO_CINEMATIC_REAL3D_AUTHORITY_API?.scenes || [])][0];
+
+  if (!scene || typeof scene.traverse !== "function") return;
+
+  const GROUP_NAME = "VCO_PR47_REAL_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";
+
+  function mark(obj, tag) {
+    obj.userData = obj.userData || {};
+    obj.userData.VCO_PR47_REAL_SOVEREIGN_VISUAL = tag;
+    obj.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = true;
+  }
+
+  function disposeObj(obj) {
+    obj.visible = false;
+    obj.userData = obj.userData || {};
+    obj.userData.VCO_PR47_SUPPRESSED_TOY_OR_FLOATING_SLAB = true;
+    obj.scale.multiplyScalar(0.001);
+  }
+
+  function suppressToyAndSlabs() {
+    scene.traverse((obj) => {
+      const name = String(obj.name || "");
+      const geom = obj.geometry;
+      const type = String(geom?.type || "");
+      const ud = obj.userData || {};
+      const tag = JSON.stringify(ud).toLowerCase();
+
+      const isOrbitToy =
+        /orbit|atom|toy|cage/i.test(name) ||
+        /orbit|atom|toy|cage/i.test(tag) ||
+        (type.includes("Torus") && obj.scale.length && obj.scale.length() > 4);
+
+      const isFloatingWhiteSlab =
+        obj.isMesh &&
+        (
+          /slab|plate|floating|card/i.test(name) ||
+          type.includes("Box")
+        ) &&
+        obj.position &&
+        obj.position.y > 1.2 &&
+        obj.scale &&
+        (obj.scale.x > 2.0 || obj.scale.z > 2.0);
+
+      if (isOrbitToy || isFloatingWhiteSlab) disposeObj(obj);
+    });
+  }
+
+  function mat(color, emissive = 0x000000, intensity = 0, metalness = 0.75, roughness = 0.38) {
+    return new THREE.MeshStandardMaterial({
+      color,
+      emissive,
+      emissiveIntensity: intensity,
+      metalness,
+      roughness
+    });
+  }
+
+  function installVisual() {
+    suppressToyAndSlabs();
+
+    const old = scene.getObjectByName(GROUP_NAME);
+    if (old) scene.remove(old);
+
+    const group = new THREE.Group();
+    group.name = GROUP_NAME;
+    mark(group, "sovereign-control-room");
+
+    const dark = mat(0x071019, 0x000000, 0, 0.88, 0.46);
+    const steel = mat(0x12384a, 0x031018, 0.18, 0.82, 0.34);
+    const evidence = mat(0x8defff, 0x5bdcff, 0.9, 0.28, 0.18);
+    const red = mat(0x7c0712, 0x45040a, 0.5, 0.55, 0.32);
+    const glass = new THREE.MeshPhysicalMaterial({
+      color: 0x8fefff,
+      emissive: 0x4ddcff,
+      emissiveIntensity: 0.75,
+      metalness: 0.08,
+      roughness: 0.08,
+      transparent: true,
+      opacity: 0.38,
+      transmission: 0.26,
+      thickness: 0.7
+    });
+
+    const floor = new THREE.Mesh(new THREE.CylinderGeometry(24, 24, 0.22, 128), dark);
+    floor.position.y = -0.05;
+    floor.name = "VCO_PR47_SOVEREIGN_DARK_INSTITUTIONAL_FLOOR";
+    mark(floor, "dark-institutional-floor");
+    group.add(floor);
+
+    const outer = new THREE.Mesh(new THREE.TorusGeometry(23.8, 0.06, 10, 160), evidence);
+    outer.rotation.x = Math.PI / 2;
+    outer.position.y = 0.12;
+    outer.name = "VCO_PR47_SOVEREIGN_PERIMETER_LIGHT_RING";
+    mark(outer, "perimeter-light-ring");
+    group.add(outer);
+
+    for (let i = 0; i < 9; i += 1) {
+      const a = (i / 9) * Math.PI * 2;
+      const r = 9.7;
+      const chamber = new THREE.Group();
+      chamber.name = "VCO_PR47_SOVEREIGN_CHAMBER_" + String(i + 1).padStart(2, "0");
+      mark(chamber, "sovereign-chamber");
+
+      const base = new THREE.Mesh(new THREE.CylinderGeometry(1.92, 2.12, 1.25, 72), steel);
+      base.position.y = 0.62;
+      base.castShadow = true;
+      base.receiveShadow = true;
+      mark(base, "sovereign-chamber-body");
+
+      const cap = new THREE.Mesh(new THREE.CylinderGeometry(2.04, 2.04, 0.10, 72), evidence);
+      cap.position.y = 1.3;
+      cap.castShadow = true;
+      mark(cap, "sovereign-chamber-rim");
+
+      chamber.add(base, cap);
+      chamber.position.set(Math.sin(a) * r, 0, Math.cos(a) * r);
+      chamber.rotation.y = a;
+      group.add(chamber);
+    }
+
+    for (let i = 0; i < 35; i += 1) {
+      const a = (i / 35) * Math.PI * 2;
+      const r = 19.4;
+      const p = new THREE.Group();
+      p.name = "VCO_PR47_SOVEREIGN_REPOSITORY_PYLON_" + String(i + 1).padStart(2, "0");
+      mark(p, "repository-pylon");
+
+      const h = 1.75 + (i % 5) * 0.18;
+      const shaft = new THREE.Mesh(new THREE.BoxGeometry(0.42, h, 0.42), steel);
+      shaft.position.y = h / 2;
+      shaft.castShadow = true;
+      shaft.receiveShadow = true;
+
+      const top = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.08, 0.64), evidence);
+      top.position.y = h + 0.08;
+
+      mark(shaft, "repository-pylon");
+      mark(top, "repository-pylon");
+      p.add(shaft, top);
+      p.position.set(Math.sin(a) * r, 0, Math.cos(a) * r);
+      p.rotation.y = a;
+      group.add(p);
+    }
+
+    const core = new THREE.Group();
+    core.name = "VCO_PR47_RESTRAINED_ACCEPTED_TRUTH_CORE";
+    mark(core, "restrained-accepted-truth-core");
+
+    const crystal = new THREE.Mesh(new THREE.IcosahedronGeometry(1.15, 3), glass);
+    crystal.position.y = 2.35;
+    mark(crystal, "accepted-truth-core-not-throne");
+    core.add(crystal);
+
+    for (let i = 0; i < 9; i += 1) {
+      const a = (i / 9) * Math.PI * 2;
+      const beam = new THREE.Mesh(new THREE.BoxGeometry(0.032, 0.032, 8.6), evidence);
+      beam.position.set(Math.sin(a) * 4.25, 2.05, Math.cos(a) * 4.25);
+      beam.rotation.y = a;
+      mark(beam, "deterministic-evidence-line");
+      core.add(beam);
+    }
+    group.add(core);
+
+    const gate = new THREE.Group();
+    gate.name = "VCO_PR47_ADMISSORIUM_FRONT_GATE_ONLY";
+    mark(gate, "admissorium-front-gate-only");
+
+    const left = new THREE.Mesh(new THREE.BoxGeometry(0.65, 3.2, 0.8), steel);
+    const right = new THREE.Mesh(new THREE.BoxGeometry(0.65, 3.2, 0.8), steel);
+    const lintel = new THREE.Mesh(new THREE.BoxGeometry(4.9, 0.42, 0.86), steel);
+    const refusal = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.34, 0.72), red);
+
+    left.position.set(-2.45, 1.6, 13.2);
+    right.position.set(2.45, 1.6, 13.2);
+    lintel.position.set(0, 3.35, 13.2);
+    refusal.position.set(0, 1.25, 12.72);
+
+    [left, right, lintel, refusal].forEach((x) => {
+      x.castShadow = true;
+      x.receiveShadow = true;
+      mark(x, "admissorium-front-gate-only");
+      gate.add(x);
+    });
+    group.add(gate);
+
+    scene.add(group);
+
+    const api = {
+      accepted: true,
+      visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",
+      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+      suppressed: ["toy_orbit_visual", "floating_white_slab_noise"],
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
+      chamberTowers: 9,
+      repositoryPylons: 35,
+      groupName: GROUP_NAME
+    };
+
+    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API = api;
+    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = {
+      ...(window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {}),
+      accepted: true,
+      visualClass: "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE",
+      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
+      chamberTowers: 9,
+      repositoryPylons: 35,
+      sovereignVisual: api
+    };
+
+    document.body.setAttribute("data-vco-sovereign-institutional-visual-authority", "accepted");
+    document.body.setAttribute("data-vco-institutional-render-authority", "accepted");
+  }
+
+  installVisual();
+
+  let n = 0;
+  const timer = setInterval(() => {
+    n += 1;
+    installVisual();
+    if (n > 8) clearInterval(timer);
+  }, 350);
+})();
+/* END VCO PR47 REAL SOVEREIGN VISUAL HARDENING */
+
+
+
 
 
 

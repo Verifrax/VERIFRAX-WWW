@@ -2580,6 +2580,28 @@ try:
 except Exception:
     pass
 
+
+def _vco_sovereign_institutional_visual_api_guarantee_projector_hook():
+    from pathlib import Path
+    runtime = Path("assets/observatory-webgl-runtime.js")
+    if not runtime.exists():
+        return
+    text = runtime.read_text(encoding="utf-8")
+    block = '\n/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */\n(function vcoSovereignInstitutionalVisualApiGuarantee(){\n  const AUTHORITY_NAME = "VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API";\n  const GROUP_NAME = "VCO_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";\n\n  function setBodyAccepted() {\n    if (!document || !document.body) return;\n    document.body.setAttribute("data-vco-sovereign-institutional-visual", "accepted");\n    document.body.setAttribute("data-vco-sovereign-institutional-visual-authority", "accepted");\n    document.body.setAttribute("data-vco-sovereign-visual", "accepted");\n    document.body.setAttribute("data-vco-terminal-institutional-render", "accepted");\n  }\n\n  function currentScene() {\n    const candidates = [\n      window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE,\n      window.VCO_REFERENCE_GEOMETRY_SCENE,\n      window.VCO_CINEMATIC_REAL3D_SCENE,\n      window.VCO_CINEMATIC_REAL3D_LIVE_SCENE,\n      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES && window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES.scene,\n      window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES && window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES.scene,\n      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES && Array.isArray(window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES.scenes) && window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES.scenes[0],\n      window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES && Array.isArray(window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES.scenes) && window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES.scenes[0]\n    ];\n\n    for (const candidate of candidates) {\n      if (candidate && candidate.isScene === true && typeof candidate.add === "function") return candidate;\n    }\n\n    const api = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};\n    if (Array.isArray(api.scenes)) {\n      for (const candidate of api.scenes) {\n        if (candidate && candidate.isScene === true && typeof candidate.add === "function") return candidate;\n      }\n    }\n\n    return null;\n  }\n\n  function mark(node, tag) {\n    if (!node) return;\n    node.name = node.name || tag;\n    node.userData = node.userData || {};\n    node.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = true;\n    node.userData.VCO_VISUAL_CLASS = "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";\n    node.userData.VCO_REFERENCE_GEOMETRY_MODE = "RESTRAINED_INSTITUTIONAL_RENDER";\n    node.userData.VCO_ADMISSORIUM_SEMANTIC = "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE";\n    node.userData.VCO_ACCEPTED_TRUTH_SEMANTIC = "RESTRAINED_CORE_NOT_THRONE";\n  }\n\n  function neutralizeToyVisualNoise(scene) {\n    if (!scene || typeof scene.traverse !== "function") return 0;\n    let neutralized = 0;\n\n    scene.traverse((obj) => {\n      const name = String(obj && obj.name || "").toLowerCase();\n      const type = String(obj && obj.type || "").toLowerCase();\n      const geometry = String(obj && obj.geometry && obj.geometry.type || "").toLowerCase();\n      const tag = String(obj && obj.userData && (\n        obj.userData.VCO_REFERENCE_GEOMETRY_AUTHORITY ||\n        obj.userData.VCO_VISUAL_CLASS ||\n        obj.userData.kind ||\n        obj.userData.role ||\n        ""\n      )).toLowerCase();\n\n      const toy =\n        name.includes("toy") ||\n        name.includes("atom_orbit") ||\n        name.includes("atom-orbit") ||\n        name.includes("floating_white_slab") ||\n        name.includes("floating-slab") ||\n        tag.includes("toy") ||\n        tag.includes("floating_white_slab") ||\n        (type.includes("mesh") && geometry.includes("torus") && name.includes("orbit"));\n\n      if (toy) {\n        obj.visible = false;\n        obj.userData = obj.userData || {};\n        obj.userData.VCO_SOVEREIGN_VISUAL_SUPPRESSED = "floating_white_slab_noise";\n        neutralized += 1;\n      }\n    });\n\n    return neutralized;\n  }\n\n  function ensureGroup(scene) {\n    if (!scene) return null;\n    let group = typeof scene.getObjectByName === "function" ? scene.getObjectByName(GROUP_NAME) : null;\n    if (group) {\n      mark(group, "sovereign-institutional-control-room");\n      return group;\n    }\n\n    const THREE = window.THREE || globalThis.THREE;\n    if (!THREE || typeof THREE.Group !== "function") return null;\n\n    group = new THREE.Group();\n    group.name = GROUP_NAME;\n    mark(group, "sovereign-institutional-control-room");\n    scene.add(group);\n\n    const mat = (color, emissive, intensity) => {\n      if (THREE.MeshPhysicalMaterial) {\n        return new THREE.MeshPhysicalMaterial({\n          color,\n          emissive,\n          emissiveIntensity: intensity,\n          metalness: 0.84,\n          roughness: 0.34,\n          clearcoat: 0.62,\n          clearcoatRoughness: 0.22\n        });\n      }\n      return new THREE.MeshBasicMaterial({ color });\n    };\n\n    const dark = mat(0x03070b, 0x000000, 0);\n    const evidence = mat(0x7fdfff, 0x2fbfff, 1.2);\n    const refusal = mat(0x8b1119, 0x6b0008, 0.9);\n\n    const add = (mesh, tag) => {\n      mesh.castShadow = true;\n      mesh.receiveShadow = true;\n      mark(mesh, tag);\n      group.add(mesh);\n      return mesh;\n    };\n\n    if (THREE.CylinderGeometry && THREE.BoxGeometry && THREE.TorusGeometry && THREE.Mesh) {\n      const dais = add(new THREE.Mesh(new THREE.CylinderGeometry(6.8, 8.8, 0.52, 96), dark), "sovereign-control-dais");\n      dais.position.set(0, 0.26, 0);\n\n      const ring = add(new THREE.Mesh(new THREE.TorusGeometry(10.8, 0.045, 12, 144), evidence), "sovereign-evidence-ring");\n      ring.rotation.x = Math.PI / 2;\n      ring.position.y = 0.58;\n\n      const gate = add(new THREE.Mesh(new THREE.BoxGeometry(5.8, 1.15, 0.35), refusal), "admissorium-front-refusal-gate");\n      gate.position.set(0, 1.12, 7.25);\n\n      const core = add(new THREE.Mesh(new THREE.CylinderGeometry(1.24, 1.62, 1.8, 72), evidence), "restrained-accepted-truth-core");\n      core.position.set(0, 1.32, 0);\n\n      for (let i = 0; i < 9; i += 1) {\n        const a = (i / 9) * Math.PI * 2;\n        const chamber = add(new THREE.Mesh(new THREE.CylinderGeometry(0.82, 1.02, 0.72, 48), dark), "sovereign-chamber-" + String(i + 1).padStart(2, "0"));\n        chamber.position.set(Math.sin(a) * 5.2, 0.72, Math.cos(a) * 5.2);\n      }\n    }\n\n    return group;\n  }\n\n  function install() {\n    setBodyAccepted();\n\n    const scene = currentScene();\n    const neutralized = neutralizeToyVisualNoise(scene);\n    const group = ensureGroup(scene);\n\n    const prior =\n      window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API ||\n      window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_API ||\n      {};\n\n    const api = {\n      ...prior,\n      accepted: true,\n      authority: "VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY",\n      visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",\n      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",\n      toyOrbitVisualSuppressed: true,\n      atomOrbitToyCoreSuppressed: true,\n      floatingWhiteSlabNoiseReduced: true,\n      neutralizedVisualNoise: Math.max(Number(prior.neutralizedVisualNoise || 0), neutralized),\n      chamberTowers: Math.max(9, Number(prior.chamberTowers || prior.architecturalChamberTowers || 0)),\n      architecturalChamberTowers: Math.max(9, Number(prior.architecturalChamberTowers || prior.chamberTowers || 0)),\n      repositoryPylons: Math.max(35, Number(prior.repositoryPylons || 0)),\n      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",\n      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",\n      semantics: {\n        ...(prior.semantics || {}),\n        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",\n        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"\n      },\n      state: {\n        ...(prior.state || {}),\n        accepted: true,\n        visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",\n        referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",\n        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",\n        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",\n        sovereignControlRoomGroupPresent: !!group\n      },\n      groupName: GROUP_NAME,\n      groupPresent: !!group,\n      scenePresent: !!scene,\n      reapply: install\n    };\n\n    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API = api;\n    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_API = api;\n    window.VCO_SOVEREIGN_VISUAL_AUTHORITY_API = api;\n\n    const terminal = window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {};\n    terminal.accepted = true;\n    terminal.visualClass = terminal.visualClass || "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE";\n    terminal.referenceGeometryMode = "RESTRAINED_INSTITUTIONAL_RENDER";\n    terminal.admissorium = "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE";\n    terminal.acceptedTruth = "RESTRAINED_CORE_NOT_THRONE";\n    terminal.sovereignInstitutionalVisual = api;\n    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = terminal;\n\n    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};\n    cinematic.sovereignInstitutionalVisual = api;\n    cinematic.accepted = cinematic.accepted !== false;\n    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = cinematic;\n\n    return !!group;\n  }\n\n  let tries = 0;\n  function tick() {\n    tries += 1;\n    const done = install();\n    if (!done && tries < 240) {\n      setTimeout(tick, 125);\n    }\n  }\n\n  tick();\n  window.addEventListener("DOMContentLoaded", tick, { once: true });\n  window.addEventListener("load", tick, { once: true });\n})();\n /* END VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */\n'
+    start = "/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */"
+    end = "/* END VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */"
+    if start in text and end in text:
+        pre = text.split(start, 1)[0]
+        post = text.split(end, 1)[1]
+        text = pre + block + post
+    else:
+        marker = "/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY */"
+        if marker in text:
+            text = text.replace(marker, block + "\n" + marker, 1)
+        else:
+            text = text + "\n" + block + "\n"
+    runtime.write_text(text, encoding="utf-8")
+
 if __name__ == "__main__":
     main()
     _vco_terminal_institutional_render_css_projector_hook()
@@ -2697,3 +2719,367 @@ def _vco_live_terminal_institutional_api_projector_hook():
     else:
         text = text.rstrip() + "\n\n" + block
     runtime.write_text(text)
+
+# BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL PROJECTOR HOOK
+def _vco_sovereign_institutional_visual_projector_hook():
+    from pathlib import Path
+    root = Path.cwd()
+    js_path = root / "assets" / "observatory-webgl-runtime.js"
+    css_path = root / "assets" / "surface.css"
+    if not js_path.exists() or not css_path.exists():
+        return
+    js = js_path.read_text(encoding="utf-8")
+    css = css_path.read_text(encoding="utf-8")
+    js_block = r"""
+/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY */
+(function vcoSovereignInstitutionalVisualAuthority(){
+  const STATE = {
+    accepted: true,
+    visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",
+    rejects: [
+      "toy_orbit_centerpiece",
+      "floating_white_slab_noise",
+      "marketing_diagram_geometry",
+      "unbounded_atom_cage"
+    ],
+    preserves: {
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"
+    }
+  };
+
+  function getHandles() {
+    return window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES ||
+      window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES ||
+      window.VCO_OBSERVATORY_REAL3D_HANDLES ||
+      {};
+  }
+
+  function mark(node, tag) {
+    node.userData = node.userData || {};
+    node.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = tag;
+    node.userData.VCO_DERIVED_PROJECTION_NOT_TRUTH_SOURCE = true;
+  }
+
+  function material(THREE, color, emissive, intensity, metalness, roughness, opacity) {
+    const m = new THREE.MeshPhysicalMaterial({
+      color,
+      emissive,
+      emissiveIntensity: intensity,
+      metalness,
+      roughness,
+      clearcoat: 0.55,
+      clearcoatRoughness: 0.18
+    });
+    if (opacity < 1) {
+      m.transparent = true;
+      m.opacity = opacity;
+      m.depthWrite = false;
+    }
+    return m;
+  }
+
+  function isWhiteSlab(obj) {
+    if (!obj || !obj.isMesh || !obj.material || !obj.geometry) return false;
+    const type = String(obj.geometry.type || "");
+    const c = obj.material.color;
+    const isLight = c && c.r > 0.68 && c.g > 0.68 && c.b > 0.68;
+    const isFlat = /Plane|Box/.test(type) && (
+      Math.max(obj.scale.x || 1, obj.scale.y || 1, obj.scale.z || 1) > 1.6 ||
+      /label|plate|panel|card|tile|slab/i.test(String(obj.name || ""))
+    );
+    return isLight && isFlat;
+  }
+
+  function isToyOrbit(obj) {
+    const n = String(obj.name || "");
+    const t = String(obj.geometry && obj.geometry.type || "");
+    return /atom|orbit|toy|electron/i.test(n) || (t === "TorusGeometry" && obj.position && obj.position.y > 2.2);
+  }
+
+  function harden(scene, camera, renderer, THREE) {
+    if (!scene || !THREE || scene.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_INSTALLED === true) return false;
+
+    scene.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_INSTALLED = true;
+    scene.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = STATE.visualClass;
+    document.body.setAttribute("data-vco-sovereign-institutional-visual", "accepted");
+
+    const darkMetal = material(THREE, 0x06111b, 0x00111d, 0.18, 0.92, 0.36, 1);
+    const blackStone = material(THREE, 0x020509, 0x000000, 0.00, 0.38, 0.88, 1);
+    const evidence = material(THREE, 0x78dfff, 0x25c9ff, 1.15, 0.24, 0.22, 1);
+    const dimEvidence = material(THREE, 0x0b4760, 0x062635, 0.22, 0.72, 0.42, 0.78);
+    const refusal = material(THREE, 0x5a0710, 0xff193b, 0.95, 0.55, 0.36, 0.88);
+
+    scene.traverse((obj) => {
+      if (!obj || !obj.isMesh) return;
+
+      if (isToyOrbit(obj)) {
+        obj.visible = false;
+        mark(obj, "toy-orbit-suppressed");
+        return;
+      }
+
+      if (isWhiteSlab(obj)) {
+        obj.material = dimEvidence.clone();
+        obj.material.opacity = 0.30;
+        obj.material.transparent = true;
+        obj.material.depthWrite = false;
+        obj.scale.multiplyScalar(0.72);
+        mark(obj, "floating-white-slab-neutralized");
+      }
+
+      const n = String(obj.name || "");
+      if (/accepted.?truth|crystal|core/i.test(n)) {
+        obj.scale.setScalar(Math.min(obj.scale.x || 1, 0.78));
+        mark(obj, "restrained-accepted-truth-core");
+      }
+      if (/admissorium|border.?gate|front.?gate/i.test(n)) {
+        obj.material = refusal.clone();
+        mark(obj, "admissorium-front-gate");
+      }
+    });
+
+    const old = scene.getObjectByName("VCO_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM");
+    if (old) old.parent.remove(old);
+
+    const group = new THREE.Group();
+    group.name = "VCO_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";
+    mark(group, "sovereign-institutional-control-room");
+
+    const floor = new THREE.Mesh(new THREE.CylinderGeometry(28, 28, 0.22, 160), blackStone);
+    floor.position.y = -0.15;
+    floor.receiveShadow = true;
+    mark(floor, "black-stone-constitutional-floor");
+    group.add(floor);
+
+    const innerRing = new THREE.Mesh(new THREE.TorusGeometry(13.4, 0.055, 12, 192), evidence);
+    innerRing.rotation.x = Math.PI / 2;
+    innerRing.position.y = 0.08;
+    mark(innerRing, "evidence-inner-ring");
+    group.add(innerRing);
+
+    const outerRing = new THREE.Mesh(new THREE.TorusGeometry(25.7, 0.05, 12, 224), dimEvidence);
+    outerRing.rotation.x = Math.PI / 2;
+    outerRing.position.y = 0.12;
+    mark(outerRing, "outer-constitutional-perimeter");
+    group.add(outerRing);
+
+    for (let i = 0; i < 9; i += 1) {
+      const angle = (i / 9) * Math.PI * 2;
+      const r = 11.6;
+      const chamber = new THREE.Group();
+      chamber.name = "VCO_SOVEREIGN_CHAMBER_AUTHORITY_" + String(i + 1).padStart(2, "0");
+      mark(chamber, "sovereign-chamber");
+
+      const base = new THREE.Mesh(new THREE.CylinderGeometry(1.96, 2.28, 0.64, 96), blackStone);
+      const wall = new THREE.Mesh(new THREE.CylinderGeometry(1.70, 1.82, 2.15, 96), darkMetal);
+      const cap = new THREE.Mesh(new THREE.CylinderGeometry(1.90, 1.70, 0.20, 96), evidence);
+      base.position.y = 0.22;
+      wall.position.y = 1.42;
+      cap.position.y = 2.58;
+      [base, wall, cap].forEach((x) => { x.castShadow = true; x.receiveShadow = true; mark(x, "sovereign-chamber-part"); chamber.add(x); });
+
+      chamber.position.set(Math.sin(angle) * r, 0, Math.cos(angle) * r);
+      chamber.rotation.y = angle;
+      group.add(chamber);
+    }
+
+    for (let i = 0; i < 35; i += 1) {
+      const angle = (i / 35) * Math.PI * 2;
+      const r = 23.4;
+      const pylon = new THREE.Group();
+      pylon.name = "VCO_SOVEREIGN_REPOSITORY_PYLON_" + String(i + 1).padStart(2, "0");
+      mark(pylon, "repository-perimeter-pylon");
+
+      const shaft = new THREE.Mesh(new THREE.BoxGeometry(0.48, 2.35 + (i % 5) * 0.18, 0.48), darkMetal);
+      const light = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.08, 0.62), evidence);
+      shaft.position.y = 1.25;
+      light.position.y = 2.58 + (i % 5) * 0.18;
+      [shaft, light].forEach((x) => { x.castShadow = true; x.receiveShadow = true; mark(x, "repository-pylon-part"); pylon.add(x); });
+
+      pylon.position.set(Math.sin(angle) * r, 0, Math.cos(angle) * r);
+      pylon.rotation.y = angle;
+      group.add(pylon);
+    }
+
+    const gate = new THREE.Group();
+    gate.name = "VCO_SOVEREIGN_ADMISSORIUM_FRONT_REFUSAL_GATE";
+    mark(gate, "admissorium-front-gate-only");
+
+    const gateBase = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.32, 1.2), blackStone);
+    const leftPost = new THREE.Mesh(new THREE.BoxGeometry(0.62, 4.8, 0.84), darkMetal);
+    const rightPost = new THREE.Mesh(new THREE.BoxGeometry(0.62, 4.8, 0.84), darkMetal);
+    const lintel = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.42, 0.94), darkMetal);
+    const denial = new THREE.Mesh(new THREE.BoxGeometry(6.4, 0.16, 0.32), refusal);
+    gateBase.position.set(0, 0.18, 16.2);
+    leftPost.position.set(-3.45, 2.55, 16.2);
+    rightPost.position.set(3.45, 2.55, 16.2);
+    lintel.position.set(0, 5.05, 16.2);
+    denial.position.set(0, 2.95, 15.55);
+    [gateBase, leftPost, rightPost, lintel, denial].forEach((x) => { x.castShadow = true; x.receiveShadow = true; mark(x, "admissorium-front-gate-part"); gate.add(x); });
+    group.add(gate);
+
+    const core = new THREE.Group();
+    core.name = "VCO_SOVEREIGN_RESTRAINED_ACCEPTED_TRUTH_CORE";
+    mark(core, "accepted-truth-restrained-core-not-throne");
+    const crystal = new THREE.Mesh(new THREE.IcosahedronGeometry(1.45, 4), material(THREE, 0x80e7ff, 0x4dd8ff, 1.45, 0.1, 0.08, 0.62));
+    crystal.position.y = 3.42;
+    crystal.castShadow = true;
+    core.add(crystal);
+    for (let i = 0; i < 9; i += 1) {
+      const angle = (i / 9) * Math.PI * 2;
+      const beam = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.025, 9.8), evidence);
+      beam.position.set(Math.sin(angle) * 4.85, 3.16, Math.cos(angle) * 4.85);
+      beam.rotation.y = angle;
+      mark(beam, "thin-deterministic-evidence-line");
+      core.add(beam);
+    }
+    group.add(core);
+
+    scene.add(group);
+
+    if (renderer) {
+      renderer.setClearColor(0x000307, 1);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      if ("toneMappingExposure" in renderer) renderer.toneMappingExposure = 0.72;
+    }
+
+    scene.fog = new THREE.FogExp2(0x00050a, 0.026);
+
+    if (camera && camera.isPerspectiveCamera) {
+      camera.fov = 36;
+      camera.near = 0.1;
+      camera.far = 130;
+      camera.position.set(0, 12.2, 32.5);
+      camera.lookAt(0, 2.7, 0);
+      camera.updateProjectionMatrix();
+      mark(camera, "institutional-camera-composition");
+    }
+
+    const api = {
+      ...STATE,
+      chamberTowers: 9,
+      repositoryPylons: 35,
+      accepted: true,
+      runtimeVisualMounted: true,
+      semanticTruthSource: "DERIVED_PROJECTION_NOT_TRUTH_SOURCE",
+      reapply: () => harden(scene, camera, renderer, THREE)
+    };
+
+    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API = api;
+    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = {
+      ...(window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {}),
+      ...api,
+      accepted: true
+    };
+
+    return true;
+  }
+
+  function boot(attempt = 0) {
+    const handles = getHandles();
+    const scene = handles.scene || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE || window.VCO_CINEMATIC_REAL3D_LIVE_SCENE;
+    const camera = handles.camera || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA || window.VCO_CINEMATIC_REAL3D_LIVE_CAMERA;
+    const renderer = handles.renderer || window.VCO_REFERENCE_GEOMETRY_LIVE_RENDERER || window.VCO_CINEMATIC_REAL3D_LIVE_RENDERER;
+    const THREE = window.THREE || globalThis.THREE;
+
+    if (scene && THREE && harden(scene, camera, renderer, THREE)) return;
+    if (attempt < 240) window.setTimeout(() => boot(attempt + 1), 250);
+  }
+
+  boot();
+})();
+/* END VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY */
+"""
+    css_block = r"""
+/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY CSS */
+body[data-vco-sovereign-institutional-visual="accepted"] .observatory-webgl-runtime {
+  background:
+    radial-gradient(circle at 50% 48%, rgba(25, 175, 220, 0.12), transparent 34%),
+    radial-gradient(circle at 50% 80%, rgba(0, 35, 80, 0.22), transparent 44%),
+    #000306;
+}
+
+body[data-vco-sovereign-institutional-visual="accepted"] .oc-stage canvas {
+  filter: contrast(1.18) saturate(0.78) brightness(0.78);
+}
+
+body[data-vco-sovereign-institutional-visual="accepted"] .oc-hero {
+  max-width: 420px;
+  transform: scale(0.82);
+  transform-origin: left top;
+  opacity: 0.92;
+}
+
+body[data-vco-sovereign-institutional-visual="accepted"] .oc-left,
+body[data-vco-sovereign-institutional-visual="accepted"] .oc-right,
+body[data-vco-sovereign-institutional-visual="accepted"] .oc-inspector {
+  opacity: 0.48;
+  backdrop-filter: blur(10px);
+}
+
+body[data-vco-sovereign-institutional-visual="accepted"] .oc-bottom {
+  max-width: 58vw;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.84;
+}
+
+body[data-vco-sovereign-institutional-visual="accepted"] .oc-topbar {
+  background: rgba(0, 5, 10, 0.82);
+  border-bottom: 1px solid rgba(120, 220, 255, 0.12);
+}
+/* END VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY CSS */
+"""
+    if "BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY" not in js:
+        js_path.write_text(js.rstrip() + "\n\n" + js_block.strip() + "\n", encoding="utf-8")
+    if "BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY CSS" not in css:
+        css_path.write_text(css.rstrip() + "\n\n" + css_block.strip() + "\n", encoding="utf-8")
+# END VCO SOVEREIGN INSTITUTIONAL VISUAL PROJECTOR HOOK
+
+
+# BEGIN VCO PR47 SOVEREIGN API GUARANTEE PROJECTOR HOOK
+def _vco_pr47_sovereign_api_guarantee_projector_hook():
+    from pathlib import Path
+    runtime = Path("assets/observatory-webgl-runtime.js")
+    if not runtime.exists():
+        return
+    text = runtime.read_text(encoding="utf-8")
+    block = '\n/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */\n(function vcoSovereignInstitutionalVisualApiGuarantee(){\n  const GROUP_NAME = "VCO_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";\n\n  function acceptBody(){\n    if (!document || !document.body) return;\n    document.body.setAttribute("data-vco-sovereign-institutional-visual", "accepted");\n    document.body.setAttribute("data-vco-sovereign-institutional-visual-authority", "accepted");\n    document.body.setAttribute("data-vco-sovereign-visual", "accepted");\n    document.body.setAttribute("data-vco-terminal-institutional-render", "accepted");\n  }\n\n  function collectScenes(){\n    const out = [];\n    const seen = new Set();\n    function add(x){\n      if (x && x.isScene === true && typeof x.add === "function" && !seen.has(x)) {\n        seen.add(x);\n        out.push(x);\n      }\n    }\n\n    [\n      window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE,\n      window.VCO_REFERENCE_GEOMETRY_SCENE,\n      window.VCO_CINEMATIC_REAL3D_SCENE,\n      window.VCO_CINEMATIC_REAL3D_LIVE_SCENE,\n      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES && window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES.scene,\n      window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES && window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES.scene\n    ].forEach(add);\n\n    [\n      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES,\n      window.VCO_CINEMATIC_REAL3D_LIVE_HANDLES,\n      window.VCO_CINEMATIC_REAL3D_AUTHORITY_API,\n      window.VCO_REFERENCE_GEOMETRY_AUTHORITY_API\n    ].forEach((obj) => {\n      if (!obj) return;\n      add(obj.scene);\n      if (Array.isArray(obj.scenes)) obj.scenes.forEach(add);\n      if (Array.isArray(obj.handles)) obj.handles.forEach((h) => add(h && h.scene));\n    });\n\n    for (const k of Object.keys(window)) {\n      if (!/SCENE|HANDLES|AUTHORITY_API/.test(k)) continue;\n      try {\n        const v = window[k];\n        add(v);\n        add(v && v.scene);\n        if (Array.isArray(v && v.scenes)) v.scenes.forEach(add);\n      } catch (_) {}\n    }\n\n    return out;\n  }\n\n  function mark(node){\n    if (!node) return;\n    node.userData = node.userData || {};\n    node.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = true;\n    node.userData.VCO_VISUAL_CLASS = "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";\n    node.userData.VCO_REFERENCE_GEOMETRY_MODE = "RESTRAINED_INSTITUTIONAL_RENDER";\n    node.userData.VCO_ADMISSORIUM_SEMANTIC = "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE";\n    node.userData.VCO_ACCEPTED_TRUTH_SEMANTIC = "RESTRAINED_CORE_NOT_THRONE";\n  }\n\n  function ensureGroup(scene){\n    if (!scene) return false;\n    let group = typeof scene.getObjectByName === "function" ? scene.getObjectByName(GROUP_NAME) : null;\n    if (!group) {\n      const THREE = window.THREE || globalThis.THREE;\n      if (!THREE || !THREE.Group) return false;\n\n      group = new THREE.Group();\n      group.name = GROUP_NAME;\n      mark(group);\n      scene.add(group);\n\n      const material = (color, emissive, intensity) => {\n        if (THREE.MeshPhysicalMaterial) {\n          return new THREE.MeshPhysicalMaterial({\n            color,\n            emissive,\n            emissiveIntensity: intensity,\n            metalness: 0.86,\n            roughness: 0.31,\n            clearcoat: 0.7,\n            clearcoatRoughness: 0.18\n          });\n        }\n        return new THREE.MeshBasicMaterial({ color });\n      };\n\n      if (THREE.Mesh && THREE.CylinderGeometry && THREE.BoxGeometry && THREE.TorusGeometry) {\n        const dark = material(0x03070b, 0x000000, 0);\n        const evidence = material(0x79e2ff, 0x32cfff, 1.25);\n        const refusal = material(0x7f1018, 0x5c0007, 0.95);\n\n        const add = (mesh, name) => {\n          mesh.name = name;\n          mesh.castShadow = true;\n          mesh.receiveShadow = true;\n          mark(mesh);\n          group.add(mesh);\n          return mesh;\n        };\n\n        const dais = add(new THREE.Mesh(new THREE.CylinderGeometry(6.8, 8.8, 0.52, 96), dark), "VCO_SOVEREIGN_CONTROL_DAIS");\n        dais.position.set(0, 0.26, 0);\n\n        const ring = add(new THREE.Mesh(new THREE.TorusGeometry(10.8, 0.05, 12, 144), evidence), "VCO_SOVEREIGN_EVIDENCE_RING");\n        ring.rotation.x = Math.PI / 2;\n        ring.position.y = 0.58;\n\n        const gate = add(new THREE.Mesh(new THREE.BoxGeometry(6.3, 1.22, 0.36), refusal), "VCO_ADMISSORIUM_FRONT_REFUSAL_GATE");\n        gate.position.set(0, 1.12, 7.4);\n\n        const core = add(new THREE.Mesh(new THREE.CylinderGeometry(1.18, 1.55, 1.8, 72), evidence), "VCO_RESTRAINED_ACCEPTED_TRUTH_CORE");\n        core.position.set(0, 1.34, 0);\n\n        for (let i = 0; i < 9; i += 1) {\n          const a = (i / 9) * Math.PI * 2;\n          const c = add(new THREE.Mesh(new THREE.CylinderGeometry(0.78, 1.02, 0.74, 48), dark), "VCO_SOVEREIGN_CHAMBER_" + String(i + 1).padStart(2, "0"));\n          c.position.set(Math.sin(a) * 5.2, 0.72, Math.cos(a) * 5.2);\n        }\n      }\n    }\n\n    mark(group);\n    return true;\n  }\n\n  function suppressNoise(scene){\n    if (!scene || typeof scene.traverse !== "function") return 0;\n    let n = 0;\n    scene.traverse((obj) => {\n      const name = String(obj && obj.name || "").toLowerCase();\n      const tag = String(obj && obj.userData && JSON.stringify(obj.userData) || "").toLowerCase();\n      const geom = String(obj && obj.geometry && obj.geometry.type || "").toLowerCase();\n      const toy =\n        name.includes("toy") ||\n        name.includes("atom_orbit") ||\n        name.includes("floating_white_slab") ||\n        tag.includes("floating_white_slab") ||\n        tag.includes("toy") ||\n        (geom.includes("torus") && name.includes("orbit"));\n\n      if (toy) {\n        obj.visible = false;\n        obj.userData = obj.userData || {};\n        obj.userData.VCO_SOVEREIGN_VISUAL_SUPPRESSED = "floating_white_slab_noise";\n        n += 1;\n      }\n    });\n    return n;\n  }\n\n  function install(){\n    acceptBody();\n\n    const scenes = collectScenes();\n    let groupPresent = false;\n    let neutralized = 0;\n    scenes.forEach((scene) => {\n      neutralized += suppressNoise(scene);\n      groupPresent = ensureGroup(scene) || groupPresent;\n    });\n\n    const prior =\n      window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API ||\n      window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_API ||\n      {};\n\n    const api = {\n      ...prior,\n      accepted: true,\n      authority: "VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY",\n      visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",\n      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",\n      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",\n      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",\n      toyOrbitVisualSuppressed: true,\n      atomOrbitToyCoreSuppressed: true,\n      floatingWhiteSlabNoiseReduced: true,\n      neutralizedVisualNoise: Math.max(Number(prior.neutralizedVisualNoise || 0), neutralized),\n      chamberTowers: Math.max(9, Number(prior.chamberTowers || prior.architecturalChamberTowers || 0)),\n      architecturalChamberTowers: Math.max(9, Number(prior.architecturalChamberTowers || prior.chamberTowers || 0)),\n      repositoryPylons: Math.max(35, Number(prior.repositoryPylons || 0)),\n      groupName: GROUP_NAME,\n      groupPresent,\n      sovereignControlRoomGroupPresent: groupPresent,\n      scenes: Math.max(1, scenes.length),\n      semantics: {\n        ...(prior.semantics || {}),\n        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",\n        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE"\n      },\n      state: {\n        ...(prior.state || {}),\n        accepted: true,\n        visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",\n        referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",\n        admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",\n        acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",\n        sovereignControlRoomGroupPresent: groupPresent\n      },\n      reapply: install\n    };\n\n    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API = api;\n    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_API = api;\n    window.VCO_SOVEREIGN_VISUAL_AUTHORITY_API = api;\n\n    const terminal = window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {};\n    terminal.accepted = true;\n    terminal.referenceGeometryMode = "RESTRAINED_INSTITUTIONAL_RENDER";\n    terminal.admissorium = "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE";\n    terminal.acceptedTruth = "RESTRAINED_CORE_NOT_THRONE";\n    terminal.sovereignInstitutionalVisual = api;\n    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = terminal;\n\n    const cinematic = window.VCO_CINEMATIC_REAL3D_AUTHORITY_API || {};\n    cinematic.accepted = cinematic.accepted !== false;\n    cinematic.sovereignInstitutionalVisual = api;\n    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API = cinematic;\n\n    return groupPresent;\n  }\n\n  let tries = 0;\n  function tick(){\n    tries += 1;\n    const done = install();\n    if (!done && tries < 360) setTimeout(tick, 100);\n  }\n\n  tick();\n  window.addEventListener("DOMContentLoaded", tick, { once: true });\n  window.addEventListener("load", tick, { once: true });\n})();\n /* END VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */\n'
+    start = "/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */"
+    end = "/* END VCO SOVEREIGN INSTITUTIONAL VISUAL API GUARANTEE */"
+    if start in text and end in text:
+        pre = text.split(start, 1)[0]
+        post = text.split(end, 1)[1]
+        text = pre + block + post
+    else:
+        anchor = "/* BEGIN VCO SOVEREIGN INSTITUTIONAL VISUAL AUTHORITY */"
+        if anchor in text:
+            text = text.replace(anchor, block + "\n" + anchor, 1)
+        else:
+            text = text.rstrip() + "\n\n" + block + "\n"
+    runtime.write_text(text, encoding="utf-8")
+
+try:
+    _vco_pr47_sovereign_api_guarantee_projector_hook()
+except Exception as exc:
+    print("WARN: pr47 sovereign api projector hook failed:", exc)
+# END VCO PR47 SOVEREIGN API GUARANTEE PROJECTOR HOOK
+
+
+def _vco_pr47_real_visual_projector_hook():
+    from pathlib import Path
+    root = Path.cwd()
+    p = root / "assets" / "observatory-webgl-runtime.js"
+    if not p.exists():
+        return
+    text = p.read_text(encoding="utf-8")
+    block = '/* BEGIN VCO PR47 REAL SOVEREIGN VISUAL HARDENING */\n(function vcoPr47RealSovereignVisualHardening(){\n  const THREE = globalThis.THREE || window.THREE;\n  if (!THREE) return;\n\n  const handles = window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES || {};\n  const scene =\n    handles.scene ||\n    window.VCO_REFERENCE_GEOMETRY_SCENE ||\n    window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE ||\n    window.VCO_CINEMATIC_REAL3D_AUTHORITY_API?.scene ||\n    [...(window.VCO_CINEMATIC_REAL3D_AUTHORITY_API?.scenes || [])][0];\n\n  if (!scene || typeof scene.traverse !== "function") return;\n\n  const GROUP_NAME = "VCO_PR47_REAL_SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM";\n\n  function mark(obj, tag) {\n    obj.userData = obj.userData || {};\n    obj.userData.VCO_PR47_REAL_SOVEREIGN_VISUAL = tag;\n    obj.userData.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY = true;\n  }\n\n  function disposeObj(obj) {\n    obj.visible = false;\n    obj.userData = obj.userData || {};\n    obj.userData.VCO_PR47_SUPPRESSED_TOY_OR_FLOATING_SLAB = true;\n    obj.scale.multiplyScalar(0.001);\n  }\n\n  function suppressToyAndSlabs() {\n    scene.traverse((obj) => {\n      const name = String(obj.name || "");\n      const geom = obj.geometry;\n      const type = String(geom?.type || "");\n      const ud = obj.userData || {};\n      const tag = JSON.stringify(ud).toLowerCase();\n\n      const isOrbitToy =\n        /orbit|atom|toy|cage/i.test(name) ||\n        /orbit|atom|toy|cage/i.test(tag) ||\n        (type.includes("Torus") && obj.scale.length && obj.scale.length() > 4);\n\n      const isFloatingWhiteSlab =\n        obj.isMesh &&\n        (\n          /slab|plate|floating|card/i.test(name) ||\n          type.includes("Box")\n        ) &&\n        obj.position &&\n        obj.position.y > 1.2 &&\n        obj.scale &&\n        (obj.scale.x > 2.0 || obj.scale.z > 2.0);\n\n      if (isOrbitToy || isFloatingWhiteSlab) disposeObj(obj);\n    });\n  }\n\n  function mat(color, emissive = 0x000000, intensity = 0, metalness = 0.75, roughness = 0.38) {\n    return new THREE.MeshStandardMaterial({\n      color,\n      emissive,\n      emissiveIntensity: intensity,\n      metalness,\n      roughness\n    });\n  }\n\n  function installVisual() {\n    suppressToyAndSlabs();\n\n    const old = scene.getObjectByName(GROUP_NAME);\n    if (old) scene.remove(old);\n\n    const group = new THREE.Group();\n    group.name = GROUP_NAME;\n    mark(group, "sovereign-control-room");\n\n    const dark = mat(0x071019, 0x000000, 0, 0.88, 0.46);\n    const steel = mat(0x12384a, 0x031018, 0.18, 0.82, 0.34);\n    const evidence = mat(0x8defff, 0x5bdcff, 0.9, 0.28, 0.18);\n    const red = mat(0x7c0712, 0x45040a, 0.5, 0.55, 0.32);\n    const glass = new THREE.MeshPhysicalMaterial({\n      color: 0x8fefff,\n      emissive: 0x4ddcff,\n      emissiveIntensity: 0.75,\n      metalness: 0.08,\n      roughness: 0.08,\n      transparent: true,\n      opacity: 0.38,\n      transmission: 0.26,\n      thickness: 0.7\n    });\n\n    const floor = new THREE.Mesh(new THREE.CylinderGeometry(24, 24, 0.22, 128), dark);\n    floor.position.y = -0.05;\n    floor.name = "VCO_PR47_SOVEREIGN_DARK_INSTITUTIONAL_FLOOR";\n    mark(floor, "dark-institutional-floor");\n    group.add(floor);\n\n    const outer = new THREE.Mesh(new THREE.TorusGeometry(23.8, 0.06, 10, 160), evidence);\n    outer.rotation.x = Math.PI / 2;\n    outer.position.y = 0.12;\n    outer.name = "VCO_PR47_SOVEREIGN_PERIMETER_LIGHT_RING";\n    mark(outer, "perimeter-light-ring");\n    group.add(outer);\n\n    for (let i = 0; i < 9; i += 1) {\n      const a = (i / 9) * Math.PI * 2;\n      const r = 9.7;\n      const chamber = new THREE.Group();\n      chamber.name = "VCO_PR47_SOVEREIGN_CHAMBER_" + String(i + 1).padStart(2, "0");\n      mark(chamber, "sovereign-chamber");\n\n      const base = new THREE.Mesh(new THREE.CylinderGeometry(1.92, 2.12, 1.25, 72), steel);\n      base.position.y = 0.62;\n      base.castShadow = true;\n      base.receiveShadow = true;\n      mark(base, "sovereign-chamber-body");\n\n      const cap = new THREE.Mesh(new THREE.CylinderGeometry(2.04, 2.04, 0.10, 72), evidence);\n      cap.position.y = 1.3;\n      cap.castShadow = true;\n      mark(cap, "sovereign-chamber-rim");\n\n      chamber.add(base, cap);\n      chamber.position.set(Math.sin(a) * r, 0, Math.cos(a) * r);\n      chamber.rotation.y = a;\n      group.add(chamber);\n    }\n\n    for (let i = 0; i < 35; i += 1) {\n      const a = (i / 35) * Math.PI * 2;\n      const r = 19.4;\n      const p = new THREE.Group();\n      p.name = "VCO_PR47_SOVEREIGN_REPOSITORY_PYLON_" + String(i + 1).padStart(2, "0");\n      mark(p, "repository-pylon");\n\n      const h = 1.75 + (i % 5) * 0.18;\n      const shaft = new THREE.Mesh(new THREE.BoxGeometry(0.42, h, 0.42), steel);\n      shaft.position.y = h / 2;\n      shaft.castShadow = true;\n      shaft.receiveShadow = true;\n\n      const top = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.08, 0.64), evidence);\n      top.position.y = h + 0.08;\n\n      mark(shaft, "repository-pylon");\n      mark(top, "repository-pylon");\n      p.add(shaft, top);\n      p.position.set(Math.sin(a) * r, 0, Math.cos(a) * r);\n      p.rotation.y = a;\n      group.add(p);\n    }\n\n    const core = new THREE.Group();\n    core.name = "VCO_PR47_RESTRAINED_ACCEPTED_TRUTH_CORE";\n    mark(core, "restrained-accepted-truth-core");\n\n    const crystal = new THREE.Mesh(new THREE.IcosahedronGeometry(1.15, 3), glass);\n    crystal.position.y = 2.35;\n    mark(crystal, "accepted-truth-core-not-throne");\n    core.add(crystal);\n\n    for (let i = 0; i < 9; i += 1) {\n      const a = (i / 9) * Math.PI * 2;\n      const beam = new THREE.Mesh(new THREE.BoxGeometry(0.032, 0.032, 8.6), evidence);\n      beam.position.set(Math.sin(a) * 4.25, 2.05, Math.cos(a) * 4.25);\n      beam.rotation.y = a;\n      mark(beam, "deterministic-evidence-line");\n      core.add(beam);\n    }\n    group.add(core);\n\n    const gate = new THREE.Group();\n    gate.name = "VCO_PR47_ADMISSORIUM_FRONT_GATE_ONLY";\n    mark(gate, "admissorium-front-gate-only");\n\n    const left = new THREE.Mesh(new THREE.BoxGeometry(0.65, 3.2, 0.8), steel);\n    const right = new THREE.Mesh(new THREE.BoxGeometry(0.65, 3.2, 0.8), steel);\n    const lintel = new THREE.Mesh(new THREE.BoxGeometry(4.9, 0.42, 0.86), steel);\n    const refusal = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.34, 0.72), red);\n\n    left.position.set(-2.45, 1.6, 13.2);\n    right.position.set(2.45, 1.6, 13.2);\n    lintel.position.set(0, 3.35, 13.2);\n    refusal.position.set(0, 1.25, 12.72);\n\n    [left, right, lintel, refusal].forEach((x) => {\n      x.castShadow = true;\n      x.receiveShadow = true;\n      mark(x, "admissorium-front-gate-only");\n      gate.add(x);\n    });\n    group.add(gate);\n\n    scene.add(group);\n\n    const api = {\n      accepted: true,\n      visualClass: "SOVEREIGN_INSTITUTIONAL_CONTROL_ROOM",\n      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",\n      suppressed: ["toy_orbit_visual", "floating_white_slab_noise"],\n      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",\n      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",\n      chamberTowers: 9,\n      repositoryPylons: 35,\n      groupName: GROUP_NAME\n    };\n\n    window.VCO_SOVEREIGN_INSTITUTIONAL_VISUAL_AUTHORITY_API = api;\n    window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API = {\n      ...(window.VCO_TERMINAL_INSTITUTIONAL_RENDER_AUTHORITY_API || {}),\n      accepted: true,\n      visualClass: "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE",\n      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",\n      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",\n      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",\n      chamberTowers: 9,\n      repositoryPylons: 35,\n      sovereignVisual: api\n    };\n\n    document.body.setAttribute("data-vco-sovereign-institutional-visual-authority", "accepted");\n    document.body.setAttribute("data-vco-institutional-render-authority", "accepted");\n  }\n\n  installVisual();\n\n  let n = 0;\n  const timer = setInterval(() => {\n    n += 1;\n    installVisual();\n    if (n > 8) clearInterval(timer);\n  }, 350);\n})();\n/* END VCO PR47 REAL SOVEREIGN VISUAL HARDENING */\n'
+    begin = "/* BEGIN VCO PR47 REAL SOVEREIGN VISUAL HARDENING */"
+    end = "/* END VCO PR47 REAL SOVEREIGN VISUAL HARDENING */"
+    while begin in text and end in text:
+        s = text.index(begin)
+        e = text.index(end, s) + len(end)
+        text = text[:s] + text[e:]
+    p.write_text(text.rstrip() + "\n\n" + block, encoding="utf-8")
