@@ -19,7 +19,7 @@ jobs:
           cd /tmp/vco-sovereign-visual
           npm init -y >/dev/null 2>&1
           npm install --no-save playwright pngjs >/dev/null
-          npx playwright install --with-deps chromium >/dev/null
+          npx playwright install chromium >/dev/null
       - name: Verify sovereign institutional visual authority
         run: |
           set -euo pipefail
