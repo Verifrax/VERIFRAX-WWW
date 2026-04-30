@@ -1247,3 +1247,45 @@ html,body{margin:0!important;width:100%!important;height:100%!important;min-heig
   cursor:crosshair;
 }
 /* END VCO CINEMATIC COMMAND KEYBOARD CLICK AUTHORITY */
+
+/* BEGIN VERIFRAX PURE LIVE NONDESTRUCTIVE OVERLAY */
+/* VCO REAL3D VIEWPORT HARDENING */
+html,body{margin:0!important;width:100%!important;height:100%!important;min-height:100%!important;overflow:hidden!important}
+.surface.stack{min-height:100svh!important;height:100svh!important;overflow:hidden!important}
+.observatory-webgl-runtime{position:relative!important;width:100%!important;height:100svh!important;min-height:100svh!important;overflow:hidden!important}
+.oc-stage{position:absolute!important;inset:0!important;width:100%!important;height:100svh!important;overflow:hidden!important}
+
+#static-root-contract,
+.surface-fallback-root,
+#observatory-render-gate,
+.observatory-render-gate{
+  position:absolute!important;
+  left:-99999px!important;
+  top:auto!important;
+  width:1px!important;
+  height:1px!important;
+  overflow:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  visibility:hidden!important;
+}
+
+.oc-left,
+.oc-right,
+.oc-inspector,
+.oc-bottom{
+  opacity:0!important;
+  transform:translateY(140vh)!important;
+  pointer-events:none!important;
+}
+
+.observatory-webgl-runtime{
+  background:
+    radial-gradient(circle at 50% 42%, rgba(79,190,255,.16), transparent 38%),
+    linear-gradient(180deg,#02070b 0%,#000 100%)!important;
+}
+
+.oc-stage canvas{
+  filter:contrast(1.12) saturate(.92) brightness(.86)!important;
+}
+/* END VERIFRAX PURE LIVE NONDESTRUCTIVE OVERLAY */
