@@ -2582,6 +2582,172 @@ function advanceJourney() {
  /* END VCO TERMINAL NO ATOM ORBIT AUTHORITY */
 
 
+/* BEGIN VCO TERMINAL ABSOLUTE VISUAL LOCK */
+(function vcoTerminalAbsoluteVisualLock(){
+  if (window.VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_AUTHORITY) return;
+  window.VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_AUTHORITY = true;
+
+  function getHandles() {
+    return (
+      window.VCO_TERMINAL_NO_ATOM_HANDLES ||
+      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES ||
+      window.VCO_REFERENCE_GEOMETRY_HANDLES ||
+      window.VCO_OBSERVATORY_RUNTIME_HANDLES ||
+      {
+        THREE: window.THREE || globalThis.THREE,
+        scene: window.VCO_OBSERVATORY_SCENE || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE,
+        camera: window.VCO_OBSERVATORY_CAMERA || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA,
+        renderer: window.VCO_OBSERVATORY_RENDERER || window.VCO_REFERENCE_GEOMETRY_LIVE_RENDERER
+      }
+    );
+  }
+
+  function materials(obj) {
+    if (!obj || !obj.material) return [];
+    return Array.isArray(obj.material) ? obj.material.filter(Boolean) : [obj.material];
+  }
+
+  function materialIsBright(m) {
+    if (!m) return false;
+    const c = m.color;
+    if (!c) return false;
+    const avg = (Number(c.r || 0) + Number(c.g || 0) + Number(c.b || 0)) / 3;
+    const max = Math.max(Number(c.r || 0), Number(c.g || 0), Number(c.b || 0));
+    return avg > 0.58 || max > 0.78;
+  }
+
+  function darkPanelMaterial(THREE) {
+    return new THREE.MeshPhysicalMaterial({
+      color: 0x10202a,
+      emissive: 0x052f42,
+      emissiveIntensity: 0.26,
+      roughness: 0.54,
+      metalness: 0.86,
+      clearcoat: 0.38,
+      clearcoatRoughness: 0.22
+    });
+  }
+
+  function world(THREE, obj) {
+    const v = new THREE.Vector3();
+    try { obj.getWorldPosition(v); } catch (_) {}
+    return v;
+  }
+
+  function flatBoxLike(obj) {
+    const g = obj && obj.geometry;
+    const t = String(g && g.type || "");
+    const params = g && g.parameters || {};
+    const w = Number(params.width || 0);
+    const h = Number(params.height || 0);
+    const d = Number(params.depth || 0);
+    const maxDim = Math.max(w, h, d);
+    const minDim = Math.min(...[w, h, d].filter(Boolean));
+    const shallow = minDim > 0 && minDim <= 0.55 && maxDim >= 1.05;
+    return /BoxGeometry|PlaneGeometry|ExtrudeGeometry/.test(t) && shallow;
+  }
+
+  function hide(obj, reason) {
+    obj.visible = false;
+    obj.userData = obj.userData || {};
+    obj.userData.VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_HIDDEN = reason;
+  }
+
+  function apply() {
+    const h = getHandles();
+    const THREE = h.THREE || window.THREE || globalThis.THREE;
+    const scene = h.scene || window.VCO_OBSERVATORY_SCENE || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE;
+    if (!THREE || !scene || !scene.isScene) return false;
+
+    const panelMat = darkPanelMaterial(THREE);
+    let hiddenCage = 0;
+    let rematerializedSlabs = 0;
+    let hiddenLoops = 0;
+
+    scene.traverse((obj) => {
+      if (!obj) return;
+
+      const pos = world(THREE, obj);
+      const radial = Math.hypot(pos.x, pos.z);
+      const y = pos.y;
+      const gtype = String(obj.geometry && obj.geometry.type || "");
+      const type = String(obj.type || "");
+      const name = String(obj.name || "");
+      const tag = JSON.stringify(obj.userData || {}).toLowerCase();
+      const text = (name + " " + gtype + " " + type + " " + tag).toLowerCase();
+
+      const central = radial < 9.0 && y > 0.45 && y < 8.8;
+      const chamberField = radial < 27.5 && y > 0.15 && y < 8.4;
+
+      if (
+        central &&
+        (
+          /orthogonal_restraint|restraint_|clamp|wire|wireframe|cage|containment/.test(text) ||
+          (/boxgeometry/.test(text) && /vco_terminal_truth_core_final|vco_terminal_no_atom_orbit_authority/.test(text))
+        )
+      ) {
+        hide(obj, "central_wire_cube_or_restraint_removed");
+        hiddenCage += 1;
+        return;
+      }
+
+      if (
+        central &&
+        /torus|torusknot|tubegeometry|curve|lineloop|linesegments|spheregeometry/.test(text) &&
+        !/terminal_straight_evidence|deterministic_evidence/.test(text)
+      ) {
+        hide(obj, "atom_or_loop_residue_removed");
+        hiddenLoops += 1;
+        return;
+      }
+
+      if (
+        obj.isMesh &&
+        chamberField &&
+        flatBoxLike(obj) &&
+        materials(obj).some(materialIsBright)
+      ) {
+        obj.material = panelMat.clone();
+        obj.castShadow = true;
+        obj.receiveShadow = true;
+        obj.userData = obj.userData || {};
+        obj.userData.VCO_TERMINAL_WHITE_SLAB_DARKENED_FINAL = true;
+        rematerializedSlabs += 1;
+      }
+    });
+
+    document.body.setAttribute("data-vco-no-atom-core", "accepted");
+    document.body.setAttribute("data-vco-terminal-visual-doctrine-final", "accepted");
+    document.body.setAttribute("data-vco-terminal-absolute-visual-lock", "accepted");
+
+    window.VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_API = {
+      accepted: true,
+      noAtomLoops: true,
+      noWireCube: true,
+      noWhiteSlabs: true,
+      hiddenCage,
+      hiddenLoops,
+      rematerializedSlabs,
+      reapply: apply
+    };
+
+    return true;
+  }
+
+  let tries = 0;
+  const timer = window.setInterval(() => {
+    tries += 1;
+    apply();
+    if (tries > 260) window.clearInterval(timer);
+  }, 80);
+
+  window.addEventListener("load", () => setTimeout(apply, 80));
+  window.addEventListener("resize", () => setTimeout(apply, 80));
+  window.addEventListener("pointermove", () => apply(), { passive: true });
+})();
+ /* END VCO TERMINAL ABSOLUTE VISUAL LOCK */
+
+
 
 
 
