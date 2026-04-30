@@ -229,7 +229,11 @@ function pass(name) { console.log(`${name} PASS`); }
   if (pageErrors.length === 0) pass("page_error_zero"); else fail("page_error_zero", pageErrors.join(" | ").slice(0, 500));
   if (failedRequests.length === 0) pass("request_failure_zero"); else fail("request_failure_zero", failedRequests.join(" | ").slice(0, 500));
 
-  await page.screenshot({ path: "/tmp/verifrax-observatory-browser-authority.png", fullPage: false });
+  try {
+    await page.screenshot({ path: "/tmp/verifrax-observatory-browser-authority.png", fullPage: false });
+  } catch (error) {
+    console.log("[OBSERVATORY_BROWSER_AUTHORITY_SCREENSHOT_NON_FATAL]", String(error?.message || error));
+  }
   await browser.close();
 
   if (failures.length) {

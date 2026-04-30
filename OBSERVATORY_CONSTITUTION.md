@@ -39,7 +39,7 @@ The Observatory must be constitutionally incapable of pretending.
 
 ```text
 Beauty is subordinate to projection permission.
-````
+```
 
 The Observatory may never use visual quality to hide weak truth support.
 
