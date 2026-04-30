@@ -1,0 +1,28 @@
+name: Observatory Live Runtime Doctrine
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  live-runtime-doctrine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright runtime
+        run: |
+          npm install --no-save playwright
+          npx playwright install chromium
+      - name: Verify deployed live runtime doctrine
+        env:
+          URL_ROOT: https://www.verifrax.net
+        run: npm run check:observatory-live-runtime-doctrine
