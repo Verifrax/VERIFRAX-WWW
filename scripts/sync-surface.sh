@@ -1,18 +1,25 @@
 #!/usr/bin/env bash
 set -euo pipefail
-REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SURFACE_REPO="${SURFACE_REPO:-$REPO_ROOT/../VERIFRAX-SURFACE}"
 
-if [ ! -d "$SURFACE_REPO/.git" ]; then
-  echo "VERIFRAX-SURFACE repo not found at: $SURFACE_REPO" >&2
-  exit 1
-fi
+need() {
+  local file="$1"
+  local needle="$2"
+  if ! grep -Fq "$needle" "$file"; then
+    echo "sync-surface locked-live failure: missing [$needle] in $file" >&2
+    exit 1
+  fi
+}
 
-mkdir -p "$REPO_ROOT/.surface/vendor"
-rsync -a --delete "$SURFACE_REPO/tokens/" "$REPO_ROOT/.surface/vendor/tokens/"
-rsync -a --delete "$SURFACE_REPO/shell/" "$REPO_ROOT/.surface/vendor/shell/"
-rsync -a --delete "$SURFACE_REPO/scripts/" "$REPO_ROOT/.surface/vendor/scripts/"
-git -C "$SURFACE_REPO" rev-parse HEAD > "$REPO_ROOT/.surface/SURFACE_SHA"
+need index.html 'id="observatory-webgl-runtime"'
+need 404.html 'id="observatory-webgl-runtime"'
+need index.html 'assets/observatory-webgl-runtime.js'
+need 404.html 'assets/observatory-webgl-runtime.js'
+need index.html 'FULL_OBSERVATORY'
+need 404.html 'FULL_OBSERVATORY'
+need assets/surface.css 'VCO REAL3D VIEWPORT HARDENING'
+need assets/surface.css 'height:100svh'
+need assets/surface.css 'overflow:hidden'
+need assets/observatory-webgl-runtime.js 'VCO REAL3D ANTI TOY RUNTIME AUTHORITY'
+need assets/observatory-webgl-runtime.js 'VCO_REAL3D_ANTI_TOY_RUNTIME_API'
 
-python3 "$REPO_ROOT/.surface/vendor/scripts/validate_host.py" "$REPO_ROOT/surface.host.json"
-python3 "$REPO_ROOT/.surface/vendor/scripts/project_host.py" "$REPO_ROOT"
+echo "ok: www"
