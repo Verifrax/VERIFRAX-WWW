@@ -2748,6 +2748,248 @@ function advanceJourney() {
  /* END VCO TERMINAL ABSOLUTE VISUAL LOCK */
 
 
+/* BEGIN VCO TERMINAL FOREGROUND COMPOSITION GOVERNOR */
+(function vcoTerminalForegroundCompositionGovernor(){
+  if (window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_AUTHORITY) return;
+  window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_AUTHORITY = true;
+
+  function getHandles() {
+    return (
+      window.VCO_TERMINAL_NO_ATOM_HANDLES ||
+      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES ||
+      window.VCO_REFERENCE_GEOMETRY_HANDLES ||
+      window.VCO_OBSERVATORY_RUNTIME_HANDLES ||
+      {
+        THREE: window.THREE || globalThis.THREE,
+        scene: window.VCO_OBSERVATORY_SCENE || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE,
+        camera: window.VCO_OBSERVATORY_CAMERA || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA,
+        renderer: window.VCO_OBSERVATORY_RENDERER || window.VCO_REFERENCE_GEOMETRY_LIVE_RENDERER
+      }
+    );
+  }
+
+  function materialList(obj) {
+    if (!obj || !obj.material) return [];
+    return Array.isArray(obj.material) ? obj.material.filter(Boolean) : [obj.material];
+  }
+
+  function darkGovernedMaterial(THREE, source) {
+    const mat = source && source.clone ? source.clone() : new THREE.MeshPhysicalMaterial();
+    mat.color = new THREE.Color(0x071722);
+    mat.emissive = new THREE.Color(0x01131f);
+    mat.emissiveIntensity = 0.12;
+    mat.roughness = 0.68;
+    mat.metalness = 0.74;
+    mat.transparent = true;
+    mat.opacity = Math.min(Number(mat.opacity || 1), 0.74);
+    mat.depthWrite = true;
+    mat.needsUpdate = true;
+    return mat;
+  }
+
+  function worldPosition(THREE, obj) {
+    const v = new THREE.Vector3();
+    try { obj.getWorldPosition(v); } catch (_) {}
+    return v;
+  }
+
+  function boundsScreen(THREE, obj, camera, renderer) {
+    if (!obj || !camera || !renderer) return null;
+
+    const box = new THREE.Box3();
+    try { box.setFromObject(obj); } catch (_) { return null; }
+    if (!Number.isFinite(box.min.x) || !Number.isFinite(box.max.x)) return null;
+    if (box.isEmpty()) return null;
+
+    const size = new THREE.Vector3();
+    box.getSize(size);
+
+    const pts = [
+      [box.min.x, box.min.y, box.min.z],
+      [box.min.x, box.min.y, box.max.z],
+      [box.min.x, box.max.y, box.min.z],
+      [box.min.x, box.max.y, box.max.z],
+      [box.max.x, box.min.y, box.min.z],
+      [box.max.x, box.min.y, box.max.z],
+      [box.max.x, box.max.y, box.min.z],
+      [box.max.x, box.max.y, box.max.z]
+    ].map(([x,y,z]) => new THREE.Vector3(x,y,z).project(camera));
+
+    const xs = pts.map(v => (v.x + 1) / 2).filter(Number.isFinite);
+    const ys = pts.map(v => (1 - v.y) / 2).filter(Number.isFinite);
+    if (!xs.length || !ys.length) return null;
+
+    const minX = Math.max(0, Math.min(...xs));
+    const maxX = Math.min(1, Math.max(...xs));
+    const minY = Math.max(0, Math.min(...ys));
+    const maxY = Math.min(1, Math.max(...ys));
+    const w = Math.max(0, maxX - minX);
+    const h = Math.max(0, maxY - minY);
+
+    return {
+      minX, maxX, minY, maxY,
+      cx: (minX + maxX) / 2,
+      cy: (minY + maxY) / 2,
+      area: w * h,
+      width: w,
+      height: h,
+      size
+    };
+  }
+
+  function semanticProtected(obj) {
+    const name = String(obj.name || "");
+    const tag = JSON.stringify(obj.userData || {});
+    const text = (name + " " + tag).toLowerCase();
+
+    return (
+      /accepted.truth|accepted_truth|truth.core|admissorium|contradiction|label|text|glyph|chamber|cylinder|repo.pillar|repository/.test(text) ||
+      obj.type === "Sprite"
+    );
+  }
+
+  function isBlockCandidate(obj) {
+    if (!obj || !obj.isMesh || semanticProtected(obj)) return false;
+
+    const gtype = String(obj.geometry && obj.geometry.type || "");
+    if (!/boxgeometry|planegeometry|extrudegeometry/.test(gtype.toLowerCase())) return false;
+
+    return true;
+  }
+
+  function storeOriginal(obj) {
+    obj.userData = obj.userData || {};
+    if (!obj.userData.VCO_FOREGROUND_COMPOSITION_ORIGINAL) {
+      obj.userData.VCO_FOREGROUND_COMPOSITION_ORIGINAL = {
+        sx: obj.scale.x, sy: obj.scale.y, sz: obj.scale.z,
+        px: obj.position.x, py: obj.position.y, pz: obj.position.z
+      };
+    }
+    return obj.userData.VCO_FOREGROUND_COMPOSITION_ORIGINAL;
+  }
+
+  function governMaterial(THREE, obj) {
+    const mats = materialList(obj);
+    if (!mats.length) return;
+    if (Array.isArray(obj.material)) {
+      obj.material = mats.map(m => darkGovernedMaterial(THREE, m));
+    } else {
+      obj.material = darkGovernedMaterial(THREE, mats[0]);
+    }
+  }
+
+  function apply() {
+    const h = getHandles();
+    const THREE = h.THREE || window.THREE || globalThis.THREE;
+    const scene = h.scene || window.VCO_OBSERVATORY_SCENE || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE;
+    const camera = h.camera || window.VCO_OBSERVATORY_CAMERA || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA;
+    const renderer = h.renderer || window.VCO_OBSERVATORY_RENDERER || window.VCO_REFERENCE_GEOMETRY_LIVE_RENDERER;
+
+    if (!THREE || !scene || !scene.isScene || !camera || !renderer) return false;
+
+    let governed = 0;
+    let strongGoverned = 0;
+    let maxResidualArea = 0;
+    const residuals = [];
+
+    scene.traverse((obj) => {
+      if (!isBlockCandidate(obj)) return;
+
+      const b = boundsScreen(THREE, obj, camera, renderer);
+      if (!b) return;
+
+      const pos = worldPosition(THREE, obj);
+      const radial = Math.hypot(pos.x, pos.z);
+
+      const foreground = b.cy > 0.46 && b.maxY > 0.54;
+      const centralBand = b.cx > 0.12 && b.cx < 0.88;
+      const chamberField = radial < 32.0;
+      const obstructive = foreground && centralBand && chamberField && b.area > 0.012;
+
+      if (!obstructive) return;
+
+      const o = storeOriginal(obj);
+
+      let factor = 0.72;
+      if (b.area > 0.16) factor = 0.38;
+      else if (b.area > 0.10) factor = 0.46;
+      else if (b.area > 0.065) factor = 0.54;
+      else if (b.area > 0.035) factor = 0.62;
+
+      obj.scale.set(o.sx * factor, o.sy * factor, o.sz * factor);
+      obj.position.set(o.px, o.py - Math.min(0.92, 0.22 + b.area * 2.8), o.pz);
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+
+      governMaterial(THREE, obj);
+
+      obj.userData.VCO_FOREGROUND_COMPOSITION_GOVERNED = true;
+      obj.userData.VCO_FOREGROUND_COMPOSITION_FACTOR = factor;
+
+      governed += 1;
+      if (factor <= 0.54) strongGoverned += 1;
+    });
+
+    scene.traverse((obj) => {
+      if (!isBlockCandidate(obj)) return;
+
+      const b = boundsScreen(THREE, obj, camera, renderer);
+      if (!b) return;
+
+      const pos = worldPosition(THREE, obj);
+      const radial = Math.hypot(pos.x, pos.z);
+      const residual = (
+        b.cy > 0.47 &&
+        b.maxY > 0.55 &&
+        b.cx > 0.10 &&
+        b.cx < 0.90 &&
+        radial < 32.0 &&
+        b.area > 0.085 &&
+        !semanticProtected(obj)
+      );
+
+      if (residual) {
+        maxResidualArea = Math.max(maxResidualArea, b.area);
+        residuals.push({
+          name: String(obj.name || ""),
+          geometry: String(obj.geometry && obj.geometry.type || ""),
+          area: Number(b.area.toFixed(4)),
+          cx: Number(b.cx.toFixed(4)),
+          cy: Number(b.cy.toFixed(4))
+        });
+      }
+    });
+
+    document.body.setAttribute("data-vco-foreground-composition-governor", "accepted");
+
+    window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API = {
+      accepted: true,
+      governed,
+      strongGoverned,
+      maxResidualArea,
+      residualObstructions: residuals,
+      noAtomLoopsPreserved: document.body.getAttribute("data-vco-no-atom-core") === "accepted",
+      noCentralCagePreserved: document.body.getAttribute("data-vco-terminal-absolute-visual-lock") === "accepted",
+      reapply: apply
+    };
+
+    return true;
+  }
+
+  let tries = 0;
+  const timer = window.setInterval(() => {
+    tries += 1;
+    apply();
+    if (tries > 300) window.clearInterval(timer);
+  }, 80);
+
+  window.addEventListener("load", () => setTimeout(apply, 80));
+  window.addEventListener("resize", () => setTimeout(apply, 80));
+  window.addEventListener("pointermove", () => apply(), { passive: true });
+})();
+ /* END VCO TERMINAL FOREGROUND COMPOSITION GOVERNOR */
+
+
 
 
 
