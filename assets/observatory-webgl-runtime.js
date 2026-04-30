@@ -3243,6 +3243,78 @@ function advanceJourney() {
 })();
  /* END VCO TERMINAL HARD FOREGROUND OCCLUSION GOVERNOR */
 
+/* BEGIN VCO TERMINAL FOREGROUND COMPOSITION API ALIAS LOCK */
+(function vcoTerminalForegroundCompositionApiAliasLock(){
+  if (window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_LOCK_AUTHORITY) return;
+  window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_LOCK_AUTHORITY = true;
+
+  function sourceApi() {
+    return (
+      window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API ||
+      window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API ||
+      window.VCO_FOREGROUND_COMPOSITION_GOVERNOR_API ||
+      null
+    );
+  }
+
+  function normalizedResiduals(api) {
+    if (api && Array.isArray(api.residualObstructions)) return api.residualObstructions;
+    if (api && Array.isArray(api.residuals)) return api.residuals;
+    return [];
+  }
+
+  function apply() {
+    const source = sourceApi();
+    const bodyAccepted =
+      document.body.getAttribute("data-vco-foreground-composition-governor") === "accepted";
+
+    const accepted = Boolean(
+      bodyAccepted ||
+      (source && source.accepted === true) ||
+      (
+        window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API &&
+        window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API.compositionGovernorPreserved === true
+      )
+    );
+
+    const api = Object.assign({}, source || {}, {
+      accepted,
+      authority: "VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_LOCK",
+      stableAlias: true,
+      residualObstructions: normalizedResiduals(source),
+      noAtomLoopsPreserved:
+        document.body.getAttribute("data-vco-no-atom-core") === "accepted",
+      noCentralCagePreserved:
+        document.body.getAttribute("data-vco-terminal-absolute-visual-lock") === "accepted",
+      hardOcclusionGovernorPreserved:
+        document.body.getAttribute("data-vco-hard-foreground-occlusion-governor") === "accepted",
+      reapply: apply
+    });
+
+    window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API = api;
+    window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API = api;
+
+    if (accepted) {
+      document.body.setAttribute("data-vco-foreground-composition-governor", "accepted");
+      document.body.setAttribute("data-vco-foreground-composition-api-alias-lock", "accepted");
+    }
+
+    return accepted;
+  }
+
+  let tries = 0;
+  const timer = window.setInterval(() => {
+    tries += 1;
+    apply();
+    if (tries > 300) window.clearInterval(timer);
+  }, 80);
+
+  window.addEventListener("load", () => setTimeout(apply, 80));
+  window.addEventListener("resize", () => setTimeout(apply, 80));
+  window.addEventListener("pointermove", () => apply(), { passive: true });
+})();
+ /* END VCO TERMINAL FOREGROUND COMPOSITION API ALIAS LOCK */
+
 
 
 
