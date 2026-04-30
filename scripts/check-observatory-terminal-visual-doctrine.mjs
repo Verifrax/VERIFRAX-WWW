@@ -27,6 +27,9 @@ const required = [
   "data-vco-foreground-composition-governor",
   "data-vco-foreground-composition-api-alias-lock",
   "VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_LOCK_AUTHORITY",
+  "VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_HARD_FREEZE_AUTHORITY",
+  "hardAlias(\"VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API\")",
+  "hardAlias(\"VCO_TERMINAL_FOREGROUND_COMPOSITION_API\")",
 
   "VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API",
   "VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_GOVERNOR_AUTHORITY",
@@ -52,5 +55,6 @@ console.log(JSON.stringify({
   file,
   doctrine: "terminal_visual_doctrine_invariant",
   requiredMarkers: required.length,
-  foregroundCompositionApiAlias: true
+  foregroundCompositionApiAlias: true,
+  foregroundCompositionApiAliasHardFreeze: true
 }, null, 2));

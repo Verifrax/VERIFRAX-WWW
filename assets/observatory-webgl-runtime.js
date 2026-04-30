@@ -3315,6 +3315,106 @@ function advanceJourney() {
 })();
  /* END VCO TERMINAL FOREGROUND COMPOSITION API ALIAS LOCK */
 
+/* BEGIN VCO TERMINAL FOREGROUND COMPOSITION API ALIAS HARD FREEZE */
+(function vcoTerminalForegroundCompositionApiAliasHardFreeze(){
+  if (window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_HARD_FREEZE_AUTHORITY) return;
+  window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_HARD_FREEZE_AUTHORITY = true;
+
+  let canonical = null;
+
+  function residuals(api) {
+    if (api && Array.isArray(api.residualObstructions)) return api.residualObstructions;
+    if (api && Array.isArray(api.residuals)) return api.residuals;
+    return [];
+  }
+
+  function accepted(api) {
+    return Boolean(
+      document.body.getAttribute("data-vco-foreground-composition-governor") === "accepted" ||
+      document.body.getAttribute("data-vco-foreground-composition-api-alias-lock") === "accepted" ||
+      (api && api.accepted === true) ||
+      (
+        window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API &&
+        window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API.compositionGovernorPreserved === true
+      )
+    );
+  }
+
+  function normalize(api) {
+    const src = api && typeof api === "object" ? api : {};
+    return Object.assign({}, src, {
+      accepted: accepted(src),
+      authority: "VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_LOCK",
+      stableAlias: true,
+      residualObstructions: residuals(src),
+      noAtomLoopsPreserved:
+        document.body.getAttribute("data-vco-no-atom-core") === "accepted",
+      noCentralCagePreserved:
+        document.body.getAttribute("data-vco-terminal-absolute-visual-lock") === "accepted",
+      hardOcclusionGovernorPreserved:
+        document.body.getAttribute("data-vco-hard-foreground-occlusion-governor") === "accepted",
+      reapply: apply
+    });
+  }
+
+  function publish(api) {
+    canonical = normalize(api || canonical || {});
+    if (canonical.accepted) {
+      document.body.setAttribute("data-vco-foreground-composition-governor", "accepted");
+      document.body.setAttribute("data-vco-foreground-composition-api-alias-lock", "accepted");
+    }
+    return canonical;
+  }
+
+  function hardAlias(key) {
+    let shadow = null;
+    try { shadow = window[key] || null; } catch (_) {}
+
+    try {
+      Object.defineProperty(window, key, {
+        configurable: true,
+        enumerable: true,
+        get() {
+          return publish(canonical || shadow || {});
+        },
+        set(value) {
+          shadow = value;
+          publish(value);
+        }
+      });
+    } catch (_) {
+      try { window[key] = publish(shadow || {}); } catch (_) {}
+    }
+  }
+
+  function apply() {
+    const src =
+      canonical ||
+      window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API ||
+      window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API ||
+      window.VCO_FOREGROUND_COMPOSITION_GOVERNOR_API ||
+      {};
+    return publish(src).accepted === true;
+  }
+
+  hardAlias("VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API");
+  hardAlias("VCO_TERMINAL_FOREGROUND_COMPOSITION_API");
+
+  apply();
+
+  let tries = 0;
+  const timer = window.setInterval(() => {
+    tries += 1;
+    apply();
+    if (tries > 360) window.clearInterval(timer);
+  }, 80);
+
+  window.addEventListener("load", () => setTimeout(apply, 80));
+  window.addEventListener("resize", () => setTimeout(apply, 80));
+  window.addEventListener("pointermove", () => apply(), { passive: true });
+})();
+ /* END VCO TERMINAL FOREGROUND COMPOSITION API ALIAS HARD FREEZE */
+
 
 
 
