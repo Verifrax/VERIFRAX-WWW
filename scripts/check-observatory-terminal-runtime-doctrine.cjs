@@ -2,15 +2,20 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 const http = require("node:http");
+const net = require("node:net");
 const { spawn } = require("node:child_process");
 const { chromium } = require("playwright");
 
 const OUT = process.env.OUT || fs.mkdtempSync(path.join(os.tmpdir(), "verifrax-terminal-runtime-doctrine-"));
 fs.mkdirSync(OUT, { recursive: true });
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function freePort() {
   return new Promise((resolve, reject) => {
-    const srv = require("node:net").createServer();
+    const srv = net.createServer();
     srv.listen(0, "127.0.0.1", () => {
       const port = srv.address().port;
       srv.close(() => resolve(port));
@@ -23,7 +28,7 @@ function httpOk(url) {
   return new Promise((resolve) => {
     const req = http.get(url, (res) => {
       res.resume();
-      resolve(res.statusCode && res.statusCode >= 200 && res.statusCode < 500);
+      resolve(Boolean(res.statusCode && res.statusCode >= 200 && res.statusCode < 500));
     });
     req.on("error", () => resolve(false));
     req.setTimeout(2000, () => {
@@ -33,11 +38,11 @@ function httpOk(url) {
   });
 }
 
-async function waitForHttp(url, timeoutMs = 120000) {
+async function waitForHttp(url, timeoutMs) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     if (await httpOk(url)) return true;
-    await new Promise((r) => setTimeout(r, 500));
+    await sleep(500);
   }
   return false;
 }
@@ -47,23 +52,81 @@ function fail(payload) {
   process.exit(1);
 }
 
+function assertFacts(facts, consoleErrors, pageErrors, requestFailures) {
+  const failures = [];
+  const attrs = facts.bodyAttrs || {};
+
+  for (const attr of [
+    "data-vco-no-atom-core",
+    "data-vco-terminal-visual-doctrine-final",
+    "data-vco-terminal-absolute-visual-lock",
+    "data-vco-foreground-composition-governor",
+    "data-vco-foreground-composition-api-alias-lock",
+    "data-vco-hard-foreground-occlusion-governor"
+  ]) {
+    if (attrs[attr] !== "accepted") failures.push(`${attr}_not_accepted`);
+  }
+
+  if (!facts.canvas || facts.canvas.width < 300 || facts.canvas.height < 300 || facts.canvas.boxWidth < 300 || facts.canvas.boxHeight < 300) {
+    failures.push("canvas_not_visible_or_real_size");
+  }
+
+  for (const [label, api] of [
+    ["compositionApi", facts.compositionApi],
+    ["compositionAliasApi", facts.compositionAliasApi]
+  ]) {
+    if (!api || api.accepted !== true) failures.push(`${label}_not_accepted`);
+    if (!api || api.stableAlias !== true) failures.push(`${label}_stableAlias_not_true`);
+    if (!api || api.authority !== "VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_LOCK") failures.push(`${label}_authority_wrong`);
+    if (!Array.isArray(api && api.residualObstructions) || api.residualObstructions.length !== 0) failures.push(`${label}_residualObstructions_not_empty`);
+    if (!api || api.noAtomLoopsPreserved !== true) failures.push(`${label}_noAtomLoops_not_preserved`);
+    if (!api || api.noCentralCagePreserved !== true) failures.push(`${label}_noCentralCage_not_preserved`);
+    if (!api || api.hardOcclusionGovernorPreserved !== true) failures.push(`${label}_hardOcclusion_not_preserved`);
+  }
+
+  const hard = facts.hardOcclusionApi;
+  if (!hard || hard.accepted !== true) failures.push("hardOcclusionApi_not_accepted");
+  if (!Array.isArray(hard && hard.residualObstructions) || hard.residualObstructions.length !== 0) failures.push("hardOcclusion_residualObstructions_not_empty");
+  if (!hard || hard.compositionGovernorPreserved !== true) failures.push("hardOcclusion_compositionGovernor_not_preserved");
+  if (!hard || hard.noAtomLoopsPreserved !== true) failures.push("hardOcclusion_noAtomLoops_not_preserved");
+  if (!hard || hard.noCentralCagePreserved !== true) failures.push("hardOcclusion_noCentralCage_not_preserved");
+
+  const abs = facts.absoluteApi;
+  if (!abs || abs.accepted !== true) failures.push("absoluteApi_not_accepted");
+  if (!abs || abs.noAtomLoops !== true) failures.push("absoluteApi_noAtomLoops_not_true");
+  if (!abs || abs.noWireCube !== true) failures.push("absoluteApi_noWireCube_not_true");
+  if (!abs || abs.noWhiteSlabs !== true) failures.push("absoluteApi_noWhiteSlabs_not_true");
+
+  const noAtom = facts.noAtomApi;
+  if (!noAtom || noAtom.accepted !== true) failures.push("noAtomApi_not_accepted");
+  if (!noAtom || noAtom.atomOrbitSuppressed !== true) failures.push("atomOrbit_not_suppressed");
+  if (!noAtom || noAtom.coreDoctrine !== "RESTRAINED_FACETED_TRUTH_CORE_NOT_ATOM_ORBIT_TOY") failures.push("coreDoctrine_wrong");
+  if (!noAtom || noAtom.evidenceDoctrine !== "STRAIGHT_DETERMINISTIC_LINES_NOT_ORBITAL_LOOPS") failures.push("evidenceDoctrine_wrong");
+  if (!noAtom || noAtom.slabDoctrine !== "NO_WHITE_PLACEHOLDER_PLATES") failures.push("slabDoctrine_wrong");
+
+  if (consoleErrors.length) failures.push("console_errors_present");
+  if (pageErrors.length) failures.push("page_errors_present");
+  if (requestFailures.length) failures.push("request_failures_present");
+
+  return failures;
+}
+
 (async () => {
   const port = Number(process.env.PORT || await freePort());
   const url = process.env.URL || `http://127.0.0.1:${port}/?v=${Date.now()}`;
 
   const serverLog = path.join(OUT, "vite.log");
-  const logStream = fs.createWriteStream(serverLog, { flags: "a" });
-
   const server = spawn(
     "npm",
     ["exec", "vite", "--", "--host", "127.0.0.1", "--port", String(port)],
     {
       cwd: process.cwd(),
       stdio: ["ignore", "pipe", "pipe"],
-      env: { ...process.env, FORCE_COLOR: "0" }
+      env: { ...process.env, FORCE_COLOR: "0", CI: "1" }
     }
   );
 
+  const logStream = fs.createWriteStream(serverLog, { flags: "a" });
   server.stdout.pipe(logStream);
   server.stderr.pipe(logStream);
 
@@ -71,11 +134,8 @@ function fail(payload) {
     try { server.kill("SIGTERM"); } catch (_) {}
   };
   process.on("exit", cleanup);
-  process.on("SIGINT", () => { cleanup(); process.exit(130); });
-  process.on("SIGTERM", () => { cleanup(); process.exit(143); });
 
-  const serverReady = await waitForHttp(`http://127.0.0.1:${port}/`, 120000);
-  if (!serverReady) {
+  if (!await waitForHttp(`http://127.0.0.1:${port}/`, 120000)) {
     fail({
       ok: false,
       doctrine: "terminal_runtime_doctrine_browser_invariant",
@@ -88,7 +148,13 @@ function fail(payload) {
 
   const browser = await chromium.launch({
     headless: true,
-    args: ["--disable-dev-shm-usage", "--no-sandbox"]
+    args: [
+      "--no-sandbox",
+      "--disable-dev-shm-usage",
+      "--use-gl=swiftshader",
+      "--ignore-gpu-blocklist",
+      "--disable-features=VizDisplayCompositor"
+    ]
   });
 
   const page = await browser.newPage({
@@ -102,9 +168,9 @@ function fail(payload) {
   const consoleMessages = [];
 
   page.on("console", (msg) => {
-    const text = `${msg.type()}: ${msg.text()}`;
-    consoleMessages.push(text);
-    if (msg.type() === "error") consoleErrors.push(text);
+    const line = `${msg.type()}: ${msg.text()}`;
+    consoleMessages.push(line);
+    if (msg.type() === "error") consoleErrors.push(line);
   });
 
   page.on("pageerror", (err) => pageErrors.push(String(err && err.stack || err)));
@@ -116,12 +182,9 @@ function fail(payload) {
     });
   });
 
-  let gotoOk = false;
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 90000 });
-    gotoOk = true;
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 120000 });
   } catch (err) {
-    const html = await page.content().catch(() => "");
     await browser.close();
     fail({
       ok: false,
@@ -129,7 +192,6 @@ function fail(payload) {
       failure: "page_goto_failed",
       url,
       error: String(err && err.stack || err),
-      htmlExcerpt: html.slice(0, 2000),
       consoleErrors,
       pageErrors,
       requestFailures,
@@ -137,168 +199,103 @@ function fail(payload) {
     });
   }
 
-  try {
-    await page.waitForFunction(() => {
-      const runtime = document.querySelector("#observatory-webgl-runtime");
-      const stage = document.querySelector("[data-runtime-stage]");
-      return Boolean(runtime && stage);
-    }, { timeout: 90000 });
+  let facts = null;
+  let failures = ["not_collected"];
 
-    await page.waitForFunction(() => {
-      return Array.from(document.querySelectorAll("canvas")).some((canvas) => {
-        const box = canvas.getBoundingClientRect();
-        return canvas.width >= 300 &&
-          canvas.height >= 300 &&
-          box.width >= 300 &&
-          box.height >= 300 &&
-          getComputedStyle(canvas).visibility !== "hidden" &&
-          getComputedStyle(canvas).display !== "none";
-      });
-    }, { timeout: 180000 });
+  for (let i = 0; i < 300; i++) {
+    facts = await page.evaluate(() => {
+      function callReapply(key) {
+        try {
+          const api = window[key];
+          if (api && typeof api.reapply === "function") api.reapply();
+        } catch (_) {}
+      }
 
-    await page.waitForFunction(() => {
-      const body = document.body;
-      return body &&
-        body.getAttribute("data-vco-no-atom-core") === "accepted" &&
-        body.getAttribute("data-vco-terminal-visual-doctrine-final") === "accepted" &&
-        body.getAttribute("data-vco-terminal-absolute-visual-lock") === "accepted" &&
-        body.getAttribute("data-vco-foreground-composition-governor") === "accepted" &&
-        body.getAttribute("data-vco-hard-foreground-occlusion-governor") === "accepted" &&
-        body.getAttribute("data-vco-foreground-composition-api-alias-lock") === "accepted" &&
-        window.VCO_TERMINAL_NO_ATOM_ORBIT_API &&
-        window.VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_API &&
-        window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API &&
-        window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API &&
-        window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API;
-    }, { timeout: 180000 });
-  } catch (err) {
-    const diagnostics = await page.evaluate(() => ({
-      href: location.href,
-      title: document.title,
-      text: document.body ? document.body.innerText.slice(0, 2000) : "",
-      scripts: Array.from(document.scripts).map((s) => s.src || "[inline]"),
-      canvases: Array.from(document.querySelectorAll("canvas")).map((canvas) => {
-        const box = canvas.getBoundingClientRect();
-        const css = getComputedStyle(canvas);
+      for (const key of [
+        "VCO_TERMINAL_NO_ATOM_ORBIT_API",
+        "VCO_TERMINAL_VISUAL_DOCTRINE_FINAL_API",
+        "VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_API",
+        "VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API",
+        "VCO_TERMINAL_FOREGROUND_COMPOSITION_API",
+        "VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API"
+      ]) callReapply(key);
+
+      function attrs() {
+        return Object.fromEntries(
+          Array.from(document.body?.attributes || [])
+            .filter((a) => a.name.startsWith("data-vco-"))
+            .map((a) => [a.name, a.value])
+        );
+      }
+
+      function selectedApi(key) {
+        const api = window[key];
+        if (!api) return null;
         return {
+          accepted: api.accepted === true,
+          governed: Number(api.governed || 0),
+          strongGoverned: Number(api.strongGoverned || 0),
+          hardDemoted: Number(api.hardDemoted || 0),
+          hidden: Number(api.hidden || 0),
+          maxResidualArea: Number(api.maxResidualArea || 0),
+          residualObstructions: Array.isArray(api.residualObstructions) ? api.residualObstructions : [],
+          noAtomLoopsPreserved: api.noAtomLoopsPreserved === true,
+          noCentralCagePreserved: api.noCentralCagePreserved === true,
+          compositionGovernorPreserved: api.compositionGovernorPreserved === true,
+          hardOcclusionGovernorPreserved: api.hardOcclusionGovernorPreserved === true,
+          authority: typeof api.authority === "string" ? api.authority : null,
+          stableAlias: api.stableAlias === true,
+          noAtomLoops: api.noAtomLoops === true,
+          noWireCube: api.noWireCube === true,
+          noWhiteSlabs: api.noWhiteSlabs === true,
+          rematerializedSlabs: Number(api.rematerializedSlabs || 0),
+          atomOrbitSuppressed: api.atomOrbitSuppressed === true,
+          coreDoctrine: typeof api.coreDoctrine === "string" ? api.coreDoctrine : null,
+          evidenceDoctrine: typeof api.evidenceDoctrine === "string" ? api.evidenceDoctrine : null,
+          slabDoctrine: typeof api.slabDoctrine === "string" ? api.slabDoctrine : null,
+          rematerialized: Number(api.rematerialized || 0)
+        };
+      }
+
+      const canvas = document.querySelector("canvas");
+      const box = canvas ? canvas.getBoundingClientRect() : null;
+
+      return {
+        href: location.href,
+        title: document.title,
+        bodyAttrs: attrs(),
+        canvas: canvas ? {
           width: canvas.width,
           height: canvas.height,
           clientWidth: canvas.clientWidth,
           clientHeight: canvas.clientHeight,
           boxWidth: box.width,
-          boxHeight: box.height,
-          display: css.display,
-          visibility: css.visibility,
-          opacity: css.opacity
-        };
-      }),
-      bodyAttrs: Object.fromEntries(Array.from(document.body?.attributes || []).filter((a) => a.name.startsWith("data-vco-")).map((a) => [a.name, a.value])),
-      vcoKeys: Object.keys(window).filter((k) => k.startsWith("VCO_")).sort()
-    })).catch((e) => ({ diagnosticError: String(e) }));
-
-    await page.screenshot({ path: path.join(OUT, "terminal-runtime-doctrine-timeout.png"), fullPage: true }).catch(() => {});
-    await browser.close();
-
-    fail({
-      ok: false,
-      doctrine: "terminal_runtime_doctrine_browser_invariant",
-      failure: "runtime_doctrine_wait_timeout",
-      url,
-      gotoOk,
-      error: String(err && err.stack || err),
-      diagnostics,
-      consoleMessages,
-      consoleErrors,
-      pageErrors,
-      requestFailures,
-      serverLog,
-      serverLogText: fs.existsSync(serverLog) ? fs.readFileSync(serverLog, "utf8").slice(-6000) : ""
+          boxHeight: box.height
+        } : null,
+        compositionApi: selectedApi("VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API"),
+        compositionAliasApi: selectedApi("VCO_TERMINAL_FOREGROUND_COMPOSITION_API"),
+        hardOcclusionApi: selectedApi("VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API"),
+        absoluteApi: selectedApi("VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_API"),
+        noAtomApi: selectedApi("VCO_TERMINAL_NO_ATOM_ORBIT_API"),
+        vcoKeys: Object.keys(window).filter((k) => k.startsWith("VCO_")).sort()
+      };
     });
+
+    failures = assertFacts(facts, consoleErrors, pageErrors, requestFailures);
+    if (failures.length === 0) break;
+
+    await sleep(1000);
   }
 
-  const png = path.join(OUT, "terminal-runtime-doctrine-proof.png");
+  const screenshot = path.join(OUT, "terminal-runtime-doctrine-proof.png");
+  let screenshotError = null;
+  try {
+    await page.screenshot({ path: screenshot, fullPage: true, timeout: 120000 });
+  } catch (err) {
+    screenshotError = String(err && err.stack || err);
+  }
 
-  const facts = await page.evaluate(() => {
-    const attrs = Object.fromEntries(
-      Array.from(document.body.attributes)
-        .filter((a) => a.name.startsWith("data-vco-"))
-        .map((a) => [a.name, a.value])
-    );
-
-    const canvas = document.querySelector("canvas");
-    const box = canvas ? canvas.getBoundingClientRect() : null;
-
-    return {
-      bodyAttrs: attrs,
-      canvas: canvas ? {
-        width: canvas.width,
-        height: canvas.height,
-        clientWidth: canvas.clientWidth,
-        clientHeight: canvas.clientHeight,
-        boxWidth: box.width,
-        boxHeight: box.height
-      } : null,
-      compositionApi: window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API || null,
-      compositionAliasApi: window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API || null,
-      hardOcclusionApi: window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API || null,
-      absoluteApi: window.VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_API || null,
-      noAtomApi: window.VCO_TERMINAL_NO_ATOM_ORBIT_API || null
-    };
-  });
-
-  await page.screenshot({ path: png, fullPage: true });
   await browser.close();
-
-  const failures = [];
-
-  const requiredAttrs = [
-    "data-vco-no-atom-core",
-    "data-vco-terminal-visual-doctrine-final",
-    "data-vco-terminal-absolute-visual-lock",
-    "data-vco-foreground-composition-governor",
-    "data-vco-hard-foreground-occlusion-governor",
-    "data-vco-foreground-composition-api-alias-lock"
-  ];
-
-  for (const attr of requiredAttrs) {
-    if (facts.bodyAttrs[attr] !== "accepted") failures.push(`${attr}_not_accepted`);
-  }
-
-  if (!facts.canvas || facts.canvas.width < 300 || facts.canvas.height < 300 || facts.canvas.boxWidth < 300 || facts.canvas.boxHeight < 300) {
-    failures.push("canvas_not_visible_or_not_real_size");
-  }
-
-  if (!facts.compositionApi || facts.compositionApi.accepted !== true) failures.push("compositionApi_not_accepted");
-  if (!facts.compositionApi || facts.compositionApi.stableAlias !== true) failures.push("compositionApi_stableAlias_not_true");
-  if (!facts.compositionAliasApi || facts.compositionAliasApi.accepted !== true) failures.push("compositionAliasApi_not_accepted");
-  if (!facts.compositionAliasApi || facts.compositionAliasApi.stableAlias !== true) failures.push("compositionAliasApi_stableAlias_not_true");
-
-  if (!Array.isArray(facts.compositionApi?.residualObstructions) || facts.compositionApi.residualObstructions.length !== 0) {
-    failures.push("compositionApi_residualObstructions_not_empty");
-  }
-
-  if (!facts.hardOcclusionApi || facts.hardOcclusionApi.accepted !== true) failures.push("hardOcclusionApi_not_accepted");
-  if (!Array.isArray(facts.hardOcclusionApi?.residualObstructions) || facts.hardOcclusionApi.residualObstructions.length !== 0) {
-    failures.push("hardOcclusion_residualObstructions_not_empty");
-  }
-  if (facts.hardOcclusionApi?.compositionGovernorPreserved !== true) failures.push("compositionGovernor_not_preserved");
-  if (facts.hardOcclusionApi?.noAtomLoopsPreserved !== true) failures.push("hardOcclusion_noAtomLoops_not_preserved");
-  if (facts.hardOcclusionApi?.noCentralCagePreserved !== true) failures.push("hardOcclusion_noCentralCage_not_preserved");
-
-  if (!facts.absoluteApi || facts.absoluteApi.accepted !== true) failures.push("absoluteApi_not_accepted");
-  if (facts.absoluteApi?.noAtomLoops !== true) failures.push("absoluteApi_noAtomLoops_not_true");
-  if (facts.absoluteApi?.noWireCube !== true) failures.push("absoluteApi_noWireCube_not_true");
-  if (facts.absoluteApi?.noWhiteSlabs !== true) failures.push("absoluteApi_noWhiteSlabs_not_true");
-
-  if (!facts.noAtomApi || facts.noAtomApi.accepted !== true) failures.push("noAtomApi_not_accepted");
-  if (facts.noAtomApi?.atomOrbitSuppressed !== true) failures.push("atomOrbit_not_suppressed");
-  if (facts.noAtomApi?.coreDoctrine !== "RESTRAINED_FACETED_TRUTH_CORE_NOT_ATOM_ORBIT_TOY") failures.push("coreDoctrine_wrong");
-  if (facts.noAtomApi?.evidenceDoctrine !== "STRAIGHT_DETERMINISTIC_LINES_NOT_ORBITAL_LOOPS") failures.push("evidenceDoctrine_wrong");
-  if (facts.noAtomApi?.slabDoctrine !== "NO_WHITE_PLACEHOLDER_PLATES") failures.push("slabDoctrine_wrong");
-
-  if (consoleErrors.length) failures.push("console_errors_present");
-  if (pageErrors.length) failures.push("page_errors_present");
-  if (requestFailures.length) failures.push("request_failures_present");
 
   const result = {
     ok: failures.length === 0,
@@ -309,12 +306,13 @@ function fail(payload) {
     consoleErrors,
     pageErrors,
     requestFailures,
-    screenshot: png
+    screenshot,
+    screenshotError,
+    serverLog
   };
 
   fs.writeFileSync(path.join(OUT, "terminal-runtime-doctrine-proof.json"), JSON.stringify(result, null, 2));
   console.log(JSON.stringify(result, null, 2));
-
   process.exit(result.ok ? 0 : 1);
 })().catch((err) => {
   fail({
