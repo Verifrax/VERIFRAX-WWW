@@ -13,6 +13,7 @@
     "check:observatory": "npm run check:observatory-constitution && npm run check:observatory-attestation && npm run check:observatory-runtime-boot && npm run check:observatory-real3d-hardening && npm run check:observatory-terminal-visual-doctrine && npm run check:observatory-terminal-runtime-doctrine && npm run check:observatory-browser-authority",
     "check:observatory-browser-authority": "node scripts/check-observatory-browser-authority.cjs",
     "check:observatory-terminal-visual-doctrine": "node scripts/check-observatory-terminal-visual-doctrine.mjs",
-    "check:observatory-terminal-runtime-doctrine": "node scripts/check-observatory-terminal-runtime-doctrine.cjs"
+    "check:observatory-terminal-runtime-doctrine": "node scripts/check-observatory-terminal-runtime-doctrine.cjs",
+    "check:observatory-live-runtime-doctrine": "node scripts/check-observatory-live-runtime-doctrine.cjs"
   }
 }
