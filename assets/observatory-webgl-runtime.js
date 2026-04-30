@@ -2990,6 +2990,260 @@ function advanceJourney() {
  /* END VCO TERMINAL FOREGROUND COMPOSITION GOVERNOR */
 
 
+/* BEGIN VCO TERMINAL HARD FOREGROUND OCCLUSION GOVERNOR */
+(function vcoTerminalHardForegroundOcclusionGovernor(){
+  if (window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_GOVERNOR_AUTHORITY) return;
+  window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_GOVERNOR_AUTHORITY = true;
+
+  function handles() {
+    return (
+      window.VCO_TERMINAL_NO_ATOM_HANDLES ||
+      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES ||
+      window.VCO_REFERENCE_GEOMETRY_HANDLES ||
+      window.VCO_OBSERVATORY_RUNTIME_HANDLES ||
+      {
+        THREE: window.THREE || globalThis.THREE,
+        scene: window.VCO_OBSERVATORY_SCENE || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE,
+        camera: window.VCO_OBSERVATORY_CAMERA || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA,
+        renderer: window.VCO_OBSERVATORY_RENDERER || window.VCO_REFERENCE_GEOMETRY_LIVE_RENDERER
+      }
+    );
+  }
+
+  function textOf(obj) {
+    return (
+      String(obj.name || "") + " " +
+      String(obj.type || "") + " " +
+      String(obj.geometry && obj.geometry.type || "") + " " +
+      JSON.stringify(obj.userData || {})
+    ).toLowerCase();
+  }
+
+  function isLabelLike(obj) {
+    const t = textOf(obj);
+    return obj.type === "Sprite" || /label|text|glyph|caption|badge/.test(t);
+  }
+
+  function materialList(obj) {
+    if (!obj || !obj.material) return [];
+    return Array.isArray(obj.material) ? obj.material.filter(Boolean) : [obj.material];
+  }
+
+  function governedMaterial(THREE, src, red) {
+    const m = src && src.clone ? src.clone() : new THREE.MeshPhysicalMaterial();
+    m.color = new THREE.Color(red ? 0x240707 : 0x06111a);
+    m.emissive = new THREE.Color(red ? 0x250202 : 0x010914);
+    m.emissiveIntensity = red ? 0.10 : 0.08;
+    m.roughness = 0.82;
+    m.metalness = 0.54;
+    m.transparent = true;
+    m.opacity = red ? 0.46 : 0.58;
+    m.depthWrite = true;
+    m.needsUpdate = true;
+    return m;
+  }
+
+  function world(THREE, obj) {
+    const v = new THREE.Vector3();
+    try { obj.getWorldPosition(v); } catch (_) {}
+    return v;
+  }
+
+  function screenBox(THREE, obj, camera) {
+    const box = new THREE.Box3();
+    try { box.setFromObject(obj); } catch (_) { return null; }
+
+    if (box.isEmpty()) return null;
+    if (!Number.isFinite(box.min.x) || !Number.isFinite(box.max.x)) return null;
+
+    const pts = [
+      [box.min.x, box.min.y, box.min.z],
+      [box.min.x, box.min.y, box.max.z],
+      [box.min.x, box.max.y, box.min.z],
+      [box.min.x, box.max.y, box.max.z],
+      [box.max.x, box.min.y, box.min.z],
+      [box.max.x, box.min.y, box.max.z],
+      [box.max.x, box.max.y, box.min.z],
+      [box.max.x, box.max.y, box.max.z]
+    ].map(([x,y,z]) => new THREE.Vector3(x,y,z).project(camera));
+
+    const xs = pts.map(v => (v.x + 1) / 2).filter(Number.isFinite);
+    const ys = pts.map(v => (1 - v.y) / 2).filter(Number.isFinite);
+    if (!xs.length || !ys.length) return null;
+
+    const minX = Math.max(0, Math.min(...xs));
+    const maxX = Math.min(1, Math.max(...xs));
+    const minY = Math.max(0, Math.min(...ys));
+    const maxY = Math.min(1, Math.max(...ys));
+    const width = Math.max(0, maxX - minX);
+    const height = Math.max(0, maxY - minY);
+
+    return {
+      minX, maxX, minY, maxY,
+      cx: (minX + maxX) / 2,
+      cy: (minY + maxY) / 2,
+      width, height,
+      area: width * height
+    };
+  }
+
+  function candidate(obj) {
+    if (!obj || !obj.isMesh || isLabelLike(obj)) return false;
+
+    const t = textOf(obj);
+    const meshPrimitive = /boxgeometry|planegeometry|extrudegeometry|buffergeometry/.test(t);
+    const semanticMass = /admissorium|contradiction|gate|border|front|slab|panel|block|cube|frame/.test(t);
+
+    return meshPrimitive || semanticMass;
+  }
+
+  function saveOriginal(obj) {
+    obj.userData = obj.userData || {};
+    if (!obj.userData.VCO_HARD_OCCLUSION_ORIGINAL) {
+      obj.userData.VCO_HARD_OCCLUSION_ORIGINAL = {
+        sx: obj.scale.x, sy: obj.scale.y, sz: obj.scale.z,
+        px: obj.position.x, py: obj.position.y, pz: obj.position.z
+      };
+    }
+    return obj.userData.VCO_HARD_OCCLUSION_ORIGINAL;
+  }
+
+  function applyMaterial(THREE, obj, red) {
+    const mats = materialList(obj);
+    if (!mats.length) return;
+
+    if (Array.isArray(obj.material)) {
+      obj.material = mats.map(m => governedMaterial(THREE, m, red));
+    } else {
+      obj.material = governedMaterial(THREE, mats[0], red);
+    }
+  }
+
+  function apply() {
+    const h = handles();
+    const THREE = h.THREE || window.THREE || globalThis.THREE;
+    const scene = h.scene || window.VCO_OBSERVATORY_SCENE || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE;
+    const camera = h.camera || window.VCO_OBSERVATORY_CAMERA || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA;
+
+    if (!THREE || !scene || !scene.isScene || !camera) return false;
+
+    let governed = 0;
+    let hardDemoted = 0;
+    let hidden = 0;
+    const residuals = [];
+
+    scene.traverse((obj) => {
+      if (!candidate(obj)) return;
+
+      const b = screenBox(THREE, obj, camera);
+      if (!b) return;
+
+      const pos = world(THREE, obj);
+      const radial = Math.hypot(pos.x, pos.z);
+      const t = textOf(obj);
+
+      const foreground = b.cy > 0.42 || b.maxY > 0.58;
+      const compositionField = b.cx > 0.02 && b.cx < 0.96 && radial < 42;
+      const redGate = /admissorium|contradiction|gate|border/.test(t);
+      const bigDarkBlock = b.area > 0.020 && b.maxY > 0.50;
+      const nearCoreOccluder = b.cx > 0.18 && b.cx < 0.82 && b.area > 0.012 && b.cy > 0.36;
+
+      if (!(compositionField && foreground && (redGate || bigDarkBlock || nearCoreOccluder))) return;
+
+      const o = saveOriginal(obj);
+
+      let factor = 0.58;
+      if (redGate) factor = 0.34;
+      if (b.area > 0.16) factor = Math.min(factor, 0.24);
+      else if (b.area > 0.10) factor = Math.min(factor, 0.30);
+      else if (b.area > 0.055) factor = Math.min(factor, 0.40);
+
+      obj.scale.set(o.sx * factor, o.sy * factor, o.sz * factor);
+      obj.position.set(
+        o.px,
+        o.py - Math.min(2.20, 0.48 + b.area * 5.0 + (redGate ? 0.78 : 0)),
+        o.pz + (redGate ? 1.05 : 0.28)
+      );
+
+      applyMaterial(THREE, obj, redGate);
+
+      obj.userData.VCO_HARD_FOREGROUND_OCCLUSION_GOVERNED = true;
+      obj.userData.VCO_HARD_FOREGROUND_OCCLUSION_FACTOR = factor;
+
+      governed += 1;
+      if (factor <= 0.40) hardDemoted += 1;
+
+      if (b.area > 0.24 && !redGate) {
+        obj.visible = false;
+        obj.userData.VCO_HARD_FOREGROUND_OCCLUSION_HIDDEN = true;
+        hidden += 1;
+      }
+    });
+
+    scene.traverse((obj) => {
+      if (!candidate(obj) || isLabelLike(obj)) return;
+
+      const b = screenBox(THREE, obj, camera);
+      if (!b) return;
+
+      const pos = world(THREE, obj);
+      const radial = Math.hypot(pos.x, pos.z);
+      const t = textOf(obj);
+
+      const residual = (
+        radial < 42 &&
+        b.cy > 0.42 &&
+        b.maxY > 0.58 &&
+        b.cx > 0.03 &&
+        b.cx < 0.94 &&
+        b.area > 0.090 &&
+        !/accepted.truth|truth.core|label|text|glyph/.test(t)
+      );
+
+      if (residual) {
+        residuals.push({
+          name: String(obj.name || ""),
+          type: String(obj.type || ""),
+          geometry: String(obj.geometry && obj.geometry.type || ""),
+          area: Number(b.area.toFixed(4)),
+          cx: Number(b.cx.toFixed(4)),
+          cy: Number(b.cy.toFixed(4)),
+          redGate: /admissorium|contradiction|gate|border/.test(t)
+        });
+      }
+    });
+
+    document.body.setAttribute("data-vco-hard-foreground-occlusion-governor", "accepted");
+
+    window.VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API = {
+      accepted: true,
+      governed,
+      hardDemoted,
+      hidden,
+      residualObstructions: residuals,
+      noAtomLoopsPreserved: document.body.getAttribute("data-vco-no-atom-core") === "accepted",
+      noCentralCagePreserved: document.body.getAttribute("data-vco-terminal-absolute-visual-lock") === "accepted",
+      compositionGovernorPreserved: document.body.getAttribute("data-vco-foreground-composition-governor") === "accepted",
+      reapply: apply
+    };
+
+    return true;
+  }
+
+  let tries = 0;
+  const timer = window.setInterval(() => {
+    tries += 1;
+    apply();
+    if (tries > 340) window.clearInterval(timer);
+  }, 80);
+
+  window.addEventListener("load", () => setTimeout(apply, 80));
+  window.addEventListener("resize", () => setTimeout(apply, 80));
+  window.addEventListener("pointermove", () => apply(), { passive: true });
+})();
+ /* END VCO TERMINAL HARD FOREGROUND OCCLUSION GOVERNOR */
+
+
 
 
 
