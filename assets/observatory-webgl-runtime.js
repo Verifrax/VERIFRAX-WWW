@@ -1310,6 +1310,18 @@ window.addEventListener("mousemove", (event) => {
 
 
 
+  /* BEGIN VCO TERMINAL NO ATOM HANDLE EXPORT */
+  if (typeof window !== "undefined") {
+    window.THREE = THREE;
+    globalThis.THREE = THREE;
+    window.VCO_TERMINAL_NO_ATOM_HANDLES = { THREE, scene, camera, renderer };
+    window.VCO_OBSERVATORY_SCENE = window.VCO_OBSERVATORY_SCENE || scene;
+    window.VCO_OBSERVATORY_CAMERA = window.VCO_OBSERVATORY_CAMERA || camera;
+    window.VCO_OBSERVATORY_RENDERER = window.VCO_OBSERVATORY_RENDERER || renderer;
+  }
+  /* END VCO TERMINAL NO ATOM HANDLE EXPORT */
+
+
 
 
   /* BEGIN VCO CINEMATIC REAL3D HANDLE BINDING */
@@ -2041,6 +2053,293 @@ function advanceJourney() {
   window.addEventListener("resize", () => setTimeout(terminalApi, 50));
 })();
 /* END VCO LIVE TERMINAL INSTITUTIONAL API GUARANTEE */
+
+
+/* BEGIN VCO TERMINAL NO ATOM ORBIT AUTHORITY */
+(function vcoTerminalNoAtomOrbitAuthority(){
+  if (window.VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY) return;
+  window.VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY = true;
+
+  const AUTHORITY = "VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY";
+  const CORE_GROUP = "VCO_TERMINAL_RESTRAINED_TRUTH_ARCHITECTURE";
+
+  function handles() {
+    return (
+      window.VCO_TERMINAL_NO_ATOM_HANDLES ||
+      window.VCO_REFERENCE_GEOMETRY_LIVE_HANDLES ||
+      window.VCO_REFERENCE_GEOMETRY_HANDLES ||
+      window.VCO_OBSERVATORY_RUNTIME_HANDLES ||
+      {
+        THREE: window.THREE || globalThis.THREE,
+        scene: window.VCO_OBSERVATORY_SCENE || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE,
+        camera: window.VCO_OBSERVATORY_CAMERA || window.VCO_REFERENCE_GEOMETRY_LIVE_CAMERA,
+        renderer: window.VCO_OBSERVATORY_RENDERER || window.VCO_REFERENCE_GEOMETRY_LIVE_RENDERER
+      }
+    );
+  }
+
+  function mat(THREE, spec) {
+    return new THREE.MeshPhysicalMaterial({
+      color: spec.color,
+      roughness: spec.roughness ?? 0.42,
+      metalness: spec.metalness ?? 0.52,
+      emissive: spec.emissive ?? 0x000000,
+      emissiveIntensity: spec.emissiveIntensity ?? 0,
+      transparent: spec.transparent ?? false,
+      opacity: spec.opacity ?? 1,
+      transmission: spec.transmission ?? 0,
+      thickness: spec.thickness ?? 0,
+      clearcoat: spec.clearcoat ?? 0.4,
+      clearcoatRoughness: spec.clearcoatRoughness ?? 0.22
+    });
+  }
+
+  function worldDistanceXZ(THREE, obj) {
+    const v = new THREE.Vector3();
+    try { obj.getWorldPosition(v); } catch { return Infinity; }
+    return Math.hypot(v.x, v.z);
+  }
+
+  function hideAtomOrbits(THREE, scene) {
+    let hidden = 0;
+
+    scene.traverse((obj) => {
+      if (!obj || obj.name === CORE_GROUP) return;
+
+      const name = String(obj.name || "");
+      const type = String(obj.type || "");
+      const gtype = String(obj.geometry?.type || "");
+      const tag = String(
+        obj.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY ||
+        obj.userData?.VCO_REFERENCE_GEOMETRY_AUTHORITY ||
+        ""
+      );
+
+      const dist = worldDistanceXZ(THREE, obj);
+      const coreLocal = dist < 8.25;
+
+      const explicitAtom =
+        /atom|orbit|torus|knot|orbital|cage/i.test(name + " " + tag + " " + gtype);
+
+      const curvedCoreGeometry =
+        coreLocal && /Torus|TorusKnot|Tube|Curve|Loop/i.test(gtype + " " + type);
+
+      const coreLineNoise =
+        coreLocal &&
+        /Line|LineLoop|LineSegments/i.test(type) &&
+        !/TERMINAL_STRAIGHT_EVIDENCE|DETERMINISTIC_EVIDENCE/i.test(name + " " + tag);
+
+      if (explicitAtom || curvedCoreGeometry || coreLineNoise) {
+        obj.visible = false;
+        obj.userData = obj.userData || {};
+        obj.userData.VCO_TERMINAL_NO_ATOM_SUPPRESSED = true;
+        hidden += 1;
+      }
+    });
+
+    return hidden;
+  }
+
+  function rematerializeWhiteSlabs(THREE, scene, materials) {
+    let changed = 0;
+
+    scene.traverse((obj) => {
+      if (!obj?.isMesh || !obj.material || !obj.geometry) return;
+
+      const dist = worldDistanceXZ(THREE, obj);
+      const gtype = String(obj.geometry.type || "");
+      const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+
+      const bright = mats.some((m) =>
+        m?.color &&
+        m.color.r > 0.70 &&
+        m.color.g > 0.70 &&
+        m.color.b > 0.70
+      );
+
+      if (bright && dist < 26 && /Box|Plane|Extrude/.test(gtype)) {
+        obj.material = materials.darkPlate;
+        obj.userData = obj.userData || {};
+        obj.userData.VCO_TERMINAL_PLACEHOLDER_SLAB_REMATERIALIZED = true;
+        changed += 1;
+      }
+    });
+
+    return changed;
+  }
+
+  function cylinderBetween(THREE, a, b, radius, material, name) {
+    const from = new THREE.Vector3(a[0], a[1], a[2]);
+    const to = new THREE.Vector3(b[0], b[1], b[2]);
+    const dir = new THREE.Vector3().subVectors(to, from);
+    const len = dir.length();
+
+    const mesh = new THREE.Mesh(
+      new THREE.CylinderGeometry(radius, radius, len, 12, 1),
+      material
+    );
+
+    mesh.name = name;
+    mesh.position.copy(from).add(to).multiplyScalar(0.5);
+    mesh.quaternion.setFromUnitVectors(
+      new THREE.Vector3(0, 1, 0),
+      dir.clone().normalize()
+    );
+    mesh.castShadow = false;
+    mesh.receiveShadow = false;
+    mesh.userData.VCO_TERMINAL_STRAIGHT_EVIDENCE = true;
+    mesh.userData.VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY = true;
+
+    return mesh;
+  }
+
+  function addBoxBar(THREE, group, material, name, pos, scale) {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+    m.name = name;
+    m.position.set(pos[0], pos[1], pos[2]);
+    m.scale.set(scale[0], scale[1], scale[2]);
+    m.castShadow = true;
+    m.receiveShadow = true;
+    m.userData.VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY = true;
+    group.add(m);
+    return m;
+  }
+
+  function installRestrainedCore(THREE, scene, materials) {
+    const existing = scene.getObjectByName(CORE_GROUP);
+    if (existing) return false;
+
+    const group = new THREE.Group();
+    group.name = CORE_GROUP;
+    group.userData.VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY = true;
+
+    const crystal = new THREE.Mesh(
+      new THREE.DodecahedronGeometry(2.15, 1),
+      materials.truthGlass
+    );
+    crystal.name = "VCO_ACCEPTED_TRUTH_RESTRAINED_FACETED_CORE";
+    crystal.position.set(0, 3.42, 0);
+    crystal.scale.set(1.08, 0.78, 1.08);
+    crystal.castShadow = true;
+    crystal.receiveShadow = true;
+    crystal.userData.VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY = true;
+    group.add(crystal);
+
+    const inner = new THREE.Mesh(
+      new THREE.OctahedronGeometry(1.14, 0),
+      materials.evidence
+    );
+    inner.name = "VCO_ACCEPTED_TRUTH_INNER_EVIDENCE_POLYHEDRON";
+    inner.position.set(0, 3.42, 0);
+    inner.userData.VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY = true;
+    group.add(inner);
+
+    const y = 3.42;
+    const s = 2.72;
+    const t = 0.055;
+
+    [
+      [[0,y+s, s],[s*2,t,t]], [[0,y+s,-s],[s*2,t,t]], [[0,y-s, s],[s*2,t,t]], [[0,y-s,-s],[s*2,t,t]],
+      [[ s,y+s,0],[t,t,s*2]], [[-s,y+s,0],[t,t,s*2]], [[ s,y-s,0],[t,t,s*2]], [[-s,y-s,0],[t,t,s*2]],
+      [[ s,y, s],[t,s*2,t]], [[-s,y, s],[t,s*2,t]], [[ s,y,-s],[t,s*2,t]], [[-s,y,-s],[t,s*2,t]]
+    ].forEach(([pos, scale], i) => {
+      addBoxBar(THREE, group, materials.evidence, "VCO_ACCEPTED_TRUTH_ORTHOGONAL_RESTRAINT_" + String(i + 1).padStart(2, "0"), pos, scale);
+    });
+
+    for (let i = 0; i < 9; i += 1) {
+      const angle = (i / 9) * Math.PI * 2;
+      const end = [Math.sin(angle) * 12.0, 3.05, Math.cos(angle) * 12.0];
+      group.add(cylinderBetween(
+        THREE,
+        [0, 3.42, 0],
+        end,
+        0.028,
+        materials.evidence,
+        "VCO_TERMINAL_STRAIGHT_EVIDENCE_TO_CHAMBER_" + String(i + 1).padStart(2, "0")
+      ));
+    }
+
+    scene.add(group);
+    return true;
+  }
+
+  function apply() {
+    const h = handles();
+    const THREE = h.THREE || window.THREE || globalThis.THREE;
+    const scene = h.scene || window.VCO_OBSERVATORY_SCENE || window.VCO_REFERENCE_GEOMETRY_LIVE_SCENE;
+
+    if (!THREE || !scene?.isScene) return false;
+
+    const materials = {
+      truthGlass: mat(THREE, {
+        color: 0x9feaff,
+        roughness: 0.08,
+        metalness: 0.08,
+        transmission: 0.34,
+        thickness: 2.0,
+        transparent: true,
+        opacity: 0.52,
+        emissive: 0x1699c6,
+        emissiveIntensity: 0.38,
+        clearcoat: 0.88,
+        clearcoatRoughness: 0.06
+      }),
+      evidence: mat(THREE, {
+        color: 0xb8f4ff,
+        roughness: 0.16,
+        metalness: 0.18,
+        emissive: 0x55d8ff,
+        emissiveIntensity: 1.72,
+        clearcoat: 0.72,
+        clearcoatRoughness: 0.10
+      }),
+      darkPlate: mat(THREE, {
+        color: 0x1b3340,
+        roughness: 0.46,
+        metalness: 0.82,
+        emissive: 0x063f58,
+        emissiveIntensity: 0.18,
+        clearcoat: 0.50
+      })
+    };
+
+    const hidden = hideAtomOrbits(THREE, scene);
+    const rematerialized = rematerializeWhiteSlabs(THREE, scene, materials);
+    const installed = installRestrainedCore(THREE, scene, materials);
+
+    scene.userData = scene.userData || {};
+    scene.userData.VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY = true;
+
+    document.body.setAttribute("data-vco-no-atom-core", "accepted");
+
+    window.VCO_TERMINAL_NO_ATOM_ORBIT_API = {
+      accepted: true,
+      authority: AUTHORITY,
+      atomOrbitSuppressed: true,
+      coreDoctrine: "RESTRAINED_FACETED_TRUTH_CORE_NOT_ATOM_ORBIT_TOY",
+      evidenceDoctrine: "STRAIGHT_DETERMINISTIC_LINES_NOT_ORBITAL_LOOPS",
+      slabDoctrine: "NO_WHITE_PLACEHOLDER_PLATES",
+      hidden,
+      rematerialized,
+      installed,
+      reapply: apply
+    };
+
+    return true;
+  }
+
+  let tries = 0;
+  const timer = setInterval(() => {
+    tries += 1;
+    const ok = apply();
+    if (ok && tries > 12) clearInterval(timer);
+    if (tries > 120) clearInterval(timer);
+  }, 100);
+
+  window.addEventListener("load", () => setTimeout(apply, 160));
+  window.addEventListener("resize", () => setTimeout(apply, 160));
+})();
+ /* END VCO TERMINAL NO ATOM ORBIT AUTHORITY */
 
 
 
