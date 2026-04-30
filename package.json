@@ -1,0 +1,15 @@
+{
+  "name": "@verifrax/www",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Canonical root surface for www.verifrax.net. Public entry only.",
+  "type": "module",
+  "license": "MPL-2.0",
+  "scripts": {
+    "check:observatory-constitution": "node scripts/check-observatory-constitution.mjs",
+    "check:observatory-attestation": "node scripts/check-observatory-attestation.mjs",
+    "check:observatory-runtime-boot": "node scripts/check-observatory-runtime-boot.mjs",
+    "check:observatory-real3d-hardening": "node scripts/check-observatory-real3d-hardening.mjs",
+    "check:observatory": "npm run check:observatory-constitution && npm run check:observatory-attestation && npm run check:observatory-runtime-boot && npm run check:observatory-real3d-hardening"
+  }
+}
