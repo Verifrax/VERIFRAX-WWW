@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.verifrax.net/sitemap.xml
+Sitemap: https://verifrax.net/sitemap.xml
