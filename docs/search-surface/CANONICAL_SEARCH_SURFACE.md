@@ -8,9 +8,9 @@ https://www.verifrax.net/
 
 The public root is the VERIFRAX Constitutional Observatory and routing surface.
 
-It is not the historical Genesis Certificate commercial surface.
+It is not an early commercial certificate/pricing page.
 
-Legacy search snippets referring to Genesis Certificate execution, command-line certificate verification copy, or early pricing tiers are stale search-index memory and do not define the current public root.
+Legacy snippets that describe early certificate execution, command-line certificate-verification copy, or fixed euro price tiers are stale search-index memory and do not define the current public root.
 
 Current boundary:
 
@@ -18,14 +18,4 @@ Current boundary:
 VERIFRAX-WWW = public root / Constitutional Observatory / routing surface
 ```
 
-Forbidden current-root copy:
-
-```text
-Genesis Certificate
-verifrax verify certificate.json
-€120
-€650
-€1500
-```
-
-Those phrases may exist only in explicitly historical protocol material outside the current public root.
+Those retired phrases may exist only in explicitly historical protocol material that is not presented as the current public root.
