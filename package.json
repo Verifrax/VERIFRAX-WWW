@@ -16,6 +16,7 @@
     "check:observatory-terminal-runtime-doctrine": "node scripts/check-observatory-terminal-runtime-doctrine.cjs",
     "check:observatory-live-runtime-doctrine": "node scripts/check-observatory-live-runtime-doctrine.cjs",
     "emit:search-metadata": "node scripts/emit-search-metadata.cjs",
-    "postbuild": "node scripts/emit-search-metadata.cjs"
+    "postbuild": "node scripts/emit-search-metadata.cjs",
+    "build": "npm run emit:search-metadata"
   }
 }

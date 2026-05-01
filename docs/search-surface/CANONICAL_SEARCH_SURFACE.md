@@ -1,23 +1,14 @@
-# VERIFRAX Canonical Search Surface
+# Canonical Search Surface
 
-The canonical public root is:
+The current public search surface is the live VERIFRAX Observatory root.
 
-```text
-https://www.verifrax.net/
-````
+Live metadata must expose:
 
-The public root is the VERIFRAX Constitutional Observatory and routing surface.
+- `https://www.verifrax.net/robots.txt`
+- `https://www.verifrax.net/sitemap.xml`
+- `https://verifrax.net/robots.txt`
+- `https://verifrax.net/sitemap.xml`
 
-It is not an early commercial certificate/pricing page.
+Robots files declare both sitemap hosts so crawler behavior cannot depend on apex/www routing variance.
 
-Legacy snippets that describe early certificate execution, command-line certificate-verification copy, or fixed euro price tiers are stale search-index memory and do not define the current public root.
-
-Live crawl metadata must be available at:
-
-```text
-https://www.verifrax.net/robots.txt
-https://www.verifrax.net/sitemap.xml
-https://verifrax.net/robots.txt
-https://verifrax.net/sitemap.xml
-```
-
+Retired early-stage copy must not reappear in active root, language-query, Genesis, use-case, pricing, or certificate surfaces.
