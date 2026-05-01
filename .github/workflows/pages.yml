@@ -46,6 +46,8 @@ jobs:
           grep -q "DERIVED_PROJECTION" dist/data/verifrax-observatory.json
 
       - uses: actions/configure-pages@v5
+      - name: Emit search metadata
+        run: node scripts/emit-search-metadata.cjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
