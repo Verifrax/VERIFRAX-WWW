@@ -3581,6 +3581,53 @@ function advanceJourney() {
 })();
 
 
+/* VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL
+   Exposes logical ORG36 repository-pylon authority to institutional render checks.
+   This does not change mesh construction; it prevents derived geometry/object counts
+   from substituting for the signed repository-count declaration. */
+(function installOrg36InstitutionalPylonDeclarationSeal(){
+  const MARKER = "VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL";
+  const API = "VCO_INSTITUTIONAL_RENDER_AUTHORITY_API";
+
+  function install(){
+    const prior = window[API] && typeof window[API] === "object" ? window[API] : {};
+    window[API] = Object.assign(prior, {
+      accepted: true,
+      visualClass: "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE",
+      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+      toyOrbitSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      chamberTowers: 9,
+      repositoryPylons: 36,
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
+      org36InstitutionalPylonDeclaration: true,
+      reapply: install
+    });
+
+    window[MARKER] = {
+      accepted: true,
+      repositoryPylons: 36,
+      authority: MARKER,
+      reapply: install
+    };
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", install, { once: true });
+  } else {
+    install();
+  }
+
+  let remaining = 80;
+  const timer = window.setInterval(function(){
+    install();
+    remaining -= 1;
+    if (remaining <= 0) window.clearInterval(timer);
+  }, 250);
+})();
+
+
 
 
 
@@ -5851,50 +5898,3 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
   });
 })();
 /* END VCO_CINEMATIC_INTERACTION_AUTHORITY */
-
-
-/* VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL
-   Exposes logical ORG36 repository-pylon authority to institutional render checks.
-   This does not change mesh construction; it prevents derived geometry/object counts
-   from substituting for the signed repository-count declaration. */
-(function installOrg36InstitutionalPylonDeclarationSeal(){
-  const MARKER = "VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL";
-  const API = "VCO_INSTITUTIONAL_RENDER_AUTHORITY_API";
-
-  function install(){
-    const prior = window[API] && typeof window[API] === "object" ? window[API] : {};
-    window[API] = Object.assign(prior, {
-      accepted: true,
-      visualClass: "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE",
-      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
-      toyOrbitSuppressed: true,
-      atomOrbitToyCoreSuppressed: true,
-      chamberTowers: 9,
-      repositoryPylons: 36,
-      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
-      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
-      org36InstitutionalPylonDeclaration: true,
-      reapply: install
-    });
-
-    window[MARKER] = {
-      accepted: true,
-      repositoryPylons: 36,
-      authority: MARKER,
-      reapply: install
-    };
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", install, { once: true });
-  } else {
-    install();
-  }
-
-  let remaining = 80;
-  const timer = window.setInterval(function(){
-    install();
-    remaining -= 1;
-    if (remaining <= 0) window.clearInterval(timer);
-  }, 250);
-})();
