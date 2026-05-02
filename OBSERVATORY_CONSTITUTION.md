@@ -336,7 +336,7 @@ The repository perimeter may render only as governed repository structure.
 The expected count is:
 
 ```text
-35 governed repositories
+36 governed repositories
 ```
 
 Repository pillars are permitted only when each repository has:
@@ -540,7 +540,7 @@ CI must enforce at minimum:
 * projection type is `DERIVED_PROJECTION`
 * truth warning is `NOT_TRUTH_SOURCE`
 * render permission is one of the allowed values
-* full render requires 35 repositories
+* full render requires 36 repositories
 * full render requires 9 chambers
 * ADMISSORIUM is front gate only
 * required warning copy exists
@@ -618,7 +618,7 @@ Allowed copy:
 ```text
 Rendered from signed projection data.
 DERIVED_PROJECTION / NOT_TRUTH_SOURCE.
-35 repositories. 9 sovereign chambers. ADMISSORIUM at the border.
+36 repositories. 9 sovereign chambers. ADMISSORIUM at the border.
 ```
 
 Allowed ambition copy:

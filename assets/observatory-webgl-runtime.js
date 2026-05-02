@@ -188,7 +188,7 @@ function assertManifest(manifest, attestation) {
 
   if (manifest?.projection_type !== "DERIVED_PROJECTION") errors.push("projection_type_not_derived");
   if (manifest?.truth_warning !== "NOT_TRUTH_SOURCE") errors.push("truth_warning_missing");
-  if (!Array.isArray(manifest?.repositories) || manifest.repositories.length !== 35) errors.push("repo_count_not_35");
+  if (!Array.isArray(manifest?.repositories) || manifest.repositories.length !== 36) errors.push("repo_count_not_36");
   if (!Array.isArray(manifest?.chambers) || manifest.chambers.length !== 9) errors.push("chamber_count_not_9");
   if (!Array.isArray(manifest?.hosts) || manifest.hosts.length !== 12) errors.push("host_count_not_12");
 
@@ -496,7 +496,7 @@ function createAdmissoriumRepoGate(scene, repo, labels, selectable) {
   selectable.push(group);
   scene.add(group);
 
-  const label = makeLabel("ADMISSORIUM", "repo 35 · front admissibility gate", 760, 200, "#ff8b7e");
+  const label = makeLabel("ADMISSORIUM", "front admissibility gate", 760, 200, "#ff8b7e");
   label.position.set(0, 4.34, 16.92);
   label.userData.visualWeight = "chamber";
   labels.add(label);
