@@ -1,0 +1,446 @@
+{
+  "schema": "verifrax.org36.public-surface-authority-witness.v1",
+  "status": "PASS",
+  "generated_at": "2026-05-02T14:12:28Z",
+  "authority_boundary": {
+    "owner": "Verifrax",
+    "expected_repository_count": 36,
+    "repository_count_live": 36,
+    "stale_34_35_counts_forbidden": true,
+    "repositories": [
+      {
+        "description": "Canonical GitHub governance, community defaults, and organization profile surface for Verifrax repositories.",
+        "isArchived": false,
+        "isFork": false,
+        "name": ".github",
+        "pushedAt": "2026-04-25T15:22:09Z",
+        "url": "https://github.com/Verifrax/.github",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Admissibility enforcement implementation for the VERIFRAX constitutional perimeter.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "ADMISSORIUM",
+        "pushedAt": "2026-04-26T16:35:33Z",
+        "url": "https://github.com/Verifrax/ADMISSORIUM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "",
+        "isArchived": false,
+        "isFork": false,
+        "name": "ANAGNORIUM",
+        "pushedAt": "2026-04-23T19:56:17Z",
+        "url": "https://github.com/Verifrax/ANAGNORIUM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Canonical system architecture, repository topology, host map, and governance boundary for Verifrax.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "ARCHITECTURE",
+        "pushedAt": "2026-04-24T06:02:12Z",
+        "url": "https://github.com/Verifrax/ARCHITECTURE",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Authority issuance system for Verifrax: generates governance seals that authorize execution and bind receipts.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "AUCTORISEAL",
+        "pushedAt": "2026-04-25T06:22:27Z",
+        "url": "https://github.com/Verifrax/AUCTORISEAL",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Reconciler, compiler, repair, and quarantine engine that aligns Verifrax surfaces to law and epoch truth.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "CONSONORIUM",
+        "pushedAt": "2026-04-23T21:14:00Z",
+        "url": "https://github.com/Verifrax/CONSONORIUM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Deterministic execution runtime for Verifrax: authority-governed runs with verifiable receipt output.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "CORPIFORM",
+        "pushedAt": "2026-04-25T06:22:33Z",
+        "url": "https://github.com/Verifrax/CORPIFORM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Canonical world graph, reconciled epochs, proof bundles, and current-state memory for Verifrax.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "ORBISTIUM",
+        "pushedAt": "2026-04-23T21:18:41Z",
+        "url": "https://github.com/Verifrax/ORBISTIUM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "",
+        "isArchived": false,
+        "isFork": false,
+        "name": "REGRESSORIUM",
+        "pushedAt": "2026-05-01T07:49:20Z",
+        "url": "https://github.com/Verifrax/REGRESSORIUM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Deterministic artifact sealing protocol for reproducible integrity bundles independent of identity or blockchain.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "SIGILLARIUM",
+        "pushedAt": "2026-04-24T10:46:40Z",
+        "url": "https://github.com/Verifrax/SIGILLARIUM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Verifrax root registry and governance surface: SPEEDKIT.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "SPEEDKIT",
+        "pushedAt": "2026-04-24T06:06:11Z",
+        "url": "https://github.com/Verifrax/SPEEDKIT",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Constitutional law, invariants, role definitions, and projection contracts for the Verifrax system.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "SYNTAGMARIUM",
+        "pushedAt": "2026-04-23T21:23:27Z",
+        "url": "https://github.com/Verifrax/SYNTAGMARIUM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "v0.1.0 live — bounded sovereign cognition infrastructure for the Verifrax stack.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "TACHYRIUM",
+        "pushedAt": "2026-04-25T09:38:14Z",
+        "url": "https://github.com/Verifrax/TACHYRIUM",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Core Verifrax verification protocol for authority-governed execution, evidence receipts, and deterministic trust.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX",
+        "pushedAt": "2026-05-01T08:28:46Z",
+        "url": "https://github.com/Verifrax/VERIFRAX",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Canonical API source for api.verifrax.net. Execution surface only.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-API",
+        "pushedAt": "2026-05-01T08:38:11Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-API",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Official documentation site for Verifrax systems, repositories, hosts, policies, and public operating surfaces.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-DOCS",
+        "pushedAt": "2026-04-24T10:46:52Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-DOCS",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Schemas, fixtures, and deterministic profile surfaces for Verifrax identity and verification flows.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-PROFILES",
+        "pushedAt": "2026-04-23T21:24:03Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-PROFILES",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Python SDK and CLI implementation boundary for VERIFRAX verification, evidence inspection, API access, and refusal-aware object-chain diagnostics.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-PY",
+        "pushedAt": "2026-05-02T13:18:19Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-PY",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Reference samples and example artifacts for Verifrax verification, evidence, and integration workflows.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-SAMPLES",
+        "pushedAt": "2026-04-23T21:24:11Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-SAMPLES",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Formal Verifrax specification covering contracts, invariants, evidence boundaries, and verification rules.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-SPEC",
+        "pushedAt": "2026-04-23T21:24:20Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-SPEC",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Canonical operational status surface for status.verifrax.net. Status truth only.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-STATUS",
+        "pushedAt": "2026-04-24T14:20:37Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-STATUS",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Canonical surface system for VERIFRAX.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-SURFACE",
+        "pushedAt": "2026-04-24T10:47:05Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-SURFACE",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Canonical root surface for www.verifrax.net Public entry only.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-WWW",
+        "pushedAt": "2026-05-01T09:21:34Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-WWW",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Public verification surface for finality-grade truth checks, proof review, and post-hoc determination.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "VERIFRAX-verify",
+        "pushedAt": "2026-05-01T07:50:10Z",
+        "url": "https://github.com/Verifrax/VERIFRAX-verify",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Application and contributor intake surface for Verifrax: structured submissions, roles, and growth pipeline.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "apply",
+        "pushedAt": "2026-04-24T14:20:32Z",
+        "url": "https://github.com/Verifrax/apply",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Custody-preservation primitive for Verifrax: protects continuity, control, and artifact stewardship boundaries.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "archicustos",
+        "pushedAt": "2026-04-23T20:29:35Z",
+        "url": "https://github.com/Verifrax/archicustos",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Attestation primitive for Verifrax: emits deterministic attestation signals for irreversible verification systems.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "attestorium",
+        "pushedAt": "2026-04-23T20:56:53Z",
+        "url": "https://github.com/Verifrax/attestorium",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Deterministic GitHub enforcement action for Verifrax: irreversible merge-time policy and compliance gating.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "cicullis",
+        "pushedAt": "2026-04-25T06:22:39Z",
+        "url": "https://github.com/Verifrax/cicullis",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Termination primitive for Verifrax: enforces irreversible cut-off and final-stop behavior in governed systems.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "guillotine",
+        "pushedAt": "2026-04-23T20:57:01Z",
+        "url": "https://github.com/Verifrax/guillotine",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Judgment primitive for Verifrax: records irreversible decisions for deterministic trust and compliance systems.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "irrevocull",
+        "pushedAt": "2026-04-23T20:57:09Z",
+        "url": "https://github.com/Verifrax/irrevocull",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Time-boundary primitive for Verifrax: locks temporal conditions for deterministic verification and control.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "kairoclasp",
+        "pushedAt": "2026-04-23T20:45:34Z",
+        "url": "https://github.com/Verifrax/kairoclasp",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Boundary-enforcement primitive for Verifrax: guards entry, transition, and limit conditions in governed systems.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "limenward",
+        "pushedAt": "2026-04-23T20:57:17Z",
+        "url": "https://github.com/Verifrax/limenward",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Origin-sealing primitive for Verifrax: binds artifact origin and provenance for deterministic trust chains.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "originseal",
+        "pushedAt": "2026-04-23T20:57:25Z",
+        "url": "https://github.com/Verifrax/originseal",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Public proof publication surface for Verifrax: canonical proof artifacts, disclosures, and verification references.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "proof",
+        "pushedAt": "2026-04-23T21:38:19Z",
+        "url": "https://github.com/Verifrax/proof",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Verification primitive for Verifrax: deterministic validation logic for irreversible integrity systems.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "validexor",
+        "pushedAt": "2026-04-23T20:16:12Z",
+        "url": "https://github.com/Verifrax/validexor",
+        "visibility": "PUBLIC"
+      },
+      {
+        "description": "Marketplace smoke-test repository for Verifrax actions, releases, and installation-path verification.",
+        "isArchived": false,
+        "isFork": false,
+        "name": "verifrax-marketplace-smoke",
+        "pushedAt": "2026-04-24T10:47:31Z",
+        "url": "https://github.com/Verifrax/verifrax-marketplace-smoke",
+        "visibility": "PUBLIC"
+      }
+    ]
+  },
+  "public_surface": {
+    "repo": "Verifrax/VERIFRAX-WWW",
+    "base_head": "37410006ebd328b19eb4d2c80caa0546f947a3d6",
+    "role": "rendered projection surface",
+    "authority": "does_not_own_truth",
+    "host_roles": [
+      {
+        "name": "www",
+        "url": "https://www.verifrax.net/",
+        "role": "public_projection_not_authority",
+        "http_status": "200"
+      },
+      {
+        "name": "api_health",
+        "url": "https://api.verifrax.net/healthz",
+        "role": "machine_runtime_health",
+        "http_status": "200"
+      },
+      {
+        "name": "api_ready",
+        "url": "https://api.verifrax.net/readyz",
+        "role": "machine_runtime_readiness",
+        "http_status": "200"
+      },
+      {
+        "name": "api_version",
+        "url": "https://api.verifrax.net/version",
+        "role": "machine_version_boundary",
+        "http_status": "200"
+      },
+      {
+        "name": "api_openapi",
+        "url": "https://api.verifrax.net/openapi.json",
+        "role": "machine_contract_boundary",
+        "http_status": "200"
+      },
+      {
+        "name": "status",
+        "url": "https://status.verifrax.net/",
+        "role": "status_projection",
+        "http_status": "200"
+      },
+      {
+        "name": "docs",
+        "url": "https://docs.verifrax.net/",
+        "role": "doctrine_projection",
+        "http_status": "200"
+      },
+      {
+        "name": "proof",
+        "url": "https://proof.verifrax.net/",
+        "role": "evidence_projection",
+        "http_status": "200"
+      },
+      {
+        "name": "verify",
+        "url": "https://verify.verifrax.net/",
+        "role": "verifier_projection",
+        "http_status": "200"
+      },
+      {
+        "name": "apply",
+        "url": "https://apply.verifrax.net/",
+        "role": "intake_projection",
+        "http_status": "200"
+      }
+    ]
+  },
+  "sealed_distribution": {
+    "python": {
+      "repo": "Verifrax/VERIFRAX-PY",
+      "package": "verifrax",
+      "version": "0.1.0",
+      "pypi_project_url": "https://pypi.org/project/verifrax/0.1.0/",
+      "remote_main": "e55a4186e51f27cac06d0fb530836bf2043c5ac1",
+      "release_tag": "v0.1.0",
+      "release_tag_object": "195989f447582d27c963a872e3af5f9e36b9659b",
+      "release_tag_head": "3213f55eb3dccca1fcaf8dfdc508dc7030bc1fee",
+      "tag_is_annotated": true,
+      "tag_not_moved_to_post_seal_witness": true,
+      "github_release": {
+        "isDraft": false,
+        "isPrerelease": false,
+        "name": "VERIFRAX-PY v0.1.0",
+        "publishedAt": "2026-05-02T11:12:22Z",
+        "tagName": "v0.1.0",
+        "targetCommitish": "main",
+        "url": "https://github.com/Verifrax/VERIFRAX-PY/releases/tag/v0.1.0"
+      },
+      "files": {
+        "wheel": {
+          "filename": "verifrax-0.1.0-py3-none-any.whl",
+          "sha256": "5139065b0c4f3738bff6252f72bd2615b59efb9ad356d1e875311cb1d5ac5701"
+        },
+        "sdist": {
+          "filename": "verifrax-0.1.0.tar.gz",
+          "sha256": "9a7675917708bbadcc740c4a078ed41c3642593eb9993db2dc60243da66ff3bd"
+        }
+      }
+    }
+  },
+  "invariants": {
+    "org36_is_current_public_repository_perimeter": true,
+    "www_is_projection_not_origin": true,
+    "proof_verify_apply_are_separate_public_surfaces": true,
+    "pypi_v010_is_sealed": true,
+    "same_version_publish_rerun_refused": true,
+    "no_publish_executed": true
+  }
+}
