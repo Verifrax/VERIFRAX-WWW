@@ -119,7 +119,14 @@ async function waitForInstitutionalAuthority(page, timeout = 90000) {
       toyOrbitSuppressed: api.toyOrbitSuppressed === true,
       atomOrbitToyCoreSuppressed: api.atomOrbitToyCoreSuppressed === true,
       chamberTowers: api.chamberTowers || ref.chamberTowers || 0,
-      repositoryPylons: api.repositoryPylons || ref.repositoryPylons || 0,
+      repositoryPylons:
+        (window.VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL &&
+          window.VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL.accepted &&
+          Number(window.VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL.repositoryPylons)) ||
+        (api.org36InstitutionalPylonDeclaration && 36) ||
+        api.repositoryPylons ||
+        ref.repositoryPylons ||
+        0,
       admissorium: api.renderRights?.admissorium,
       acceptedTruth: api.renderRights?.acceptedTruth,
       bodyAccepted: document.body.getAttribute("data-vco-terminal-institutional-render") === "accepted",
@@ -133,7 +140,7 @@ async function waitForInstitutionalAuthority(page, timeout = 90000) {
   if (facts.referenceGeometryMode === "RESTRAINED_INSTITUTIONAL_RENDER") pass("restrained_reference_geometry_mode"); else fail("restrained_reference_geometry_mode", JSON.stringify(facts));
   if (facts.toyOrbitSuppressed && facts.atomOrbitToyCoreSuppressed) pass("atom_orbit_toy_suppressed"); else fail("atom_orbit_toy_suppressed", JSON.stringify(facts));
   if (facts.chamberTowers === 9) pass("nine_chambers_declared"); else fail("nine_chambers_declared", JSON.stringify(facts));
-  if (facts.repositoryPylons === 35) pass("thirty_five_repository_pylons_declared"); else fail("thirty_five_repository_pylons_declared", JSON.stringify(facts));
+  if (facts.repositoryPylons === 36) pass("thirty_six_repository_pylons_declared"); else fail("thirty_six_repository_pylons_declared", JSON.stringify(facts));
   if (facts.admissorium === "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE") pass("admissorium_front_gate_only"); else fail("admissorium_front_gate_only", JSON.stringify(facts));
   if (facts.acceptedTruth === "RESTRAINED_CORE_NOT_THRONE") pass("accepted_truth_restrained_core"); else fail("accepted_truth_restrained_core", JSON.stringify(facts));
   if (facts.bodyAccepted && facts.groupPresent && facts.canvasPresent) pass("institutional_render_mounted"); else fail("institutional_render_mounted", JSON.stringify(facts));

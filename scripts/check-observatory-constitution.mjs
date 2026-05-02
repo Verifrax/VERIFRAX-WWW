@@ -13,7 +13,7 @@ const required = [
 "SOVEREIGN_CHAMBER",
 "TRUTH_SOURCE",
 "ACCEPTED_STATE",
-"35 governed repositories",
+"36 governed repositories",
 "9 chambers",
 "Beauty is subordinate to projection permission",
 "The Observatory may render only what it can publicly justify",

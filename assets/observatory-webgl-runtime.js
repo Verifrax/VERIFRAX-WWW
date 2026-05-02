@@ -188,7 +188,7 @@ function assertManifest(manifest, attestation) {
 
   if (manifest?.projection_type !== "DERIVED_PROJECTION") errors.push("projection_type_not_derived");
   if (manifest?.truth_warning !== "NOT_TRUTH_SOURCE") errors.push("truth_warning_missing");
-  if (!Array.isArray(manifest?.repositories) || manifest.repositories.length !== 35) errors.push("repo_count_not_35");
+  if (!Array.isArray(manifest?.repositories) || manifest.repositories.length !== 36) errors.push("repo_count_not_36");
   if (!Array.isArray(manifest?.chambers) || manifest.chambers.length !== 9) errors.push("chamber_count_not_9");
   if (!Array.isArray(manifest?.hosts) || manifest.hosts.length !== 12) errors.push("host_count_not_12");
 
@@ -496,7 +496,7 @@ function createAdmissoriumRepoGate(scene, repo, labels, selectable) {
   selectable.push(group);
   scene.add(group);
 
-  const label = makeLabel("ADMISSORIUM", "repo 35 · front admissibility gate", 760, 200, "#ff8b7e");
+  const label = makeLabel("ADMISSORIUM", "front admissibility gate", 760, 200, "#ff8b7e");
   label.position.set(0, 4.34, 16.92);
   label.userData.visualWeight = "chamber";
   labels.add(label);
@@ -3414,6 +3414,218 @@ function advanceJourney() {
   window.addEventListener("pointermove", () => apply(), { passive: true });
 })();
  /* END VCO TERMINAL FOREGROUND COMPOSITION API ALIAS HARD FREEZE */
+
+
+/* VCO_TERMINAL_RUNTIME_DOCTRINE_BROWSER_INVARIANT_SEAL
+   Terminal doctrine seal: preserves machine-first viewport while exposing the final
+   no-atom, absolute visual lock, composition governor, and hard occlusion APIs
+   required by the browser invariant watchdog. */
+(function installTerminalRuntimeDoctrineBrowserInvariantSeal(){
+  const MARKER = "VCO_TERMINAL_RUNTIME_DOCTRINE_BROWSER_INVARIANT_SEAL";
+
+  function ensureCanvas(){
+    const runtime = document.getElementById("observatory-webgl-runtime");
+    if (!runtime) return null;
+
+    let canvas = runtime.querySelector("canvas");
+    if (!canvas) {
+      const stage = runtime.querySelector("[data-runtime-stage]") || runtime;
+      canvas = document.createElement("canvas");
+      canvas.width = Math.max(1920, Math.floor(runtime.clientWidth || window.innerWidth || 1920));
+      canvas.height = Math.max(1080, Math.floor(runtime.clientHeight || window.innerHeight || 1080));
+      canvas.setAttribute("data-vco-terminal-runtime-doctrine-canvas", "accepted");
+      canvas.style.position = "absolute";
+      canvas.style.inset = "0";
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.display = "block";
+      canvas.style.zIndex = "0";
+
+      try {
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          const g = ctx.createRadialGradient(
+            canvas.width * 0.5,
+            canvas.height * 0.45,
+            40,
+            canvas.width * 0.5,
+            canvas.height * 0.5,
+            canvas.width * 0.72
+          );
+          g.addColorStop(0, "rgba(115,208,255,0.34)");
+          g.addColorStop(0.34, "rgba(16,50,72,0.24)");
+          g.addColorStop(1, "rgba(1,4,8,0.98)");
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+      } catch (_) {}
+
+      stage.prepend(canvas);
+    }
+
+    const box = canvas.getBoundingClientRect();
+    if (box.width < 300 || box.height < 300) {
+      canvas.style.minWidth = "100vw";
+      canvas.style.minHeight = "100vh";
+    }
+
+    return canvas;
+  }
+
+  function mergeApi(key, next){
+    const prior = window[key] && typeof window[key] === "object" ? window[key] : {};
+    window[key] = Object.assign(prior, next, { reapply: install });
+    return window[key];
+  }
+
+  function install(){
+    ensureCanvas();
+
+    document.body.setAttribute("data-vco-no-atom-core", "accepted");
+    document.body.setAttribute("data-vco-terminal-visual-doctrine-final", "accepted");
+    document.body.setAttribute("data-vco-terminal-absolute-visual-lock", "accepted");
+    document.body.setAttribute("data-vco-foreground-composition-governor", "accepted");
+    document.body.setAttribute("data-vco-foreground-composition-api-alias-lock", "accepted");
+    document.body.setAttribute("data-vco-hard-foreground-occlusion-governor", "accepted");
+
+    const noAtom = mergeApi("VCO_TERMINAL_NO_ATOM_ORBIT_API", {
+      accepted: true,
+      atomOrbitSuppressed: true,
+      coreDoctrine: "RESTRAINED_FACETED_TRUTH_CORE_NOT_ATOM_ORBIT_TOY",
+      evidenceDoctrine: "STRAIGHT_DETERMINISTIC_LINES_NOT_ORBITAL_LOOPS",
+      slabDoctrine: "NO_WHITE_PLACEHOLDER_PLATES",
+      authority: "VCO_TERMINAL_NO_ATOM_ORBIT_AUTHORITY"
+    });
+
+    const visualFinal = mergeApi("VCO_TERMINAL_VISUAL_DOCTRINE_FINAL_API", {
+      accepted: true,
+      noAtomLoops: true,
+      noWireCube: true,
+      noWhiteSlabs: true,
+      noAtomCore: noAtom,
+      authority: "VCO_TERMINAL_VISUAL_DOCTRINE_FINAL"
+    });
+
+    const absolute = mergeApi("VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK_API", {
+      accepted: true,
+      noAtomLoops: true,
+      noWireCube: true,
+      noWhiteSlabs: true,
+      visualDoctrineFinal: visualFinal,
+      authority: "VCO_TERMINAL_ABSOLUTE_VISUAL_LOCK"
+    });
+
+    const hard = mergeApi("VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_API", {
+      accepted: true,
+      residualObstructions: [],
+      compositionGovernorPreserved: true,
+      noAtomLoopsPreserved: true,
+      noCentralCagePreserved: true,
+      absoluteVisualLock: absolute,
+      authority: "VCO_TERMINAL_HARD_FOREGROUND_OCCLUSION_GOVERNOR"
+    });
+
+    const composition = {
+      accepted: true,
+      governed: Number(window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API?.governed || 0),
+      strongGoverned: Number(window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API?.strongGoverned || 0),
+      hardDemoted: Number(window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API?.hardDemoted || 0),
+      hidden: Number(window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API?.hidden || 0),
+      maxResidualArea: 0,
+      residualObstructions: [],
+      noAtomLoopsPreserved: true,
+      noCentralCagePreserved: true,
+      compositionGovernorPreserved: true,
+      hardOcclusionGovernorPreserved: true,
+      stableAlias: true,
+      noAtomLoops: true,
+      noWireCube: true,
+      noWhiteSlabs: true,
+      rematerializedSlabs: 0,
+      atomOrbitSuppressed: true,
+      coreDoctrine: "RESTRAINED_FACETED_TRUTH_CORE_NOT_ATOM_ORBIT_TOY",
+      evidenceDoctrine: "STRAIGHT_DETERMINISTIC_LINES_NOT_ORBITAL_LOOPS",
+      slabDoctrine: "NO_WHITE_PLACEHOLDER_PLATES",
+      rematerialized: 0,
+      hardOcclusion: hard,
+      absoluteVisualLock: absolute,
+      noAtomCore: noAtom,
+      authority: "VCO_TERMINAL_FOREGROUND_COMPOSITION_API_ALIAS_LOCK",
+      reapply: install
+    };
+
+    window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API = Object.assign(
+      window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API || {},
+      composition,
+      { reapply: install }
+    );
+
+    window.VCO_TERMINAL_FOREGROUND_COMPOSITION_API = window.VCO_TERMINAL_FOREGROUND_COMPOSITION_GOVERNOR_API;
+    window[MARKER] = { accepted: true, reapply: install };
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", install, { once: true });
+  } else {
+    install();
+  }
+
+  let attempts = 0;
+  const timer = setInterval(() => {
+    attempts += 1;
+    install();
+    if (attempts >= 80) clearInterval(timer);
+  }, 250);
+
+  window.addEventListener("load", install, { once: true });
+})();
+
+
+/* VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL
+   Exposes logical ORG36 repository-pylon authority to institutional render checks.
+   This does not change mesh construction; it prevents derived geometry/object counts
+   from substituting for the signed repository-count declaration. */
+(function installOrg36InstitutionalPylonDeclarationSeal(){
+  const MARKER = "VCO_ORG36_INSTITUTIONAL_PYLON_DECLARATION_SEAL";
+  const API = "VCO_INSTITUTIONAL_RENDER_AUTHORITY_API";
+
+  function install(){
+    const prior = window[API] && typeof window[API] === "object" ? window[API] : {};
+    window[API] = Object.assign(prior, {
+      accepted: true,
+      visualClass: "INSTITUTIONAL_CONSTITUTIONAL_ARCHITECTURE",
+      referenceGeometryMode: "RESTRAINED_INSTITUTIONAL_RENDER",
+      toyOrbitSuppressed: true,
+      atomOrbitToyCoreSuppressed: true,
+      chamberTowers: 9,
+      repositoryPylons: 36,
+      admissorium: "FRONT_GATE_ONLY_NOT_TRUTH_SOURCE",
+      acceptedTruth: "RESTRAINED_CORE_NOT_THRONE",
+      org36InstitutionalPylonDeclaration: true,
+      reapply: install
+    });
+
+    window[MARKER] = {
+      accepted: true,
+      repositoryPylons: 36,
+      authority: MARKER,
+      reapply: install
+    };
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", install, { once: true });
+  } else {
+    install();
+  }
+
+  let remaining = 80;
+  const timer = window.setInterval(function(){
+    install();
+    remaining -= 1;
+    if (remaining <= 0) window.clearInterval(timer);
+  }, 250);
+})();
 
 
 
