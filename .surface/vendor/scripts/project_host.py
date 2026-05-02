@@ -90,9 +90,9 @@ def render_observatory_webgl(cfg):
       <section class="oc-hero">
         <span>REAL WEBGL PROJECTION RUNTIME</span>
         <h2>VERIFRAX</h2>
-        <p>35 repositories. 9 sovereign chambers. ADMISSORIUM at the border. Rendered from signed projection data.</p>
+        <p>36 repositories. 9 sovereign chambers. ADMISSORIUM at the border. Rendered from signed projection data.</p>
         <div class="oc-hero-badges">
-          <code><b data-count="repos">35</b> repos live</code>
+          <code><b data-count="repos">36</b> repos live</code>
           <code data-runtime-status>STATIC_FALLBACK</code>
         </div>
       </section>
@@ -101,7 +101,7 @@ def render_observatory_webgl(cfg):
         <section>
           <h3>Live Object Graph Observatory</h3>
           <dl>
-            <div><dt>Repositories</dt><dd><b data-count="repos">35</b></dd></div>
+            <div><dt>Repositories</dt><dd><b data-count="repos">36</b></dd></div>
             <div><dt>Chambers</dt><dd><b data-count="chambers">9</b></dd></div>
             <div><dt>Hosts</dt><dd><b data-count="hosts">12</b></dd></div>
             <div><dt>Packages</dt><dd><b data-count="packages">—</b></dd></div>
