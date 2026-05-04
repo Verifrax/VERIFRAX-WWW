@@ -1419,20 +1419,48 @@ html,body{margin:0!important;width:100%!important;height:100%!important;min-heig
 
 /* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_LAYOUT_INERT */
 .oc-static-timeline-details {
-  display: block;
-  position: static;
-  width: 100%;
-  max-width: 100%;
-  pointer-events: none;
+  position: relative;
+  z-index: 6;
+  margin-top: 0.65rem;
+  contain: layout paint;
 }
 
 .oc-static-timeline-detail {
   display: none;
-  margin-top: 0.75rem;
-  pointer-events: none;
+  max-height: min(36vh, 22rem);
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 1rem;
+  padding: 0.85rem;
+  background: rgba(3,8,18,0.84);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+}
+
+.oc-static-timeline-detail:first-of-type {
+  display: block;
 }
 
 .oc-static-timeline-detail:target {
   display: block;
-  pointer-events: auto;
 }
+
+.oc-static-timeline-details:has(.oc-static-timeline-detail:target)
+  .oc-static-timeline-detail:first-of-type:not(:target) {
+  display: none;
+}
+
+.oc-static-timeline-detail h4,
+.oc-static-timeline-detail h5 {
+  margin: 0.25rem 0;
+}
+
+.oc-static-timeline-detail p {
+  margin: 0.35rem 0 0.65rem;
+}
+
+.oc-static-timeline-detail ul {
+  margin: 0.25rem 0 0.65rem 1rem;
+  padding: 0;
+}
+
+/* /VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_LAYOUT_INERT */
