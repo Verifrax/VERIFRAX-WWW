@@ -26,10 +26,17 @@ for (const [name, html] of [["index", index], ["404", notFound]]) {
   if (!html.includes("MAIN STACK TIMELINE")) fail(`${name} missing timeline label`);
   if (!html.includes('role="listbox"')) fail(`${name} missing listbox role`);
   if (!html.includes("Click or use ← → to select")) fail(`${name} missing selectable instruction`);
+  if (!html.includes('data-timeline-mode="package"')) fail(`${name} missing package timeline mode`);
 }
 
 const runtimeNeedles = [
-  "function hydrateMainStackTimeline(container, manifest)",
+  "VERIFRAX_TIMELINE_RUNTIME_AUTHORITY_V2",
+  "function hydrateCompleteMainStackTimeline(container, manifest, timelineContract = null)",
+  "timelineObjectFromMode",
+  'if (mode === "package")',
+  'fetch(TIMELINE_URL, { cache: "no-store" })',
+  "const timelineContract = await timelineResponse.json();",
+  "hydrateCompleteMainStackTimeline(container, manifest, timelineContract);",
   "data-stack-id",
   "data-stack-index",
   "aria-selected",
@@ -40,15 +47,18 @@ const runtimeNeedles = [
   "Home",
   "End",
   "writeInspector(container",
-  "hydrateMainStackTimeline(container, manifest);",
 ];
 
 for (const needle of runtimeNeedles) {
   if (!runtime.includes(needle)) fail("runtime missing selectable timeline binding", { needle });
 }
 
+if (runtime.includes("hydrateMainStackTimeline(container, manifest);")) {
+  fail("legacy timeline hydrator still clobbers complete timeline");
+}
+
 const cssNeedles = [
-  "VERIFRAX_MAIN_STACK_TIMELINE_SELECTABLE_CSS",
+  "VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_CSS",
   ".oc-main-stack-timeline",
   ".oc-timeline-track",
   ".oc-timeline-node",
@@ -65,5 +75,8 @@ console.log(JSON.stringify({
   clickable: true,
   keyboard_selectable: true,
   inspector_bound: true,
+  package_mode: true,
+  runtime_authority_v2: true,
+  legacy_clobber_blocked: true,
   generated_surface_bound: true
 }, null, 2));

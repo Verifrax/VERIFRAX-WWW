@@ -32,10 +32,11 @@ for (const [name, html] of [["index", index], ["404", notFound]]) {
   if (!html.includes("data-main-stack-timeline")) fail(`${name} missing timeline mount`);
   if (!html.includes("MAIN STACK TIMELINE")) fail(`${name} missing label`);
   if (!html.includes('role="listbox"')) fail(`${name} missing listbox`);
-  if (!html.includes("data-timeline-mode=\"stack\"")) fail(`${name} missing stack mode`);
-  if (!html.includes("data-timeline-mode=\"artifact\"")) fail(`${name} missing artifact mode`);
-  if (!html.includes("data-timeline-mode=\"host\"")) fail(`${name} missing host mode`);
-  if (!html.includes("data-timeline-mode=\"repository\"")) fail(`${name} missing repository mode`);
+  if (!html.includes('data-timeline-mode="stack"')) fail(`${name} missing stack mode`);
+  if (!html.includes('data-timeline-mode="artifact"')) fail(`${name} missing artifact mode`);
+  if (!html.includes('data-timeline-mode="host"')) fail(`${name} missing host mode`);
+  if (!html.includes('data-timeline-mode="repository"')) fail(`${name} missing repository mode`);
+  if (!html.includes('data-timeline-mode="package"')) fail(`${name} missing package mode`);
 }
 
 if (contract.schema_version !== "1.0.0") fail("bad contract schema");
@@ -60,9 +61,14 @@ const actual = contract.stack.map((item) => item.id);
 if (JSON.stringify(actual) !== JSON.stringify(expected)) fail("stack order mismatch", { actual });
 
 const runtimeNeedles = [
-  "const TIMELINE_URL = \"data/main-stack-timeline.json\"",
+  'const TIMELINE_URL = "data/main-stack-timeline.json"',
   "hydrateCompleteMainStackTimeline",
   "timelineObjectFromMode",
+  'if (mode === "package")',
+  'fetch(TIMELINE_URL, { cache: "no-store" })',
+  "const timelineContract = await timelineResponse.json();",
+  "hydrateCompleteMainStackTimeline(container, manifest, timelineContract);",
+  "VERIFRAX_TIMELINE_RUNTIME_AUTHORITY_V2",
   "data-timeline-mode",
   "data-stack-id",
   "aria-selected",
@@ -79,6 +85,10 @@ const runtimeNeedles = [
 
 for (const needle of runtimeNeedles) {
   if (!runtime.includes(needle)) fail("runtime missing complete binding", { needle });
+}
+
+if (runtime.includes("hydrateMainStackTimeline(container, manifest);")) {
+  fail("legacy timeline hydrator still clobbers complete timeline");
 }
 
 const cssNeedles = [
@@ -102,5 +112,8 @@ console.log(JSON.stringify({
   keyboard_selectable: true,
   deep_linkable: true,
   inspector_bound: true,
+  package_mode: true,
+  timeline_contract_fetch: "no-store",
+  legacy_clobber_blocked: true,
   generated_surface_bound: true
 }, null, 2));
