@@ -2754,86 +2754,14 @@ _verifrax_main_stack_timeline_selectable_patch()
 # BEGIN VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_GENERATOR_PATCH
 def _verifrax_complete_main_stack_timeline_generator_patch():
     from pathlib import Path
-    import shutil
+    import subprocess
+    import sys
 
     base = Path(__file__).resolve().parents[3]
-    css_block = '\n/* VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_CSS */\n.oc-main-stack-timeline{\n  position:absolute;\n  z-index:26;\n  top:86px;\n  left:50%;\n  transform:translateX(-50%);\n  width:min(760px,calc(100vw - 820px));\n  min-width:460px;\n  pointer-events:auto;\n  border:1px solid rgba(115,208,255,.22);\n  border-radius:20px;\n  background:linear-gradient(180deg,rgba(2,8,14,.92),rgba(1,5,10,.78));\n  box-shadow:0 18px 56px rgba(0,0,0,.36);\n  backdrop-filter:blur(14px);\n  padding:12px;\n}\n.oc-timeline-actions{\n  display:flex;\n  flex-wrap:wrap;\n  gap:6px;\n  justify-content:flex-end;\n}\n.oc-timeline-actions button{\n  appearance:none;\n  cursor:pointer;\n  color:#cfe6f8;\n  border:1px solid rgba(115,208,255,.18);\n  border-radius:999px;\n  background:rgba(255,255,255,.04);\n  padding:6px 9px;\n  font:900 9px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n  text-transform:uppercase;\n}\n.oc-timeline-actions button[aria-pressed="true"],\n.oc-timeline-actions button.is-selected{\n  color:#9ee6b8;\n  border-color:rgba(115,208,255,.72);\n  background:rgba(115,208,255,.14);\n}\n.oc-timeline-instruction{\n  margin:0 0 10px;\n  color:#8fa5b9;\n  font:800 10px/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n}\n.oc-timeline-track{\n  display:grid;\n  grid-template-columns:repeat(9,minmax(0,1fr));\n  gap:6px;\n}\n.oc-timeline-node{\n  appearance:none;\n  display:grid;\n  gap:3px;\n  min-width:0;\n  min-height:62px;\n  padding:8px 6px;\n  text-align:left;\n  cursor:pointer;\n  color:#dcecff;\n  border:1px solid rgba(255,255,255,.09);\n  border-radius:12px;\n  background:rgba(255,255,255,.035);\n}\n.oc-timeline-node span{\n  color:#73d0ff;\n  font:900 10px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n}\n.oc-timeline-node strong,\n.oc-timeline-node em{\n  overflow:hidden;\n  text-overflow:ellipsis;\n  white-space:nowrap;\n}\n.oc-timeline-node strong{\n  font:900 10px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n}\n.oc-timeline-node em{\n  color:#8fa5b9;\n  font:800 9px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n  font-style:normal;\n}\n.oc-timeline-node:hover,\n.oc-timeline-node:focus-visible,\n.oc-timeline-node.is-selected{\n  outline:none;\n  border-color:rgba(115,208,255,.72);\n  background:linear-gradient(180deg,rgba(115,208,255,.18),rgba(115,208,255,.07));\n  box-shadow:0 0 0 1px rgba(115,208,255,.32),0 12px 34px rgba(0,0,0,.28);\n}\n.oc-timeline-node.is-selected em{\n  color:#9ee6b8;\n}\n.oc-timeline-detail{\n  margin-top:10px;\n  padding:10px;\n  border:1px solid rgba(255,255,255,.08);\n  border-radius:14px;\n  background:rgba(255,255,255,.035);\n}\n.oc-timeline-detail strong{\n  display:block;\n  color:#f2f8ff;\n  font:900 12px/1.25 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n}\n.oc-timeline-detail p{\n  margin:5px 0 8px;\n  color:#b8c7d6;\n  font:600 12px/1.35 Inter,ui-sans-serif,system-ui,sans-serif;\n}\n.oc-timeline-detail dl{\n  display:grid;\n  grid-template-columns:repeat(3,minmax(0,1fr));\n  gap:6px;\n  margin:0;\n}\n.oc-timeline-detail div{\n  min-width:0;\n  padding:6px;\n  border-radius:10px;\n  background:rgba(0,0,0,.18);\n}\n.oc-timeline-detail dt,\n.oc-timeline-detail dd{\n  margin:0;\n  overflow:hidden;\n  text-overflow:ellipsis;\n  white-space:nowrap;\n  font:800 9px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n}\n.oc-timeline-detail dt{color:#73d0ff}\n.oc-timeline-detail dd{color:#dcecff;margin-top:3px}\n@media (max-width:1320px), (max-height:780px){\n  .oc-main-stack-timeline{\n    top:auto;\n    left:300px;\n    right:320px;\n    bottom:132px;\n    transform:none;\n    width:auto;\n    min-width:0;\n  }\n  .oc-timeline-track{\n    grid-template-columns:repeat(3,minmax(0,1fr));\n  }\n  .oc-timeline-detail{\n    display:none;\n  }\n}\n@media (max-width:900px), (max-height:640px){\n  .oc-main-stack-timeline{\n    display:none;\n  }\n}\n'
-    timeline_html = '      <section class="oc-main-stack-timeline" aria-label="VERIFRAX complete selectable main stack timeline" data-main-stack-shell>\n        <div class="oc-timeline-head">\n          <div>\n            <span>MAIN STACK TIMELINE</span>\n            <strong data-timeline-active-label>SYNTAGMARIUM / law</strong>\n          </div>\n          <div class="oc-timeline-actions" role="group" aria-label="Timeline modes">\n            <button type="button" data-timeline-mode="stack" aria-pressed="true">Stack</button>\n            <button type="button" data-timeline-mode="artifact" aria-pressed="false">Artifacts</button>\n            <button type="button" data-timeline-mode="host" aria-pressed="false">Hosts</button>\n            <button type="button" data-timeline-mode="repository" aria-pressed="false">Repos</button>\n          </div>\n        </div>\n\n        <div class="oc-timeline-instruction">\n          Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.\n        </div>\n\n        <div class="oc-timeline-track" role="listbox" aria-label="Selectable VERIFRAX main stack timeline" data-main-stack-timeline></div>\n\n        <div class="oc-timeline-detail" data-main-stack-detail>\n          <strong>Selection loading</strong>\n          <p>Timeline data is loaded from signed derived projection data. It is not truth source.</p>\n        </div>\n      </section>\n\n'
-
-    source = base / "data/main-stack-timeline.json"
-    target = base / "public/data/timeline/main-stack-timeline.json"
-    if source.exists():
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(source, target)
-
-    def patch_html(path):
-        html = path.read_text()
-
-        # Replace complete shell if already present.
-        if "data-main-stack-shell" in html:
-            start = html.index('      <section class="oc-main-stack-timeline"')
-            end = html.index('      <aside class="oc-left">', start)
-            html = html[:start] + timeline_html + html[end:]
-            path.write_text(html)
-            return
-
-        # Replace older thin timeline if present.
-        if "data-main-stack-timeline" in html:
-            start = html.index('      <section class="oc-main-stack-timeline"')
-            end = html.index('      <aside class="oc-left">', start)
-            html = html[:start] + timeline_html + html[end:]
-            path.write_text(html)
-            return
-
-        # Insert after hero section and before left command panel.
-        needle = '      </section>\n\n      <aside class="oc-left">'
-        if needle not in html:
-            raise SystemExit(f"{path.name} missing timeline insertion needle")
-        html = html.replace(needle, "      </section>\n\n" + timeline_html + '      <aside class="oc-left">')
-        path.write_text(html)
-
-    for rel in ["index.html", "404.html"]:
-        path = base / rel
-        if path.exists():
-            patch_html(path)
-
-    for rel in ["index.html", "404.html"]:
-        path = base / rel
-        if not path.exists():
-            continue
-        html = path.read_text()
-        required = [
-            "data-main-stack-shell",
-            "data-main-stack-timeline",
-            "data-timeline-mode=\"stack\"",
-            "data-timeline-mode=\"artifact\"",
-            "data-timeline-mode=\"host\"",
-            "data-timeline-mode=\"repository\"",
-            "role=\"listbox\""
-        ]
-        missing = [x for x in required if x not in html]
-        if missing:
-            raise SystemExit(f"{rel} missing complete timeline shell pieces: {missing}")
-
-
-    css_path = base / "assets/surface.css"
-    if css_path.exists():
-        css = css_path.read_text()
-        if "VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_CSS" not in css:
-            css_path.write_text(css.rstrip() + "\n\n" + css_block.lstrip())
-
-    runtime = base / "assets/observatory-webgl-runtime.js"
-    if runtime.exists():
-        js = runtime.read_text()
-        required = [
-            "hydrateCompleteMainStackTimeline",
-            "TIMELINE_URL",
-            "timelineContract",
-            "verifrax:timeline-select"
-        ]
-        missing = [x for x in required if x not in js]
-        if missing:
-            raise SystemExit(f"runtime missing complete timeline bindings: {missing}")
+    script = base / "scripts/apply-timeline-runtime-authority.py"
+    if not script.exists():
+        raise SystemExit("missing timeline runtime authority post-pass script")
+    subprocess.run([sys.executable, str(script)], cwd=str(base), check=True)
 
 _verifrax_complete_main_stack_timeline_generator_patch()
 # END VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_GENERATOR_PATCH

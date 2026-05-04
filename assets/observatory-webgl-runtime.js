@@ -291,6 +291,7 @@ function setRuntimeStatus(container, mode, message) {
 
 
 /* BEGIN VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_RUNTIME */
+/* VERIFRAX_TIMELINE_RUNTIME_AUTHORITY_V2 */
 function timelineObjectFromMode(mode, manifest, timelineContract) {
   if (mode === "stack") return timelineContract.stack || [];
 
@@ -333,6 +334,30 @@ function timelineObjectFromMode(mode, manifest, timelineContract) {
         repo.truth_owner ? "unbounded truth ownership" : "truth source unless explicitly admitted",
         repo.sovereign_chamber ? "extra-stack sovereignty" : "sovereign chamber role",
         "private truth control"
+      ]
+    }));
+  }
+
+
+  if (mode === "package") {
+    return (manifest.packages || []).map((pkg, index) => ({
+      id: pkg.id || pkg.name || `package-${index + 1}`,
+      ordinal: index + 1,
+      label: pkg.name || pkg.id || `Package ${index + 1}`,
+      role: [pkg.ecosystem, pkg.version].filter(Boolean).join(" ") || pkg.role || "package boundary",
+      question: pkg.description || pkg.source_repo || "Which package boundary is selected?",
+      repo: pkg.source_repo || pkg.repo || "Verifrax/VERIFRAX",
+      owns: [
+        pkg.ecosystem ? `${pkg.ecosystem} package surface` : "package surface",
+        pkg.version ? `version ${pkg.version}` : "versioned distribution",
+        pkg.source_repo || "source repository binding"
+      ],
+      must_not_own: [
+        "constitutional law",
+        "accepted state",
+        "authority issuance",
+        "governed execution",
+        "package sovereignty"
       ]
     }));
   }
@@ -568,7 +593,7 @@ function hydrateMainStackTimeline(container, manifest) {
   selectTimelineNode(chambers[0]?.id || "syntagmarium", false);
 }
 
-function hydrateCommandSurface(container, manifest, attestation) {
+function hydrateCommandSurface(container, manifest, attestation, timelineContract) {
   const metrics = {
     repos: manifest.repositories.length,
     chambers: manifest.chambers.length,
@@ -613,9 +638,7 @@ function hydrateCommandSurface(container, manifest, attestation) {
     }).join("");
   }
 
-  hydrateCompleteMainStackTimeline(container, manifest);
-
-  hydrateMainStackTimeline(container, manifest);
+  hydrateCompleteMainStackTimeline(container, manifest, timelineContract);
 
   const projection = $(container, "[data-projection-id]");
   if (projection) projection.textContent = attestation.projection_id;
@@ -1910,16 +1933,19 @@ async function boot() {
   setRuntimeStatus(container, "loading", "Loading signed projection data.");
 
   try {
-    const [manifestResponse, attestationResponse] = await Promise.all([
+    const [manifestResponse, attestationResponse, timelineResponse] = await Promise.all([
       fetch(DATA_URL, { cache: "no-store" }),
-      fetch(ATTESTATION_URL, { cache: "no-store" })
+      fetch(ATTESTATION_URL, { cache: "no-store" }),
+      fetch(TIMELINE_URL, { cache: "no-store" })
     ]);
 
     if (!manifestResponse.ok) throw new Error(`manifest fetch failed: ${manifestResponse.status}`);
     if (!attestationResponse.ok) throw new Error(`attestation fetch failed: ${attestationResponse.status}`);
+    if (!timelineResponse.ok) throw new Error(`timeline fetch failed: ${timelineResponse.status}`);
 
     const manifest = await manifestResponse.json();
     const attestation = await attestationResponse.json();
+    const timelineContract = await timelineResponse.json();
     const errors = assertManifest(manifest, attestation);
 
     if (errors.length) {
@@ -1927,7 +1953,7 @@ async function boot() {
       return;
     }
 
-    hydrateCommandSurface(container, manifest, attestation);
+    hydrateCommandSurface(container, manifest, attestation, timelineContract);
     setRuntimeStatus(container, FULL, "FULL_OBSERVATORY: signed WebGL constitutional projection active.");
     buildScene(container, manifest);
     window.observatorySceneBoot = { rendered: true, repositories: manifest.repositories.length, chambers: manifest.chambers.length, renderPermission: attestation.render_permission };
