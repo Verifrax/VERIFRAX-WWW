@@ -293,6 +293,7 @@ function setRuntimeStatus(container, mode, message) {
 /* BEGIN VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_RUNTIME */
 /* VERIFRAX_TIMELINE_RUNTIME_AUTHORITY_V2 */
 /* VERIFRAX_TIMELINE_MODE_AUTHORITY_V3 */
+/* VERIFRAX_TIMELINE_STATIC_COUNT_AUTHORITY */
 function timelineObjectFromMode(mode, manifest, timelineContract) {
   if (mode === "stack") return timelineContract.stack || [];
 
@@ -385,6 +386,7 @@ function timelineEmptyModeDenial(mode) {
   }];
 }
 
+const EXPECTED_TIMELINE_STATIC_COUNTS = {"artifact": 9, "host": 12, "package": 3, "repository": 36, "stack": 9};
 function hydrateCompleteMainStackTimeline(container, manifest, timelineContract = null) {
   const shell = $(container, "[data-main-stack-shell]");
   const timeline = $(container, "[data-main-stack-timeline]");

@@ -2765,3 +2765,17 @@ def _verifrax_complete_main_stack_timeline_generator_patch():
 
 _verifrax_complete_main_stack_timeline_generator_patch()
 # END VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_GENERATOR_PATCH
+
+# BEGIN VERIFRAX_TIMELINE_STATIC_COUNT_AUTHORITY_HOOK
+def _verifrax_timeline_static_count_authority_hook() -> None:
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    base = Path(__file__).resolve().parents[3]
+    script = base / "scripts" / "apply-timeline-static-count-authority.py"
+    if script.exists():
+        subprocess.run([sys.executable, str(script)], cwd=str(base), check=True)
+
+_verifrax_timeline_static_count_authority_hook()
+# END VERIFRAX_TIMELINE_STATIC_COUNT_AUTHORITY_HOOK
