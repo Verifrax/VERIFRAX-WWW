@@ -234,7 +234,7 @@ function cropStats(png, box) {
         x?.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "accepted-truth-crystal"
       ),
       repoPillars: flat.filter((x) =>
-        x?.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "35-repository-pbr-pillar"
+        x?.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "36-repository-pbr-pillar"
       ).length,
       fullText: document.body.innerText.includes("FULL_OBSERVATORY"),
       staticFallbackText: document.body.innerText.includes("STATIC_FALLBACK")

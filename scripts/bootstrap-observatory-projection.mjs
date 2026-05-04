@@ -376,7 +376,7 @@ const manifest = {
   generated_by: "VERIFRAX-WWW projection bootstrap compiler",
   system: {
     name: "VERIFRAX",
-    tagline: "35 repositories. One constitutional machine.",
+    tagline: "36 repositories. One constitutional machine.",
     governed_repo_count: repos.length,
     sovereign_chamber_count: chambers.length,
     host_gate_count: hosts.length,

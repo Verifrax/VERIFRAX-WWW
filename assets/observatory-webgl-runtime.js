@@ -1195,8 +1195,8 @@ window.addEventListener("mousemove", (event) => {
         group.add(tower);
       }
 
-      for (let i = 0; i < 35; i += 1) {
-        const angle = (i / 35) * Math.PI * 2;
+      for (let i = 0; i < 36; i += 1) {
+        const angle = (i / 36) * Math.PI * 2;
         const radius = 22.6;
         const pylon = new THREE.Group();
         pylon.name = "VCO_REFERENCE_REPOSITORY_PERIMETER_PYLON_" + String(i + 1).padStart(2, "0");
@@ -1781,7 +1781,7 @@ function advanceJourney() {
     return [
       ...VCO_DEEP_OBJECTS.map((id) => ({ id, label: `Open ${format(id)}`, section: "Objects" })),
       ...journey.map((id, i) => ({ id, label: `Open Artifact Journey stage ${i + 1}: ${format(id)}`, section: "Artifact Journey" })),
-      { id: "REPO_PILLARS", label: "Show 35 repo pillars", section: "Repositories" },
+      { id: "REPO_PILLARS", label: "Show 36 repo pillars", section: "Repositories" },
       { id: "HOST_GATES", label: "Show host boundary gates", section: "Host Gates" }
     ];
   }
@@ -2031,8 +2031,8 @@ function advanceJourney() {
       wall.rotation.y = a;
     }
 
-    for (let i = 0; i < 35; i += 1) {
-      const a = (i / 35) * Math.PI * 2;
+    for (let i = 0; i < 36; i += 1) {
+      const a = (i / 36) * Math.PI * 2;
       const h = 3.0 + (i % 5) * 0.28;
       const pylon = new T.Group();
       pylon.name = "VCO_INSTITUTIONAL_REPOSITORY_PILLAR_" + String(i + 1).padStart(2, "0");
@@ -4453,8 +4453,8 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
 
     scene.add(coreGroup);
 
-    for (let i = 0; i < 35; i++) {
-      const angle = (i / 35) * Math.PI * 2;
+    for (let i = 0; i < 36; i++) {
+      const angle = (i / 36) * Math.PI * 2;
       const radius = 22.4 + Math.sin(i * 1.7) * 0.36;
       const height = 2.2 + (i % 5) * 0.24;
       const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.72, height, 0.72), i % 3 === 0 ? metal : stone);
@@ -4462,7 +4462,7 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
       pillar.rotation.y = angle;
       pillar.castShadow = true;
       pillar.receiveShadow = true;
-      mark(pillar, "35-repository-pbr-pillar");
+      mark(pillar, "36-repository-pbr-pillar");
       scene.add(pillar);
 
       const cap = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.055, 0.88), emissiveBlue);
@@ -4808,15 +4808,15 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
     perimeter.name = "VCO_CINEMATIC_REPOSITORY_PERIMETER";
     perimeter.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;
 
-    for (let i = 0; i < 35; i++) {
-      const angle = (i / 35) * Math.PI * 2;
+    for (let i = 0; i < 36; i++) {
+      const angle = (i / 36) * Math.PI * 2;
       const radius = 22.8 + Math.sin(i * 1.618) * 0.42;
       const height = 2.25 + (i % 7) * 0.18;
 
       const pillar = mark(new THREE.Mesh(
         new THREE.BoxGeometry(0.74, height, 0.74),
         i % 3 === 0 ? metal : stone
-      ), "35-repository-pbr-pillar");
+      ), "36-repository-pbr-pillar");
       pillar.name = `VCO_REPOSITORY_PBR_PILLAR_${String(i + 1).padStart(2, "0")}`;
       pillar.position.set(Math.sin(angle) * radius, height / 2, Math.cos(angle) * radius);
       pillar.rotation.y = angle;
@@ -4996,7 +4996,7 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
     scene.traverse((obj) => {
       const tag = obj?.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY || obj?.name || "";
       if (
-        tag === "35-repository-pbr-pillar" ||
+        tag === "36-repository-pbr-pillar" ||
         tag === "repository-evidence-cap" ||
         tag === "restrained-evidence-cage" ||
         /TorusKnot|atom|orbit/i.test(String(tag))
@@ -5293,7 +5293,7 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
         chamberTowers += 1;
       });
 
-      for (let i = 0; i < 35; i++) {
+      for (let i = 0; i < 36; i++) {
         root.add(buildRepositoryPylon(THREE, mat, i));
         repositoryPylons += 1;
       }
@@ -5517,10 +5517,10 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
       )
     );
     const repoPillars = flat.filter((x) =>
-      x?.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "35-repository-pbr-pillar"
+      x?.userData?.VCO_CINEMATIC_REAL3D_AUTHORITY === "36-repository-pbr-pillar"
     ).length;
 
-    if (!hasCrystal || repoPillars < 35) return false;
+    if (!hasCrystal || repoPillars < 36) return false;
 
     scene.userData = scene.userData || {};
     scene.userData.VCO_CINEMATIC_SCENE_GEOMETRY_AUTHORITY = true;
