@@ -288,6 +288,80 @@ function setRuntimeStatus(container, mode, message) {
   if (status) status.textContent = message;
 }
 
+
+function hydrateMainStackTimeline(container, manifest) {
+  const timeline = $(container, "[data-main-stack-timeline]");
+  if (!timeline) return;
+
+  const chambers = chamberOrder
+    .map((id) => manifest.chambers.find((item) => item.id === id))
+    .filter(Boolean);
+
+  timeline.innerHTML = chambers.map((chamber, index) => {
+    const selected = index === 0 ? "true" : "false";
+    return `<button type="button" class="oc-timeline-node${index === 0 ? " is-selected" : ""}" role="option" aria-selected="${selected}" data-stack-id="${escapeHtml(chamber.id)}" data-stack-index="${index}" tabindex="${index === 0 ? "0" : "-1"}">
+      <span>${String(index + 1).padStart(2, "0")}</span>
+      <strong>${escapeHtml(chamber.name)}</strong>
+      <em>${escapeHtml(chamber.role)}</em>
+    </button>`;
+  }).join("");
+
+  function selectTimelineNode(id, shouldFocus = false) {
+    const chamber = chambers.find((item) => item.id === id);
+    if (!chamber) return;
+
+    container.dataset.selectedStack = id;
+
+    timeline.querySelectorAll("[data-stack-id]").forEach((button) => {
+      const active = button.getAttribute("data-stack-id") === id;
+      button.classList.toggle("is-selected", active);
+      button.setAttribute("aria-selected", active ? "true" : "false");
+      button.setAttribute("tabindex", active ? "0" : "-1");
+      if (active && shouldFocus) button.focus();
+    });
+
+    writeInspector(container, {
+      ...chamber,
+      visual_class: "main_stack_timeline",
+      warning: "DERIVED_PROJECTION / NOT_TRUTH_SOURCE"
+    });
+  }
+
+  if (timeline.dataset.bound !== "true") {
+    timeline.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-stack-id]");
+      if (!button) return;
+      selectTimelineNode(button.getAttribute("data-stack-id"), true);
+    });
+
+    timeline.addEventListener("keydown", (event) => {
+      const active = timeline.querySelector(".oc-timeline-node.is-selected") || timeline.querySelector("[data-stack-id]");
+      const buttons = [...timeline.querySelectorAll("[data-stack-id]")];
+      const current = Math.max(0, buttons.indexOf(active));
+      let next = current;
+
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") next = Math.min(buttons.length - 1, current + 1);
+      else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = Math.max(0, current - 1);
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = buttons.length - 1;
+      else if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        if (active) selectTimelineNode(active.getAttribute("data-stack-id"), true);
+        return;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      selectTimelineNode(buttons[next].getAttribute("data-stack-id"), true);
+    });
+
+    timeline.dataset.bound = "true";
+  }
+
+  selectTimelineNode(chambers[0]?.id || "syntagmarium", false);
+}
+
 function hydrateCommandSurface(container, manifest, attestation) {
   const metrics = {
     repos: manifest.repositories.length,
@@ -332,6 +406,8 @@ function hydrateCommandSurface(container, manifest, attestation) {
       return `<li><strong>${escapeHtml(host.label || host.id)}</strong><span>${escapeHtml(host.host)}</span></li>`;
     }).join("");
   }
+
+  hydrateMainStackTimeline(container, manifest);
 
   const projection = $(container, "[data-projection-id]");
   if (projection) projection.textContent = attestation.projection_id;
