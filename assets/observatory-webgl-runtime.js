@@ -593,7 +593,7 @@ function hydrateMainStackTimeline(container, manifest) {
   selectTimelineNode(chambers[0]?.id || "syntagmarium", false);
 }
 
-function hydrateCommandSurface(container, manifest, attestation) {
+function hydrateCommandSurface(container, manifest, attestation, timelineContract) {
   const metrics = {
     repos: manifest.repositories.length,
     chambers: manifest.chambers.length,
@@ -1953,7 +1953,7 @@ async function boot() {
       return;
     }
 
-    hydrateCommandSurface(container, manifest, attestation);
+    hydrateCommandSurface(container, manifest, attestation, timelineContract);
     setRuntimeStatus(container, FULL, "FULL_OBSERVATORY: signed WebGL constitutional projection active.");
     buildScene(container, manifest);
     window.observatorySceneBoot = { rendered: true, repositories: manifest.repositories.length, chambers: manifest.chambers.length, renderPermission: attestation.render_permission };

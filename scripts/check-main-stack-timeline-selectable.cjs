@@ -36,6 +36,8 @@ const runtimeNeedles = [
   'if (mode === "package")',
   'fetch(TIMELINE_URL, { cache: "no-store" })',
   "const timelineContract = await timelineResponse.json();",
+  "function hydrateCommandSurface(container, manifest, attestation, timelineContract)",
+  "hydrateCommandSurface(container, manifest, attestation, timelineContract);",
   "hydrateCompleteMainStackTimeline(container, manifest, timelineContract);",
   "data-stack-id",
   "data-stack-index",
@@ -46,11 +48,15 @@ const runtimeNeedles = [
   "ArrowLeft",
   "Home",
   "End",
-  "writeInspector(container",
+  "writeInspector(container"
 ];
 
 for (const needle of runtimeNeedles) {
   if (!runtime.includes(needle)) fail("runtime missing selectable timeline binding", { needle });
+}
+
+if (runtime.includes("function hydrateCommandSurface(container, manifest, attestation) {")) {
+  fail("old hydrateCommandSurface signature still present");
 }
 
 if (runtime.includes("hydrateMainStackTimeline(container, manifest);")) {
@@ -62,7 +68,7 @@ const cssNeedles = [
   ".oc-main-stack-timeline",
   ".oc-timeline-track",
   ".oc-timeline-node",
-  ".oc-timeline-node.is-selected",
+  ".oc-timeline-node.is-selected"
 ];
 
 for (const needle of cssNeedles) {
@@ -77,6 +83,7 @@ console.log(JSON.stringify({
   inspector_bound: true,
   package_mode: true,
   runtime_authority_v2: true,
+  timeline_contract_call_chain: true,
   legacy_clobber_blocked: true,
   generated_surface_bound: true
 }, null, 2));

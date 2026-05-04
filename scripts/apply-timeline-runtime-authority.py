@@ -294,6 +294,16 @@ def patch_runtime() -> None:
         "hydrateCompleteMainStackTimeline(container, manifest, timelineContract);",
     )
 
+    js = js.replace(
+        "function hydrateCommandSurface(container, manifest, attestation) {",
+        "function hydrateCommandSurface(container, manifest, attestation, timelineContract) {",
+    )
+
+    js = js.replace(
+        "hydrateCommandSurface(container, manifest, attestation);",
+        "hydrateCommandSurface(container, manifest, attestation, timelineContract);",
+    )
+
     js = re.sub(r'\n\s*hydrateMainStackTimeline\(container,\s*manifest\);\n', "\n", js)
 
     required = [
@@ -302,6 +312,8 @@ def patch_runtime() -> None:
         'fetch(TIMELINE_URL, { cache: "no-store" })',
         "const timelineContract = await timelineResponse.json();",
         "hydrateCompleteMainStackTimeline(container, manifest, timelineContract);",
+        "function hydrateCommandSurface(container, manifest, attestation, timelineContract)",
+        "hydrateCommandSurface(container, manifest, attestation, timelineContract);",
     ]
     missing = [x for x in required if x not in js]
     if missing:

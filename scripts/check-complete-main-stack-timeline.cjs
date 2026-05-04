@@ -67,6 +67,8 @@ const runtimeNeedles = [
   'if (mode === "package")',
   'fetch(TIMELINE_URL, { cache: "no-store" })',
   "const timelineContract = await timelineResponse.json();",
+  "function hydrateCommandSurface(container, manifest, attestation, timelineContract)",
+  "hydrateCommandSurface(container, manifest, attestation, timelineContract);",
   "hydrateCompleteMainStackTimeline(container, manifest, timelineContract);",
   "VERIFRAX_TIMELINE_RUNTIME_AUTHORITY_V2",
   "data-timeline-mode",
@@ -85,6 +87,10 @@ const runtimeNeedles = [
 
 for (const needle of runtimeNeedles) {
   if (!runtime.includes(needle)) fail("runtime missing complete binding", { needle });
+}
+
+if (runtime.includes("function hydrateCommandSurface(container, manifest, attestation) {")) {
+  fail("old hydrateCommandSurface signature still present");
 }
 
 if (runtime.includes("hydrateMainStackTimeline(container, manifest);")) {
@@ -114,6 +120,7 @@ console.log(JSON.stringify({
   inspector_bound: true,
   package_mode: true,
   timeline_contract_fetch: "no-store",
+  timeline_contract_call_chain: true,
   legacy_clobber_blocked: true,
   generated_surface_bound: true
 }, null, 2));
