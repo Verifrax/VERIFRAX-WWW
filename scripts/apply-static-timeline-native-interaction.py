@@ -283,6 +283,51 @@ def normalize_projection_output_files() -> None:
 
         path.write_text(text.rstrip() + "\n")
 
+
+def patch_native_hittest_quarantine_css() -> None:
+    gate = "VERIFRAX_STATIC_TIMELINE_NATIVE_HITTEST_QUARANTINE"
+    block = f"""
+/* {gate} */
+.oc-static-timeline-details,
+.oc-static-timeline-detail,
+.oc-static-timeline-detail:target {{
+  pointer-events: none;
+}}
+
+.oc-static-timeline-details {{
+  position: relative;
+  z-index: 1;
+  contain: layout paint style;
+}}
+
+.oc-static-timeline-detail {{
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+}}
+
+.oc-static-timeline-detail:target {{
+  display: block;
+  max-height: min(28vh, 18rem);
+  overflow: auto;
+}}
+""".strip() + "\n"
+
+    path = ROOT / "assets/surface.css"
+    text = path.read_text()
+
+    if gate not in text:
+        text = text.rstrip() + "\n\n" + block
+    else:
+        start = text.index(f"/* {gate} */")
+        next_marker = text.find("\n/* VERIFRAX_", start + len(gate))
+        if next_marker == -1:
+            text = text[:start].rstrip() + "\n\n" + block
+        else:
+            text = text[:start].rstrip() + "\n\n" + block + "\n" + text[next_marker:].lstrip()
+
+    path.write_text(text.rstrip() + "\n")
+
 def main():
     stack = load_stack()
     for rel in ["index.html", "404.html"]:
@@ -293,6 +338,7 @@ def main():
     patch_layout_inert_css()
     patch_runtime_marker()
     patch_selectable_guard_files()
+    patch_native_hittest_quarantine_css()
     normalize_projection_output_files()
     print(json.dumps({
         "status": "PASS",

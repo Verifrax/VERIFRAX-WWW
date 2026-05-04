@@ -1464,3 +1464,28 @@ html,body{margin:0!important;width:100%!important;height:100%!important;min-heig
 }
 
 /* /VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_LAYOUT_INERT */
+
+/* VERIFRAX_STATIC_TIMELINE_NATIVE_HITTEST_QUARANTINE */
+.oc-static-timeline-details,
+.oc-static-timeline-detail,
+.oc-static-timeline-detail:target {
+  pointer-events: none;
+}
+
+.oc-static-timeline-details {
+  position: relative;
+  z-index: 1;
+  contain: layout paint style;
+}
+
+.oc-static-timeline-detail {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.oc-static-timeline-detail:target {
+  display: block;
+  max-height: min(28vh, 18rem);
+  overflow: auto;
+}
