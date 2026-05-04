@@ -25,6 +25,7 @@ function readJson(path) {
 const index = read("index.html");
 const runtime = read("assets/observatory-webgl-runtime.js");
 const manifest = readJson("data/verifrax-observatory.json");
+const publicManifest = readJson("public/data/verifrax-observatory.json");
 const witness = readJson("public/data/verifrax-org36-public-surface-authority-witness.json");
 
 if (witness?.authority_boundary?.expected_repository_count !== EXPECTED) fail("witness expected count mismatch");
@@ -32,6 +33,9 @@ if (witness?.authority_boundary?.repository_count_live !== EXPECTED) fail("witne
 if (witness?.authority_boundary?.stale_34_35_counts_forbidden !== true) fail("stale count witness guard missing");
 
 if (manifest?.system?.governed_repo_count !== EXPECTED) fail("runtime manifest governed_repo_count mismatch");
+if (publicManifest?.system?.governed_repo_count !== EXPECTED) fail("public signed manifest governed_repo_count mismatch");
+if (!Array.isArray(publicManifest.repositories) || publicManifest.repositories.length !== EXPECTED) fail("public signed manifest repository array mismatch");
+
 if (!Array.isArray(manifest.repositories) || manifest.repositories.length !== EXPECTED) {
   fail("runtime manifest repository array mismatch", {
     governed_repo_count: manifest?.system?.governed_repo_count,

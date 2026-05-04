@@ -6,12 +6,12 @@
   "truth_warning": "NOT_TRUTH_SOURCE",
   "subject": {
     "manifest": "public/data/verifrax-observatory.json",
-    "manifest_sha256": "sha256:f7198b4fd0ba9c02962eaddf589c7262da708b03b7ad52861e5972397bf098cf",
+    "manifest_sha256": "sha256:6474757490f43f1bc6606fceab143a43237e96ba732490080126eefd235fa08a",
     "receipt": "public/data/projection-receipt.json",
-    "receipt_sha256": "sha256:c3cd8a06fa3d6aaf5526b9c09d4a24b12eade15ae354d75e1953c78661d1ca6e",
+    "receipt_sha256": "sha256:04030cb87f38b151ec3e2d09959ce9893ba25795640debf6fbf66c23a9dc9057",
     "ledger": "public/data/projection-ledger.json",
-    "ledger_sha256": "sha256:dbd6aa5911a4894a555ca9a43b94f65a550a5bd7cd109ddb80ced5585c25f61d",
-    "ledger_entry_sha256": "sha256:8bb3a1df699aa03a2afdf820ca8ca667cc4472e0b2630da83b880da5297ec85d"
+    "ledger_sha256": "sha256:611e186a7eee331b681115d593e54422cb0ac5400b94fd99f11f2af09200d166",
+    "ledger_entry_sha256": "sha256:178dca53dc71f455277abeb13676d032a67cf6b39a94e86dbea91225dfe9a50e"
   },
   "source_hashes": {
     "topology": "sha256:3f61aecf1dc30333040498f8340070b1a722936c4109a407b9d6ae0654613b60",
@@ -32,6 +32,6 @@
   "signed_by": "VERIFRAX-WWW projection release key",
   "signature_algorithm": "ed25519",
   "public_key_id": "verifrax-www-projection-key-001",
-  "signed_payload_sha256": "sha256:3234086c3bbace3e21b83b607b816a23c99b2bd199dbfef96d8c6c92dd35768d",
-  "signature": "LsLOB0qByWfb603jXQR1XtPkRpLnrxJElzCCbCtXKTGkF4kUZpdZ9jACzNbkRk55A3S8Fc6GRftZ0TLrrRA1DA=="
+  "signed_payload_sha256": "sha256:8e3d054c40d5fa1fa94b9b791f6b8523916f42585489bd2ae29810649f4d02b2",
+  "signature": "z2vZYwM5UF2M9Nbb1vc1hM1Hqpaj3C1DGXzCLYNlziMYfZGCNTsrxq1tkfz0SQa6VnDxrAhD9w8JsuKUoTp6BA=="
 }

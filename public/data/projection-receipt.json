@@ -36,7 +36,7 @@
     "models/admissorium-gate.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "models/accepted-truth-core.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
-  "manifest_sha256": "sha256:f7198b4fd0ba9c02962eaddf589c7262da708b03b7ad52861e5972397bf098cf",
+  "manifest_sha256": "sha256:6474757490f43f1bc6606fceab143a43237e96ba732490080126eefd235fa08a",
   "render_permission": "FULL_OBSERVATORY",
   "failure_policy": "DOWNGRADE_OR_BLOCK"
 }
