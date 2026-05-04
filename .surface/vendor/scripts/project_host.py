@@ -2779,3 +2779,26 @@ def _verifrax_timeline_static_count_authority_hook() -> None:
 
 _verifrax_timeline_static_count_authority_hook()
 # END VERIFRAX_TIMELINE_STATIC_COUNT_AUTHORITY_HOOK
+
+# BEGIN VERIFRAX_STATIC_OBSERVATORY_DOM_AUTHORITY_HOOK
+def _verifrax_static_observatory_dom_authority_hook():
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    here = Path(__file__).resolve()
+    base = None
+    for parent in here.parents:
+        if (parent / "index.html").exists() and (parent / "assets").exists():
+            base = parent
+            break
+    if base is None:
+        raise SystemExit("repository root not found for static observatory DOM authority")
+
+    script = base / "scripts/apply-static-observatory-dom-authority.py"
+    if not script.exists():
+        raise SystemExit("missing static observatory DOM authority post-pass")
+    subprocess.run([sys.executable, str(script)], cwd=str(base), check=True)
+
+_verifrax_static_observatory_dom_authority_hook()
+# END VERIFRAX_STATIC_OBSERVATORY_DOM_AUTHORITY_HOOK
