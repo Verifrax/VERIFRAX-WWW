@@ -138,103 +138,104 @@ def ensure_canonical_stack_deeplink_aliases(path, stack):
 
 
 
+
+
 def patch_selectable_guard_files() -> None:
     import re
 
-    guard_files = [
-        ROOT / "scripts/check-main-stack-timeline-selectable.cjs",
-        ROOT / "scripts/check-complete-main-stack-timeline.cjs",
+    guard_lines = [
+        "// VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:",
+        "// Static selection is native anchor/:target authority. The old JS-only instruction is forbidden.",
+        'if (index.includes("Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.")) {',
+        '  fail("dead selectable instruction still present");',
+        "}",
+        "",
+        "for (const needle of [",
+        '  "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY",',
+        '  "data-static-timeline-details",',
+        "  'href=\"#static-timeline-detail-',",
+        "  'id=\"static-timeline-detail-'",
+        "]) {",
+        "  if (!index.includes(needle) && !runtime.includes(needle) && !css.includes(needle)) {",
+        '    fail("native selectable authority missing", { needle });',
+        "  }",
+        "}",
+        "",
     ]
+    guard = "\n".join(guard_lines)
 
-    native_guard = """
-// VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:
-// Static selection is native anchor/:target authority. The old JS-only instruction is forbidden.
-if (index.includes("Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.")) {
-  fail("dead selectable instruction still present");
-}
+    positive_old = '  if (!html.includes("Click or use ← → to select")) fail(`${name} missing selectable instruction`);\n'
+    positive_new = (
+        '  if (!html.includes("VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY")) fail(`${name} missing native static timeline authority`);\n'
+        "  if (!html.includes('href=\"#static-timeline-detail-')) fail(`${name} missing native static timeline anchors`);\n"
+    )
 
-for (const needle of [
-  "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY",
-  "data-static-timeline-details",
-  'href="#static-timeline-detail-',
-  'id="static-timeline-detail-'
-]) {
-  if (!index.includes(needle) && !runtime.includes(needle) && !css.includes(needle)) {
-    fail("native selectable authority missing", { needle });
-  }
-}
+    guard_re = r'\n{0,8}// VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:[\s\S]*?(?=\nconsole\.log\(JSON\.stringify\()'
 
-"""
-
-    for path in guard_files:
+    for rel in [
+        "scripts/check-main-stack-timeline-selectable.cjs",
+        "scripts/check-complete-main-stack-timeline.cjs",
+    ]:
+        path = ROOT / rel
         if not path.exists():
             continue
 
-        src = path.read_text()
-
-        src = src.replace(
-            '  if (!html.includes("Click or use ← → to select")) fail(`${name} missing selectable instruction`);\n',
-            '  if (!html.includes("VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY")) fail(`${name} missing native static timeline authority`);\n'
-            '  if (!html.includes("data-static-timeline-details")) fail(`${name} missing native static timeline details`);\n'
-            "  if (!html.includes('href=\"#static-timeline-detail-')) fail(`${name} missing native static timeline anchors`);\n"
-        )
-
-        src = src.replace(
-            'if (!index.includes("Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.")) fail("index missing selectable instruction");\n',
-            ''
-        )
-
-        src = src.replace(
-            'if (!index.includes("Click or use ← → to select")) fail("index missing selectable instruction");\n',
-            ''
-        )
-
-        src = re.sub(
-            r'\n// VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:[\s\S]*?(?=\nconsole\.log\(JSON\.stringify\()',
-            '\n',
-            src,
-            count=1,
-        )
+        text = path.read_text()
+        text = text.replace(positive_old, positive_new)
+        text = re.sub(guard_re, "\n", text, count=0)
 
         marker = "console.log(JSON.stringify("
-        if marker not in src:
-            raise SystemExit(f"{path} missing console output marker")
+        if marker not in text:
+            raise SystemExit(f"{rel}: console output marker missing")
 
-        src = src.replace(marker, native_guard + marker, 1)
+        text = re.sub(r"\n{3,}(?=console\.log\(JSON\.stringify\()", "\n\n", text)
+        text = text.replace(marker, guard + marker, 1)
 
-        if "index missing selectable instruction" in src:
-            raise SystemExit(f"{path} still contains stale selectable-instruction failure")
+        if "index missing selectable instruction" in text:
+            raise SystemExit(f"{rel}: stale selectable-instruction failure remains")
 
-        path.write_text(src)
+        path.write_text(text)
 
 
 
-def patch_layout_inert_css():
+def patch_layout_inert_css() -> None:
     css_path = ROOT / "assets/surface.css"
-    s = css_path.read_text()
-    marker = "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_LAYOUT_INERT"
-    block = """/* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_LAYOUT_INERT */
+    css = css_path.read_text() if css_path.exists() else ""
+
+    marker = "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_LAYOUT_INERT"
+    block = """
+/* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_LAYOUT_INERT */
+.oc-static-timeline-details {
+  display: block;
+  position: static;
+  width: 100%;
+  max-width: 100%;
+  pointer-events: none;
+}
+
 .oc-static-timeline-detail {
   display: none;
-  visibility: hidden;
+  margin-top: 0.75rem;
   pointer-events: none;
 }
 
 .oc-static-timeline-detail:target {
   display: block;
-  visibility: visible;
   pointer-events: auto;
 }
 """.strip()
-    if marker in s:
-        start = s.index(f"/* {marker} */")
-        rest = s[start:]
-        first = rest.index("}")
-        second = rest.index("}", first + 1)
-        s = s[:start] + block + rest[second + 1:]
+
+    if marker not in css:
+        css = css.rstrip() + "\n\n" + block + "\n"
     else:
-        s = s.rstrip() + "\n\n" + block + "\n"
-    css_path.write_text(s)
+        css = re.sub(
+            r'/\* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_LAYOUT_INERT \*/[\s\S]*?(?=\n/\*|\Z)',
+            block,
+            css,
+            count=1,
+        )
+
+    css_path.write_text(css)
 
 
 def main():
