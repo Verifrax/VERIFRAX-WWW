@@ -342,7 +342,6 @@ function timelineObjectFromMode(mode, manifest, timelineContract) {
 
 
 
-
   if (mode === "package") {
     const packages = (timelineContract.packages && timelineContract.packages.length)
       ? timelineContract.packages
