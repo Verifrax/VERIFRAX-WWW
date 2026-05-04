@@ -5,7 +5,7 @@
   "truth_warning": "NOT_TRUTH_SOURCE",
   "generated_at": "2026-04-26T07:28:32.376Z",
   "object_counts": {
-    "governed_repositories": 35,
+    "governed_repositories": 36,
     "sovereign_chambers": 9,
     "host_gates": 12,
     "enterprise_products": 5
@@ -36,7 +36,7 @@
     "models/admissorium-gate.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "models/accepted-truth-core.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
-  "manifest_sha256": "sha256:879621604cefa060f8aaa61acd3d17f602ef204bedbedee1907d8a524909e981",
+  "manifest_sha256": "sha256:f7198b4fd0ba9c02962eaddf589c7262da708b03b7ad52861e5972397bf098cf",
   "render_permission": "FULL_OBSERVATORY",
   "failure_policy": "DOWNGRADE_OR_BLOCK"
 }
