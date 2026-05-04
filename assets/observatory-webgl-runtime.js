@@ -292,6 +292,7 @@ function setRuntimeStatus(container, mode, message) {
 
 /* BEGIN VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_RUNTIME */
 /* VERIFRAX_TIMELINE_RUNTIME_AUTHORITY_V2 */
+/* VERIFRAX_TIMELINE_MODE_AUTHORITY_V3 */
 function timelineObjectFromMode(mode, manifest, timelineContract) {
   if (mode === "stack") return timelineContract.stack || [];
 
@@ -339,20 +340,25 @@ function timelineObjectFromMode(mode, manifest, timelineContract) {
   }
 
 
+
   if (mode === "package") {
-    return (manifest.packages || []).map((pkg, index) => ({
+    const packages = (timelineContract.packages && timelineContract.packages.length)
+      ? timelineContract.packages
+      : (manifest.packages || []);
+
+    return packages.map((pkg, index) => ({
       id: pkg.id || pkg.name || `package-${index + 1}`,
-      ordinal: index + 1,
-      label: pkg.name || pkg.id || `Package ${index + 1}`,
-      role: [pkg.ecosystem, pkg.version].filter(Boolean).join(" ") || pkg.role || "package boundary",
-      question: pkg.description || pkg.source_repo || "Which package boundary is selected?",
-      repo: pkg.source_repo || pkg.repo || "Verifrax/VERIFRAX",
-      owns: [
+      ordinal: pkg.ordinal || index + 1,
+      label: pkg.label || pkg.name || pkg.id || `Package ${index + 1}`,
+      role: [pkg.ecosystem, pkg.version || pkg.version_status].filter(Boolean).join(" / ") || pkg.role || "package boundary",
+      question: pkg.question || pkg.description || pkg.source_repo || "Which package boundary is selected?",
+      repo: pkg.repo || pkg.source_repo || "Verifrax/VERIFRAX",
+      owns: pkg.owns || [
         pkg.ecosystem ? `${pkg.ecosystem} package surface` : "package surface",
-        pkg.version ? `version ${pkg.version}` : "versioned distribution",
-        pkg.source_repo || "source repository binding"
+        pkg.version || pkg.version_status || "versioned distribution",
+        pkg.source_repo || pkg.repo || "source repository binding"
       ],
-      must_not_own: [
+      must_not_own: pkg.must_not_own || [
         "constitutional law",
         "accepted state",
         "authority issuance",
@@ -363,6 +369,20 @@ function timelineObjectFromMode(mode, manifest, timelineContract) {
   }
 
   return timelineContract.stack || [];
+}
+
+
+function timelineEmptyModeDenial(mode) {
+  return [{
+    id: `${mode}-empty-denial`,
+    ordinal: 0,
+    label: `${mode.toUpperCase()} MODE EMPTY`,
+    role: "denied empty projection mode",
+    question: "This timeline mode has no selectable projection objects and is therefore denied.",
+    repo: "DERIVED_PROJECTION",
+    owns: ["empty-mode denial", "runtime safety surface"],
+    must_not_own: ["silent empty UI", "false completeness", "truth source"]
+  }];
 }
 
 function hydrateCompleteMainStackTimeline(container, manifest, timelineContract = null) {
@@ -391,7 +411,16 @@ function hydrateCompleteMainStackTimeline(container, manifest, timelineContract 
 
   let mode = shell.dataset.timelineMode || "stack";
   let objects = timelineObjectFromMode(mode, manifest, contract);
-  let selectedId = shell.dataset.selectedTimelineId || new URL(location.href).hash.replace(/^#timeline:/, "") || objects[0]?.id;
+    if (!objects.length) objects = timelineEmptyModeDenial(mode);
+    if (!objects.length) objects = timelineEmptyModeDenial(mode);
+    if (!objects.length) objects = timelineEmptyModeDenial(mode);
+  let hashMatch = new URL(location.href).hash.match(/^#timeline:([^:]+):(.+)$/);
+  if (hashMatch) {
+    mode = hashMatch[1];
+    objects = timelineObjectFromMode(mode, manifest, contract);
+  }
+  if (!objects.length) objects = timelineEmptyModeDenial(mode);
+  let selectedId = shell.dataset.selectedTimelineId || (hashMatch ? hashMatch[2] : null) || objects[0]?.id;
 
   function render() {
     objects = timelineObjectFromMode(mode, manifest, contract);
@@ -410,6 +439,19 @@ function hydrateCompleteMainStackTimeline(container, manifest, timelineContract 
       const active = button.getAttribute("data-timeline-mode") === mode;
       button.setAttribute("aria-pressed", active ? "true" : "false");
       button.classList.toggle("is-selected", active);
+
+    const modeCounts = {
+      stack: timelineObjectFromMode("stack", manifest, contract).length,
+      artifact: timelineObjectFromMode("artifact", manifest, contract).length,
+      host: timelineObjectFromMode("host", manifest, contract).length,
+      repository: timelineObjectFromMode("repository", manifest, contract).length,
+      package: timelineObjectFromMode("package", manifest, contract).length
+    };
+
+    shell.querySelectorAll("[data-timeline-mode-count]").forEach((node) => {
+      const key = node.getAttribute("data-timeline-mode-count");
+      node.textContent = String(modeCounts[key] || 0);
+    });
     });
 
     applySelection(selectedId, false, true);
@@ -469,7 +511,7 @@ function hydrateCompleteMainStackTimeline(container, manifest, timelineContract 
 
     if (!silent) {
       const url = new URL(location.href);
-      url.hash = `timeline:${item.id}`;
+      url.hash = `timeline:${mode}:${item.id}`;
       history.replaceState(null, "", url);
     }
   }
