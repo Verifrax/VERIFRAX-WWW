@@ -205,7 +205,7 @@
       }
 
       check("projection_id_alignment", receipt.projection_id === attestation.projection_id && ledger.latest_projection_id === attestation.projection_id);
-      check("repo_count", manifest.repositories?.length === 35 && receipt.object_counts?.governed_repositories === 35);
+      check("repo_count", manifest.repositories?.length === 36 && receipt.object_counts?.governed_repositories === 36);
       check("chamber_count", manifest.chambers?.length === 9 && receipt.object_counts?.sovereign_chambers === 9);
       check("host_count", manifest.hosts?.length === 12 && receipt.object_counts?.host_gates === 12);
 

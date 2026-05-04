@@ -420,7 +420,7 @@ const manifestSha = sha256(`${out}/verifrax-observatory.json`);
 
 const gateResults = {
   manifest_schema: "PASS",
-  repo_count: repos.length === 35 ? "PASS" : "FAIL",
+  repo_count: repos.length === 36 ? "PASS" : "FAIL",
   chamber_count: chambers.length === 9 ? "PASS" : "FAIL",
   host_gate_count: hosts.length === 12 ? "PASS" : "FAIL",
   admissorium_position: repos.find((r) => r.name === "ADMISSORIUM")?.visual_class === "front_gate" ? "PASS" : "FAIL",
