@@ -88,12 +88,6 @@ for (const needle of [
   }
 }
 
-
-
-
-
-
-
 // VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:
 const deadSelectableInstruction = ["Click or use ", "← →", " to select. Tab / Home / End also work. ", "Selection updates inspector, URL hash, and 3D focus intent."].join("");
 for (const path of ["index.html", "404.html"]) {

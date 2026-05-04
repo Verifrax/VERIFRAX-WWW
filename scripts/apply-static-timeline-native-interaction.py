@@ -259,6 +259,30 @@ for (const path of ["index.html", "404.html"]) {{
         path.write_text(text)
 
 
+
+def normalize_projection_output_files() -> None:
+    import re
+
+    for rel in [
+        "assets/surface.css",
+        "scripts/check-complete-main-stack-timeline.cjs",
+        "scripts/check-main-stack-timeline-selectable.cjs",
+    ]:
+        path = ROOT / rel
+        if not path.exists():
+            continue
+
+        text = path.read_text()
+
+        if rel.endswith(".cjs"):
+            text = re.sub(
+                r"\n{3,}(// VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:)",
+                r"\n\n\1",
+                text,
+            )
+
+        path.write_text(text.rstrip() + "\n")
+
 def main():
     stack = load_stack()
     for rel in ["index.html", "404.html"]:
@@ -269,6 +293,7 @@ def main():
     patch_layout_inert_css()
     patch_runtime_marker()
     patch_selectable_guard_files()
+    normalize_projection_output_files()
     print(json.dumps({
         "status": "PASS",
         "gate": GATE,
