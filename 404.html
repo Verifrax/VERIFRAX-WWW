@@ -37,12 +37,30 @@
         </div>
       </section>
 
-      <section class="oc-main-stack-timeline" aria-label="VERIFRAX main stack timeline">
+      <section class="oc-main-stack-timeline" aria-label="VERIFRAX complete selectable main stack timeline" data-main-stack-shell>
         <div class="oc-timeline-head">
-          <span>MAIN STACK TIMELINE</span>
-          <strong>Click or use ← → to select</strong>
+          <div>
+            <span>MAIN STACK TIMELINE</span>
+            <strong data-timeline-active-label>SYNTAGMARIUM / law</strong>
+          </div>
+          <div class="oc-timeline-actions" role="group" aria-label="Timeline modes">
+            <button type="button" data-timeline-mode="stack" aria-pressed="true">Stack</button>
+            <button type="button" data-timeline-mode="artifact" aria-pressed="false">Artifacts</button>
+            <button type="button" data-timeline-mode="host" aria-pressed="false">Hosts</button>
+            <button type="button" data-timeline-mode="repository" aria-pressed="false">Repos</button>
+          </div>
         </div>
+
+        <div class="oc-timeline-instruction">
+          Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.
+        </div>
+
         <div class="oc-timeline-track" role="listbox" aria-label="Selectable VERIFRAX main stack timeline" data-main-stack-timeline></div>
+
+        <div class="oc-timeline-detail" data-main-stack-detail>
+          <strong>Selection loading</strong>
+          <p>Timeline data is loaded from signed derived projection data. It is not truth source.</p>
+        </div>
       </section>
 
       <aside class="oc-left">
@@ -137,7 +155,7 @@
       <p>Host <code>https://www.verifrax.net</code></p>
       <p>Repository <a href="https://github.com/Verifrax/VERIFRAX-WWW">VERIFRAX-WWW</a></p>
       <p>Host class <code>root</code></p>
-      <p>Projection source <code>VERIFRAX-SURFACE@c33a312e736a7c60</code></p>
+      <p>Projection source <code>VERIFRAX-SURFACE@ee2ed3de95250748</code></p>
       <p>Static public host.</p>
     </section>
 

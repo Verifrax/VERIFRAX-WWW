@@ -40,6 +40,7 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
 const DATA_URL = "data/verifrax-observatory.json";
 const ATTESTATION_URL = "data/projection-attestation.json";
+const TIMELINE_URL = "data/main-stack-timeline.json";
 const FULL = "FULL_OBSERVATORY";
 const BLOCKED = "BLOCKED_PROJECTION";
 
@@ -289,6 +290,211 @@ function setRuntimeStatus(container, mode, message) {
 }
 
 
+/* BEGIN VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_RUNTIME */
+function timelineObjectFromMode(mode, manifest, timelineContract) {
+  if (mode === "stack") return timelineContract.stack || [];
+
+  if (mode === "artifact") {
+    return (manifest.journey || []).map((item, index) => ({
+      id: item.id || `artifact-${index + 1}`,
+      ordinal: index + 1,
+      label: item.label || item.id || `Artifact ${index + 1}`,
+      role: item.maps_to || item.role || "artifact journey",
+      question: item.description || "Where does this artifact sit in the current journey?",
+      repo: item.repo || "Verifrax/VERIFRAX",
+      owns: [item.maps_to || item.role || "artifact journey position"],
+      must_not_own: ["truth source beyond recorded evidence", "universal completion", "final seal-state"]
+    }));
+  }
+
+  if (mode === "host") {
+    return (manifest.hosts || []).map((host, index) => ({
+      id: host.id || host.host || `host-${index + 1}`,
+      ordinal: index + 1,
+      label: host.label || host.id || host.host,
+      role: host.role || host.class || "host boundary",
+      question: host.host || "Which public host boundary is selected?",
+      repo: host.owner_repo || host.repo || "Verifrax/VERIFRAX-WWW",
+      owns: [host.host || "host route", host.role || "host boundary"],
+      must_not_own: ["truth source", "cross-host role absorption", "private authority"]
+    }));
+  }
+
+  if (mode === "repository") {
+    return (manifest.repositories || []).map((repo, index) => ({
+      id: repo.id || repo.name || `repo-${index + 1}`,
+      ordinal: index + 1,
+      label: repo.name || repo.repo,
+      role: repo.class || repo.visual_class || "governed repository",
+      question: repo.repo,
+      repo: repo.repo,
+      owns: [repo.class || "repository boundary", repo.render_right?.mode || "projection object"],
+      must_not_own: [
+        repo.truth_owner ? "unbounded truth ownership" : "truth source unless explicitly admitted",
+        repo.sovereign_chamber ? "extra-stack sovereignty" : "sovereign chamber role",
+        "private truth control"
+      ]
+    }));
+  }
+
+  return timelineContract.stack || [];
+}
+
+function hydrateCompleteMainStackTimeline(container, manifest, timelineContract = null) {
+  const shell = $(container, "[data-main-stack-shell]");
+  const timeline = $(container, "[data-main-stack-timeline]");
+  const detail = $(container, "[data-main-stack-detail]");
+  const activeLabel = $(container, "[data-timeline-active-label]");
+
+  if (!shell || !timeline) return;
+
+  const contract = timelineContract || {
+    stack: chamberOrder.map((id, index) => {
+      const chamber = manifest.chambers.find((item) => item.id === id);
+      return {
+        id,
+        ordinal: index + 1,
+        label: chamber?.name || id,
+        role: chamber?.role || "",
+        question: chamber?.question || "",
+        repo: chamber?.repo || "",
+        owns: chamber?.owns || [],
+        must_not_own: chamber?.must_not_own || []
+      };
+    })
+  };
+
+  let mode = shell.dataset.timelineMode || "stack";
+  let objects = timelineObjectFromMode(mode, manifest, contract);
+  let selectedId = shell.dataset.selectedTimelineId || new URL(location.href).hash.replace(/^#timeline:/, "") || objects[0]?.id;
+
+  function render() {
+    objects = timelineObjectFromMode(mode, manifest, contract);
+    if (!objects.some((item) => item.id === selectedId)) selectedId = objects[0]?.id;
+
+    timeline.innerHTML = objects.map((item, index) => {
+      const selected = item.id === selectedId;
+      return `<button type="button" class="oc-timeline-node${selected ? " is-selected" : ""}" role="option" aria-selected="${selected ? "true" : "false"}" data-stack-id="${escapeHtml(item.id)}" data-stack-index="${index}" tabindex="${selected ? "0" : "-1"}">
+        <span>${String(item.ordinal || index + 1).padStart(2, "0")}</span>
+        <strong>${escapeHtml(item.label || item.id)}</strong>
+        <em>${escapeHtml(item.role || "")}</em>
+      </button>`;
+    }).join("");
+
+    shell.querySelectorAll("[data-timeline-mode]").forEach((button) => {
+      const active = button.getAttribute("data-timeline-mode") === mode;
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+      button.classList.toggle("is-selected", active);
+    });
+
+    applySelection(selectedId, false, true);
+  }
+
+  function selectedObject(id) {
+    return objects.find((item) => item.id === id) || objects[0];
+  }
+
+  function applySelection(id, shouldFocus = false, silent = false) {
+    const item = selectedObject(id);
+    if (!item) return;
+
+    selectedId = item.id;
+    shell.dataset.timelineMode = mode;
+    shell.dataset.selectedTimelineId = selectedId;
+    container.dataset.selectedStack = selectedId;
+
+    timeline.querySelectorAll("[data-stack-id]").forEach((button) => {
+      const active = button.getAttribute("data-stack-id") === selectedId;
+      button.classList.toggle("is-selected", active);
+      button.setAttribute("aria-selected", active ? "true" : "false");
+      button.setAttribute("tabindex", active ? "0" : "-1");
+      if (active && shouldFocus) button.focus();
+    });
+
+    if (activeLabel) activeLabel.textContent = `${item.label || item.id} / ${item.role || mode}`;
+
+    if (detail) {
+      detail.innerHTML = `
+        <strong>${escapeHtml(item.label || item.id)}</strong>
+        <p>${escapeHtml(item.question || item.role || "Bounded projection object.")}</p>
+        <dl>
+          <div><dt>Mode</dt><dd>${escapeHtml(mode)}</dd></div>
+          <div><dt>Repo</dt><dd>${escapeHtml(item.repo || "DERIVED_PROJECTION")}</dd></div>
+          <div><dt>Role</dt><dd>${escapeHtml(item.role || "")}</dd></div>
+        </dl>
+      `;
+    }
+
+    writeInspector(container, {
+      ...item,
+      name: item.label,
+      visual_class: `timeline_${mode}`,
+      warning: "DERIVED_PROJECTION / NOT_TRUTH_SOURCE"
+    });
+
+    window.dispatchEvent(new CustomEvent("verifrax:timeline-select", {
+      detail: {
+        mode,
+        id: item.id,
+        label: item.label,
+        role: item.role,
+        repo: item.repo
+      }
+    }));
+
+    if (!silent) {
+      const url = new URL(location.href);
+      url.hash = `timeline:${item.id}`;
+      history.replaceState(null, "", url);
+    }
+  }
+
+  if (shell.dataset.completeTimelineBound !== "true") {
+    shell.addEventListener("click", (event) => {
+      const modeButton = event.target.closest("[data-timeline-mode]");
+      if (modeButton) {
+        mode = modeButton.getAttribute("data-timeline-mode");
+        selectedId = null;
+        render();
+        return;
+      }
+
+      const node = event.target.closest("[data-stack-id]");
+      if (!node) return;
+      applySelection(node.getAttribute("data-stack-id"), true);
+    });
+
+    shell.addEventListener("keydown", (event) => {
+      const buttons = [...timeline.querySelectorAll("[data-stack-id]")];
+      if (!buttons.length) return;
+
+      const active = timeline.querySelector(".oc-timeline-node.is-selected") || buttons[0];
+      const current = Math.max(0, buttons.indexOf(active));
+      let next = current;
+
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") next = Math.min(buttons.length - 1, current + 1);
+      else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = Math.max(0, current - 1);
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = buttons.length - 1;
+      else if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        applySelection(active.getAttribute("data-stack-id"), true);
+        return;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      applySelection(buttons[next].getAttribute("data-stack-id"), true);
+    });
+
+    shell.dataset.completeTimelineBound = "true";
+  }
+
+  render();
+}
+/* END VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_RUNTIME */
+
 function hydrateMainStackTimeline(container, manifest) {
   const timeline = $(container, "[data-main-stack-timeline]");
   if (!timeline) return;
@@ -406,6 +612,8 @@ function hydrateCommandSurface(container, manifest, attestation) {
       return `<li><strong>${escapeHtml(host.label || host.id)}</strong><span>${escapeHtml(host.host)}</span></li>`;
     }).join("");
   }
+
+  hydrateCompleteMainStackTimeline(container, manifest);
 
   hydrateMainStackTimeline(container, manifest);
 
