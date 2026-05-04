@@ -2697,3 +2697,55 @@ def _vco_live_terminal_institutional_api_projector_hook():
     else:
         text = text.rstrip() + "\n\n" + block
     runtime.write_text(text)
+
+
+# BEGIN VERIFRAX_MAIN_STACK_TIMELINE_SELECTABLE_PATCH
+def _verifrax_main_stack_timeline_selectable_patch():
+    from pathlib import Path
+
+    base = Path(__file__).resolve().parents[3]
+    timeline_html = '      <section class="oc-main-stack-timeline" aria-label="VERIFRAX main stack timeline">\n        <div class="oc-timeline-head">\n          <span>MAIN STACK TIMELINE</span>\n          <strong>Click or use ← → to select</strong>\n        </div>\n        <div class="oc-timeline-track" role="listbox" aria-label="Selectable VERIFRAX main stack timeline" data-main-stack-timeline></div>\n      </section>\n\n'
+    runtime_fn = '\nfunction hydrateMainStackTimeline(container, manifest) {\n  const timeline = $(container, "[data-main-stack-timeline]");\n  if (!timeline) return;\n\n  const chambers = chamberOrder\n    .map((id) => manifest.chambers.find((item) => item.id === id))\n    .filter(Boolean);\n\n  timeline.innerHTML = chambers.map((chamber, index) => {\n    const selected = index === 0 ? "true" : "false";\n    return `<button type="button" class="oc-timeline-node${index === 0 ? " is-selected" : ""}" role="option" aria-selected="${selected}" data-stack-id="${escapeHtml(chamber.id)}" data-stack-index="${index}" tabindex="${index === 0 ? "0" : "-1"}">\n      <span>${String(index + 1).padStart(2, "0")}</span>\n      <strong>${escapeHtml(chamber.name)}</strong>\n      <em>${escapeHtml(chamber.role)}</em>\n    </button>`;\n  }).join("");\n\n  function selectTimelineNode(id, shouldFocus = false) {\n    const chamber = chambers.find((item) => item.id === id);\n    if (!chamber) return;\n\n    container.dataset.selectedStack = id;\n\n    timeline.querySelectorAll("[data-stack-id]").forEach((button) => {\n      const active = button.getAttribute("data-stack-id") === id;\n      button.classList.toggle("is-selected", active);\n      button.setAttribute("aria-selected", active ? "true" : "false");\n      button.setAttribute("tabindex", active ? "0" : "-1");\n      if (active && shouldFocus) button.focus();\n    });\n\n    writeInspector(container, {\n      ...chamber,\n      visual_class: "main_stack_timeline",\n      warning: "DERIVED_PROJECTION / NOT_TRUTH_SOURCE"\n    });\n  }\n\n  if (timeline.dataset.bound !== "true") {\n    timeline.addEventListener("click", (event) => {\n      const button = event.target.closest("[data-stack-id]");\n      if (!button) return;\n      selectTimelineNode(button.getAttribute("data-stack-id"), true);\n    });\n\n    timeline.addEventListener("keydown", (event) => {\n      const active = timeline.querySelector(".oc-timeline-node.is-selected") || timeline.querySelector("[data-stack-id]");\n      const buttons = [...timeline.querySelectorAll("[data-stack-id]")];\n      const current = Math.max(0, buttons.indexOf(active));\n      let next = current;\n\n      if (event.key === "ArrowRight" || event.key === "ArrowDown") next = Math.min(buttons.length - 1, current + 1);\n      else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = Math.max(0, current - 1);\n      else if (event.key === "Home") next = 0;\n      else if (event.key === "End") next = buttons.length - 1;\n      else if (event.key === "Enter" || event.key === " ") {\n        event.preventDefault();\n        if (active) selectTimelineNode(active.getAttribute("data-stack-id"), true);\n        return;\n      } else {\n        return;\n      }\n\n      event.preventDefault();\n      selectTimelineNode(buttons[next].getAttribute("data-stack-id"), true);\n    });\n\n    timeline.dataset.bound = "true";\n  }\n\n  selectTimelineNode(chambers[0]?.id || "syntagmarium", false);\n}\n'
+    css_block = '\n/* VERIFRAX_MAIN_STACK_TIMELINE_SELECTABLE_CSS */\n.oc-main-stack-timeline{\n  position:absolute;\n  z-index:19;\n  top:86px;\n  left:50%;\n  transform:translateX(-50%);\n  width:min(680px,calc(100vw - 820px));\n  min-width:420px;\n  pointer-events:auto;\n  border:1px solid rgba(115,208,255,.18);\n  border-radius:18px;\n  background:linear-gradient(180deg,rgba(2,8,14,.86),rgba(1,5,10,.72));\n  box-shadow:0 18px 56px rgba(0,0,0,.34);\n  backdrop-filter:blur(14px);\n  padding:12px;\n}\n.oc-timeline-head{\n  display:flex;\n  align-items:center;\n  justify-content:space-between;\n  gap:12px;\n  margin-bottom:10px;\n}\n.oc-timeline-head span{\n  color:#73d0ff;\n  font:900 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n  letter-spacing:.14em;\n}\n.oc-timeline-head strong{\n  color:#9fafbf;\n  font:800 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n  text-transform:uppercase;\n}\n.oc-timeline-track{\n  display:grid;\n  grid-template-columns:repeat(9,minmax(0,1fr));\n  gap:6px;\n}\n.oc-timeline-node{\n  appearance:none;\n  display:grid;\n  gap:3px;\n  min-width:0;\n  min-height:58px;\n  padding:8px 6px;\n  text-align:left;\n  cursor:pointer;\n  color:#dcecff;\n  border:1px solid rgba(255,255,255,.09);\n  border-radius:12px;\n  background:rgba(255,255,255,.035);\n  box-shadow:inset 0 0 0 1px rgba(115,208,255,0);\n}\n.oc-timeline-node span{\n  color:#73d0ff;\n  font:900 10px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n}\n.oc-timeline-node strong{\n  overflow:hidden;\n  text-overflow:ellipsis;\n  white-space:nowrap;\n  font:900 10px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n}\n.oc-timeline-node em{\n  overflow:hidden;\n  text-overflow:ellipsis;\n  white-space:nowrap;\n  color:#8fa5b9;\n  font:800 9px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;\n  font-style:normal;\n}\n.oc-timeline-node:hover,\n.oc-timeline-node:focus-visible,\n.oc-timeline-node.is-selected{\n  outline:none;\n  border-color:rgba(115,208,255,.72);\n  background:linear-gradient(180deg,rgba(115,208,255,.18),rgba(115,208,255,.07));\n  box-shadow:0 0 0 1px rgba(115,208,255,.32),0 12px 34px rgba(0,0,0,.28);\n}\n.oc-timeline-node.is-selected em{\n  color:#9ee6b8;\n}\n@media (max-width:1320px), (max-height:780px){\n  .oc-main-stack-timeline{\n    top:auto;\n    left:300px;\n    right:320px;\n    bottom:132px;\n    transform:none;\n    width:auto;\n    min-width:0;\n  }\n  .oc-timeline-track{\n    grid-template-columns:repeat(3,minmax(0,1fr));\n  }\n}\n@media (max-width:900px), (max-height:640px){\n  .oc-main-stack-timeline{\n    display:none;\n  }\n}\n'
+
+    def patch_html(path):
+        p = Path(path)
+        s = p.read_text()
+        if "data-main-stack-timeline" not in s:
+            needle = '      </section>\n\n      <aside class="oc-left">'
+            s = s.replace(needle, "      </section>\n\n" + timeline_html + '      <aside class="oc-left">')
+            p.write_text(s)
+
+    def patch_runtime(path):
+        p = Path(path)
+        s = p.read_text()
+        if "function hydrateMainStackTimeline(container, manifest)" not in s:
+            needle = "function hydrateCommandSurface(container, manifest, attestation) {"
+            s = s.replace(needle, runtime_fn + "\n" + needle)
+        if "hydrateMainStackTimeline(container, manifest);" not in s:
+            needle = '  const projection = $(container, "[data-projection-id]");'
+            s = s.replace(needle, '  hydrateMainStackTimeline(container, manifest);\n\n' + needle)
+        p.write_text(s)
+
+    def patch_css(path):
+        p = Path(path)
+        s = p.read_text()
+        if "VERIFRAX_MAIN_STACK_TIMELINE_SELECTABLE_CSS" not in s:
+            s = s.rstrip() + "\n\n" + css_block.lstrip()
+            p.write_text(s)
+
+    for rel in ["index.html", "404.html"]:
+        target = base / rel
+        if target.exists():
+            patch_html(target)
+
+    runtime = base / "assets/observatory-webgl-runtime.js"
+    if runtime.exists():
+        patch_runtime(runtime)
+
+    css = base / "assets/surface.css"
+    if css.exists():
+        patch_css(css)
+
+_verifrax_main_stack_timeline_selectable_patch()
+# END VERIFRAX_MAIN_STACK_TIMELINE_SELECTABLE_PATCH
