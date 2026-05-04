@@ -102,6 +102,10 @@ for (const needle of ["VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_CSS", ".oc-main-sta
 
 
 
+
+
+
+
 // VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:
 // Static selection is native anchor/:target authority. The old JS-only instruction is forbidden.
 if (index.includes("Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.")) {
