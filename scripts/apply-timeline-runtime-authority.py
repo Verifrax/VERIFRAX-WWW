@@ -271,6 +271,24 @@ def patch_runtime() -> None:
             1,
         )
 
+    js = "\n".join(
+        line for line in js.splitlines()
+        if line.strip() != "if (!objects.length) objects = timelineEmptyModeDenial(mode);"
+    ) + "\n"
+
+    hash_block = """  if (hashMatch) {
+    mode = hashMatch[1];
+    objects = timelineObjectFromMode(mode, manifest, contract);
+  }
+"""
+    if hash_block not in js:
+        raise SystemExit("runtime: hash mode selection block missing")
+    js = js.replace(
+        hash_block,
+        hash_block + "    if (!objects.length) objects = timelineEmptyModeDenial(mode);\n",
+        1,
+    )
+
     js = re.sub(r'\n\s*hydrateMainStackTimeline\(container,\s*manifest\);\n', "\n", js)
 
     required = [

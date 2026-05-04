@@ -341,6 +341,7 @@ function timelineObjectFromMode(mode, manifest, timelineContract) {
 
 
 
+
   if (mode === "package") {
     const packages = (timelineContract.packages && timelineContract.packages.length)
       ? timelineContract.packages
@@ -411,15 +412,12 @@ function hydrateCompleteMainStackTimeline(container, manifest, timelineContract 
 
   let mode = shell.dataset.timelineMode || "stack";
   let objects = timelineObjectFromMode(mode, manifest, contract);
-    if (!objects.length) objects = timelineEmptyModeDenial(mode);
-    if (!objects.length) objects = timelineEmptyModeDenial(mode);
-    if (!objects.length) objects = timelineEmptyModeDenial(mode);
   let hashMatch = new URL(location.href).hash.match(/^#timeline:([^:]+):(.+)$/);
   if (hashMatch) {
     mode = hashMatch[1];
     objects = timelineObjectFromMode(mode, manifest, contract);
   }
-  if (!objects.length) objects = timelineEmptyModeDenial(mode);
+    if (!objects.length) objects = timelineEmptyModeDenial(mode);
   let selectedId = shell.dataset.selectedTimelineId || (hashMatch ? hashMatch[2] : null) || objects[0]?.id;
 
   function render() {
