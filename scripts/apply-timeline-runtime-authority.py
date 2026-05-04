@@ -319,10 +319,14 @@ def patch_runtime() -> None:
 
 def mirror_contract() -> None:
     src = ROOT / "data/main-stack-timeline.json"
-    dst = ROOT / "public/data/timeline/main-stack-timeline.json"
+    dsts = [
+        ROOT / "data/timeline/main-stack-timeline.json",
+        ROOT / "public/data/timeline/main-stack-timeline.json",
+    ]
     if src.exists():
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(src, dst)
+        for dst in dsts:
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src, dst)
 
 def main() -> None:
     mirror_contract()
