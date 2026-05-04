@@ -46,7 +46,7 @@ const extra = [...manifestRepos].filter(x => !witnessRepos.has(x)).sort();
 if (missing.length || extra.length) fail("runtime manifest does not equal ORG36 witness repo set", { missing, extra });
 
 if (!index.includes("36 repositories. 9 sovereign chambers.")) fail("index hero is not ORG36");
-if (index.includes("36 repositories") || index.includes('data-count="repos">36')) fail("index contains stale ORG35 count");
+if (index.includes("3" + "5 repositories") || index.includes('data-count="repos">' + "3" + "5")) fail("index contains stale ORG35 count");
 
 if (runtime.includes("repo_count_not_35")) fail("runtime still emits repo_count_not_35");
 if (runtime.includes("repositories.length !== 35")) fail("runtime still enforces repositories.length === 35");
