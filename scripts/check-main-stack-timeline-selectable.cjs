@@ -20,7 +20,9 @@ for (const [name, html] of [["index", index], ["404", notFound]]) {
   if (!html.includes("data-main-stack-timeline")) fail(`${name} missing timeline mount`);
   if (!html.includes("MAIN STACK TIMELINE")) fail(`${name} missing timeline label`);
   if (!html.includes('role="listbox"')) fail(`${name} missing listbox role`);
-  if (!html.includes("Click or use ← → to select")) fail(`${name} missing selectable instruction`);
+  if (!html.includes("VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY")) fail(`${name} missing native static timeline authority`);
+  if (!html.includes("data-static-timeline-details")) fail(`${name} missing native static timeline details`);
+  if (!html.includes('href="#static-timeline-detail-')) fail(`${name} missing native static timeline anchors`);
   for (const mode of ["stack", "artifact", "host", "repository", "package"]) {
     if (!html.includes(`data-timeline-mode="${mode}"`)) fail(`${name} missing mode`, { mode });
     if (!html.includes(`data-timeline-mode-count="${mode}"`)) fail(`${name} missing mode count`, { mode });
@@ -70,6 +72,38 @@ for (const needle of ["VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_CSS", ".oc-main-sta
   if (!css.includes(needle)) fail("css missing timeline selector", { needle });
 }
 
+
+// VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY guard:
+// The raw surface must not advertise JS-only selection as the primary contract.
+// Native anchors and :target panels are now the static interaction authority.
+
+for (const needle of [
+  "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY",
+  "data-static-timeline-details",
+  'href="#static-timeline-detail-',
+  'id="static-timeline-detail-'
+]) {
+  if (!index.includes(needle) && !runtime.includes(needle) && !css.includes(needle)) {
+    fail("native selectable authority missing", { needle });
+  }
+}
+
+// VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:
+// Static selection is native anchor/:target authority. The old JS-only instruction is forbidden.
+if (index.includes("Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.")) {
+  fail("dead selectable instruction still present");
+}
+
+for (const needle of [
+  "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY",
+  "data-static-timeline-details",
+  'href="#static-timeline-detail-',
+  'id="static-timeline-detail-'
+]) {
+  if (!index.includes(needle) && !runtime.includes(needle) && !css.includes(needle)) {
+    fail("native selectable authority missing", { needle });
+  }
+}
 console.log(JSON.stringify({
   status: "PASS",
   gate: "VERIFRAX_MAIN_STACK_TIMELINE_SELECTABLE",

@@ -1395,3 +1395,44 @@ html,body{margin:0!important;width:100%!important;height:100%!important;min-heig
 .oc-timeline-detail dt{color:#73d0ff}.oc-timeline-detail dd{color:#dcecff;margin-top:3px}
 @media (max-width:1320px), (max-height:780px){.oc-main-stack-timeline{top:auto;left:300px;right:320px;bottom:132px;transform:none;width:auto;min-width:0}.oc-timeline-track{grid-template-columns:repeat(3,minmax(0,1fr))}.oc-timeline-detail{display:none}}
 @media (max-width:900px), (max-height:640px){.oc-main-stack-timeline{display:none}}
+
+/* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY */
+.oc-static-timeline-details {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+.oc-static-timeline-detail {
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 1rem;
+  padding: 0.9rem;
+  background: rgba(0,0,0,0.24);
+}
+.oc-static-timeline-detail:target {
+  outline: 2px solid rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.08);
+}
+.oc-static-timeline-detail h4,
+.oc-static-timeline-detail h5 {
+  margin: 0 0 0.45rem;
+}
+
+/* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_LAYOUT_INERT */
+.oc-static-timeline-details {
+  display: block;
+  position: static;
+  width: 100%;
+  max-width: 100%;
+  pointer-events: none;
+}
+
+.oc-static-timeline-detail {
+  display: none;
+  margin-top: 0.75rem;
+  pointer-events: none;
+}
+
+.oc-static-timeline-detail:target {
+  display: block;
+  pointer-events: auto;
+}
