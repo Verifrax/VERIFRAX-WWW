@@ -208,6 +208,35 @@ for (const needle of [
         path.write_text(src)
 
 
+
+def patch_layout_inert_css():
+    css_path = ROOT / "assets/surface.css"
+    s = css_path.read_text()
+    marker = "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_LAYOUT_INERT"
+    block = """/* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_LAYOUT_INERT */
+.oc-static-timeline-detail {
+  display: none;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.oc-static-timeline-detail:target {
+  display: block;
+  visibility: visible;
+  pointer-events: auto;
+}
+""".strip()
+    if marker in s:
+        start = s.index(f"/* {marker} */")
+        rest = s[start:]
+        first = rest.index("}")
+        second = rest.index("}", first + 1)
+        s = s[:start] + block + rest[second + 1:]
+    else:
+        s = s.rstrip() + "\n\n" + block + "\n"
+    css_path.write_text(s)
+
+
 def main():
     stack = load_stack()
     for rel in ["index.html", "404.html"]:
@@ -215,6 +244,7 @@ def main():
         patch_html(path, stack)
         ensure_canonical_stack_deeplink_aliases(path, stack)
     patch_css()
+    patch_layout_inert_css()
     patch_runtime_marker()
     patch_selectable_guard_files()
     print(json.dumps({

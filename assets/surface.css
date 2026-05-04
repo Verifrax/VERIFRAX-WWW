@@ -1416,3 +1416,16 @@ html,body{margin:0!important;width:100%!important;height:100%!important;min-heig
 .oc-static-timeline-detail h5 {
   margin: 0 0 0.45rem;
 }
+
+/* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_LAYOUT_INERT */
+.oc-static-timeline-detail {
+  display: none;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.oc-static-timeline-detail:target {
+  display: block;
+  visibility: visible;
+  pointer-events: auto;
+}
