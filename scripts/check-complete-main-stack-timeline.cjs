@@ -91,6 +91,28 @@ for (const needle of ["VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_CSS", ".oc-main-sta
   if (!css.includes(needle)) fail("css missing complete selector", { needle });
 }
 
+
+
+
+
+
+// VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:
+// Static selection is native anchor/:target authority. The old JS-only instruction is forbidden.
+if (index.includes("Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.")) {
+  fail("dead selectable instruction still present");
+}
+
+for (const needle of [
+  "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY",
+  "data-static-timeline-details",
+  'href="#static-timeline-detail-',
+  'id="static-timeline-detail-'
+]) {
+  if (!index.includes(needle) && !runtime.includes(needle) && !css.includes(needle)) {
+    fail("native selectable authority missing", { needle });
+  }
+}
+
 console.log(JSON.stringify({
   status: "PASS",
   gate: "VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE",

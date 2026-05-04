@@ -2802,3 +2802,17 @@ def _verifrax_static_observatory_dom_authority_hook():
 
 _verifrax_static_observatory_dom_authority_hook()
 # END VERIFRAX_STATIC_OBSERVATORY_DOM_AUTHORITY_HOOK
+
+# BEGIN VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_HOOK
+def _verifrax_static_timeline_native_interaction_authority_hook():
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    base = Path(__file__).resolve().parents[3]
+    script = base / "scripts/apply-static-timeline-native-interaction.py"
+    if script.exists():
+        subprocess.run([sys.executable, str(script)], cwd=str(base), check=True)
+
+_verifrax_static_timeline_native_interaction_authority_hook()
+# END VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_HOOK

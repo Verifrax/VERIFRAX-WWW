@@ -294,6 +294,7 @@ function setRuntimeStatus(container, mode, message) {
 /* VERIFRAX_TIMELINE_RUNTIME_AUTHORITY_V2 */
 /* VERIFRAX_TIMELINE_MODE_AUTHORITY_V3 */
 /* VERIFRAX_TIMELINE_STATIC_COUNT_AUTHORITY */
+/* VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY */
 /* VERIFRAX_VISUAL_REPO_COUNT_AUTHORITY */
 function timelineObjectFromMode(mode, manifest, timelineContract) {
   if (mode === "stack") return timelineContract.stack || [];
