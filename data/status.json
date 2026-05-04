@@ -4,7 +4,7 @@
   "render_permission": "FULL_OBSERVATORY",
   "projection_type": "DERIVED_PROJECTION",
   "truth_warning": "NOT_TRUTH_SOURCE",
-  "repo_count": 35,
+  "repo_count": 36,
   "chamber_count": 9,
   "host_gate_count": 12,
   "object_maturity_note": "structural perimeter is live; machine-deference completeness requires stronger public bounded object families"

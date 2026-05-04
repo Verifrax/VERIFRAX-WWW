@@ -294,6 +294,7 @@ function setRuntimeStatus(container, mode, message) {
 /* VERIFRAX_TIMELINE_RUNTIME_AUTHORITY_V2 */
 /* VERIFRAX_TIMELINE_MODE_AUTHORITY_V3 */
 /* VERIFRAX_TIMELINE_STATIC_COUNT_AUTHORITY */
+/* VERIFRAX_VISUAL_REPO_COUNT_AUTHORITY */
 function timelineObjectFromMode(mode, manifest, timelineContract) {
   if (mode === "stack") return timelineContract.stack || [];
 
@@ -1189,7 +1190,7 @@ window.addEventListener("mousemove", (event) => {
     createAdmissoriumRepoGate(scene, admissoriumRepo, labels, selectable);
   }
 
-  const repoLabel = makeLabel("35 GOVERNED REPOSITORIES", "34 perimeter pillars + ADMISSORIUM front gate", 820, 190);
+  const repoLabel = makeLabel("36 GOVERNED REPOSITORIES", "35 perimeter pillars + ADMISSORIUM front gate", 820, 190);
   repoLabel.position.set(0, 4.75, -23.35);
   repoLabel.userData.visualWeight = "chamber";
   labels.add(repoLabel);
@@ -1300,7 +1301,7 @@ window.addEventListener("mousemove", (event) => {
   denied.position.set(0, 2.05, 16.25);
   labels.add(denied);
 
-  const statusLabel = makeLabel("35 REPOSITORIES. ONE CONSTITUTIONAL MACHINE.", "OPEN TRUTH BELOW. ENTERPRISE CONTROL ABOVE. DERIVED PROJECTION.", 1340, 220);
+  const statusLabel = makeLabel("36 REPOSITORIES. ONE CONSTITUTIONAL MACHINE.", "OPEN TRUTH BELOW. ENTERPRISE CONTROL ABOVE. DERIVED PROJECTION.", 1340, 220);
   statusLabel.position.set(0, 2.78, 23.15);
   labels.add(statusLabel);
 
@@ -2042,7 +2043,7 @@ window.labelAspectRestoration = "VERIFRAX_OBSERVATORY_LABEL_ASPECT_RESTORATION";
 window.panelContainmentBoundary = "VERIFRAX_OBSERVATORY_PANEL_CONTAINMENT_BOUNDARY";
 
 
-window.governedRepoPillarAuthority = "VERIFRAX_OBSERVATORY_35_GOVERNED_REPO_PILLAR_AUTHORITY";
+window.governedRepoPillarAuthority = "VERIFRAX_OBSERVATORY_36_GOVERNED_REPO_PILLAR_AUTHORITY";
 
 
 window.observatoryRuntimeBootAuthority = "VERIFRAX_OBSERVATORY_RUNTIME_BOOT_AUTHORITY_REPAIRED";
