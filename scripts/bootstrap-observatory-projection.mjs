@@ -6,7 +6,7 @@ const out = "public/data";
 mkdirSync(out, { recursive: true });
 
 const now = new Date().toISOString();
-const projectionId = `vco-${now.replaceAll(":", "-").replace(/\.\d{3}Z$/, "Z")}`;
+const projectionId = "vco-org36-public-surface-runtime-convergence";
 
 const chambers = [
   {
@@ -132,6 +132,7 @@ const repos = [
   ["VERIFRAX", "authored-protocol-and-evidence-core", "Apache-2.0"],
   ["VERIFRAX-SPEC", "package-bearing-protocol-surface", "Apache-2.0"],
   ["VERIFRAX-PROFILES", "package-bearing-protocol-surface", "Apache-2.0"],
+  ["VERIFRAX-PY", "package-bearing-protocol-surface", "Apache-2.0"],
   ["VERIFRAX-SAMPLES", "operational-tooling-and-validation", "Apache-2.0"],
   ["verifrax-marketplace-smoke", "operational-tooling-and-validation", "Apache-2.0"],
   ["originseal", "irreversible-primitive", "Apache-2.0"],
@@ -239,6 +240,29 @@ const packages = [
   position: index
 }));
 
+packages.push({
+  id: "verifrax-py",
+  name: "verifrax",
+  ecosystem: "pypi",
+  version: "0.1.0",
+  package: "verifrax",
+  package_name: "verifrax",
+  registry: "PyPI",
+  package_type: "python",
+  repository: "Verifrax/VERIFRAX-PY",
+  repo: "Verifrax/VERIFRAX-PY",
+  source_repo: "Verifrax/VERIFRAX-PY",
+  url: "https://pypi.org/project/verifrax/",
+  registry_url: "https://pypi.org/project/verifrax/",
+  seal_status: "SEALED",
+  publication_status: "SEALED",
+  truth_warning: "NOT_TRUTH_SOURCE",
+  projection_type: "DERIVED_PROJECTION",
+  visual_class: "package_surface",
+  role: "sealed PyPI package object",
+  position: packages.length
+});
+
 const products = [
   {
     id: "authority-governance",
@@ -334,7 +358,14 @@ const topology = {
 };
 
 function writeJson(name, data) {
-  writeFileSync(`${out}/${name}`, `${JSON.stringify(data, null, 2)}\n`);
+  const payload = `${JSON.stringify(data, null, 2)}\n`;
+
+  // GitHub Pages serves /data/* from repository-root data/.
+  // Static/tooling consumers may also read public/data/*.
+  // The projection compiler must keep both publication paths byte-aligned.
+  writeFileSync(`${out}/${name}`, payload);
+  writeFileSync(`data/${name}`, payload);
+  writeFileSync(`public/data/${name}`, payload);
 }
 
 writeJson("topology.json", topology);
@@ -364,6 +395,67 @@ const assetHashes = {
   "models/admissorium-gate.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "models/accepted-truth-core.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 };
+
+const expectedOrg36Repos = [
+  ".github",
+  "ADMISSORIUM",
+  "ANAGNORIUM",
+  "ARCHITECTURE",
+  "AUCTORISEAL",
+  "CONSONORIUM",
+  "CORPIFORM",
+  "ORBISTIUM",
+  "REGRESSORIUM",
+  "SIGILLARIUM",
+  "SPEEDKIT",
+  "SYNTAGMARIUM",
+  "TACHYRIUM",
+  "VERIFRAX",
+  "VERIFRAX-API",
+  "VERIFRAX-DOCS",
+  "VERIFRAX-PROFILES",
+  "VERIFRAX-PY",
+  "VERIFRAX-SAMPLES",
+  "VERIFRAX-SPEC",
+  "VERIFRAX-STATUS",
+  "VERIFRAX-SURFACE",
+  "VERIFRAX-WWW",
+  "VERIFRAX-verify",
+  "apply",
+  "archicustos",
+  "attestorium",
+  "cicullis",
+  "guillotine",
+  "irrevocull",
+  "kairoclasp",
+  "limenward",
+  "originseal",
+  "proof",
+  "validexor",
+  "verifrax-marketplace-smoke"
+].sort();
+
+const observedOrg36Repos = repos
+  .map((repo) => String(repo.repo || repo.name || repo.id).replace(/^Verifrax\//, ""))
+  .sort();
+
+const missingOrg36Repos = expectedOrg36Repos.filter((name) => !observedOrg36Repos.includes(name));
+const extraOrg36Repos = observedOrg36Repos.filter((name) => !expectedOrg36Repos.includes(name));
+
+if (
+  !Array.isArray(repos) ||
+  repos.length !== 36 ||
+  missingOrg36Repos.length > 0 ||
+  extraOrg36Repos.length > 0
+) {
+  console.error(JSON.stringify({
+    observed_count: Array.isArray(repos) ? repos.length : "not-array",
+    missingOrg36Repos,
+    extraOrg36Repos,
+    observedOrg36Repos
+  }, null, 2));
+  throw new Error(`ORG36_REPOSITORY_INPUT_SET_MISMATCH:${Array.isArray(repos) ? repos.length : "not-array"}`);
+}
 
 const manifest = {
   schema_version: "1.0.0",
@@ -484,7 +576,7 @@ writeJson("projection-diff.json", {
 
 console.log("OBSERVATORY PROJECTION INPUTS");
 console.log(`projection_id          ${projectionId}`);
-console.log(`repositories           ${repos.length}/35`);
+console.log(`repositories           ${repos.length}/36`);
 console.log(`chambers               ${chambers.length}/9`);
 console.log(`hosts                  ${hosts.length}/12`);
 console.log(`render_permission      ${renderPermission}`);
