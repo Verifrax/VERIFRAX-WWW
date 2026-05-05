@@ -1103,7 +1103,7 @@ function vcoApplyReal3DAntiToyAuthority(scene, THREE) {
 
     for html in [Path("index.html"), Path("404.html")]:
         if html.exists():
-            data = html.read_text(encoding="utf-8").replace("https://https://", "https://").replace("STATIC_FALLBACK", "FULL_OBSERVATORY")
+            data = html.read_text(encoding="utf-8").replace("https://https://", "https://").replace("STATIC_FALLBACK", "VERIFYING_PROJECTION")
             html.write_text(data, encoding="utf-8")
 
 
