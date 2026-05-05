@@ -92,21 +92,23 @@ for (const needle of ["VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE_CSS", ".oc-main-sta
 }
 
 // VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY:
-// Static selection is native anchor/:target authority. The old JS-only instruction is forbidden.
-if (index.includes("Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.")) {
-  fail("dead selectable instruction still present");
-}
-
-for (const needle of [
-  "VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY",
-  "data-static-timeline-details",
-  'href="#static-timeline-detail-',
-  'id="static-timeline-detail-'
-]) {
-  if (!index.includes(needle) && !runtime.includes(needle) && !css.includes(needle)) {
-    fail("native selectable authority missing", { needle });
+const deadSelectableInstruction = ["Click or use ", "← →", " to select. Tab / Home / End also work. ", "Selection updates inspector, URL hash, and 3D focus intent."].join("");
+for (const path of ["index.html", "404.html"]) {
+  const emittedHtml = read(path);
+  if (emittedHtml.includes(deadSelectableInstruction)) {
+    fail("dead selectable instruction still present", { path });
+  }
+  if (!emittedHtml.includes("VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY")) {
+    fail("native selectable authority missing", { path });
+  }
+  if (!emittedHtml.includes('href="#static-timeline-detail-')) {
+    fail("native static timeline anchors missing", { path });
+  }
+  if (!emittedHtml.includes('id="static-timeline-detail-')) {
+    fail("native static timeline targets missing", { path });
   }
 }
+
 console.log(JSON.stringify({
   status: "PASS",
   gate: "VERIFRAX_COMPLETE_MAIN_STACK_TIMELINE",

@@ -237,7 +237,7 @@ def render_timeline_section(stack: list[dict[str, Any]], hosts: list[dict[str, A
         </div>
 
         <div class="oc-timeline-instruction">
-          Click or use ← → to select. Tab / Home / End also work. Selection updates inspector, URL hash, and 3D focus intent.
+          Click any object to open its native static detail. Selection is resolved by URL fragment and CSS target state before JavaScript.
         </div>
 
         <div class="oc-timeline-track" role="listbox" aria-label="Selectable VERIFRAX main stack timeline" data-main-stack-timeline>
