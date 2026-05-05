@@ -28,4 +28,14 @@ must("viewport_css_marker", css.includes("VCO REAL3D VIEWPORT HARDENING"));
 must("viewport_containment", css.includes("height:100svh") && css.includes("overflow:hidden"));
 must("panel_containment", css.includes(".oc-bottom") && css.includes(".oc-right"));
 must("double_https_repaired", !index.includes("https://https://") && !page404.includes("https://https://"));
-must("render_permission_full", index.includes("FULL_OBSERVATORY") && page404.includes("FULL_OBSERVATORY"));
+must(
+  "render_permission_static_boot_boundary",
+  index.includes("VERIFYING_PROJECTION") &&
+    page404.includes("VERIFYING_PROJECTION") &&
+    !index.includes("data-runtime-status>FULL_OBSERVATORY") &&
+    !page404.includes("data-runtime-status>FULL_OBSERVATORY") &&
+    !index.includes("data-render-permission>FULL_OBSERVATORY") &&
+    !page404.includes("data-render-permission>FULL_OBSERVATORY") &&
+    !index.includes("Render permission: FULL_OBSERVATORY") &&
+    !page404.includes("Render permission: FULL_OBSERVATORY")
+);
