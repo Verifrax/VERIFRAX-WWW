@@ -50,11 +50,11 @@
         "ledger_entry_sha256"
       ],
       "properties": {
-        "manifest": { "const": "public/data/verifrax-observatory.json" },
+        "manifest": { "const": "data/verifrax-observatory.json" },
         "manifest_sha256": { "$ref": "#/$defs/sha256" },
-        "receipt": { "const": "public/data/projection-receipt.json" },
+        "receipt": { "const": "data/projection-receipt.json" },
         "receipt_sha256": { "$ref": "#/$defs/sha256" },
-        "ledger": { "const": "public/data/projection-ledger.json" },
+        "ledger": { "const": "data/projection-ledger.json" },
         "ledger_sha256": { "$ref": "#/$defs/sha256" },
         "ledger_entry_sha256": { "$ref": "#/$defs/sha256" }
       }

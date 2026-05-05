@@ -1,6 +1,6 @@
 {
   "receipt_type": "VERIFRAX_OBSERVATORY_PROJECTION_RECEIPT",
-  "projection_id": "vco-2026-04-26T07-28-32Z",
+  "projection_id": "vco-org36-public-surface-runtime-convergence",
   "projection_type": "DERIVED_PROJECTION",
   "truth_warning": "NOT_TRUTH_SOURCE",
   "generated_at": "2026-04-26T07:28:32.376Z",
@@ -36,7 +36,7 @@
     "models/admissorium-gate.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "models/accepted-truth-core.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
-  "manifest_sha256": "sha256:879621604cefa060f8aaa61acd3d17f602ef204bedbedee1907d8a524909e981",
+  "manifest_sha256": "e53f5b5495d225d86c796cea50747cf28a057bdfcd7fd2bdb9644423e34d644a",
   "render_permission": "FULL_OBSERVATORY",
   "failure_policy": "DOWNGRADE_OR_BLOCK"
 }
