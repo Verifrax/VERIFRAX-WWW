@@ -2,7 +2,7 @@
   "key_type": "ed25519-public-key",
   "key_id": "verifrax-www-projection-key-001",
   "owner": "VERIFRAX-WWW projection release key",
-  "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAThNbuBjpCjgicY+tkPpqfELv4qf37p0gwf+rvGuKjkU=\n-----END PUBLIC KEY-----\n",
+  "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAMBr4NFjo6VV3zPBlJTCHkH0awvMsMcgUwezwD29OSSk=\n-----END PUBLIC KEY-----\n",
   "private_key_policy": "NOT_IN_REPOSITORY",
   "verification_scope": "VERIFRAX_OBSERVATORY_PROJECTION_ATTESTATION"
 }

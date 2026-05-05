@@ -5,11 +5,11 @@ import { homedir } from "node:os";
 import { createHash, generateKeyPairSync, sign, verify, createPrivateKey, createPublicKey } from "node:crypto";
 
 const paths = {
-  manifest: "public/data/verifrax-observatory.json",
-  receipt: "public/data/projection-receipt.json",
-  ledger: "public/data/projection-ledger.json",
-  attestation: "public/data/projection-attestation.json",
-  publicKey: "public/data/projection-public-key.json"
+  manifest: "data/verifrax-observatory.json",
+  receipt: "data/projection-receipt.json",
+  ledger: "data/projection-ledger.json",
+  attestation: "data/projection-attestation.json",
+  publicKey: "data/projection-public-key.json"
 };
 
 const keyId = process.env.VERIFRAX_PROJECTION_PUBLIC_KEY_ID || "verifrax-www-projection-key-001";

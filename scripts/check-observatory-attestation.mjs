@@ -3,11 +3,11 @@ import { readFileSync, existsSync } from "node:fs";
 import { createHash, verify, createPublicKey } from "node:crypto";
 
 const paths = {
-  manifest: "public/data/verifrax-observatory.json",
-  receipt: "public/data/projection-receipt.json",
-  ledger: "public/data/projection-ledger.json",
-  attestation: "public/data/projection-attestation.json",
-  publicKey: "public/data/projection-public-key.json"
+  manifest: "data/verifrax-observatory.json",
+  receipt: "data/projection-receipt.json",
+  ledger: "data/projection-ledger.json",
+  attestation: "data/projection-attestation.json",
+  publicKey: "data/projection-public-key.json"
 };
 
 function fail(message) {

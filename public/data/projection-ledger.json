@@ -1,13 +1,13 @@
 {
   "ledger_schema": "1.0.0",
-  "latest_projection_id": "vco-2026-04-26T07-28-32Z",
+  "latest_projection_id": "vco-org36-public-surface-runtime-convergence",
   "entries": [
     {
-      "projection_id": "vco-2026-04-26T07-28-32Z",
+      "projection_id": "vco-org36-public-surface-runtime-convergence",
       "generated_at": "2026-04-26T07:28:32.376Z",
       "generated_by": "VERIFRAX-WWW projection bootstrap compiler",
       "git_commit": "working-tree-bootstrap",
-      "manifest_sha256": "sha256:6474757490f43f1bc6606fceab143a43237e96ba732490080126eefd235fa08a",
+      "manifest_sha256": "sha256:879621604cefa060f8aaa61acd3d17f602ef204bedbedee1907d8a524909e981",
       "source_hashes": {
         "topology": "sha256:3f61aecf1dc30333040498f8340070b1a722936c4109a407b9d6ae0654613b60",
         "repos": "sha256:d98c39857f840f005c9559d19a0ae69be43aea40051d8c8b34370dbc7db2517e",

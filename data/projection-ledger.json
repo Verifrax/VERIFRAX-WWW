@@ -1,9 +1,9 @@
 {
   "ledger_schema": "1.0.0",
-  "latest_projection_id": "vco-2026-04-26T07-28-32Z",
+  "latest_projection_id": "vco-org36-public-surface-runtime-convergence",
   "entries": [
     {
-      "projection_id": "vco-2026-04-26T07-28-32Z",
+      "projection_id": "vco-org36-public-surface-runtime-convergence",
       "generated_at": "2026-04-26T07:28:32.376Z",
       "generated_by": "VERIFRAX-WWW projection bootstrap compiler",
       "git_commit": "working-tree-bootstrap",

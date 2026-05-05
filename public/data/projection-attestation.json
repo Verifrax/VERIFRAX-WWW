@@ -1,17 +1,17 @@
 {
   "attestation_type": "VERIFRAX_OBSERVATORY_PROJECTION_ATTESTATION",
   "schema_version": "1.0.0",
-  "projection_id": "vco-2026-04-26T07-28-32Z",
+  "projection_id": "vco-org36-public-surface-runtime-convergence",
   "projection_type": "DERIVED_PROJECTION",
   "truth_warning": "NOT_TRUTH_SOURCE",
   "subject": {
-    "manifest": "public/data/verifrax-observatory.json",
-    "manifest_sha256": "sha256:6474757490f43f1bc6606fceab143a43237e96ba732490080126eefd235fa08a",
-    "receipt": "public/data/projection-receipt.json",
-    "receipt_sha256": "sha256:04030cb87f38b151ec3e2d09959ce9893ba25795640debf6fbf66c23a9dc9057",
-    "ledger": "public/data/projection-ledger.json",
-    "ledger_sha256": "sha256:611e186a7eee331b681115d593e54422cb0ac5400b94fd99f11f2af09200d166",
-    "ledger_entry_sha256": "sha256:178dca53dc71f455277abeb13676d032a67cf6b39a94e86dbea91225dfe9a50e"
+    "manifest": "data/verifrax-observatory.json",
+    "manifest_sha256": "sha256:e53f5b5495d225d86c796cea50747cf28a057bdfcd7fd2bdb9644423e34d644a",
+    "receipt": "data/projection-receipt.json",
+    "receipt_sha256": "sha256:550f55a3bb490028b5c83fc3bd112c142da4e18bfb9584d5ab131f98e8cd33e2",
+    "ledger": "data/projection-ledger.json",
+    "ledger_sha256": "sha256:ddd48606fd41339afb088a51df77163361cdcd3131c866acce3c742ce50d07d5",
+    "ledger_entry_sha256": "sha256:597559158b5a790335bf30466c2dc339c9ddfc03a5feab5afa272b90d816923f"
   },
   "source_hashes": {
     "topology": "sha256:3f61aecf1dc30333040498f8340070b1a722936c4109a407b9d6ae0654613b60",
@@ -32,6 +32,6 @@
   "signed_by": "VERIFRAX-WWW projection release key",
   "signature_algorithm": "ed25519",
   "public_key_id": "verifrax-www-projection-key-001",
-  "signed_payload_sha256": "sha256:8e3d054c40d5fa1fa94b9b791f6b8523916f42585489bd2ae29810649f4d02b2",
-  "signature": "z2vZYwM5UF2M9Nbb1vc1hM1Hqpaj3C1DGXzCLYNlziMYfZGCNTsrxq1tkfz0SQa6VnDxrAhD9w8JsuKUoTp6BA=="
+  "signed_payload_sha256": "sha256:cc4a2c2a33275c9038860cc4ca8e4f815ded7fab03b33ff552912c2aa91948c3",
+  "signature": "OdsxE5UQsqNsETohIrlTVrKtZZi1wbWXDYQBJ+SIni9tAR0sH6YENPJoK4Wipy3EsuWbXyaZt43qih7VBuGSCQ=="
 }
