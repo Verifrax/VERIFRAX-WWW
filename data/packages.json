@@ -142,27 +142,5 @@
     "package_truth": "subordinate_to_repo_host_and_accepted_epoch_truth",
     "visual_class": "package_surface",
     "position": 17
-  },
-  {
-    "id": "verifrax-py",
-    "name": "verifrax",
-    "ecosystem": "pypi",
-    "version": "0.1.0",
-    "package": "verifrax",
-    "package_name": "verifrax",
-    "registry": "PyPI",
-    "package_type": "python",
-    "repository": "Verifrax/VERIFRAX-PY",
-    "repo": "Verifrax/VERIFRAX-PY",
-    "source_repo": "Verifrax/VERIFRAX-PY",
-    "url": "https://pypi.org/project/verifrax/",
-    "registry_url": "https://pypi.org/project/verifrax/",
-    "seal_status": "SEALED",
-    "publication_status": "SEALED",
-    "truth_warning": "NOT_TRUTH_SOURCE",
-    "projection_type": "DERIVED_PROJECTION",
-    "visual_class": "package_surface",
-    "role": "sealed PyPI package object",
-    "position": 18
   }
 ]
