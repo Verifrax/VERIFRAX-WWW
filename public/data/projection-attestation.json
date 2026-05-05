@@ -6,20 +6,20 @@
   "truth_warning": "NOT_TRUTH_SOURCE",
   "subject": {
     "manifest": "data/verifrax-observatory.json",
-    "manifest_sha256": "sha256:542cd7fa8b73b8c031b16fb452fdfab6362c696344d24bdb85c21f520e6733b2",
+    "manifest_sha256": "sha256:e53f5b5495d225d86c796cea50747cf28a057bdfcd7fd2bdb9644423e34d644a",
     "receipt": "data/projection-receipt.json",
-    "receipt_sha256": "sha256:5ed2d24bae08dc45462300a4767bd1d4438c6645655de6d3a344a58a760228f1",
+    "receipt_sha256": "sha256:550f55a3bb490028b5c83fc3bd112c142da4e18bfb9584d5ab131f98e8cd33e2",
     "ledger": "data/projection-ledger.json",
-    "ledger_sha256": "sha256:6565c77e57834b55c5aef4dbebbcbeb4d84068742eccb2b3fe19e945e743f13f",
-    "ledger_entry_sha256": "sha256:192fb8bb9bd3da7551e3ea5cedd53a0b11ec6f85646e4465388643c8085ee4e6"
+    "ledger_sha256": "sha256:ddd48606fd41339afb088a51df77163361cdcd3131c866acce3c742ce50d07d5",
+    "ledger_entry_sha256": "sha256:597559158b5a790335bf30466c2dc339c9ddfc03a5feab5afa272b90d816923f"
   },
   "source_hashes": {
     "topology": "sha256:3f61aecf1dc30333040498f8340070b1a722936c4109a407b9d6ae0654613b60",
-    "repos": "sha256:37da4751c18174c082193fe099ddbfadfbe5cc4c937e1df679e8683c30811cad",
+    "repos": "sha256:d98c39857f840f005c9559d19a0ae69be43aea40051d8c8b34370dbc7db2517e",
     "hosts": "sha256:d43b9404ef6e5ab7f6f440c154ace8e0d18683dbb84a20e992f5b12064d8ab9c",
-    "packages": "sha256:e496fb54a0a9e5a14692f35d608492f46afdb31c0016e404eaf83ae7ad2ac9e6",
+    "packages": "sha256:240fa2b7e7d07cebd6c8ebab770fda96589ae9494c24dc7e9b9cec724de53314",
     "products": "sha256:8943d30280b9750ce19399d2ab6da2e67115a496089292faf4971fbc8ee75f29",
-    "status": "sha256:9c81472e5635b7142fcdcfec6e4b69ae0c8a608610dce1c4add12f468a3ad624"
+    "status": "sha256:6ce679bcae6760b600a903f79e4ab3e6904a618fd5e3ae575c4ca98dae074240"
   },
   "asset_hashes": {
     "models/chamber.glb": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -32,6 +32,6 @@
   "signed_by": "VERIFRAX-WWW projection release key",
   "signature_algorithm": "ed25519",
   "public_key_id": "verifrax-www-projection-key-001",
-  "signed_payload_sha256": "sha256:0a7105eb3205db9394c015d7ef43f04a68d9f397d8ac6a9ded979a8c3049280a",
-  "signature": "lZoI3sUNn9GLr4YIKKObmJbfgwMlS73MffHXYnJ3ml9uYggmCRcFfR39XKWw8mmB7p4AORbrjuD8JmfAnGUJCA=="
+  "signed_payload_sha256": "sha256:cc4a2c2a33275c9038860cc4ca8e4f815ded7fab03b33ff552912c2aa91948c3",
+  "signature": "OdsxE5UQsqNsETohIrlTVrKtZZi1wbWXDYQBJ+SIni9tAR0sH6YENPJoK4Wipy3EsuWbXyaZt43qih7VBuGSCQ=="
 }
