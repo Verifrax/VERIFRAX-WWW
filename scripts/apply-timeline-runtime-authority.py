@@ -81,6 +81,49 @@ CSS_BLOCK = r'''
 .oc-timeline-detail dt{color:#73d0ff}.oc-timeline-detail dd{color:#dcecff;margin-top:3px}
 @media (max-width:1320px), (max-height:780px){.oc-main-stack-timeline{top:auto;left:300px;right:320px;bottom:132px;transform:none;width:auto;min-width:0}.oc-timeline-track{grid-template-columns:repeat(3,minmax(0,1fr))}.oc-timeline-detail{display:none}}
 @media (max-width:900px), (max-height:640px){.oc-main-stack-timeline{display:none}}
+
+/* VERIFRAX_EMERGENCY_MAIN_STACK_TIMELINE_POINTER_QUARANTINE
+   Static timeline is a support control, not the center WebGL selection plane.
+   It must remain selectable without consuming the machine pointer plane or panel-area budget.
+*/
+.oc-main-stack-timeline{
+  top:112px !important;
+  left:auto !important;
+  right:14px !important;
+  bottom:auto !important;
+  transform:none !important;
+  width:min(240px,calc(100vw - 44px)) !important;
+  min-width:0 !important;
+  max-height:min(280px,calc(100vh - 300px)) !important;
+  overflow:auto !important;
+  z-index:18 !important;
+  pointer-events:none !important;
+}
+.oc-main-stack-timeline :is(button,a,input,select,textarea,[tabindex]){
+  pointer-events:auto !important;
+}
+.oc-main-stack-timeline .oc-timeline-instruction,
+.oc-main-stack-timeline .oc-timeline-detail{
+  display:none !important;
+}
+.oc-main-stack-timeline .oc-timeline-track{
+  grid-template-columns:1fr !important;
+  gap:5px !important;
+}
+.oc-main-stack-timeline .oc-timeline-node{
+  min-height:36px !important;
+  padding:4px 5px !important;
+}
+.oc-main-stack-timeline .oc-timeline-node .oc-node-role,
+.oc-main-stack-timeline .oc-timeline-node .oc-node-desc{
+  display:none !important;
+}
+@media (max-width:1100px), (max-height:720px){
+  .oc-main-stack-timeline{
+    display:none !important;
+  }
+}
+
 '''
 
 PACKAGE_BLOCK = r'''
