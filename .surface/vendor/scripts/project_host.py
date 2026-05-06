@@ -2816,3 +2816,79 @@ def _verifrax_static_timeline_native_interaction_authority_hook():
 
 _verifrax_static_timeline_native_interaction_authority_hook()
 # END VERIFRAX_STATIC_TIMELINE_NATIVE_INTERACTION_AUTHORITY_HOOK
+
+
+# VERIFRAX_CHAINLOCK_PROJECTION_METADATA_POSTPROCESS
+def _verifrax_chainlock_projection_metadata_postprocess():
+    from pathlib import Path
+
+    p = Path("index.html")
+    if not p.exists():
+        return
+
+    text = p.read_text()
+
+    begin = "      <!-- VERIFRAX_CHAINLOCK_PROJECTION_METADATA_BEGIN -->"
+    end = "      <!-- VERIFRAX_CHAINLOCK_PROJECTION_METADATA_END -->"
+
+    while begin in text and end in text:
+        a = text.index(begin)
+        b = text.index(end, a) + len(end)
+        start = text.rfind("\n", 0, a)
+        stop = text.find("\n", b)
+        if start != -1 and stop != -1:
+            text = text[:start] + text[stop:]
+        else:
+            text = text[:a] + text[b:]
+
+    legacy_start = '      <script id="verifrax-chainlock-projection-metadata" type="application/json">'
+    legacy_end = '      </section>'
+    while legacy_start in text:
+        a = text.index(legacy_start)
+        b = text.find(legacy_end, a)
+        if b == -1:
+            break
+        b = b + len(legacy_end)
+        start = text.rfind("\n", 0, a)
+        stop = text.find("\n", b)
+        if start != -1 and stop != -1:
+            text = text[:start] + text[stop:]
+        else:
+            text = text[:a] + text[b:]
+
+    block = """      <!-- VERIFRAX_CHAINLOCK_PROJECTION_METADATA_BEGIN -->
+      <script id="verifrax-chainlock-projection-metadata" type="application/json">
+{
+  "object_type": "RootProjectionCountOntology",
+  "truth_warning": "DERIVED_PROJECTION_NOT_TRUTH_SOURCE",
+  "chain_lock_ref": "https://github.com/Verifrax/ORBISTIUM/blob/main/chains/current/minimum-object-chain-lock-0001.json",
+  "admissions_ref": "https://github.com/Verifrax/.github/blob/main/governance/ADMISSIONS.json",
+  "projection_lock_ref": "https://github.com/Verifrax/CONSONORIUM/blob/main/projections/current/projection-lock-0001.json",
+  "governed_repository_count": 35,
+  "public_repository_count": 36,
+  "sovereign_chamber_count": 9,
+  "host_count": 12,
+  "npm_package_count": 18,
+  "core_package_order_count": 16,
+  "pypi_package_boundary_count": 1,
+  "private_internal_package_count": 1,
+  "public_sentence": "VERIFRAX has published a first active bounded constitutional object chain for artifact-0005. Public deference is limited to that admitted chain and its replay bundle. Public hosts, READMEs, packages, SDKs, and observatory projections are subordinate surfaces and may not expand the chain by implication.",
+  "root_short_sentence": "First active object chain live. Replay-bounded. Projection-subordinate."
+}
+      </script>
+      <section id="chainlock-projection-subordination" hidden aria-hidden="true">
+        <h2>Chainlock projection subordination</h2>
+        <p>35 governed repositories. 36 public repositories. First active object chain live. Replay-bounded. Projection-subordinate.</p>
+      </section>
+      <!-- VERIFRAX_CHAINLOCK_PROJECTION_METADATA_END -->
+"""
+
+    if "</main>" not in text:
+        raise RuntimeError("index.html missing </main>; cannot inject chainlock projection metadata")
+
+    text = text.replace("</main>", block + "  </main>", 1)
+    p.write_text(text)
+
+
+_verifrax_chainlock_projection_metadata_postprocess()
+
