@@ -105,7 +105,12 @@ function fail(name, detail=""){ failures.push(`${name}${detail ? ` :: ${detail}`
       ".oc-right",
       ".oc-bottom",
       ".oc-inspector",
-      ".vco-deep-inspector"
+      ".vco-deep-inspector",
+      ".oc-main-stack-timeline",
+      ".oc-timeline-track",
+      ".oc-timeline-detail",
+      ".vco-command-palette",
+      ".vco-command"
     ].flatMap(sel => $$(sel).filter(visible).map(el => ({ sel, rect: rect(el) })));
 
     const collisions = panels.filter(p => intersects(p.rect, center)).map(p => p.sel);
@@ -133,6 +138,20 @@ function fail(name, detail=""){ failures.push(`${name}${detail ? ` :: ${detail}`
   if (facts.runtimeRect && facts.runtimeRect.height >= 890) pass("runtime_full_viewport"); else fail("runtime_full_viewport", JSON.stringify(facts.runtimeRect));
   if (facts.scrollH <= facts.viewportH + 4) pass("no_page_scroll"); else fail("no_page_scroll", `${facts.scrollH}/${facts.viewportH}`);
   if (facts.collisions.length === 0) pass("center_machine_panel_clearance"); else fail("center_machine_panel_clearance", facts.collisions.join(","));
+
+  const centerHit = await page.evaluate(() => {
+    const el = document.elementFromPoint(innerWidth / 2, innerHeight / 2);
+    const canvas = document.querySelector("#observatory-webgl-runtime canvas");
+    return {
+      tag: el?.tagName || null,
+      cls: el?.className || "",
+      id: el?.id || "",
+      isCanvas: el === canvas,
+      inTimeline: !!el?.closest?.(".oc-main-stack-timeline"),
+      inCommand: !!el?.closest?.(".vco-command,.vco-command-palette")
+    };
+  });
+  if (centerHit.isCanvas) pass("center_pointer_plane_owned_by_canvas"); else fail("center_pointer_plane_owned_by_canvas", JSON.stringify(centerHit));
   if (facts.panelArea < 0.23) pass("panel_area_quarantined"); else fail("panel_area_quarantined", String(facts.panelArea));
   if (facts.api) pass("panel_quarantine_api_present"); else fail("panel_quarantine_api_present");
   if (!facts.fallbackVisible) pass("static_fallback_not_in_viewport"); else fail("static_fallback_not_in_viewport");
