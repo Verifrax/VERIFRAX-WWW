@@ -7,18 +7,31 @@
   "description": "Public root-host boundary for the VERIFRAX public perimeter. This surface presents root entry and routing only. It does not issue authority, execute governed actions, verify published material, publish proof, serve archive/reference, or accept intake.",
   "deployMode": "static-root",
   "adjacentHosts": {
+    "Root": "https://www.verifrax.net",
     "Docs": "https://docs.verifrax.net",
     "Proof": "https://proof.verifrax.net",
     "Verify": "https://verify.verifrax.net",
-    "Apply": "https://apply.verifrax.net",
-    "Execution": "https://api.verifrax.net",
     "Authority": "https://auctoriseal.verifrax.net",
     "Runtime": "https://corpiform.verifrax.net",
-    "Enforcement": "https://cicullis.verifrax.net",
+    "Execution": "https://api.verifrax.net",
     "Archive": "https://sigillarium.verifrax.net",
+    "Apply": "https://apply.verifrax.net",
     "Status": "https://status.verifrax.net"
   },
   "observatoryRenderGate": true,
   "observatoryWebglRuntime": true,
-  "observatoryFirstViewport": true
+  "observatoryFirstViewport": true,
+  "systemControlState": "SYSTEM_CONTROL_MAP_OPEN",
+  "systemComplete": false,
+  "hostControlRole": "root-router",
+  "statusHost": "https://status.verifrax.net",
+  "rootHost": "https://www.verifrax.net",
+  "forbiddenCompletionClaims": [
+    "APPLY_SUPER_LEVEL_UP_COMPLETE",
+    "VERIFRAX_SYSTEM_COMPLETE"
+  ],
+  "allowedSurfaceClaims": [
+    "APPLY_LIVE_INTAKE_SURFACE_GREEN",
+    "VERIFRAX_SYSTEM_CONTROL_MAP_OPEN"
+  ]
 }
