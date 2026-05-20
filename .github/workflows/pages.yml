@@ -33,6 +33,8 @@ jobs:
           cp public/CNAME dist/CNAME
           cp -R assets dist/assets
           cp -R data dist/data
+          cp -R system dist/system
+          cp system-control.json dist/system-control.json
           test -f dist/index.html
           test -f dist/404.html
           test -f dist/CNAME
@@ -40,10 +42,15 @@ jobs:
           test -f dist/assets/observatory-render-gate.js
           test -f dist/data/verifrax-observatory.json
           test -f dist/data/projection-attestation.json
+          test -f dist/system/index.html
+          test -f dist/system-control.json
+          test -f dist/data/verifrax-system-control.json
           grep -Fx "www.verifrax.net" dist/CNAME
           grep -q "observatory-render-gate" dist/index.html
           grep -q "assets/observatory-render-gate.js" dist/index.html
           grep -q "DERIVED_PROJECTION" dist/data/verifrax-observatory.json
+          grep -q "SYSTEM_CONTROL_MAP_OPEN" dist/system-control.json
+          grep -q "SYSTEM_CONTROL_MAP_OPEN" dist/system/index.html
 
       - uses: actions/configure-pages@v5
       - name: Emit search metadata
