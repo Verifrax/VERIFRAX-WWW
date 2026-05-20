@@ -76,5 +76,8 @@
   "public_perimeter_monitoring": "scheduled_ci_probe",
   "public_control_receipt": "https://status.verifrax.net/control-receipt/receipt.json",
   "public_control_receipt_dashboard": "https://status.verifrax.net/control-receipt/",
-  "public_control_receipt_state": "VERIFRAX_PUBLIC_CONTROL_RECEIPT_GREEN"
+  "public_control_receipt_state": "VERIFRAX_PUBLIC_CONTROL_RECEIPT_GREEN",
+  "public_control_replay": "https://status.verifrax.net/control-receipt/replay.json",
+  "public_control_replay_dashboard": "https://status.verifrax.net/control-receipt/replay.html",
+  "public_control_replay_state": "VERIFRAX_PUBLIC_CONTROL_REPLAY_GREEN"
 }
