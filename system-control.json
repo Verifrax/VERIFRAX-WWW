@@ -85,5 +85,8 @@
   "public_control_fixed_point_state": "VERIFRAX_PUBLIC_CONTROL_FIXED_POINT_GREEN",
   "external_control_verify_repo": "https://github.com/Verifrax/VERIFRAX-CONTROL-VERIFY",
   "external_control_verify_workflow": "https://github.com/Verifrax/VERIFRAX-CONTROL-VERIFY/actions/workflows/external-control-verify.yml",
-  "external_control_verify_state": "VERIFRAX_EXTERNAL_CONTROL_VERIFY_GREEN"
+  "external_control_verify_state": "VERIFRAX_EXTERNAL_CONTROL_VERIFY_GREEN",
+  "external_control_verify_pages": "https://verifrax.github.io/VERIFRAX-CONTROL-VERIFY/",
+  "external_control_verify_report": "https://verifrax.github.io/VERIFRAX-CONTROL-VERIFY/reports/public-control-verify.latest.json",
+  "external_control_verify_report_state": "VERIFRAX_EXTERNAL_CONTROL_VERIFY_GREEN"
 }
