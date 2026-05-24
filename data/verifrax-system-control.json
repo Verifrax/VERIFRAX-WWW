@@ -101,5 +101,12 @@
   "admissorium_v020_public_control_receipt_data": "https://www.verifrax.net/data/admissorium-v020/control-receipt.json",
   "admissorium_v020_public_control_receipt_sha": "40fca49bb3cfea8dd4a7f6d1f8ebb592e7a709d1",
   "admissorium_v020_public_control_receipt_tag": "verifrax-root-admissorium-v020-control-receipt-40fca49bb3cf",
-  "verifrax_system_complete": false
+  "verifrax_system_complete": false,
+  "admissorium_v020_public_control_closure_state": "ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSURE",
+  "admissorium_v020_public_control_closure": "https://www.verifrax.net/system/admissorium-v020/public-control-closure.json",
+  "admissorium_v020_public_control_closure_data": "https://www.verifrax.net/data/admissorium-v020/public-control-closure.json",
+  "admissorium_v020_public_control_closure_final_release_tag": "admissorium-v020-final-release-d2a51e09f5d3",
+  "admissorium_v020_public_control_closure_final_release_sha": "d2a51e09f5d36778ba0c8130a3c691e648024a85",
+  "admissorium_v020_public_control_closure_receipt_sha": "40fca49bb3cfea8dd4a7f6d1f8ebb592e7a709d1",
+  "admissorium_v020_public_control_closure_router_sha": "210aa73d177a96b25c96afda7a73e376a21a9dd4"
 }
