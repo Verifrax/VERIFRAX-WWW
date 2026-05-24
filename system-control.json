@@ -119,5 +119,15 @@
     "ADMISSORIUM_V020"
   ],
   "global_status_board_admissorium_v020_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
-  "global_status_board_admissorium_v020_public_control_closure_tag": "verifrax-admissorium-v020-public-control-closure-c49855522ae3"
+  "global_status_board_admissorium_v020_public_control_closure_tag": "verifrax-admissorium-v020-public-control-closure-c49855522ae3",
+  "subsystem_closure_registry_state": "VERIFRAX_SUBSYSTEM_CLOSURE_REGISTRY_OPEN",
+  "subsystem_closure_registry": "https://www.verifrax.net/system/subsystem-closure-registry/",
+  "subsystem_closure_registry_json": "https://www.verifrax.net/system/subsystem-closure-registry.json",
+  "subsystem_closure_registry_data": "https://www.verifrax.net/data/subsystem-closure-registry.json",
+  "subsystem_closure_registry_system_complete": false,
+  "subsystem_closure_registry_registered_closed_subsystems": [
+    "ADMISSORIUM_V020"
+  ],
+  "subsystem_closure_registry_admissorium_v020_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+  "subsystem_closure_registry_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926"
 }

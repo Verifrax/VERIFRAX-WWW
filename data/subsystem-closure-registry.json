@@ -1,0 +1,44 @@
+{
+  "generated_at_utc": "2026-05-24T11:19:17Z",
+  "global_status_board": {
+    "data_url": "https://www.verifrax.net/data/global-status-board.json",
+    "sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
+    "state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
+    "tag": "verifrax-global-status-board-admissorium-v020-032b837d6616",
+    "url": "https://www.verifrax.net/system/global-status-board.json"
+  },
+  "open_system_boundary": {
+    "registry_closes_only_registered_subsystems": true,
+    "required_for_completion_evaluation": [
+      "All remaining VERIFRAX subsystems must publish equivalent public-control closure.",
+      "Global status board must include every subsystem closure.",
+      "Only then may VERIFRAX_SYSTEM_COMPLETE be evaluated."
+    ],
+    "single_closed_subsystem_cannot_complete_verifrax": true,
+    "verifrax_system_complete": false
+  },
+  "registered_closed_subsystems": [
+    {
+      "final_release_sha": "d2a51e09f5d36778ba0c8130a3c691e648024a85",
+      "final_release_tag": "admissorium-v020-final-release-d2a51e09f5d3",
+      "id": "ADMISSORIUM_V020",
+      "public_control_closure_data_url": "https://www.verifrax.net/data/admissorium-v020/public-control-closure.json",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+      "public_control_closure_tag": "verifrax-admissorium-v020-public-control-closure-c49855522ae3",
+      "public_control_closure_url": "https://www.verifrax.net/system/admissorium-v020/public-control-closure.json",
+      "public_control_receipt_sha": "40fca49bb3cfea8dd4a7f6d1f8ebb592e7a709d1",
+      "public_control_receipt_url": "https://www.verifrax.net/system/admissorium-v020/control-receipt.json",
+      "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
+      "status_public_seal_sha": "6133b482469a0eadc11454107225a10173f34bbb",
+      "status_public_seal_url": "https://status.verifrax.net/admissorium-v020/seal.json",
+      "token_persistence_authorization": false,
+      "truth_mutation_authorization": false,
+      "writer_authorization": false
+    }
+  ],
+  "schema_version": "1.0.0",
+  "state": "VERIFRAX_SUBSYSTEM_CLOSURE_REGISTRY_OPEN",
+  "system": "VERIFRAX",
+  "system_complete": false,
+  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM"
+}
