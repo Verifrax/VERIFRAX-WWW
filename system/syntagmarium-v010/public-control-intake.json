@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "system": "VERIFRAX",
+  "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CHAIN_INTAKE_OPEN",
+  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM",
+  "system_complete": false,
+  "subsystem": {
+    "id": "SYNTAGMARIUM",
+    "canonical_id": "SYNTAGMARIUM_V010",
+    "version": "0.1.0",
+    "slug": "syntagmarium-v010"
+  },
+  "source_queue": {
+    "state": "VERIFRAX_SUBSYSTEM_CLOSURE_QUEUE_OPEN",
+    "sha": "9165c58f7678667e5b4f0efad9c43f7f83b2b8d7",
+    "next_valid_action": "CLOSE_NEXT_SUBSYSTEM_PUBLIC_CONTROL_CHAIN",
+    "blocking_reason": "ONLY_ONE_SUBSYSTEM_REGISTERED"
+  },
+  "source_gate_evaluation": {
+    "state": "VERIFRAX_SYSTEM_COMPLETION_GATE_EVALUATION_OPEN",
+    "decision": "NOT_COMPLETE",
+    "sha": "7b100a99fb6574a2969910c41e457d9ce3d0ab46"
+  },
+  "closed_reference_subsystems": [
+    {
+      "id": "ADMISSORIUM_V020",
+      "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+    }
+  ],
+  "intake_decision": "NEXT_SUBSYSTEM_PUBLIC_CONTROL_CHAIN_OPENED",
+  "next_valid_action": "BUILD_SYNTAGMARIUM_V010_PUBLIC_CONTROL_CHAIN",
+  "issued_at": "2026-05-24T18:23:47Z"
+}
