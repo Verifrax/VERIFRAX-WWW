@@ -185,8 +185,18 @@
   "syntagmarium_v010_previous_closed_subsystem": "ADMISSORIUM_V020",
   "syntagmarium_v010_previous_admissorium_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
   "syntagmarium_v010_root_binding_state": "ROOT_ROUTER_POINTS_TO_SYNTAGMARIUM_V010_PUBLIC_CONTROL_SEAL",
-  "syntagmarium_v010_next_valid_action": "PUBLISH_SYNTAGMARIUM_V010_PUBLIC_CONTROL_RECEIPT",
+  "syntagmarium_v010_next_valid_action": "CLOSE_SYNTAGMARIUM_V010_PUBLIC_CONTROL_CHAIN",
   "public_control_bound_subsystems": [
     "SYNTAGMARIUM_V010"
-  ]
+  ],
+  "syntagmarium_v010_public_control_receipt_state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_RECEIPT",
+  "syntagmarium_v010_public_control_receipt": "https://www.verifrax.net/system/syntagmarium-v010/control-receipt.json",
+  "syntagmarium_v010_public_control_receipt_data": "https://www.verifrax.net/data/syntagmarium-v010/control-receipt.json",
+  "syntagmarium_v010_public_control_receipt_chain_sha": "eb010c0a2501f8b9ca522905160cc1886548f248",
+  "syntagmarium_v010_public_control_receipt_status_seal_sha": "7e9124db4b2e8ca2ad66491146f56b0b99f327b6",
+  "syntagmarium_v010_public_control_receipt_root_binding_sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
+  "syntagmarium_v010_public_control_receipt_source_intake_sha": "d2dfd7630af29b45e448f51c00c29b634d64ec94",
+  "syntagmarium_v010_public_control_receipt_source_queue_sha": "9165c58f7678667e5b4f0efad9c43f7f83b2b8d7",
+  "syntagmarium_v010_public_control_receipt_source_gate_evaluation_sha": "7b100a99fb6574a2969910c41e457d9ce3d0ab46",
+  "syntagmarium_v010_public_control_receipt_previous_admissorium_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
 }
