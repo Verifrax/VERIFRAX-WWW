@@ -95,5 +95,11 @@
   "admissorium_v020_final_release_workflow": "https://github.com/Verifrax/ADMISSORIUM/actions/runs/26330078809",
   "admissorium_v020_public_seal": "https://status.verifrax.net/admissorium-v020/seal.json",
   "admissorium_v020_public_seal_dashboard": "https://status.verifrax.net/admissorium-v020/",
-  "admissorium_v020_public_seal_state": "ADMISSORIUM_V020_FINAL_RELEASE_SEALED"
+  "admissorium_v020_public_seal_state": "ADMISSORIUM_V020_FINAL_RELEASE_SEALED",
+  "admissorium_v020_public_control_receipt_state": "ADMISSORIUM_V020_PUBLIC_CONTROL_RECEIPT_LIVE",
+  "admissorium_v020_public_control_receipt": "https://www.verifrax.net/system/admissorium-v020/control-receipt.json",
+  "admissorium_v020_public_control_receipt_data": "https://www.verifrax.net/data/admissorium-v020/control-receipt.json",
+  "admissorium_v020_public_control_receipt_sha": "40fca49bb3cfea8dd4a7f6d1f8ebb592e7a709d1",
+  "admissorium_v020_public_control_receipt_tag": "verifrax-root-admissorium-v020-control-receipt-40fca49bb3cf",
+  "verifrax_system_complete": false
 }
