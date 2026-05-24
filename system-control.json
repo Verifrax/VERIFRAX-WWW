@@ -108,5 +108,16 @@
   "admissorium_v020_public_control_closure_final_release_tag": "admissorium-v020-final-release-d2a51e09f5d3",
   "admissorium_v020_public_control_closure_final_release_sha": "d2a51e09f5d36778ba0c8130a3c691e648024a85",
   "admissorium_v020_public_control_closure_receipt_sha": "40fca49bb3cfea8dd4a7f6d1f8ebb592e7a709d1",
-  "admissorium_v020_public_control_closure_router_sha": "210aa73d177a96b25c96afda7a73e376a21a9dd4"
+  "admissorium_v020_public_control_closure_router_sha": "210aa73d177a96b25c96afda7a73e376a21a9dd4",
+  "global_status_board_state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
+  "global_status_board": "https://www.verifrax.net/system/global-status-board/",
+  "global_status_board_json": "https://www.verifrax.net/system/global-status-board.json",
+  "global_status_board_data": "https://www.verifrax.net/data/global-status-board.json",
+  "global_status_board_system_complete": false,
+  "global_status_board_truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM",
+  "global_status_board_closed_subsystems": [
+    "ADMISSORIUM_V020"
+  ],
+  "global_status_board_admissorium_v020_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+  "global_status_board_admissorium_v020_public_control_closure_tag": "verifrax-admissorium-v020-public-control-closure-c49855522ae3"
 }
