@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "system": "VERIFRAX",
+  "state": "VERIFRAX_SYSTEM_COMPLETION_GATE_EVALUATION_OPEN",
+  "system_complete": false,
+  "completion_decision": "NOT_COMPLETE",
+  "blocking_reason": "ONLY_ONE_SUBSYSTEM_REGISTERED",
+  "completion_gate_register": {
+    "state": "VERIFRAX_SYSTEM_COMPLETION_GATE_REGISTER_OPEN",
+    "sha": "952def7035aafab98f40863e589794bb9cde20ed",
+    "tag": "verifrax-system-completion-gate-register-952def7035aa"
+  },
+  "registered_closed_subsystems": [
+    {
+      "id": "ADMISSORIUM_V020",
+      "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+      "registered_by_subsystem_closure_registry_sha": "e9e42a84f27cd87eb1ed0d8e6541fc68e26b2224"
+    }
+  ],
+  "global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
+  "subsystem_closure_registry_sha": "e9e42a84f27cd87eb1ed0d8e6541fc68e26b2224",
+  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM",
+  "final_assertions": {
+    "no_system_completion_claim": true,
+    "no_truth_mutation": true,
+    "completion_gate_open": true,
+    "system_complete_false": true
+  }
+}
