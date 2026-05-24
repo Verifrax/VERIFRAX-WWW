@@ -1,0 +1,41 @@
+{
+  "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_RECEIPT",
+  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM",
+  "verifrax_system_complete": false,
+  "subsystem": "SYNTAGMARIUM",
+  "subsystem_version": "0.1.0",
+  "public_control_chain": {
+    "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
+    "sha": "eb010c0a2501f8b9ca522905160cc1886548f248",
+    "tag": "syntagmarium-v010-public-control-chain-eb010c0a2501",
+    "release": "https://github.com/Verifrax/SYNTAGMARIUM/releases/tag/syntagmarium-v010-public-control-chain-eb010c0a2501"
+  },
+  "public_status_seal": {
+    "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_SEAL_PUBLISHED",
+    "sha": "7e9124db4b2e8ca2ad66491146f56b0b99f327b6",
+    "tag": "verifrax-status-syntagmarium-v010-public-control-seal-7e9124db4b2e",
+    "url": "https://status.verifrax.net/syntagmarium-v010/seal.json"
+  },
+  "root_binding": {
+    "state": "ROOT_ROUTER_POINTS_TO_SYNTAGMARIUM_V010_PUBLIC_CONTROL_SEAL",
+    "sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
+    "tag": "verifrax-root-syntagmarium-v010-public-control-seal-9f9476c8d198",
+    "control_url": "https://www.verifrax.net/system-control.json",
+    "control_data_url": "https://www.verifrax.net/data/verifrax-system-control.json"
+  },
+  "source_chain": {
+    "intake_sha": "d2dfd7630af29b45e448f51c00c29b634d64ec94",
+    "queue_sha": "9165c58f7678667e5b4f0efad9c43f7f83b2b8d7",
+    "gate_evaluation_sha": "7b100a99fb6574a2969910c41e457d9ce3d0ab46",
+    "previous_closed_subsystem": "ADMISSORIUM_V020",
+    "previous_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+  },
+  "writer_boundary": {
+    "real_writer": false,
+    "token_persistence": false,
+    "truth_mutation": false,
+    "package_publish": false,
+    "operational_repair": false
+  },
+  "next_valid_action": "CLOSE_SYNTAGMARIUM_V010_PUBLIC_CONTROL_CHAIN"
+}
