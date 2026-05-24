@@ -88,5 +88,12 @@
   "external_control_verify_state": "VERIFRAX_EXTERNAL_CONTROL_VERIFY_GREEN",
   "external_control_verify_pages": "https://verifrax.github.io/VERIFRAX-CONTROL-VERIFY/",
   "external_control_verify_report": "https://verifrax.github.io/VERIFRAX-CONTROL-VERIFY/reports/public-control-verify.latest.json",
-  "external_control_verify_report_state": "VERIFRAX_EXTERNAL_CONTROL_VERIFY_GREEN"
+  "external_control_verify_report_state": "VERIFRAX_EXTERNAL_CONTROL_VERIFY_GREEN",
+  "admissorium_v020_final_release": "https://github.com/Verifrax/ADMISSORIUM/releases/tag/admissorium-v020-final-release-d2a51e09f5d3",
+  "admissorium_v020_final_release_tag": "admissorium-v020-final-release-d2a51e09f5d3",
+  "admissorium_v020_final_release_sha": "d2a51e09f5d36778ba0c8130a3c691e648024a85",
+  "admissorium_v020_final_release_workflow": "https://github.com/Verifrax/ADMISSORIUM/actions/runs/26330078809",
+  "admissorium_v020_public_seal": "https://status.verifrax.net/admissorium-v020/seal.json",
+  "admissorium_v020_public_seal_dashboard": "https://status.verifrax.net/admissorium-v020/",
+  "admissorium_v020_public_seal_state": "ADMISSORIUM_V020_FINAL_RELEASE_SEALED"
 }
