@@ -1,0 +1,27 @@
+{
+  "state": "ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSURE",
+  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM",
+  "verifrax_system_complete": false,
+  "admissorium_v020": {
+    "final_release_tag": "admissorium-v020-final-release-d2a51e09f5d3",
+    "final_release_sha": "d2a51e09f5d36778ba0c8130a3c691e648024a85",
+    "final_release_url": "https://github.com/Verifrax/ADMISSORIUM/releases/tag/admissorium-v020-final-release-d2a51e09f5d3",
+    "status_public_seal_url": "https://status.verifrax.net/admissorium-v020/seal.json",
+    "status_public_seal_sha": "6133b482469a0eadc11454107225a10173f34bbb",
+    "root_public_seal_sha": "68979080eee2a5a9032c35cb3a9ef373a0c07833",
+    "public_control_receipt_url": "https://www.verifrax.net/system/admissorium-v020/control-receipt.json",
+    "public_control_receipt_sha": "40fca49bb3cfea8dd4a7f6d1f8ebb592e7a709d1",
+    "public_control_receipt_router_sha": "210aa73d177a96b25c96afda7a73e376a21a9dd4",
+    "public_control_receipt_router_tag": "verifrax-root-admissorium-v020-receipt-router-210aa73d177a"
+  },
+  "closure": {
+    "root_router_points_to_final_release": true,
+    "root_router_points_to_public_seal": true,
+    "status_publishes_public_seal": true,
+    "public_control_receipt_live": true,
+    "root_control_map_points_to_public_control_receipt": true,
+    "real_writer_authorization": false,
+    "token_persistence_authorization": false,
+    "truth_mutation_authorization": false
+  }
+}
