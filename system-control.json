@@ -6,7 +6,15 @@
   "apply_live_intake_surface": "green",
   "required_next_level": [
     "ROOT_ROUTER",
-    "GLOBAL_STATUS_BOARD"
+    "GLOBAL_STATUS_BOARD",
+    "DOCS_BOUNDARY_TRUTH",
+    "PROOF_PUBLICATION_BOUNDARY",
+    "VERIFY_BOUNDARY",
+    "AUTHORITY_BOUNDARY",
+    "RUNTIME_API_BOUNDARY",
+    "ARCHIVE_BOUNDARY",
+    "REPO_PACKAGE_PERIMETER",
+    "ALL_SUBSYSTEM_CLOSURES"
   ],
   "hosts": [
     {
@@ -129,5 +137,12 @@
     "ADMISSORIUM_V020"
   ],
   "subsystem_closure_registry_admissorium_v020_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
-  "subsystem_closure_registry_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926"
+  "subsystem_closure_registry_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
+  "system_completion_gate_register_state": "VERIFRAX_SYSTEM_COMPLETION_GATE_REGISTER_OPEN",
+  "system_completion_gate_register": "https://www.verifrax.net/system/system-completion-gate-register.json",
+  "system_completion_gate_register_data": "https://www.verifrax.net/data/system-completion-gate-register.json",
+  "system_completion_gate_register_registered_subsystem": "ADMISSORIUM_V020",
+  "system_completion_gate_register_admissorium_v020_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+  "system_completion_gate_register_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
+  "system_completion_gate_register_subsystem_closure_registry_sha": "e9e42a84f27cd87eb1ed0d8e6541fc68e26b2224"
 }
