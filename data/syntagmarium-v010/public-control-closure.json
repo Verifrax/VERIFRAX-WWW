@@ -1,0 +1,49 @@
+{
+  "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM",
+  "verifrax_system_complete": false,
+  "subsystem": "SYNTAGMARIUM",
+  "subsystem_canonical": "SYNTAGMARIUM_V010",
+  "subsystem_version": "0.1.0",
+  "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "closed_at_basis": "public chain + status seal + root binding + root receipt",
+  "public_control_chain": {
+    "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
+    "sha": "eb010c0a2501f8b9ca522905160cc1886548f248",
+    "tag": "syntagmarium-v010-public-control-chain-eb010c0a2501",
+    "release": "https://github.com/Verifrax/SYNTAGMARIUM/releases/tag/syntagmarium-v010-public-control-chain-eb010c0a2501"
+  },
+  "status_public_seal": {
+    "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_SEAL_PUBLISHED",
+    "sha": "7e9124db4b2e8ca2ad66491146f56b0b99f327b6",
+    "tag": "verifrax-status-syntagmarium-v010-public-control-seal-7e9124db4b2e",
+    "url": "https://status.verifrax.net/syntagmarium-v010/seal.json"
+  },
+  "root_public_binding": {
+    "state": "ROOT_ROUTER_POINTS_TO_SYNTAGMARIUM_V010_PUBLIC_CONTROL_SEAL",
+    "sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
+    "tag": "verifrax-root-syntagmarium-v010-public-control-seal-9f9476c8d198"
+  },
+  "public_control_receipt": {
+    "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_RECEIPT",
+    "sha": "c5f1d5c035435e9e111aa2cb226d23b6eb35754c",
+    "tag": "verifrax-root-syntagmarium-v010-control-receipt-c5f1d5c03543",
+    "url": "https://www.verifrax.net/system/syntagmarium-v010/control-receipt.json",
+    "data_url": "https://www.verifrax.net/data/syntagmarium-v010/control-receipt.json"
+  },
+  "source_chain": {
+    "intake_sha": "d2dfd7630af29b45e448f51c00c29b634d64ec94",
+    "queue_sha": "9165c58f7678667e5b4f0efad9c43f7f83b2b8d7",
+    "gate_evaluation_sha": "7b100a99fb6574a2969910c41e457d9ce3d0ab46",
+    "previous_closed_subsystem": "ADMISSORIUM_V020",
+    "previous_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+  },
+  "writer_boundary": {
+    "real_writer": false,
+    "token_persistence": false,
+    "truth_mutation": false,
+    "package_publish": false,
+    "operational_repair": false
+  },
+  "next_valid_action": "UPDATE_VERIFRAX_GLOBAL_STATUS_BOARD_WITH_SYNTAGMARIUM_V010_CLOSURE"
+}
