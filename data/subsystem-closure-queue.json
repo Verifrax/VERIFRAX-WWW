@@ -2,66 +2,30 @@
   "schema_version": "1.0.0",
   "system": "VERIFRAX",
   "state": "VERIFRAX_SUBSYSTEM_CLOSURE_QUEUE_OPEN",
+  "decision": "NOT_COMPLETE",
+  "blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
   "system_complete": false,
-  "completion_gate_decision": "NOT_COMPLETE",
-  "blocking_reason": "ONLY_ONE_SUBSYSTEM_REGISTERED",
-  "source_gate_evaluation": {
-    "sha": "7b100a99fb6574a2969910c41e457d9ce3d0ab46",
-    "tag": "verifrax-system-completion-gate-evaluation-7b100a99fb65",
-    "state": "VERIFRAX_SYSTEM_COMPLETION_GATE_EVALUATION_OPEN"
-  },
-  "inputs": {
-    "system_completion_gate_register_sha": "952def7035aafab98f40863e589794bb9cde20ed",
-    "subsystem_closure_registry_sha": "e9e42a84f27cd87eb1ed0d8e6541fc68e26b2224",
-    "global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-    "admissorium_v020_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
-  },
-  "registered_closed_subsystems": [
+  "verifrax_system_completion_claim": "NOT_ASSERTED",
+  "updated_at": "2026-05-26T19:48:20Z",
+  "source_system_completion_gate_evaluation_sha": "1d9ee43486f911bf38e84b125f3c8c244daffa29",
+  "source_system_completion_gate_register_sha": "585ebeac5b98be160536b7d4e8080ddae19610c4",
+  "source_subsystem_closure_registry_sha": "b194767e8494520ffb8bebcd5daf1b2d454d95a2",
+  "source_global_status_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
+  "registered_public_control_closures": [
     {
       "id": "ADMISSORIUM_V020",
       "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
       "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+    },
+    {
+      "id": "SYNTAGMARIUM_V010",
+      "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSURE",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
     }
   ],
-  "next_required_closure_targets": [
-    {
-      "id": "SYNTAGMARIUM",
-      "state": "CLOSURE_REQUIRED"
-    },
-    {
-      "id": "ORBISTIUM",
-      "state": "CLOSURE_REQUIRED"
-    },
-    {
-      "id": "CONSONORIUM",
-      "state": "CLOSURE_REQUIRED"
-    },
-    {
-      "id": "TACHYRIUM",
-      "state": "CLOSURE_REQUIRED"
-    },
-    {
-      "id": "AUCTORISEAL",
-      "state": "CLOSURE_REQUIRED"
-    },
-    {
-      "id": "CORPIFORM",
-      "state": "CLOSURE_REQUIRED"
-    },
-    {
-      "id": "ANAGNORIUM",
-      "state": "CLOSURE_REQUIRED"
-    },
-    {
-      "id": "REGRESSORIUM",
-      "state": "CLOSURE_REQUIRED"
-    },
-    {
-      "id": "VERIFRAX_ROOT_CONTROL",
-      "state": "CLOSURE_REQUIRED"
-    }
-  ],
-  "next_valid_action": "CLOSE_NEXT_SUBSYSTEM_PUBLIC_CONTROL_CHAIN",
-  "forbidden_action": "CLAIM_VERIFRAX_SYSTEM_COMPLETE_WITH_ONLY_ONE_REGISTERED_SUBSYSTEM",
-  "generated_at": "2026-05-24T18:15:30.016097Z"
+  "registered_public_control_closure_count": 2,
+  "next_subsystem_public_control_chain": "ORBISTIUM_V010",
+  "next_subsystem_public_control_chain_state": "ORBISTIUM_V010_PUBLIC_CONTROL_INTAKE_PENDING",
+  "next_valid_action": "OPEN_ORBISTIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM"
 }
