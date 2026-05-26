@@ -1,42 +1,35 @@
 {
-  "closed_public_control_chains": {
-    "admissorium_v020": {
-      "final_release_sha": "d2a51e09f5d36778ba0c8130a3c691e648024a85",
-      "final_release_tag": "admissorium-v020-final-release-d2a51e09f5d3",
-      "final_release_url": "https://github.com/Verifrax/ADMISSORIUM/releases/tag/admissorium-v020-final-release-d2a51e09f5d3",
-      "public_control_closure_data_url": "https://www.verifrax.net/data/admissorium-v020/public-control-closure.json",
-      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
-      "public_control_closure_tag": "verifrax-admissorium-v020-public-control-closure-c49855522ae3",
-      "public_control_closure_url": "https://www.verifrax.net/system/admissorium-v020/public-control-closure.json",
-      "public_control_receipt_data_url": "https://www.verifrax.net/data/admissorium-v020/control-receipt.json",
-      "public_control_receipt_router_sha": "210aa73d177a96b25c96afda7a73e376a21a9dd4",
-      "public_control_receipt_router_tag": "verifrax-root-admissorium-v020-receipt-router-210aa73d177a",
-      "public_control_receipt_sha": "40fca49bb3cfea8dd4a7f6d1f8ebb592e7a709d1",
-      "public_control_receipt_tag": "verifrax-root-admissorium-v020-control-receipt-40fca49bb3cf",
-      "public_control_receipt_url": "https://www.verifrax.net/system/admissorium-v020/control-receipt.json",
-      "root_public_seal_bind_sha": "68979080eee2a5a9032c35cb3a9ef373a0c07833",
-      "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
-      "status_public_seal_sha": "6133b482469a0eadc11454107225a10173f34bbb",
-      "status_public_seal_url": "https://status.verifrax.net/admissorium-v020/seal.json"
-    }
-  },
-  "generated_at_utc": "2026-05-24T11:08:54Z",
-  "global_invariants": {
-    "admissorium_does_not_authorize_real_writer": true,
-    "admissorium_does_not_mutate_truth": true,
-    "admissorium_does_not_persist_tokens": true,
-    "admissorium_is_non_sovereign": true,
-    "do_not_flip_system_complete_from_single_subsystem": true,
-    "verifrax_system_complete": false
-  },
-  "required_next_level": [
-    "Bind every remaining VERIFRAX subsystem to equivalent public-control closure.",
-    "Only after all subsystem closures are live may VERIFRAX_SYSTEM_COMPLETE be evaluated.",
-    "Until then, keep VERIFRAX_SYSTEM_COMPLETE=false and SYSTEM_CONTROL_MAP_OPEN."
-  ],
   "schema_version": "1.0.0",
-  "state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
   "system": "VERIFRAX",
+  "state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
   "system_complete": false,
-  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM"
+  "updated_at": "2026-05-26T16:34:28Z",
+  "previous_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
+  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_SYNTAGMARIUM_V010",
+  "registered_public_control_closures": [
+    {
+      "id": "ADMISSORIUM_V020",
+      "subsystem": "ADMISSORIUM",
+      "version": "0.2.0",
+      "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+    },
+    {
+      "id": "SYNTAGMARIUM_V010",
+      "subsystem": "SYNTAGMARIUM",
+      "version": "0.1.0",
+      "state": "VERIFRAX_SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSED",
+      "public_control_closure_state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSURE",
+      "public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+      "public_control_chain_sha": "eb010c0a2501f8b9ca522905160cc1886548f248",
+      "public_control_seal_sha": "7e9124db4b2e8ca2ad66491146f56b0b99f327b6",
+      "root_public_control_binding_sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
+      "public_control_receipt_sha": "c5f1d5c035435e9e111aa2cb226d23b6eb35754c"
+    }
+  ],
+  "closed_subsystems": [
+    "ADMISSORIUM_V020",
+    "SYNTAGMARIUM_V010"
+  ]
 }
