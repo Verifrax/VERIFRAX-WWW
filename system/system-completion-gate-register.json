@@ -3,74 +3,24 @@
   "system": "VERIFRAX",
   "state": "VERIFRAX_SYSTEM_COMPLETION_GATE_REGISTER_OPEN",
   "system_complete": false,
-  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM",
-  "generated_at": "2026-05-24T11:28:56Z",
-  "closed_subsystems": [
+  "updated_at": "2026-05-26T17:09:27Z",
+  "completion_gate_posture": "REGISTER_UPDATED_NOT_EVALUATED",
+  "previous_gate_register_sha": "952def7035aafab98f40863e589794bb9cde20ed",
+  "source_subsystem_closure_registry_sha": "b194767e8494520ffb8bebcd5daf1b2d454d95a2",
+  "source_global_status_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
+  "closed_subsystem_count": 2,
+  "registered_closed_subsystems": [
     {
       "id": "ADMISSORIUM_V020",
       "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
-      "final_release_sha": "d2a51e09f5d36778ba0c8130a3c691e648024a85",
-      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
-      "registered_by_subsystem_closure_registry_sha": "e9e42a84f27cd87eb1ed0d8e6541fc68e26b2224"
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+    },
+    {
+      "id": "SYNTAGMARIUM_V010",
+      "state": "VERIFRAX_SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSED",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
     }
   ],
-  "live_control_inputs": {
-    "global_status_board_state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
-    "global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-    "subsystem_closure_registry_state": "VERIFRAX_SUBSYSTEM_CLOSURE_REGISTRY_OPEN",
-    "subsystem_closure_registry_sha": "e9e42a84f27cd87eb1ed0d8e6541fc68e26b2224"
-  },
-  "open_completion_gates": [
-    {
-      "id": "DOCS_BOUNDARY_TRUTH",
-      "state": "OPEN",
-      "reason": "Docs host must publish boundary doctrine without role collapse."
-    },
-    {
-      "id": "PROOF_PUBLICATION_BOUNDARY",
-      "state": "OPEN",
-      "reason": "Proof host must publish only proof objects, not intake, authority, or terminal truth."
-    },
-    {
-      "id": "VERIFY_BOUNDARY",
-      "state": "OPEN",
-      "reason": "Verify host must verify artifacts without becoming proof publication or authority."
-    },
-    {
-      "id": "AUTHORITY_BOUNDARY",
-      "state": "OPEN",
-      "reason": "Authority host must issue authority only inside its bounded role."
-    },
-    {
-      "id": "RUNTIME_API_BOUNDARY",
-      "state": "OPEN",
-      "reason": "Runtime/API must expose execution without claiming verification or terminal recognition."
-    },
-    {
-      "id": "ARCHIVE_BOUNDARY",
-      "state": "OPEN",
-      "reason": "Archive must preserve evidence/reference without becoming terminal recognition."
-    },
-    {
-      "id": "REPO_PACKAGE_PERIMETER",
-      "state": "OPEN",
-      "reason": "Every repo/package must bind owner, license truth, deploy truth, status truth, and no fake completion token."
-    },
-    {
-      "id": "ALL_SUBSYSTEM_CLOSURES",
-      "state": "OPEN",
-      "reason": "ADMISSORIUM v0.2.0 is closed, but the subsystem closure registry remains open for additional subsystem closures."
-    }
-  ],
-  "forbidden_claims": [
-    "VERIFRAX_SYSTEM_COMPLETE=true",
-    "APPLY_SUPER_LEVEL_UP_COMPLETE",
-    "ADMISSORIUM_IS_VERIFRAX_COMPLETION"
-  ],
-  "allowed_current_claims": [
-    "ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSURE_LIVE=true",
-    "VERIFRAX_SUBSYSTEM_CLOSURE_REGISTRY_OPEN",
-    "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
-    "VERIFRAX_SYSTEM_COMPLETE=false"
-  ]
+  "completion_claim": "NOT_ASSERTED",
+  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_EVALUATION_WITH_SYNTAGMARIUM_V010"
 }
