@@ -209,5 +209,18 @@
   "syntagmarium_v010_public_control_closure_source_intake_sha": "d2dfd7630af29b45e448f51c00c29b634d64ec94",
   "syntagmarium_v010_public_control_closure_source_queue_sha": "9165c58f7678667e5b4f0efad9c43f7f83b2b8d7",
   "syntagmarium_v010_public_control_closure_source_gate_evaluation_sha": "7b100a99fb6574a2969910c41e457d9ce3d0ab46",
-  "syntagmarium_v010_public_control_closure_previous_admissorium_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+  "syntagmarium_v010_public_control_closure_previous_admissorium_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+  "global_status_board_previous_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
+  "global_status_board_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_SYNTAGMARIUM_V010",
+  "global_status_board_registered_public_control_closures": [
+    "ADMISSORIUM_V020",
+    "SYNTAGMARIUM_V010"
+  ],
+  "global_status_board_syntagmarium_v010_public_control_closure_state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "global_status_board_syntagmarium_v010_public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+  "global_status_board_syntagmarium_v010_public_control_chain_sha": "eb010c0a2501f8b9ca522905160cc1886548f248",
+  "global_status_board_syntagmarium_v010_public_control_seal_sha": "7e9124db4b2e8ca2ad66491146f56b0b99f327b6",
+  "global_status_board_syntagmarium_v010_public_control_receipt_sha": "c5f1d5c035435e9e111aa2cb226d23b6eb35754c",
+  "global_status_board_syntagmarium_v010_root_binding_sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
+  "verifrax_syntagmarium_v010_public_control_closed": true
 }
