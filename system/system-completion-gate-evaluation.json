@@ -2,29 +2,31 @@
   "schema_version": "1.0.0",
   "system": "VERIFRAX",
   "state": "VERIFRAX_SYSTEM_COMPLETION_GATE_EVALUATION_OPEN",
+  "decision": "NOT_COMPLETE",
+  "blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
+  "completion_claim": "NOT_ASSERTED",
   "system_complete": false,
-  "completion_decision": "NOT_COMPLETE",
-  "blocking_reason": "ONLY_ONE_SUBSYSTEM_REGISTERED",
-  "completion_gate_register": {
-    "state": "VERIFRAX_SYSTEM_COMPLETION_GATE_REGISTER_OPEN",
-    "sha": "952def7035aafab98f40863e589794bb9cde20ed",
-    "tag": "verifrax-system-completion-gate-register-952def7035aa"
-  },
-  "registered_closed_subsystems": [
+  "registered_subsystems": [
     {
       "id": "ADMISSORIUM_V020",
       "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
-      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
-      "registered_by_subsystem_closure_registry_sha": "e9e42a84f27cd87eb1ed0d8e6541fc68e26b2224"
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+    },
+    {
+      "id": "SYNTAGMARIUM_V010",
+      "state": "VERIFRAX_SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSED",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
     }
   ],
-  "global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-  "subsystem_closure_registry_sha": "e9e42a84f27cd87eb1ed0d8e6541fc68e26b2224",
+  "registered_subsystem_count": 2,
+  "source_system_completion_gate_register_sha": "585ebeac5b98be160536b7d4e8080ddae19610c4",
+  "source_subsystem_closure_registry_sha": "b194767e8494520ffb8bebcd5daf1b2d454d95a2",
+  "source_global_status_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
+  "evaluation_scope": "PUBLIC_CONTROL_CLOSURE_SET",
+  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_QUEUE_AFTER_SYNTAGMARIUM_V010_EVALUATION",
   "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM",
-  "final_assertions": {
-    "no_system_completion_claim": true,
-    "no_truth_mutation": true,
-    "completion_gate_open": true,
-    "system_complete_false": true
-  }
+  "no_real_writer": true,
+  "no_token_persistence": true,
+  "no_truth_mutation": true,
+  "evaluated_at_utc": "2026-05-26T19:20:58Z"
 }
