@@ -134,7 +134,8 @@
   "subsystem_closure_registry_data": "https://www.verifrax.net/data/subsystem-closure-registry.json",
   "subsystem_closure_registry_system_complete": false,
   "subsystem_closure_registry_registered_closed_subsystems": [
-    "ADMISSORIUM_V020"
+    "ADMISSORIUM_V020",
+    "SYNTAGMARIUM_V010"
   ],
   "subsystem_closure_registry_admissorium_v020_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
   "subsystem_closure_registry_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
@@ -222,5 +223,14 @@
   "global_status_board_syntagmarium_v010_public_control_seal_sha": "7e9124db4b2e8ca2ad66491146f56b0b99f327b6",
   "global_status_board_syntagmarium_v010_public_control_receipt_sha": "c5f1d5c035435e9e111aa2cb226d23b6eb35754c",
   "global_status_board_syntagmarium_v010_root_binding_sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
-  "verifrax_syntagmarium_v010_public_control_closed": true
+  "verifrax_syntagmarium_v010_public_control_closed": true,
+  "subsystem_closure_registry_source_global_status_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
+  "subsystem_closure_registry_syntagmarium_v010_closure_state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "subsystem_closure_registry_syntagmarium_v010_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "subsystem_closure_registry_syntagmarium_v010_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+  "subsystem_closure_registry_syntagmarium_v010_public_control_chain_sha": "eb010c0a2501f8b9ca522905160cc1886548f248",
+  "subsystem_closure_registry_syntagmarium_v010_public_control_seal_sha": "7e9124db4b2e8ca2ad66491146f56b0b99f327b6",
+  "subsystem_closure_registry_syntagmarium_v010_root_binding_sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
+  "subsystem_closure_registry_syntagmarium_v010_public_control_receipt_sha": "c5f1d5c035435e9e111aa2cb226d23b6eb35754c",
+  "subsystem_closure_registry_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_SYNTAGMARIUM_V010"
 }
