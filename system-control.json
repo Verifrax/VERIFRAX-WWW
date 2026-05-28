@@ -212,7 +212,7 @@
   "syntagmarium_v010_public_control_closure_source_gate_evaluation_sha": "7b100a99fb6574a2969910c41e457d9ce3d0ab46",
   "syntagmarium_v010_public_control_closure_previous_admissorium_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
   "global_status_board_previous_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-  "global_status_board_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_SYNTAGMARIUM_V010",
+  "global_status_board_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_ORBISTIUM_V010",
   "global_status_board_registered_public_control_closures": [
     "ADMISSORIUM_V020",
     "SYNTAGMARIUM_V010"
@@ -313,5 +313,13 @@
   "orbistium_v010_public_control_closure_source_registry_sha": "b194767e8494520ffb8bebcd5daf1b2d454d95a2",
   "orbistium_v010_public_control_closure_source_global_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
   "orbistium_v010_public_control_closure_previous_admissorium_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
-  "orbistium_v010_public_control_closure_previous_syntagmarium_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
+  "orbistium_v010_public_control_closure_previous_syntagmarium_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+  "global_status_board_orbistium_v010_public_control_closure_state": "ORBISTIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "global_status_board_orbistium_v010_public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "global_status_board_orbistium_v010_public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+  "global_status_board_orbistium_v010_public_control_closure_tag": "verifrax-orbistium-v010-public-control-closure-54e5811f0718",
+  "global_status_board_orbistium_v010_public_control_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
+  "global_status_board_orbistium_v010_public_control_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
+  "global_status_board_orbistium_v010_public_control_receipt_sha": "b689ba4607f18fcb985f47a9ddf7b9900ec4ec0e",
+  "global_status_board_orbistium_v010_public_control_root_binding_sha": "a7156570e934b68dc83e3c11ace0921179ed2da3"
 }
