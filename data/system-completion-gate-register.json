@@ -1,26 +1,28 @@
 {
-  "schema_version": "1.0.0",
-  "system": "VERIFRAX",
   "state": "VERIFRAX_SYSTEM_COMPLETION_GATE_REGISTER_OPEN",
-  "system_complete": false,
-  "updated_at": "2026-05-26T17:09:27Z",
   "completion_gate_posture": "REGISTER_UPDATED_NOT_EVALUATED",
-  "previous_gate_register_sha": "952def7035aafab98f40863e589794bb9cde20ed",
-  "source_subsystem_closure_registry_sha": "b194767e8494520ffb8bebcd5daf1b2d454d95a2",
-  "source_global_status_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
-  "closed_subsystem_count": 2,
-  "registered_closed_subsystems": [
+  "completion_claim": "NOT_ASSERTED",
+  "source_subsystem_closure_registry_sha": "485b3801315b7c16817773ea8de07e00ecc4edaf",
+  "source_global_status_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
+  "registered_public_control_closures": [
     {
-      "id": "ADMISSORIUM_V020",
-      "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
-      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+      "subsystem": "ADMISSORIUM_V020",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
     },
     {
-      "id": "SYNTAGMARIUM_V010",
-      "state": "VERIFRAX_SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSED",
-      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
+      "subsystem": "SYNTAGMARIUM_V010",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "ORBISTIUM_V010",
+      "public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+      "public_control_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
+      "public_control_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
     }
   ],
-  "completion_claim": "NOT_ASSERTED",
-  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_EVALUATION_WITH_SYNTAGMARIUM_V010"
+  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_EVALUATION_WITH_ORBISTIUM_V010",
+  "system_complete": false
 }

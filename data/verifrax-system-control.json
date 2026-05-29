@@ -236,15 +236,15 @@
   "system_completion_gate_register_posture": "REGISTER_UPDATED_NOT_EVALUATED",
   "system_completion_gate_register_completion_claim": "NOT_ASSERTED",
   "system_completion_gate_register_previous_sha": "952def7035aafab98f40863e589794bb9cde20ed",
-  "system_completion_gate_register_source_subsystem_closure_registry_sha": "b194767e8494520ffb8bebcd5daf1b2d454d95a2",
-  "system_completion_gate_register_source_global_status_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
+  "system_completion_gate_register_source_subsystem_closure_registry_sha": "485b3801315b7c16817773ea8de07e00ecc4edaf",
+  "system_completion_gate_register_source_global_status_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
   "system_completion_gate_register_closed_subsystem_count": 2,
   "system_completion_gate_register_registered_closed_subsystems": [
     "ADMISSORIUM_V020",
     "SYNTAGMARIUM_V010"
   ],
   "system_completion_gate_register_syntagmarium_v010_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
-  "system_completion_gate_register_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_EVALUATION_WITH_SYNTAGMARIUM_V010",
+  "system_completion_gate_register_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_EVALUATION_WITH_ORBISTIUM_V010",
   "verifrax_system_completion_claim": "NOT_ASSERTED",
   "system_completion_gate_evaluation_registered_subsystem_count": 2,
   "system_completion_gate_evaluation_syntagmarium_v010_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
@@ -325,5 +325,9 @@
   "subsystem_closure_registry_orbistium_v010_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
   "subsystem_closure_registry_orbistium_v010_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
   "subsystem_closure_registry_orbistium_v010_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
-  "subsystem_closure_registry_orbistium_v010_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0"
+  "subsystem_closure_registry_orbistium_v010_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
+  "system_completion_gate_register_orbistium_v010_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "system_completion_gate_register_orbistium_v010_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+  "system_completion_gate_register_orbistium_v010_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
+  "system_completion_gate_register_orbistium_v010_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0"
 }
