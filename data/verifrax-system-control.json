@@ -224,7 +224,7 @@
   "global_status_board_syntagmarium_v010_public_control_receipt_sha": "c5f1d5c035435e9e111aa2cb226d23b6eb35754c",
   "global_status_board_syntagmarium_v010_root_binding_sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
   "verifrax_syntagmarium_v010_public_control_closed": true,
-  "subsystem_closure_registry_source_global_status_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
+  "subsystem_closure_registry_source_global_status_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
   "subsystem_closure_registry_syntagmarium_v010_closure_state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSURE",
   "subsystem_closure_registry_syntagmarium_v010_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
   "subsystem_closure_registry_syntagmarium_v010_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
@@ -232,7 +232,7 @@
   "subsystem_closure_registry_syntagmarium_v010_public_control_seal_sha": "7e9124db4b2e8ca2ad66491146f56b0b99f327b6",
   "subsystem_closure_registry_syntagmarium_v010_root_binding_sha": "9f9476c8d198a043f18ad10c056b029cf971a2fe",
   "subsystem_closure_registry_syntagmarium_v010_public_control_receipt_sha": "c5f1d5c035435e9e111aa2cb226d23b6eb35754c",
-  "subsystem_closure_registry_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_SYNTAGMARIUM_V010",
+  "subsystem_closure_registry_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_ORBISTIUM_V010",
   "system_completion_gate_register_posture": "REGISTER_UPDATED_NOT_EVALUATED",
   "system_completion_gate_register_completion_claim": "NOT_ASSERTED",
   "system_completion_gate_register_previous_sha": "952def7035aafab98f40863e589794bb9cde20ed",
@@ -321,5 +321,9 @@
   "global_status_board_orbistium_v010_public_control_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
   "global_status_board_orbistium_v010_public_control_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
   "global_status_board_orbistium_v010_public_control_receipt_sha": "b689ba4607f18fcb985f47a9ddf7b9900ec4ec0e",
-  "global_status_board_orbistium_v010_public_control_root_binding_sha": "a7156570e934b68dc83e3c11ace0921179ed2da3"
+  "global_status_board_orbistium_v010_public_control_root_binding_sha": "a7156570e934b68dc83e3c11ace0921179ed2da3",
+  "subsystem_closure_registry_orbistium_v010_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "subsystem_closure_registry_orbistium_v010_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+  "subsystem_closure_registry_orbistium_v010_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
+  "subsystem_closure_registry_orbistium_v010_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0"
 }
