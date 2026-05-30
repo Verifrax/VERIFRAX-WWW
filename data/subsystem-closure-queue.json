@@ -1,31 +1,32 @@
 {
-  "schema_version": "1.0.0",
-  "system": "VERIFRAX",
   "state": "VERIFRAX_SUBSYSTEM_CLOSURE_QUEUE_OPEN",
   "decision": "NOT_COMPLETE",
   "blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
-  "system_complete": false,
-  "verifrax_system_completion_claim": "NOT_ASSERTED",
-  "updated_at": "2026-05-26T19:48:20Z",
-  "source_system_completion_gate_evaluation_sha": "1d9ee43486f911bf38e84b125f3c8c244daffa29",
-  "source_system_completion_gate_register_sha": "585ebeac5b98be160536b7d4e8080ddae19610c4",
-  "source_subsystem_closure_registry_sha": "b194767e8494520ffb8bebcd5daf1b2d454d95a2",
-  "source_global_status_board_sha": "5e84f5b0bd65885a7b7566bfe6cc141d767db005",
+  "source_system_completion_gate_evaluation_sha": "20a9bddf277a184d9b361457c5b67cfa380841e4",
+  "source_system_completion_gate_register_sha": "006d196129326bb395d2f59010eb2394105c25c9",
+  "source_subsystem_closure_registry_sha": "485b3801315b7c16817773ea8de07e00ecc4edaf",
+  "source_global_status_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
   "registered_public_control_closures": [
     {
-      "id": "ADMISSORIUM_V020",
-      "state": "VERIFRAX_ADMISSORIUM_V020_PUBLIC_CONTROL_CLOSED",
-      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+      "subsystem": "ADMISSORIUM_V020",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
     },
     {
-      "id": "SYNTAGMARIUM_V010",
-      "state": "SYNTAGMARIUM_V010_PUBLIC_CONTROL_CLOSURE",
-      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
+      "subsystem": "SYNTAGMARIUM_V010",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "ORBISTIUM_V010",
+      "public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+      "public_control_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
+      "public_control_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
     }
   ],
-  "registered_public_control_closure_count": 2,
-  "next_subsystem_public_control_chain": "ORBISTIUM_V010",
-  "next_subsystem_public_control_chain_state": "ORBISTIUM_V010_PUBLIC_CONTROL_INTAKE_PENDING",
-  "next_valid_action": "OPEN_ORBISTIUM_V010_PUBLIC_CONTROL_INTAKE",
-  "truth_warning": "NOT_VERIFRAX_SYSTEM_COMPLETION_CLAIM"
+  "next_subsystem_public_control_chain": "CONSONORIUM_V010",
+  "next_subsystem_public_control_chain_state": "CONSONORIUM_V010_PUBLIC_CONTROL_INTAKE_PENDING",
+  "next_valid_action": "OPEN_CONSONORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "system_complete": false
 }
