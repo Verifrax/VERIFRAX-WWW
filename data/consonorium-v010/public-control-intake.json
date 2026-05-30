@@ -1,0 +1,33 @@
+{
+  "state": "CONSONORIUM_V010_PUBLIC_CONTROL_INTAKE_OPEN",
+  "system_complete": false,
+  "source_subsystem_closure_queue": {
+    "sha": "5a36b4b23f22717d38f6c97b04b912e1bc499faa",
+    "state": "VERIFRAX_SUBSYSTEM_CLOSURE_QUEUE_OPEN",
+    "decision": "NOT_COMPLETE",
+    "next_subsystem_public_control_chain": "CONSONORIUM_V010"
+  },
+  "source_system_completion_gate_evaluation_sha": "20a9bddf277a184d9b361457c5b67cfa380841e4",
+  "source_system_completion_gate_register_sha": "006d196129326bb395d2f59010eb2394105c25c9",
+  "source_subsystem_closure_registry_sha": "485b3801315b7c16817773ea8de07e00ecc4edaf",
+  "source_global_status_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
+  "previous_public_control_closures": [
+    {
+      "subsystem": "ADMISSORIUM_V020",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "SYNTAGMARIUM_V010",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "ORBISTIUM_V010",
+      "public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    }
+  ],
+  "admission_posture": "PUBLIC_CONTROL_INTAKE_OPEN_NO_CLOSURE_CLAIM",
+  "next_valid_action": "BUILD_CONSONORIUM_V010_PUBLIC_CONTROL_CHAIN"
+}
