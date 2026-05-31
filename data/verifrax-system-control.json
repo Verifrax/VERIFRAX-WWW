@@ -342,7 +342,7 @@
   "consonorium_v010_previous_admissorium_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
   "consonorium_v010_previous_syntagmarium_public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
   "consonorium_v010_previous_orbistium_public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
-  "consonorium_v010_next_valid_action": "PUBLISH_CONSONORIUM_V010_PUBLIC_CONTROL_RECEIPT",
+  "consonorium_v010_next_valid_action": "CLOSE_CONSONORIUM_V010_PUBLIC_CONTROL_CHAIN",
   "consonorium_v010_public_control_intake_state": "CONSONORIUM_V010_PUBLIC_CONTROL_INTAKE_OPEN",
   "consonorium_v010_public_control_intake_source_queue_sha": "5a36b4b23f22717d38f6c97b04b912e1bc499faa",
   "consonorium_v010_public_control_intake_source_gate_evaluation_sha": "20a9bddf277a184d9b361457c5b67cfa380841e4",
@@ -362,5 +362,18 @@
   "consonorium_v010_public_control_chain_source_gate_evaluation_sha": "20a9bddf277a184d9b361457c5b67cfa380841e4",
   "consonorium_v010_public_control_chain_source_gate_register_sha": "006d196129326bb395d2f59010eb2394105c25c9",
   "consonorium_v010_public_control_chain_source_registry_sha": "485b3801315b7c16817773ea8de07e00ecc4edaf",
-  "consonorium_v010_public_control_chain_source_global_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc"
+  "consonorium_v010_public_control_chain_source_global_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
+  "consonorium_v010_public_control_receipt_state": "CONSONORIUM_V010_PUBLIC_CONTROL_RECEIPT",
+  "consonorium_v010_public_control_receipt_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
+  "consonorium_v010_public_control_receipt_status_seal_sha": "7301d7ccb9787894ee9880c402ee46f390a7f98b",
+  "consonorium_v010_public_control_receipt_root_binding_sha": "c4110c8c11f7071f5b5e06f06f9bc95bc9fad647",
+  "consonorium_v010_public_control_receipt_source_intake_sha": "9a22e2fcf1288e0e410e2e9a3a72f0c67f78ade2",
+  "consonorium_v010_public_control_receipt_source_queue_sha": "5a36b4b23f22717d38f6c97b04b912e1bc499faa",
+  "consonorium_v010_public_control_receipt_source_gate_evaluation_sha": "20a9bddf277a184d9b361457c5b67cfa380841e4",
+  "consonorium_v010_public_control_receipt_source_gate_register_sha": "006d196129326bb395d2f59010eb2394105c25c9",
+  "consonorium_v010_public_control_receipt_source_registry_sha": "485b3801315b7c16817773ea8de07e00ecc4edaf",
+  "consonorium_v010_public_control_receipt_source_global_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
+  "consonorium_v010_public_control_receipt_previous_admissorium_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+  "consonorium_v010_public_control_receipt_previous_syntagmarium_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+  "consonorium_v010_public_control_receipt_previous_orbistium_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46"
 }
