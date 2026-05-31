@@ -5,7 +5,7 @@
   "system_complete": false,
   "updated_at": "2026-05-26T16:34:28Z",
   "previous_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_ORBISTIUM_V010",
+  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_CONSONORIUM_V010",
   "registered_public_control_closures": [
     {
       "id": "ADMISSORIUM_V020",
@@ -36,6 +36,14 @@
       "public_control_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
       "public_control_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
       "public_control_receipt_sha": "b689ba4607f18fcb985f47a9ddf7b9900ec4ec0e"
+    },
+    {
+      "subsystem": "CONSONORIUM_V010",
+      "public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
+      "public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
+      "public_control_seal_sha": "7301d7ccb9787894ee9880c402ee46f390a7f98b",
+      "public_control_receipt_sha": "399622116777060d4f01d741d0ae1e822cbeec8f",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
     }
   ],
   "closed_subsystems": [
@@ -50,5 +58,10 @@
   "orbistium_v010_public_control_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
   "orbistium_v010_public_control_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
   "orbistium_v010_public_control_receipt_sha": "b689ba4607f18fcb985f47a9ddf7b9900ec4ec0e",
-  "orbistium_v010_public_control_root_binding_sha": "a7156570e934b68dc83e3c11ace0921179ed2da3"
+  "orbistium_v010_public_control_root_binding_sha": "a7156570e934b68dc83e3c11ace0921179ed2da3",
+  "source_consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
+  "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
+  "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
+  "consonorium_v010_public_control_seal_sha": "7301d7ccb9787894ee9880c402ee46f390a7f98b",
+  "consonorium_v010_public_control_receipt_sha": "399622116777060d4f01d741d0ae1e822cbeec8f"
 }
