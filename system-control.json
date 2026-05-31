@@ -212,7 +212,7 @@
   "syntagmarium_v010_public_control_closure_source_gate_evaluation_sha": "7b100a99fb6574a2969910c41e457d9ce3d0ab46",
   "syntagmarium_v010_public_control_closure_previous_admissorium_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
   "global_status_board_previous_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-  "global_status_board_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_ORBISTIUM_V010",
+  "global_status_board_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_CONSONORIUM_V010",
   "global_status_board_registered_public_control_closures": [
     "ADMISSORIUM_V020",
     "SYNTAGMARIUM_V010"
@@ -390,5 +390,9 @@
   "consonorium_v010_public_control_closure_source_global_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
   "consonorium_v010_public_control_closure_previous_admissorium_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
   "consonorium_v010_public_control_closure_previous_syntagmarium_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
-  "consonorium_v010_public_control_closure_previous_orbistium_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46"
+  "consonorium_v010_public_control_closure_previous_orbistium_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+  "global_status_board_consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
+  "global_status_board_consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
+  "global_status_board_consonorium_v010_public_control_seal_sha": "7301d7ccb9787894ee9880c402ee46f390a7f98b",
+  "global_status_board_consonorium_v010_public_control_receipt_sha": "399622116777060d4f01d741d0ae1e822cbeec8f"
 }
