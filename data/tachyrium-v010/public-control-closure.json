@@ -1,0 +1,59 @@
+{
+  "state": "TACHYRIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "subsystem": "TACHYRIUM_V010",
+  "public_control_chain": {
+    "state": "TACHYRIUM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
+    "sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
+    "release_tag": "tachyrium-v010-public-control-chain-5efb4194c845",
+    "release_url": "https://github.com/Verifrax/TACHYRIUM/releases/tag/tachyrium-v010-public-control-chain-5efb4194c845"
+  },
+  "public_control_seal": {
+    "state": "TACHYRIUM_V010_PUBLIC_CONTROL_SEAL_PUBLISHED",
+    "sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
+    "release_tag": "verifrax-status-tachyrium-v010-public-control-seal-c143d8d26f90"
+  },
+  "root_binding": {
+    "state": "ROOT_ROUTER_POINTS_TO_TACHYRIUM_V010_PUBLIC_CONTROL_SEAL",
+    "sha": "7770ec69cf9ce29ebf9bc0c5c3c081b6b18cc0dd",
+    "release_tag": "verifrax-root-tachyrium-v010-public-control-seal-7770ec69cf9c"
+  },
+  "public_control_receipt": {
+    "state": "TACHYRIUM_V010_PUBLIC_CONTROL_RECEIPT",
+    "sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
+    "release_tag": "verifrax-root-tachyrium-v010-control-receipt-298a6aa7d361"
+  },
+  "source_lineage": {
+    "intake_sha": "28257ed73cbf1f13a4a641f80785277693703149",
+    "queue_sha": "9feebece70455d9dfaaca6d82d5fcf6a318b718c",
+    "gate_evaluation_sha": "e4678cdbaad52d8cb1546019daec8ffc0dc4e80f",
+    "gate_register_sha": "6679e29fc660e8d2ce0b25861335df6562bb8f3c",
+    "registry_sha": "8613d1cbbe0adb3a82ada66f321cef5e459369e5",
+    "global_board_sha": "1b27e39ad9e735263a3eb817392bf8e283161a31"
+  },
+  "previous_public_control_closures": [
+    {
+      "subsystem": "ADMISSORIUM_V020",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+    },
+    {
+      "subsystem": "SYNTAGMARIUM_V010",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
+    },
+    {
+      "subsystem": "ORBISTIUM_V010",
+      "public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46"
+    },
+    {
+      "subsystem": "CONSONORIUM_V010",
+      "public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826"
+    }
+  ],
+  "negative_capability": {
+    "real_writer": false,
+    "token_persistence": false,
+    "truth_mutation": false
+  },
+  "next_valid_action": "UPDATE_VERIFRAX_GLOBAL_STATUS_BOARD_WITH_TACHYRIUM_V010_CLOSURE",
+  "system_complete": false
+}
