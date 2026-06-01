@@ -1,6 +1,6 @@
 {
   "state": "VERIFRAX_SUBSYSTEM_CLOSURE_REGISTRY_OPEN",
-  "source_global_status_board_sha": "1b27e39ad9e735263a3eb817392bf8e283161a31",
+  "source_global_status_board_sha": "e16c0833f1c15afde835189933693f5e563a3a42",
   "registered_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -15,23 +15,64 @@
     {
       "subsystem": "ORBISTIUM_V010",
       "public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
-      "public_control_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
-      "public_control_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
       "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
     },
     {
       "subsystem": "CONSONORIUM_V010",
       "public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
-      "public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
-      "public_control_seal_sha": "7301d7ccb9787894ee9880c402ee46f390a7f98b",
-      "public_control_receipt_sha": "399622116777060d4f01d741d0ae1e822cbeec8f",
       "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "TACHYRIUM_V010",
+      "public_control_closure_sha": "da7622fef65afd0a6939eb91d3377a8fb7a19c79",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
+      "public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
+      "public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544"
     }
   ],
-  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_CONSONORIUM_V010",
+  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_TACHYRIUM_V010",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
   "consonorium_v010_public_control_seal_sha": "7301d7ccb9787894ee9880c402ee46f390a7f98b",
-  "consonorium_v010_public_control_receipt_sha": "399622116777060d4f01d741d0ae1e822cbeec8f"
+  "consonorium_v010_public_control_receipt_sha": "399622116777060d4f01d741d0ae1e822cbeec8f",
+  "subsystems": [
+    {
+      "subsystem": "ADMISSORIUM_V020",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "SYNTAGMARIUM_V010",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "ORBISTIUM_V010",
+      "public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "CONSONORIUM_V010",
+      "public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "TACHYRIUM_V010",
+      "public_control_closure_sha": "da7622fef65afd0a6939eb91d3377a8fb7a19c79",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
+      "public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
+      "public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544"
+    }
+  ],
+  "admissorium_v020_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+  "syntagmarium_v010_public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+  "orbistium_v010_public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+  "tachyrium_v010_public_control_closure_sha": "da7622fef65afd0a6939eb91d3377a8fb7a19c79",
+  "tachyrium_v010_public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "tachyrium_v010_public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
+  "tachyrium_v010_public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
+  "tachyrium_v010_public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544"
 }
