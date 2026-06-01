@@ -2,10 +2,10 @@
   "state": "VERIFRAX_SUBSYSTEM_CLOSURE_QUEUE_OPEN",
   "decision": "NOT_COMPLETE",
   "blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
-  "source_system_completion_gate_evaluation_sha": "20a9bddf277a184d9b361457c5b67cfa380841e4",
-  "source_system_completion_gate_register_sha": "006d196129326bb395d2f59010eb2394105c25c9",
-  "source_subsystem_closure_registry_sha": "485b3801315b7c16817773ea8de07e00ecc4edaf",
-  "source_global_status_board_sha": "bb39c9a79a229bcd70b93dc65e97b185efb011fc",
+  "source_system_completion_gate_evaluation_sha": "e4678cdbaad52d8cb1546019daec8ffc0dc4e80f",
+  "source_system_completion_gate_register_sha": "6679e29fc660e8d2ce0b25861335df6562bb8f3c",
+  "source_subsystem_closure_registry_sha": "8613d1cbbe0adb3a82ada66f321cef5e459369e5",
+  "source_global_status_board_sha": "1b27e39ad9e735263a3eb817392bf8e283161a31",
   "registered_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -23,10 +23,22 @@
       "public_control_chain_sha": "6b93ff01327411ff7adc168358d1306917a03c43",
       "public_control_seal_sha": "bb2c1492cc8c1dc849cf5468240a3ecf265548a0",
       "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
+    },
+    {
+      "subsystem": "CONSONORIUM_V010",
+      "public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
+      "public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
+      "public_control_seal_sha": "7301d7ccb9787894ee9880c402ee46f390a7f98b",
+      "public_control_receipt_sha": "399622116777060d4f01d741d0ae1e822cbeec8f",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED"
     }
   ],
-  "next_subsystem_public_control_chain": "CONSONORIUM_V010",
-  "next_subsystem_public_control_chain_state": "CONSONORIUM_V010_PUBLIC_CONTROL_INTAKE_PENDING",
-  "next_valid_action": "OPEN_CONSONORIUM_V010_PUBLIC_CONTROL_INTAKE",
-  "system_complete": false
+  "next_subsystem_public_control_chain": "TACHYRIUM_V010",
+  "next_subsystem_public_control_chain_state": "TACHYRIUM_V010_PUBLIC_CONTROL_INTAKE_PENDING",
+  "next_valid_action": "OPEN_TACHYRIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "system_complete": false,
+  "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
+  "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
+  "consonorium_v010_public_control_seal_sha": "7301d7ccb9787894ee9880c402ee46f390a7f98b",
+  "consonorium_v010_public_control_receipt_sha": "399622116777060d4f01d741d0ae1e822cbeec8f"
 }
