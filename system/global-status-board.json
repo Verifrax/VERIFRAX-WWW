@@ -5,7 +5,7 @@
   "system_complete": false,
   "updated_at": "2026-05-26T16:34:28Z",
   "previous_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_TACHYRIUM_V010",
+  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_AUCTORISEAL_V010",
   "registered_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -93,5 +93,20 @@
   "tachyrium_v010_public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
   "tachyrium_v010_public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
   "tachyrium_v010_public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
-  "tachyrium_v010_root_binding_sha": "7770ec69cf9ce29ebf9bc0c5c3c081b6b18cc0dd"
+  "tachyrium_v010_root_binding_sha": "7770ec69cf9ce29ebf9bc0c5c3c081b6b18cc0dd",
+  "next_subsystem_public_control_chain": "AUCTORISEAL_V010",
+  "next_subsystem_public_control_chain_state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
+  "next_subsystem_public_control_chain_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_AUCTORISEAL_V010",
+  "global_status_board_auctoriseal_v010_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
+  "global_status_board_auctoriseal_v010_public_control_closure_tag": "auctoriseal-v010-public-control-closure-b0de71519085",
+  "auctoriseal_v010_public_control_closure_state": "AUCTORISEAL_V010_PUBLIC_CONTROL_CLOSURE",
+  "auctoriseal_v010_public_control_chain_state": "AUCTORISEAL_V010_PUBLIC_CONTROL_CHAIN_CLOSED",
+  "auctoriseal_v010_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
+  "auctoriseal_v010_public_control_closure_tag": "auctoriseal-v010-public-control-closure-b0de71519085",
+  "auctoriseal_v010_public_control_chain_sha": "cecdc9b4ebff01d138a7a108351d5be796c8ee9a",
+  "auctoriseal_v010_public_control_receipt_sha": "f055eb7fcda507fdd4c61e606704e3c043343862",
+  "auctoriseal_v010_public_control_root_binding_sha": "91d29595629510402ae60d0934f58fb1630ace99",
+  "auctoriseal_v010_public_control_seal_sha": "b0187235033d0be8b72a61b3d2867650231a18b9",
+  "auctoriseal_v010_public_control_intake_sha": "c2547af5de9e5498ce4b9488cb818cb74d31bab0",
+  "auctoriseal_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_AUCTORISEAL_V010"
 }
