@@ -3,9 +3,9 @@
   "decision": "NOT_COMPLETE",
   "completion_claim": "NOT_ASSERTED",
   "blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
-  "source_system_completion_gate_register_sha": "ca60330031980218104f6a4057ae640033533330",
-  "source_subsystem_closure_registry_sha": "23c51c5c574fcc88f81978f4d2891ea296bb32f8",
-  "source_global_status_board_sha": "e16c0833f1c15afde835189933693f5e563a3a42",
+  "source_system_completion_gate_register_sha": "6db78a78b1f12c15fe736ed1aa5d53813d9fe050",
+  "source_subsystem_closure_registry_sha": "b12e2a0e5e1e07624d3abe97425951e75f64e985",
+  "source_global_status_board_sha": "862b8f3b28f994cf57516196cf59b481e11e7bfa",
   "evaluated_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -36,7 +36,7 @@
       "public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544"
     }
   ],
-  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_QUEUE_AFTER_TACHYRIUM_V010_EVALUATION",
+  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_QUEUE_AFTER_AUCTORISEAL_V010_EVALUATION",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
@@ -109,5 +109,70 @@
   "tachyrium_v010_public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
   "tachyrium_v010_public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
   "tachyrium_v010_public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
-  "tachyrium_v010_public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544"
+  "tachyrium_v010_public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
+  "source_system_completion_gate_register_tag": "verifrax-system-completion-gate-register-auctoriseal-v010-6db78a78b1f1",
+  "evaluated_subsystems": [
+    {
+      "subsystem": "ADMISSORIUM_V020",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+    },
+    {
+      "subsystem": "SYNTAGMARIUM_V010",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
+    },
+    {
+      "subsystem": "ORBISTIUM_V010",
+      "public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46"
+    },
+    {
+      "subsystem": "CONSONORIUM_V010",
+      "public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826"
+    },
+    {
+      "subsystem": "TACHYRIUM_V010",
+      "public_control_closure_sha": "da7622fef65afd0a6939eb91d3377a8fb7a19c79"
+    },
+    {
+      "subsystem": "AUCTORISEAL_V010",
+      "public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
+      "public_control_closure_tag": "auctoriseal-v010-public-control-closure-b0de71519085"
+    }
+  ],
+  "public_control_closures": [
+    {
+      "subsystem": "ADMISSORIUM_V020",
+      "public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5"
+    },
+    {
+      "subsystem": "SYNTAGMARIUM_V010",
+      "public_control_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf"
+    },
+    {
+      "subsystem": "ORBISTIUM_V010",
+      "public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46"
+    },
+    {
+      "subsystem": "CONSONORIUM_V010",
+      "public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826"
+    },
+    {
+      "subsystem": "TACHYRIUM_V010",
+      "public_control_closure_sha": "da7622fef65afd0a6939eb91d3377a8fb7a19c79"
+    },
+    {
+      "subsystem": "AUCTORISEAL_V010",
+      "public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
+      "public_control_closure_tag": "auctoriseal-v010-public-control-closure-b0de71519085"
+    }
+  ],
+  "admissorium_v020_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
+  "syntagmarium_v010_closure_sha": "b1ce6d9ab6eca54cbf2e0180538e7b5588b0d0cf",
+  "orbistium_v010_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
+  "consonorium_v010_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
+  "tachyrium_v010_closure_sha": "da7622fef65afd0a6939eb91d3377a8fb7a19c79",
+  "auctoriseal_v010_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
+  "auctoriseal_v010_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
+  "registered_auctoriseal_v010": true,
+  "evaluated_auctoriseal_v010": true,
+  "auctoriseal_v010_public_control_closure_tag": "auctoriseal-v010-public-control-closure-b0de71519085"
 }
