@@ -1,0 +1,10 @@
+{
+  "object_type": "CORPIFORM_V010_PUBLIC_CONTROL_STATE_KERNEL",
+  "subsystem": "CORPIFORM",
+  "version": "v0.1.0",
+  "answers": "WHAT_IS_STATE",
+  "source_public_control_chain_state": "CORPIFORM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
+  "source_public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
+  "next_valid_action": "PUBLISH_CORPIFORM_V010_PUBLIC_CONTROL_SEAL",
+  "system_complete": false
+}
