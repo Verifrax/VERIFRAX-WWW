@@ -1,6 +1,6 @@
 {
   "state": "VERIFRAX_SUBSYSTEM_CLOSURE_REGISTRY_OPEN",
-  "source_global_status_board_sha": "862b8f3b28f994cf57516196cf59b481e11e7bfa",
+  "source_global_status_board_sha": "e667c3e944d0e2de94c0b1417938d3d369f53c44",
   "registered_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -29,9 +29,25 @@
       "public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
       "public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
       "public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544"
+    },
+    {
+      "subsystem": "CORPIFORM_V010",
+      "subsystem_name": "CORPIFORM",
+      "version": "0.1.0",
+      "state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
+      "public_control_chain_state": "CORPIFORM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
+      "public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+      "public_control_closure_tag": "verifrax-root-corpiform-v010-public-control-closure-daa496abd0f5",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
+      "public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
+      "public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
+      "source_queue_sha": "1d199ca5e73fb73b22084b81d98e53e4e775af5f",
+      "source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82",
+      "previous_auctoriseal_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb"
     }
   ],
-  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_AUCTORISEAL_V010",
+  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_CORPIFORM_V010",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
@@ -79,6 +95,22 @@
       "public_control_root_binding_sha": "91d29595629510402ae60d0934f58fb1630ace99",
       "public_control_seal_sha": "b0187235033d0be8b72a61b3d2867650231a18b9",
       "public_control_intake_sha": "c2547af5de9e5498ce4b9488cb818cb74d31bab0"
+    },
+    {
+      "subsystem": "CORPIFORM_V010",
+      "subsystem_name": "CORPIFORM",
+      "version": "0.1.0",
+      "state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
+      "public_control_chain_state": "CORPIFORM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
+      "public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+      "public_control_closure_tag": "verifrax-root-corpiform-v010-public-control-closure-daa496abd0f5",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
+      "public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
+      "public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
+      "source_queue_sha": "1d199ca5e73fb73b22084b81d98e53e4e775af5f",
+      "source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82",
+      "previous_auctoriseal_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb"
     }
   ],
   "admissorium_v020_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
@@ -89,7 +121,7 @@
   "tachyrium_v010_public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
   "tachyrium_v010_public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
   "tachyrium_v010_public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
-  "source_global_status_board_tag": "verifrax-global-status-board-auctoriseal-v010-862b8f3b28f9",
+  "source_global_status_board_tag": "verifrax-root-global-status-board-corpiform-v010-closure-e667c3e944d0",
   "registry_has_auctoriseal": true,
   "registered_auctoriseal_v010": true,
   "auctoriseal_v010_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
@@ -98,5 +130,30 @@
   "auctoriseal_v010_public_control_receipt_sha": "f055eb7fcda507fdd4c61e606704e3c043343862",
   "auctoriseal_v010_public_control_root_binding_sha": "91d29595629510402ae60d0934f58fb1630ace99",
   "auctoriseal_v010_public_control_seal_sha": "b0187235033d0be8b72a61b3d2867650231a18b9",
-  "auctoriseal_v010_public_control_intake_sha": "c2547af5de9e5498ce4b9488cb818cb74d31bab0"
+  "auctoriseal_v010_public_control_intake_sha": "c2547af5de9e5498ce4b9488cb818cb74d31bab0",
+  "schema_version": "1.0.0",
+  "system": "VERIFRAX",
+  "verifrax_system_complete": false,
+  "updated_at": "2026-06-05T21:11:42Z",
+  "current_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_CORPIFORM_V010",
+  "registry_has_corpiform": true,
+  "registered_corpiform_v010": true,
+  "source_corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+  "corpiform_v010_public_control_closure_state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
+  "corpiform_v010_public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+  "corpiform_v010_public_control_closure_tag": "verifrax-root-corpiform-v010-public-control-closure-daa496abd0f5",
+  "corpiform_v010_public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
+  "corpiform_v010_public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
+  "corpiform_v010_public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
+  "corpiform_v010_public_control_source_queue_sha": "1d199ca5e73fb73b22084b81d98e53e4e775af5f",
+  "corpiform_v010_public_control_source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82",
+  "corpiform_v010_previous_auctoriseal_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
+  "subsystem_closure_registry_corpiform_v010_public_control_closure_state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
+  "subsystem_closure_registry_corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+  "subsystem_closure_registry_corpiform_v010_public_control_closure_tag": "verifrax-root-corpiform-v010-public-control-closure-daa496abd0f5",
+  "subsystem_closure_registry_corpiform_v010_public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
+  "subsystem_closure_registry_corpiform_v010_public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
+  "subsystem_closure_registry_corpiform_v010_public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
+  "corpiform_v010_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_CORPIFORM_V010"
 }
