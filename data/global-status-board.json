@@ -3,9 +3,9 @@
   "system": "VERIFRAX",
   "state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
   "system_complete": false,
-  "updated_at": "2026-05-26T16:34:28Z",
+  "updated_at": "2026-06-05T21:03:41Z",
   "previous_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_AUCTORISEAL_V010",
+  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_CORPIFORM_V010",
   "registered_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -35,11 +35,23 @@
       "public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
       "public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
       "root_binding_sha": "7770ec69cf9ce29ebf9bc0c5c3c081b6b18cc0dd"
+    },
+    {
+      "subsystem": "CORPIFORM_V010",
+      "public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
+      "public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
+      "public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
+      "source_queue_sha": "1d199ca5e73fb73b22084b81d98e53e4e775af5f",
+      "source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82",
+      "previous_auctoriseal_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb"
     }
   ],
   "closed_subsystems": [
     "ADMISSORIUM_V020",
-    "SYNTAGMARIUM_V010"
+    "SYNTAGMARIUM_V010",
+    "CORPIFORM_V010"
   ],
   "source_orbistium_v010_public_control_closure_sha": "54e5811f0718274e691a4d4a0e94b79f56a83f46",
   "orbistium_v010_public_control_closure_state": "ORBISTIUM_V010_PUBLIC_CONTROL_CLOSURE",
@@ -84,6 +96,17 @@
       "public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
       "public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
       "root_binding_sha": "7770ec69cf9ce29ebf9bc0c5c3c081b6b18cc0dd"
+    },
+    {
+      "subsystem": "CORPIFORM_V010",
+      "public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
+      "public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
+      "public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
+      "source_queue_sha": "1d199ca5e73fb73b22084b81d98e53e4e775af5f",
+      "source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82",
+      "previous_auctoriseal_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb"
     }
   ],
   "admissorium_v020_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
@@ -94,9 +117,9 @@
   "tachyrium_v010_public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
   "tachyrium_v010_public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
   "tachyrium_v010_root_binding_sha": "7770ec69cf9ce29ebf9bc0c5c3c081b6b18cc0dd",
-  "next_subsystem_public_control_chain": "AUCTORISEAL_V010",
+  "next_subsystem_public_control_chain": "CORPIFORM_V010",
   "next_subsystem_public_control_chain_state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
-  "next_subsystem_public_control_chain_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_AUCTORISEAL_V010",
+  "next_subsystem_public_control_chain_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_CORPIFORM_V010",
   "global_status_board_auctoriseal_v010_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
   "global_status_board_auctoriseal_v010_public_control_closure_tag": "auctoriseal-v010-public-control-closure-b0de71519085",
   "auctoriseal_v010_public_control_closure_state": "AUCTORISEAL_V010_PUBLIC_CONTROL_CLOSURE",
@@ -108,5 +131,23 @@
   "auctoriseal_v010_public_control_root_binding_sha": "91d29595629510402ae60d0934f58fb1630ace99",
   "auctoriseal_v010_public_control_seal_sha": "b0187235033d0be8b72a61b3d2867650231a18b9",
   "auctoriseal_v010_public_control_intake_sha": "c2547af5de9e5498ce4b9488cb818cb74d31bab0",
-  "auctoriseal_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_AUCTORISEAL_V010"
+  "auctoriseal_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_AUCTORISEAL_V010",
+  "current_action": "UPDATE_VERIFRAX_GLOBAL_STATUS_BOARD_WITH_CORPIFORM_V010_CLOSURE",
+  "source_corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+  "corpiform_v010_public_control_closure_state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
+  "corpiform_v010_public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+  "corpiform_v010_public_control_closure_tag": "verifrax-root-corpiform-v010-public-control-closure-daa496abd0f5",
+  "corpiform_v010_public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
+  "corpiform_v010_public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
+  "corpiform_v010_public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
+  "corpiform_v010_public_control_source_queue_sha": "1d199ca5e73fb73b22084b81d98e53e4e775af5f",
+  "corpiform_v010_public_control_source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82",
+  "corpiform_v010_previous_auctoriseal_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
+  "global_status_board_corpiform_v010_public_control_closure_state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
+  "global_status_board_corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
+  "global_status_board_corpiform_v010_public_control_closure_tag": "verifrax-root-corpiform-v010-public-control-closure-daa496abd0f5",
+  "global_status_board_corpiform_v010_public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
+  "global_status_board_corpiform_v010_public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
+  "corpiform_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_CORPIFORM_V010"
 }
