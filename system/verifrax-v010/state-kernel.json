@@ -1,0 +1,12 @@
+{
+  "object_type": "VERIFRAX_V010_PUBLIC_CONTROL_STATE_KERNEL",
+  "subsystem": "VERIFRAX",
+  "subsystem_id": "VERIFRAX_V010",
+  "version": "v0.1.0",
+  "answers": "WHAT_VERIFIED_AND_WHAT_EVIDENCE_ANCHORS_THE_AUTHORED_PROTOCOL_BOUNDARY",
+  "source_public_control_chain_state": "VERIFRAX_V010_PUBLIC_CONTROL_CHAIN_OPEN",
+  "source_public_control_intake_sha": "fa24cdbd87e1833a82f0041703c1fe7ad4125a4f",
+  "source_public_control_intake_tag": "verifrax-root-verifrax-v010-public-control-intake-fa24cdbd87e1",
+  "next_valid_action": "PUBLISH_VERIFRAX_V010_PUBLIC_CONTROL_SEAL",
+  "system_complete": false
+}
