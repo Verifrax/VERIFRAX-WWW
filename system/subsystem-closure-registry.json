@@ -1,6 +1,6 @@
 {
   "state": "VERIFRAX_SUBSYSTEM_CLOSURE_REGISTRY_OPEN",
-  "source_global_status_board_sha": "e667c3e944d0e2de94c0b1417938d3d369f53c44",
+  "source_global_status_board_sha": "aa9af0002d293522e544cc96ae58c0297bd520c9",
   "registered_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -45,9 +45,24 @@
       "source_queue_sha": "1d199ca5e73fb73b22084b81d98e53e4e775af5f",
       "source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82",
       "previous_auctoriseal_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb"
+    },
+    {
+      "subsystem": "VERIFRAX_V010",
+      "public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
+      "public_control_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "1149fc8534c783f14b95a146b9d304fd1d87ca9f",
+      "public_control_chain_tag": "verifrax-root-verifrax-v010-public-control-chain-open-1149fc8534c7",
+      "public_control_seal_sha": "7281929d102edf5c43636fac66805a91027970db",
+      "public_control_seal_tag": "verifrax-root-verifrax-v010-public-control-seal-7281929d102e",
+      "public_control_intake_sha": "fa24cdbd87e1833a82f0041703c1fe7ad4125a4f",
+      "public_control_intake_tag": "verifrax-root-verifrax-v010-public-control-intake-fa24cdbd87e1",
+      "source_global_status_board_sha": "aa9af0002d293522e544cc96ae58c0297bd520c9",
+      "source_global_status_board_tag": "verifrax-root-global-status-board-verifrax-v010-closure-aa9af0002d29",
+      "previous_corpiform_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a"
     }
   ],
-  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_CORPIFORM_V010",
+  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_VERIFRAX_V010",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
@@ -111,6 +126,21 @@
       "source_queue_sha": "1d199ca5e73fb73b22084b81d98e53e4e775af5f",
       "source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82",
       "previous_auctoriseal_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb"
+    },
+    {
+      "subsystem": "VERIFRAX_V010",
+      "public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
+      "public_control_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "1149fc8534c783f14b95a146b9d304fd1d87ca9f",
+      "public_control_chain_tag": "verifrax-root-verifrax-v010-public-control-chain-open-1149fc8534c7",
+      "public_control_seal_sha": "7281929d102edf5c43636fac66805a91027970db",
+      "public_control_seal_tag": "verifrax-root-verifrax-v010-public-control-seal-7281929d102e",
+      "public_control_intake_sha": "fa24cdbd87e1833a82f0041703c1fe7ad4125a4f",
+      "public_control_intake_tag": "verifrax-root-verifrax-v010-public-control-intake-fa24cdbd87e1",
+      "source_global_status_board_sha": "aa9af0002d293522e544cc96ae58c0297bd520c9",
+      "source_global_status_board_tag": "verifrax-root-global-status-board-verifrax-v010-closure-aa9af0002d29",
+      "previous_corpiform_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a"
     }
   ],
   "admissorium_v020_public_control_closure_sha": "c49855522ae348d5310f6c291642ae414b7a66b5",
@@ -121,7 +151,7 @@
   "tachyrium_v010_public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
   "tachyrium_v010_public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
   "tachyrium_v010_public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
-  "source_global_status_board_tag": "verifrax-root-global-status-board-corpiform-v010-closure-e667c3e944d0",
+  "source_global_status_board_tag": "verifrax-root-global-status-board-verifrax-v010-closure-aa9af0002d29",
   "registry_has_auctoriseal": true,
   "registered_auctoriseal_v010": true,
   "auctoriseal_v010_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
@@ -134,8 +164,8 @@
   "schema_version": "1.0.0",
   "system": "VERIFRAX",
   "verifrax_system_complete": false,
-  "updated_at": "2026-06-05T21:11:42Z",
-  "current_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_CORPIFORM_V010",
+  "updated_at": "2026-06-10T21:49:27Z",
+  "current_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_VERIFRAX_V010",
   "registry_has_corpiform": true,
   "registered_corpiform_v010": true,
   "source_corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
@@ -155,5 +185,48 @@
   "subsystem_closure_registry_corpiform_v010_public_control_chain_sha": "3f9605b0b0e75f031e1f676f81f06b4273ffbc22",
   "subsystem_closure_registry_corpiform_v010_public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
   "subsystem_closure_registry_corpiform_v010_public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
-  "corpiform_v010_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_CORPIFORM_V010"
+  "corpiform_v010_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_CORPIFORM_V010",
+  "verifrax_v010_public_control_closure_state": "VERIFRAX_V010_PUBLIC_CONTROL_CLOSURE",
+  "verifrax_v010_public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "verifrax_v010_public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
+  "verifrax_v010_public_control_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
+  "verifrax_v010_public_control_chain_sha": "1149fc8534c783f14b95a146b9d304fd1d87ca9f",
+  "verifrax_v010_public_control_chain_tag": "verifrax-root-verifrax-v010-public-control-chain-open-1149fc8534c7",
+  "verifrax_v010_public_control_seal_sha": "7281929d102edf5c43636fac66805a91027970db",
+  "verifrax_v010_public_control_seal_tag": "verifrax-root-verifrax-v010-public-control-seal-7281929d102e",
+  "verifrax_v010_public_control_intake_sha": "fa24cdbd87e1833a82f0041703c1fe7ad4125a4f",
+  "verifrax_v010_public_control_intake_tag": "verifrax-root-verifrax-v010-public-control-intake-fa24cdbd87e1",
+  "verifrax_v010_source_global_status_board_sha": "aa9af0002d293522e544cc96ae58c0297bd520c9",
+  "verifrax_v010_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_VERIFRAX_V010",
+  "subsystem_closure_registry_verifrax_v010_closure_state": "VERIFRAX_V010_PUBLIC_CONTROL_CLOSURE",
+  "subsystem_closure_registry_verifrax_v010_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+  "subsystem_closure_registry_verifrax_v010_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
+  "subsystem_closure_registry_verifrax_v010_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
+  "subsystem_closure_registry_verifrax_v010_chain_sha": "1149fc8534c783f14b95a146b9d304fd1d87ca9f",
+  "subsystem_closure_registry_verifrax_v010_seal_sha": "7281929d102edf5c43636fac66805a91027970db",
+  "subsystem_closure_registry_verifrax_v010_intake_sha": "fa24cdbd87e1833a82f0041703c1fe7ad4125a4f",
+  "closed_subsystems": [
+    "VERIFRAX_V010"
+  ],
+  "registered_closed_subsystems": [
+    "VERIFRAX_V010"
+  ],
+  "public_control_closures": [
+    {
+      "subsystem": "VERIFRAX_V010",
+      "public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
+      "public_control_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
+      "closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
+      "public_control_chain_sha": "1149fc8534c783f14b95a146b9d304fd1d87ca9f",
+      "public_control_chain_tag": "verifrax-root-verifrax-v010-public-control-chain-open-1149fc8534c7",
+      "public_control_seal_sha": "7281929d102edf5c43636fac66805a91027970db",
+      "public_control_seal_tag": "verifrax-root-verifrax-v010-public-control-seal-7281929d102e",
+      "public_control_intake_sha": "fa24cdbd87e1833a82f0041703c1fe7ad4125a4f",
+      "public_control_intake_tag": "verifrax-root-verifrax-v010-public-control-intake-fa24cdbd87e1",
+      "source_global_status_board_sha": "aa9af0002d293522e544cc96ae58c0297bd520c9",
+      "source_global_status_board_tag": "verifrax-root-global-status-board-verifrax-v010-closure-aa9af0002d29",
+      "previous_corpiform_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a"
+    }
+  ],
+  "next_system_completion_gate_register_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_VERIFRAX_V010"
 }
