@@ -3,9 +3,9 @@
   "decision": "NOT_COMPLETE",
   "completion_claim": "NOT_ASSERTED",
   "blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
-  "source_system_completion_gate_register_sha": "d9e7bee0a677249a5034b581158d770060a851e0",
-  "source_subsystem_closure_registry_sha": "6192a2aea6ffdb216301f06e64ce99ad76cbe821",
-  "source_global_status_board_sha": "e667c3e944d0e2de94c0b1417938d3d369f53c44",
+  "source_system_completion_gate_register_sha": "f59c466ba0eaf3492d034169a735ed1fe5a460c4",
+  "source_subsystem_closure_registry_sha": "108b1a3ba9783316ba533eeed5d9d3072ed52f91",
+  "source_global_status_board_sha": "aa9af0002d293522e544cc96ae58c0297bd520c9",
   "evaluated_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -50,7 +50,7 @@
       "source_gate_evaluation_sha": "25e8a3e63cab1f6eeb0dc0a089c7c5cae7b20e82"
     }
   ],
-  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_QUEUE_AFTER_CORPIFORM_V010_EVALUATION",
+  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_QUEUE_AFTER_VERIFRAX_V010_EVALUATION",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
@@ -152,7 +152,7 @@
   "tachyrium_v010_public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
   "tachyrium_v010_public_control_seal_sha": "c143d8d26f90cb10e8a969602f2bf44308352902",
   "tachyrium_v010_public_control_receipt_sha": "298a6aa7d3614667075e2bd916ab79dae9cef544",
-  "source_system_completion_gate_register_tag": "verifrax-root-system-completion-gate-register-corpiform-v010-d9e7bee0a677",
+  "source_system_completion_gate_register_tag": "verifrax-root-system-completion-gate-register-verifrax-v010-f59c466ba0ea",
   "evaluated_subsystems": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -289,10 +289,10 @@
   "schema_version": "1.0.0",
   "system": "VERIFRAX",
   "verifrax_system_complete": false,
-  "updated_at": "2026-06-07T10:42:03Z",
-  "source_subsystem_closure_registry_tag": "verifrax-root-subsystem-closure-registry-corpiform-v010-6192a2aea6ff",
-  "source_global_status_board_tag": "verifrax-root-global-status-board-corpiform-v010-closure-e667c3e944d0",
-  "current_action": "UPDATE_SYSTEM_COMPLETION_GATE_EVALUATION_WITH_CORPIFORM_V010",
+  "updated_at": "2026-06-11T16:47:17Z",
+  "source_subsystem_closure_registry_tag": "verifrax-root-subsystem-closure-registry-verifrax-v010-108b1a3ba978",
+  "source_global_status_board_tag": "verifrax-root-global-status-board-verifrax-v010-closure-aa9af0002d29",
+  "current_action": "UPDATE_SYSTEM_COMPLETION_GATE_EVALUATION_WITH_VERIFRAX_V010",
   "registered_corpiform_v010": true,
   "evaluated_corpiform_v010": true,
   "gate_evaluation_has_corpiform": true,
@@ -312,5 +312,40 @@
   "system_completion_gate_evaluation_corpiform_v010_public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
   "system_completion_gate_evaluation_corpiform_v010_public_control_intake_sha": "7be1d431def2b1b5cf11f4f7eeff117a6e7b3fe4",
   "corpiform_v010_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
-  "corpiform_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_QUEUE_AFTER_CORPIFORM_V010_EVALUATION"
+  "corpiform_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_QUEUE_AFTER_CORPIFORM_V010_EVALUATION",
+  "object_type": "VERIFRAX_SYSTEM_COMPLETION_GATE_EVALUATION",
+  "evaluated_subsystem": "VERIFRAX_V010",
+  "evaluated_subsystem_state": "VERIFRAX_V010_PUBLIC_CONTROL_CLOSURE",
+  "evaluated_subsystem_public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
+  "evaluated_subsystem_public_control_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
+  "evaluation_decision": "NOT_COMPLETE",
+  "sovereign_order": [
+    "SYNTAGMARIUM_V010",
+    "ORBISTIUM_V010",
+    "CONSONORIUM_V010",
+    "TACHYRIUM_V010",
+    "AUCTORISEAL_V010",
+    "CORPIFORM_V010",
+    "VERIFRAX_V010",
+    "ANAGNORIUM_V010",
+    "REGRESSORIUM_V010"
+  ],
+  "closed_through_subsystem": "VERIFRAX_V010",
+  "remaining_required_sovereign_public_control_closures": [
+    "ANAGNORIUM_V010",
+    "REGRESSORIUM_V010"
+  ],
+  "missing_sovereign_public_control_closures": [
+    "ANAGNORIUM_V010",
+    "REGRESSORIUM_V010"
+  ],
+  "source_verifrax_v010_public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
+  "source_verifrax_v010_public_control_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
+  "source_verifrax_v010_public_control_seal_sha": "7281929d102edf5c43636fac66805a91027970db",
+  "source_verifrax_v010_public_control_seal_tag": "verifrax-root-verifrax-v010-public-control-seal-7281929d102e",
+  "source_verifrax_v010_public_control_chain_sha": "1149fc8534c783f14b95a146b9d304fd1d87ca9f",
+  "source_verifrax_v010_public_control_chain_tag": "verifrax-root-verifrax-v010-public-control-chain-open-1149fc8534c7",
+  "source_verifrax_v010_public_control_intake_sha": "fa24cdbd87e1833a82f0041703c1fe7ad4125a4f",
+  "source_verifrax_v010_public_control_intake_tag": "verifrax-root-verifrax-v010-public-control-intake-fa24cdbd87e1",
+  "created_at": "2026-06-11T16:47:17Z"
 }
