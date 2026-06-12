@@ -76,7 +76,7 @@
   ],
   "next_subsystem_public_control_chain": "ANAGNORIUM_V010",
   "next_subsystem_public_control_chain_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE_PENDING",
-  "next_valid_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
+  "next_valid_action": "PUBLISH_ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
@@ -207,7 +207,7 @@
   "auctoriseal_v010_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
   "auctoriseal_v010_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
   "auctoriseal_v010_public_control_closure_tag": "auctoriseal-v010-public-control-closure-b0de71519085",
-  "current_action": "UPDATE_SUBSYSTEM_CLOSURE_QUEUE_AFTER_VERIFRAX_V010_EVALUATION",
+  "current_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
   "completion_claim": "NOT_ASSERTED",
   "source_system_completion_gate_register_tag": "verifrax-root-system-completion-gate-register-verifrax-v010-f59c466ba0ea",
   "corpiform_v010_public_control_closure_state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
@@ -220,7 +220,7 @@
   "subsystem_closure_queue_corpiform_v010_public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
   "subsystem_closure_queue_corpiform_v010_evaluation_decision": "NOT_COMPLETE",
   "subsystem_closure_queue_corpiform_v010_blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
-  "updated_at": "2026-06-11T17:06:28Z",
+  "updated_at": "2026-06-12T21:35:53Z",
   "corpiform_v010_next_valid_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
   "evaluated_subsystems": {
     "corpiform_v010": {
@@ -289,10 +289,10 @@
       "next_valid_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE"
     }
   },
-  "selection_source_queue_sha": "e7dd248c070128595a14d3b298377b7227ff1699",
-  "selected_after_subsystem": "CORPIFORM_V010",
-  "next_subsystem_public_control_intake_state": "VERIFRAX_V010_PUBLIC_CONTROL_INTAKE",
-  "next_subsystem_public_control_intake_answers": "WHAT_VERIFIED_AND_WHAT_EVIDENCE_ANCHORS_THE_AUTHORED_PROTOCOL_BOUNDARY",
+  "selection_source_queue_sha": "2245fa99ede485e1c5dce6c0ae4d6fb0912a64a8",
+  "selected_after_subsystem": "VERIFRAX_V010",
+  "next_subsystem_public_control_intake_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "next_subsystem_public_control_intake_answers": "WHAT_TRUTH_HAS_BECOME_UNAVOIDABLE",
   "verifrax_v010_next_valid_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
   "verifrax_v010_public_control_intake_source_queue_sha": "e7dd248c070128595a14d3b298377b7227ff1699",
   "verifrax_v010_selection_reason": "NEXT_SOVEREIGN_CHAMBER_AFTER_CORPIFORM_EXECUTION",
@@ -301,7 +301,7 @@
   "source_global_status_board_tag": "verifrax-root-global-status-board-verifrax-v010-closure-aa9af0002d29",
   "last_evaluated_subsystem_public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
   "last_evaluated_subsystem_public_control_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
-  "next_subsystem_public_control_chain_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
+  "next_subsystem_public_control_chain_action": "PUBLISH_ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE",
   "remaining_required_sovereign_public_control_closures": [
     "ANAGNORIUM_V010",
     "REGRESSORIUM_V010"
@@ -326,12 +326,26 @@
   "subsystem_closure_queue_verifrax_v010_public_control_closure_tag": "verifrax-root-verifrax-v010-public-control-closure-5d1d87dd6b62",
   "subsystem_closure_queue_verifrax_v010_evaluation_decision": "NOT_COMPLETE",
   "subsystem_closure_queue_verifrax_v010_blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
-  "anagnorium_v010_public_control_intake_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE_PENDING",
+  "anagnorium_v010_public_control_intake_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE_SELECTED",
   "anagnorium_v010_next_valid_action": "PUBLISH_ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE",
   "closed_sovereign_subsystems": [
     "VERIFRAX_V010"
   ],
   "queued_sovereign_subsystems": [
     "ANAGNORIUM_V010"
-  ]
+  ],
+  "next_subsystem_public_control_chain_next_valid_action": "PUBLISH_ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "selection_source_queue_tag": "verifrax-root-subsystem-closure-queue-after-verifrax-v010-evaluation-2245fa99ede4",
+  "selected_subsystem": "ANAGNORIUM_V010",
+  "selected_subsystem_public_control_intake_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE_SELECTED",
+  "selected_subsystem_public_control_intake_answers": "WHAT_TRUTH_HAS_BECOME_UNAVOIDABLE",
+  "selection_reason": "NEXT_SOVEREIGN_CHAMBER_AFTER_VERIFRAX_VERIFICATION",
+  "next_subsystem_public_control_intake_action": "PUBLISH_ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "next_subsystem_public_control_intake_source_queue_sha": "2245fa99ede485e1c5dce6c0ae4d6fb0912a64a8",
+  "next_subsystem_public_control_intake_source_queue_tag": "verifrax-root-subsystem-closure-queue-after-verifrax-v010-evaluation-2245fa99ede4",
+  "anagnorium_v010_selection_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE_SELECTED",
+  "anagnorium_v010_public_control_intake_answers": "WHAT_TRUTH_HAS_BECOME_UNAVOIDABLE",
+  "anagnorium_v010_public_control_intake_source_queue_sha": "2245fa99ede485e1c5dce6c0ae4d6fb0912a64a8",
+  "anagnorium_v010_public_control_intake_source_queue_tag": "verifrax-root-subsystem-closure-queue-after-verifrax-v010-evaluation-2245fa99ede4",
+  "anagnorium_v010_selection_reason": "NEXT_SOVEREIGN_CHAMBER_AFTER_VERIFRAX_VERIFICATION"
 }
