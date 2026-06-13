@@ -1,11 +1,11 @@
 {
   "object_type": "ANAGNORIUM_V010_STATE_KERNEL",
-  "state": "ANAGNORIUM_V010_PUBLIC_CONTROL_SEAL",
+  "state": "ANAGNORIUM_V010_PUBLIC_CONTROL_CLOSURE",
   "subsystem": "ANAGNORIUM_V010",
   "subsystem_slug": "anagnorium-v010",
   "version": "0.1.0",
-  "current_action": "PUBLISH_ANAGNORIUM_V010_PUBLIC_CONTROL_SEAL",
-  "next_valid_action": "PUBLISH_ANAGNORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "current_action": "PUBLISH_ANAGNORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "next_valid_action": "UPDATE_ANAGNORIUM_GLOBAL_STATUS_BOARD_WITH_ANAGNORIUM_V010_CLOSURE",
   "answers": "WHAT_TRUTH_HAS_BECOME_UNAVOIDABLE",
   "source_public_control_intake_sha": "40fec5dfda732dbecef6ee67033c544efcbf2c63",
   "source_public_control_intake_tag": "verifrax-root-anagnorium-v010-public-control-intake-40fec5dfda73",
@@ -21,5 +21,8 @@
   "source_public_control_chain_tag": "verifrax-root-anagnorium-v010-public-control-chain-open-ab512b5d7618",
   "source_public_control_chain_byte_sha256": "78288218cefbcd3e4f4479beca4f5da98525b2d94772dc5392c28a709c881ece",
   "source_public_control_chain_canonical_json_sha256": "431388292d4878e95c02af4f4a34d7f62bd0309a98530255958c081c80e9201b",
-  "source_public_control_seal_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_SEAL"
+  "source_public_control_seal_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_SEAL",
+  "source_public_control_closure_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "source_public_control_seal_sha": "9c6128537c8068c8e8c54fbe7bfd241b782ed627",
+  "previous_subsystem_public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93"
 }
