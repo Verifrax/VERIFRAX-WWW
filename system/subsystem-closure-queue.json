@@ -76,7 +76,7 @@
   ],
   "next_subsystem_public_control_chain": "ANAGNORIUM_V010",
   "next_subsystem_public_control_chain_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
-  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_ANAGNORIUM_V010",
+  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_ANAGNORIUM_V010",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
@@ -327,7 +327,7 @@
   "subsystem_closure_queue_verifrax_v010_evaluation_decision": "NOT_COMPLETE",
   "subsystem_closure_queue_verifrax_v010_blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
   "anagnorium_v010_public_control_intake_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_INTAKE",
-  "anagnorium_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_ANAGNORIUM_V010",
+  "anagnorium_v010_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_ANAGNORIUM_V010",
   "closed_sovereign_subsystems": [
     "VERIFRAX_V010"
   ],
@@ -375,5 +375,9 @@
   "global_status_board_current_action": "UPDATE_ANAGNORIUM_GLOBAL_STATUS_BOARD_WITH_ANAGNORIUM_V010_CLOSURE",
   "global_status_board_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_ANAGNORIUM_V010",
   "global_status_board_anagnorium_v010_public_control_closure_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_CLOSURE",
-  "global_status_board_anagnorium_v010_public_control_closure_sha": "63286f948a1aeaf8a284ad47edb964e25a3f2d54"
+  "global_status_board_anagnorium_v010_public_control_closure_sha": "63286f948a1aeaf8a284ad47edb964e25a3f2d54",
+  "subsystem_closure_registry_current_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_ANAGNORIUM_V010",
+  "subsystem_closure_registry_next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_ANAGNORIUM_V010",
+  "subsystem_closure_registry_anagnorium_v010_closure_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "subsystem_closure_registry_anagnorium_v010_closure_sha": "63286f948a1aeaf8a284ad47edb964e25a3f2d54"
 }
