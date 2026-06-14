@@ -1,5 +1,5 @@
 {
-  "state": "SUBSYSTEM_CLOSURE_QUEUE_REGRESSORIUM_V010_INTAKE_PUBLISHED",
+  "state": "SUBSYSTEM_CLOSURE_QUEUE_REGRESSORIUM_V010_CHAIN_OPENED",
   "decision": "NOT_COMPLETE",
   "blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
   "source_system_completion_gate_evaluation_sha": "3c96295bd6b59ac3c13f59856cea32fce88bec1c",
@@ -76,7 +76,7 @@
   ],
   "next_subsystem_public_control_chain": "ANAGNORIUM_V010",
   "next_subsystem_public_control_chain_state": "ANAGNORIUM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
-  "next_valid_action": "OPEN_REGRESSORIUM_V010_PUBLIC_CONTROL_CHAIN",
+  "next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_SEAL",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
@@ -208,7 +208,7 @@
   "auctoriseal_v010_public_control_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
   "auctoriseal_v010_closure_sha": "b0de715190857ddc3177e9df2fa685b44bed5acb",
   "auctoriseal_v010_public_control_closure_tag": "auctoriseal-v010-public-control-closure-b0de71519085",
-  "current_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "current_action": "OPEN_REGRESSORIUM_V010_PUBLIC_CONTROL_CHAIN",
   "completion_claim": "NOT_ASSERTED",
   "source_system_completion_gate_register_tag": "verifrax-root-system-completion-gate-register-anagnorium-v010-9081ea705c11",
   "corpiform_v010_public_control_closure_state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
@@ -537,8 +537,11 @@
   "selected_next_required_subsystem_answer": "WHAT_MUST_NOW_FOLLOW",
   "selected_next_required_subsystem_next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
   "regressorium_v010_public_control_intake_selection_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE_SELECTED",
-  "regressorium_v010_next_valid_action": "OPEN_REGRESSORIUM_V010_PUBLIC_CONTROL_CHAIN",
+  "regressorium_v010_next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_SEAL",
   "regressorium_v010_public_control_intake_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
-  "regressorium_v010_public_control_intake_sha": "b8ba37a90aa024f7bb6a87aad8bdb5885b73e443",
-  "regressorium_v010_public_control_intake_tag": "verifrax-root-select-regressorium-v010-public-control-intake-b8ba37a90aa0"
+  "regressorium_v010_public_control_intake_sha": "c5e8b82f6d838eb471e0785c3db649bdc0bde172",
+  "regressorium_v010_public_control_intake_tag": "verifrax-root-regressorium-v010-public-control-intake-c5e8b82f6d83",
+  "regressorium_v010_public_control_chain_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
+  "regressorium_v010_public_control_chain_sha": "c5e8b82f6d838eb471e0785c3db649bdc0bde172",
+  "regressorium_v010_public_control_chain_tag": "verifrax-root-regressorium-v010-public-control-intake-c5e8b82f6d83"
 }

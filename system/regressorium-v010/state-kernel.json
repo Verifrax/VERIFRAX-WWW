@@ -1,14 +1,14 @@
 {
   "object_type": "REGRESSORIUM_V010_STATE_KERNEL",
-  "state": "REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CHAIN_OPEN",
   "subsystem": "REGRESSORIUM_V010",
   "subsystem_name": "REGRESSORIUM",
   "subsystem_slug": "regressorium-v010",
   "version": "0.1.0",
   "role": "TERMINAL_RECOURSE",
   "answers": "WHAT_MUST_NOW_FOLLOW",
-  "current_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
-  "next_valid_action": "OPEN_REGRESSORIUM_V010_PUBLIC_CONTROL_CHAIN",
+  "current_action": "OPEN_REGRESSORIUM_V010_PUBLIC_CONTROL_CHAIN",
+  "next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_SEAL",
   "source_public_control_intake_selection_sha": "b8ba37a90aa024f7bb6a87aad8bdb5885b73e443",
   "source_subsystem_closure_queue_sha": "c62f2b420e20c0bb5d737cf7c03b3caff8221147",
   "source_subsystem_closure_queue_tag": "verifrax-root-subsystem-closure-queue-after-anagnorium-v010-evaluation-c62f2b420e20",
@@ -19,7 +19,9 @@
   "previous_subsystem_public_control_closure_tag": "verifrax-root-anagnorium-v010-public-control-closure-63286f948a1a",
   "system_complete": false,
   "verifrax_system_complete": false,
-  "source_public_control_intake_sha": "b8ba37a90aa024f7bb6a87aad8bdb5885b73e443",
-  "source_public_control_intake_tag": "verifrax-root-select-regressorium-v010-public-control-intake-b8ba37a90aa0",
-  "source_public_control_intake_selection_tag": "verifrax-root-select-regressorium-v010-public-control-intake-b8ba37a90aa0"
+  "source_public_control_intake_sha": "c5e8b82f6d838eb471e0785c3db649bdc0bde172",
+  "source_public_control_intake_tag": "verifrax-root-regressorium-v010-public-control-intake-c5e8b82f6d83",
+  "source_public_control_intake_selection_tag": "verifrax-root-select-regressorium-v010-public-control-intake-b8ba37a90aa0",
+  "source_public_control_chain_sha": "c5e8b82f6d838eb471e0785c3db649bdc0bde172",
+  "source_public_control_chain_tag": "verifrax-root-regressorium-v010-public-control-intake-c5e8b82f6d83"
 }
