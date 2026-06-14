@@ -482,7 +482,7 @@
   "tachyrium_v010_public_control_closure_no_token_persistence": true,
   "tachyrium_v010_public_control_closure_no_truth_mutation": true,
   "verifrax_global_status_board_state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
-  "next_valid_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
+  "next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
   "global_status_board_tachyrium_v010_public_control_closure_sha": "da7622fef65afd0a6939eb91d3377a8fb7a19c79",
   "global_status_board_tachyrium_v010_public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
   "global_status_board_tachyrium_v010_public_control_chain_sha": "5efb4194c84524257d0bd08a524a9d64e465a93b",
@@ -714,7 +714,7 @@
   "subsystem_closure_queue_corpiform_v010_public_control_seal_sha": "117d1e1f9d51a58415fb2b820a4ff3a662dfb462",
   "subsystem_closure_queue_corpiform_v010_evaluation_decision": "NOT_COMPLETE",
   "subsystem_closure_queue_corpiform_v010_blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
-  "next_required_subsystem_public_control_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
+  "next_required_subsystem_public_control_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
   "verifrax_v010_next_valid_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
   "verifrax_v010_public_control_intake_source_queue_sha": "2d717bc3d53af53e83f85ff873f8cfbcfb3f7c3a",
   "verifrax_v010_selection_reason": "NEXT_SOVEREIGN_CHAMBER_AFTER_CORPIFORM_EXECUTION",
@@ -902,5 +902,11 @@
   "anagnorium_v010_blocking_reason": "MORE_SUBSYSTEM_PUBLIC_CONTROL_CLOSURES_REQUIRED",
   "next_required_subsystem": "REGRESSORIUM_V010",
   "next_subsystem_public_control_candidate": "REGRESSORIUM_V010",
-  "next_subsystem_public_control_selection_required": true
+  "next_subsystem_public_control_selection_required": true,
+  "selected_next_required_subsystem": "REGRESSORIUM_V010",
+  "selected_next_required_subsystem_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE_SELECTED",
+  "selected_next_required_subsystem_next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "regressorium_v010_public_control_intake_selection_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE_SELECTED",
+  "regressorium_v010_next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "next_subsystem_public_control_intake_required": true
 }
