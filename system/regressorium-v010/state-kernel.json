@@ -1,0 +1,22 @@
+{
+  "object_type": "REGRESSORIUM_V010_STATE_KERNEL",
+  "state": "REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE_SELECTED",
+  "subsystem": "REGRESSORIUM_V010",
+  "subsystem_name": "REGRESSORIUM",
+  "subsystem_slug": "regressorium-v010",
+  "version": "0.1.0",
+  "role": "TERMINAL_RECOURSE",
+  "answers": "WHAT_MUST_NOW_FOLLOW",
+  "current_action": "SELECT_NEXT_REQUIRED_SUBSYSTEM_PUBLIC_CONTROL_CLOSURE",
+  "next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_INTAKE",
+  "source_public_control_intake_selection_sha": "c62f2b420e20c0bb5d737cf7c03b3caff8221147",
+  "source_subsystem_closure_queue_sha": "c62f2b420e20c0bb5d737cf7c03b3caff8221147",
+  "source_subsystem_closure_queue_tag": "verifrax-root-subsystem-closure-queue-after-anagnorium-v010-evaluation-c62f2b420e20",
+  "source_system_completion_gate_evaluation_sha": "3c96295bd6b59ac3c13f59856cea32fce88bec1c",
+  "source_system_completion_gate_evaluation_tag": "verifrax-root-system-completion-gate-evaluation-anagnorium-v010-3c96295bd6b5",
+  "previous_subsystem": "ANAGNORIUM_V010",
+  "previous_subsystem_public_control_closure_sha": "63286f948a1aeaf8a284ad47edb964e25a3f2d54",
+  "previous_subsystem_public_control_closure_tag": "verifrax-root-anagnorium-v010-public-control-closure-63286f948a1a",
+  "system_complete": false,
+  "verifrax_system_complete": false
+}
