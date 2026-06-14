@@ -1,14 +1,14 @@
 {
   "object_type": "REGRESSORIUM_V010_STATE_KERNEL",
-  "state": "REGRESSORIUM_V010_PUBLIC_CONTROL_SEAL",
+  "state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
   "subsystem": "REGRESSORIUM_V010",
   "subsystem_name": "REGRESSORIUM",
   "subsystem_slug": "regressorium-v010",
   "version": "0.1.0",
   "role": "TERMINAL_RECOURSE",
   "answers": "WHAT_MUST_NOW_FOLLOW",
-  "current_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_SEAL",
-  "next_valid_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "current_action": "PUBLISH_REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "next_valid_action": "UPDATE_REGRESSORIUM_GLOBAL_STATUS_BOARD_WITH_REGRESSORIUM_V010_CLOSURE",
   "source_public_control_intake_selection_sha": "b8ba37a90aa024f7bb6a87aad8bdb5885b73e443",
   "source_subsystem_closure_queue_sha": "c62f2b420e20c0bb5d737cf7c03b3caff8221147",
   "source_subsystem_closure_queue_tag": "verifrax-root-subsystem-closure-queue-after-anagnorium-v010-evaluation-c62f2b420e20",
@@ -26,5 +26,10 @@
   "source_public_control_chain_tag": "verifrax-root-regressorium-v010-public-control-chain-open-06cfd0aa24ef",
   "source_public_control_seal_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_SEAL",
   "source_public_control_seal_canonical_hash": "d29213ec8534f37f4c74ff8b24778c177b918452c94bd59e51ab18004cd7d876",
-  "source_public_control_seal_byte_hash": "ac770b1eb4e9665ef7cd99df90af6498b68dd2e1fc06fe94059cf0fee997f3f8"
+  "source_public_control_seal_byte_hash": "ac770b1eb4e9665ef7cd99df90af6498b68dd2e1fc06fe94059cf0fee997f3f8",
+  "source_public_control_seal_sha": "e0dbe96e8058e8ab3c080cec7a17a739e89241f0",
+  "source_public_control_seal_tag": "verifrax-root-regressorium-v010-public-control-seal-e0dbe96e8058",
+  "source_public_control_closure_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "source_public_control_closure_sha": "e0dbe96e8058e8ab3c080cec7a17a739e89241f0",
+  "updated_at": "2026-06-14T19:43:43Z"
 }
