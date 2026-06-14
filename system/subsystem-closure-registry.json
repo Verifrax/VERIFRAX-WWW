@@ -1,5 +1,5 @@
 {
-  "state": "SUBSYSTEM_CLOSURE_REGISTRY_UPDATED_WITH_ANAGNORIUM_V010",
+  "state": "SUBSYSTEM_CLOSURE_REGISTRY_UPDATED_WITH_REGRESSORIUM_V010",
   "source_global_status_board_sha": "9475cc61f11053c18a7db484713d2e13b4adf027",
   "registered_public_control_closures": [
     {
@@ -88,7 +88,7 @@
       "system_complete": false
     }
   ],
-  "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_ANAGNORIUM_V010",
+  "next_valid_action": "EVALUATE_VERIFRAX_SYSTEM_COMPLETION_GATE_AFTER_REGRESSORIUM_V010",
   "system_complete": false,
   "consonorium_v010_public_control_closure_sha": "d1e235788647a54113d4695e4c25df32c3b1d826",
   "consonorium_v010_public_control_chain_sha": "270c58d64d8263eedc754885b3b12f238546c7a7",
@@ -190,8 +190,8 @@
   "schema_version": "1.0.0",
   "system": "VERIFRAX",
   "verifrax_system_complete": false,
-  "updated_at": "2026-06-10T21:49:27Z",
-  "current_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_ANAGNORIUM_V010",
+  "updated_at": "2026-06-14T20:45:58Z",
+  "current_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_REGRESSORIUM_V010",
   "registry_has_corpiform": true,
   "registered_corpiform_v010": true,
   "source_corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
@@ -352,5 +352,64 @@
       "next_valid_action": "UPDATE_SYSTEM_COMPLETION_GATE_REGISTER_WITH_ANAGNORIUM_V010",
       "system_complete": false
     }
-  ]
+  ],
+  "truth_warning": "SUBSYSTEM_CLOSURE_REGISTRY_DOES_NOT_DEFINE_RECOGNITION_OR_SYSTEM_COMPLETION",
+  "entries": [
+    {
+      "registry_entry_type": "SUBSYSTEM_PUBLIC_CONTROL_CLOSURE_REGISTRY_ENTRY",
+      "subsystem": "REGRESSORIUM_V010",
+      "subsystem_name": "REGRESSORIUM",
+      "subsystem_version": "v0.1.0",
+      "subsystem_role": "TERMINAL_RECOURSE",
+      "public_control_closure_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+      "public_control_closure_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a",
+      "public_control_closure_tag": "",
+      "public_control_chain_sha": "06cfd0aa24efacf3fe20e629930feeac39fa6642",
+      "public_control_chain_tag": "verifrax-root-regressorium-v010-public-control-chain-open-06cfd0aa24ef",
+      "public_control_seal_sha": "e0dbe96e8058e8ab3c080cec7a17a739e89241f0",
+      "public_control_seal_tag": "verifrax-root-regressorium-v010-public-control-seal-e0dbe96e8058",
+      "source_global_status_board_sha": "71204bd39cb2a5221a09f01af37e304fc4a4ac1e",
+      "source_global_status_board_tag": "verifrax-root-global-status-board-regressorium-v010-closure-71204bd39cb2",
+      "registered_at": "2026-06-14T20:45:58Z",
+      "current_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_REGRESSORIUM_V010",
+      "next_valid_action": "EVALUATE_VERIFRAX_SYSTEM_COMPLETION_GATE_AFTER_REGRESSORIUM_V010",
+      "system_complete": false,
+      "completion_claim": "NOT_ASSERTED",
+      "truth_warning": "SUBSYSTEM_CLOSURE_REGISTRY_DOES_NOT_ASSERT_VERIFRAX_SYSTEM_COMPLETE",
+      "terminal_boundary": "REGRESSORIUM_CLOSURE_IS_TERMINAL_RECOURSE_NOT_TERMINAL_RECOGNITION"
+    }
+  ],
+  "regressorium_v010": {
+    "registry_entry_type": "SUBSYSTEM_PUBLIC_CONTROL_CLOSURE_REGISTRY_ENTRY",
+    "subsystem": "REGRESSORIUM_V010",
+    "subsystem_name": "REGRESSORIUM",
+    "subsystem_version": "v0.1.0",
+    "subsystem_role": "TERMINAL_RECOURSE",
+    "public_control_closure_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+    "public_control_closure_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a",
+    "public_control_closure_tag": "",
+    "public_control_chain_sha": "06cfd0aa24efacf3fe20e629930feeac39fa6642",
+    "public_control_chain_tag": "verifrax-root-regressorium-v010-public-control-chain-open-06cfd0aa24ef",
+    "public_control_seal_sha": "e0dbe96e8058e8ab3c080cec7a17a739e89241f0",
+    "public_control_seal_tag": "verifrax-root-regressorium-v010-public-control-seal-e0dbe96e8058",
+    "source_global_status_board_sha": "71204bd39cb2a5221a09f01af37e304fc4a4ac1e",
+    "source_global_status_board_tag": "verifrax-root-global-status-board-regressorium-v010-closure-71204bd39cb2",
+    "registered_at": "2026-06-14T20:45:58Z",
+    "current_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_REGRESSORIUM_V010",
+    "next_valid_action": "EVALUATE_VERIFRAX_SYSTEM_COMPLETION_GATE_AFTER_REGRESSORIUM_V010",
+    "system_complete": false,
+    "completion_claim": "NOT_ASSERTED",
+    "truth_warning": "SUBSYSTEM_CLOSURE_REGISTRY_DOES_NOT_ASSERT_VERIFRAX_SYSTEM_COMPLETE",
+    "terminal_boundary": "REGRESSORIUM_CLOSURE_IS_TERMINAL_RECOURSE_NOT_TERMINAL_RECOGNITION"
+  },
+  "regressorium_v010_subsystem_closure_registry_state": "SUBSYSTEM_CLOSURE_REGISTRY_UPDATED_WITH_REGRESSORIUM_V010",
+  "regressorium_v010_public_control_closure_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "regressorium_v010_public_control_closure_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a",
+  "regressorium_v010_public_control_closure_tag": "",
+  "regressorium_v010_source_global_status_board_sha": "71204bd39cb2a5221a09f01af37e304fc4a4ac1e",
+  "regressorium_v010_source_global_status_board_tag": "verifrax-root-global-status-board-regressorium-v010-closure-71204bd39cb2",
+  "regressorium_v010_next_valid_action": "EVALUATE_VERIFRAX_SYSTEM_COMPLETION_GATE_AFTER_REGRESSORIUM_V010",
+  "last_registered_required_subsystem": "REGRESSORIUM_V010",
+  "last_registered_required_subsystem_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
+  "last_registered_required_subsystem_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a"
 }
