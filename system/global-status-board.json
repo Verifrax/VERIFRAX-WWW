@@ -2,10 +2,10 @@
   "schema_version": "1.0.0",
   "system": "VERIFRAX",
   "state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
-  "system_complete": false,
-  "updated_at": "2026-06-14T20:38:59Z",
+  "system_complete": true,
+  "updated_at": "2026-06-15T20:56:00Z",
   "previous_global_status_board_sha": "032b837d6616a0b5b4cf6b5960c21d6c4c5d6926",
-  "next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_REGRESSORIUM_V010",
+  "next_valid_action": "NO_NEXT_ACTION_VERIFRAX_SYSTEM_COMPLETE",
   "registered_public_control_closures": [
     {
       "subsystem": "ADMISSORIUM_V020",
@@ -184,7 +184,7 @@
   "auctoriseal_v010_public_control_seal_sha": "b0187235033d0be8b72a61b3d2867650231a18b9",
   "auctoriseal_v010_public_control_intake_sha": "c2547af5de9e5498ce4b9488cb818cb74d31bab0",
   "auctoriseal_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_AUCTORISEAL_V010",
-  "current_action": "UPDATE_REGRESSORIUM_GLOBAL_STATUS_BOARD_WITH_REGRESSORIUM_V010_CLOSURE",
+  "current_action": "PUBLISH_VERIFRAX_SYSTEM_COMPLETION_CLOSURE_AFTER_REGRESSORIUM_V010",
   "source_corpiform_v010_public_control_closure_sha": "daa496abd0f5410cbd649c3096400119151eef6a",
   "corpiform_v010_public_control_closure_state": "CORPIFORM_V010_PUBLIC_CONTROL_CLOSURE",
   "corpiform_v010_public_control_closure_result": "PUBLIC_CONTROL_CHAIN_CLOSED",
@@ -242,7 +242,7 @@
   "previous_subsystem": "VERIFRAX_V010",
   "previous_subsystem_public_control_closure_sha": "5d1d87dd6b621370f05a18f823c7235d71631b93",
   "completion_claim": "NOT_ASSERTED",
-  "verifrax_system_complete": false,
+  "verifrax_system_complete": true,
   "subsystem_closures": [
     {
       "subsystem": "ANAGNORIUM_V010",
@@ -296,8 +296,21 @@
   "regressorium_v010_public_control_seal_tag": "verifrax-root-regressorium-v010-public-control-seal-e0dbe96e8058",
   "regressorium_v010_global_status_board_state": "VERIFRAX_GLOBAL_STATUS_BOARD_OPEN",
   "regressorium_v010_global_status_board_recorded_at": "2026-06-14T20:38:59Z",
-  "regressorium_v010_next_valid_action": "UPDATE_SUBSYSTEM_CLOSURE_REGISTRY_WITH_REGRESSORIUM_V010",
+  "regressorium_v010_next_valid_action": "NO_NEXT_ACTION_VERIFRAX_SYSTEM_COMPLETE",
   "last_closed_required_subsystem": "REGRESSORIUM_V010",
   "last_closed_required_subsystem_state": "REGRESSORIUM_V010_PUBLIC_CONTROL_CLOSURE",
-  "last_closed_required_subsystem_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a"
+  "last_closed_required_subsystem_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a",
+  "system_completion_claim": "ASSERTED_BY_FINAL_SYSTEM_COMPLETION_CLOSURE",
+  "system_completion_closure_state": "VERIFRAX_SYSTEM_COMPLETION_CLOSURE_PUBLISHED_AFTER_REGRESSORIUM_V010",
+  "system_completion_closure_published": true,
+  "system_completion_closure_authorized": true,
+  "system_completion_closure_source_gate_reevaluation_sha": "3ed66fb6c531c4964f817a5dbe8956a1d4883047",
+  "system_completion_closure_source_blocker_repair_sha": "7fdb4602694ad509233dc813c1cb111d38e30a39",
+  "system_completion_closure_source_subsystem_closure_registry_sha": "d2b2bbad0443f696ca2d610fe2b8347bf533880b",
+  "system_completion_closure_source_regressorium_closure_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a",
+  "system_completion_gate_result": "PASS",
+  "system_completion_gate_pass": true,
+  "system_completion_gate_blockers": [],
+  "system_completion_gate_required_subsystem_count": 9,
+  "system_completion_gate_closed_subsystem_count": 9
 }
