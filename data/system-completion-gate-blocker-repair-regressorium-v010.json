@@ -1,0 +1,65 @@
+{
+  "object_type": "VERIFRAX_SYSTEM_COMPLETION_GATE_BLOCKER_REPAIR",
+  "schema_version": "1.0.0",
+  "state": "SYSTEM_COMPLETION_GATE_BLOCKERS_REPAIRED_AFTER_REGRESSORIUM_V010",
+  "created_at": "2026-06-15T20:31:29Z",
+  "updated_at": "2026-06-15T20:31:29Z",
+  "current_action": "REPAIR_SYSTEM_COMPLETION_GATE_BLOCKERS_AFTER_REGRESSORIUM_V010",
+  "next_valid_action": "EVALUATE_VERIFRAX_SYSTEM_COMPLETION_GATE_AFTER_REGRESSORIUM_V010",
+  "source_system_completion_gate_sha": "852c10eda7262bd0bb1e75a0bf939b5f7ace739f",
+  "source_system_completion_gate_tag": "verifrax-root-system-completion-gate-regressorium-v010-852c10eda726",
+  "source_subsystem_closure_registry_sha": "d2b2bbad0443f696ca2d610fe2b8347bf533880b",
+  "source_regressorium_public_control_closure_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a",
+  "previous_gate_result": "BLOCKED",
+  "repair_result": "READY_FOR_REEVALUATION",
+  "repaired_entries": [
+    {
+      "subsystem": "SYNTAGMARIUM_V010",
+      "repair": "added_canonical_registry_entry"
+    },
+    {
+      "subsystem": "ORBISTIUM_V010",
+      "repair": "added_canonical_registry_entry"
+    },
+    {
+      "subsystem": "CONSONORIUM_V010",
+      "repair": "added_canonical_registry_entry"
+    },
+    {
+      "subsystem": "TACHYRIUM_V010",
+      "repair": "added_canonical_registry_entry"
+    },
+    {
+      "subsystem": "AUCTORISEAL_V010",
+      "repair": "added_canonical_registry_entry"
+    },
+    {
+      "subsystem": "CORPIFORM_V010",
+      "repair": "added_canonical_registry_entry"
+    },
+    {
+      "subsystem": "VERIFRAX_V010",
+      "repair": "added_canonical_registry_entry"
+    },
+    {
+      "subsystem": "ANAGNORIUM_V010",
+      "repair": "added_canonical_registry_entry"
+    }
+  ],
+  "required_subsystems": [
+    "SYNTAGMARIUM_V010",
+    "ORBISTIUM_V010",
+    "CONSONORIUM_V010",
+    "TACHYRIUM_V010",
+    "AUCTORISEAL_V010",
+    "CORPIFORM_V010",
+    "VERIFRAX_V010",
+    "ANAGNORIUM_V010",
+    "REGRESSORIUM_V010"
+  ],
+  "system_complete": false,
+  "verifrax_system_complete": false,
+  "system_completion_claim": "NOT_ASSERTED",
+  "truth_warning": "BLOCKER_REPAIR_DOES_NOT_ASSERT_SYSTEM_COMPLETION",
+  "next_publication_boundary": "SYSTEM_COMPLETION_GATE_MUST_BE_EVALUATED_AGAIN_BEFORE_FINAL_COMPLETION_CLOSURE"
+}
