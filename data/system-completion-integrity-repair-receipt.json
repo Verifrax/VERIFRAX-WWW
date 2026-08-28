@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "object_type": "VERIFRAX_SYSTEM_COMPLETION_INTEGRITY_REPAIR_RECEIPT",
+  "state": "VERIFRAX_SYSTEM_COMPLETION_INTEGRITY_REPAIR_CANDIDATE",
+  "generated_at": "2026-08-28T16:32:23Z",
+  "source_main_sha": "fcb004f10299e9557e128f72310d63cdb4d2d2a3",
+  "original_completion_authority_merge_sha": "fcb004f10299e9557e128f72310d63cdb4d2d2a3",
+  "original_completion_authority_preserved": true,
+  "completion_authority_reissued": false,
+  "new_independent_governance_review_required": true,
+  "reason_codes": [
+    "REGISTRY_DOES_NOT_COVER_NINE",
+    "BOARD_DOES_NOT_COVER_NINE",
+    "COMPLETION_DUPLICATE_CLOSURE_SHA_MAPPING",
+    "COMPLETION_CLOSURE_STATE_SUBSYSTEM_MISMATCH",
+    "ROOT_FORBIDS_ITS_OWN_AUTHORIZED_COMPLETION_CLAIM",
+    "ROOT_TRUE_WITH_STALE_NOT_COMPLETE_GATE",
+    "ROOT_TRUE_WITH_STALE_NOT_COMPLETE_QUEUE",
+    "BOARD_TRUE_WITH_EMBEDDED_FALSE_CURRENT_ENTRIES"
+  ],
+  "before_after_sha256": {
+    "completion": {
+      "before": "66175413858cd7132980eeef05a0c262f48c1fdd40e9b57b49a93f346a2c4657",
+      "after": "42451987ac47832e511bba9acbfc8420b0cdb170feb9340f86108547f091d729"
+    },
+    "global_status_board": {
+      "before": "2396c253110da7836b2083b822dfac9c89612d42592645ffcffa79b0f469b98a",
+      "after": "8b66d26ff6a7008053354962e405f99dddf30200932e10dd39e5a573a48785ca"
+    },
+    "subsystem_closure_registry": {
+      "before": "2e2100baa8d211d3320a65c435cfaceb79e07510e707c8ba314cbf9ad8a34020",
+      "after": "cb325cf63a1c3aacdf62d453115377094c9add12e0660aca5d4cc0dcfdef9e7b"
+    },
+    "root_control": {
+      "before": "1e1bb3db951976bcd0ac4c17c6c1fb27b25ad0e0e0515b6bf86c052bb9860a99",
+      "after": "f78d71f4245a6596ff390505eb7f8646cacfa0411f11de379a893fb7d53fbdd7"
+    },
+    "completion_integrity_manifest": "ee0aee05103d6895d4a3a6d51fe844e5f740b3b120ce8a38254c8b855ab56482"
+  },
+  "repair_scope": [
+    "completion aggregate",
+    "global status board current projection",
+    "subsystem closure registry current projection",
+    "root system control current projection",
+    "deterministic completion integrity verifier",
+    "CI completion integrity gate"
+  ],
+  "historical_per_subsystem_closure_objects_mutated": false,
+  "host_mutation_performed": false,
+  "dns_mutation_performed": false,
+  "package_publication_performed": false,
+  "external_replay_repository_mutated": false
+}
