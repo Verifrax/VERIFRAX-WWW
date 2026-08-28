@@ -1,18 +1,12 @@
 {
-  "object_type": "VERIFRAX_SYSTEM_COMPLETION_CLOSURE",
-  "schema_version": "1.1.0",
-  "state": "VERIFRAX_SYSTEM_COMPLETION_CLOSURE_PUBLISHED_AFTER_REGRESSORIUM_V010",
-  "integrity_state": "VERIFRAX_SYSTEM_COMPLETION_GRAPH_RECONSTRUCTED",
-  "created_at": "2026-06-15T20:56:00Z",
-  "updated_at": "2026-08-28T16:32:23Z",
-  "current_action": "RECONSTRUCT_MALFORMED_SYSTEM_COMPLETION_EVIDENCE_GRAPH",
-  "next_valid_action": "NO_NEXT_ACTION_VERIFRAX_SYSTEM_COMPLETE",
+  "schema_version": "1.0.0",
+  "object_type": "VERIFRAX_SYSTEM_COMPLETION_INTEGRITY_MANIFEST",
+  "state": "VERIFRAX_SYSTEM_COMPLETION_GRAPH_RECONSTRUCTED",
+  "system": "VERIFRAX",
+  "generated_at": "2026-08-28T16:32:23Z",
   "system_complete": true,
   "verifrax_system_complete": true,
-  "system_completion_claim": "ASSERTED_BY_FINAL_SYSTEM_COMPLETION_CLOSURE",
-  "completion_closure_authorized": true,
-  "completion_closure_published": true,
-  "original_completion_authority": {
+  "authority": {
     "completion_claim": "VERIFRAX_SYSTEM_COMPLETE",
     "original_authority_pr": 186,
     "original_authority_merge_sha": "fcb004f10299e9557e128f72310d63cdb4d2d2a3",
@@ -21,12 +15,28 @@
     "repair_does_not_reissue_completion_authority": true,
     "repair_requires_new_independent_governance_review": true
   },
-  "gate_result": "PASS",
-  "gate_pass": true,
-  "required_subsystem_count": 9,
-  "closed_subsystem_count": 9,
+  "supersession": {
+    "superseded_main_sha": "fcb004f10299e9557e128f72310d63cdb4d2d2a3",
+    "superseded_completion_object_sha256": "66175413858cd7132980eeef05a0c262f48c1fdd40e9b57b49a93f346a2c4657",
+    "superseded_global_status_board_sha256": "2396c253110da7836b2083b822dfac9c89612d42592645ffcffa79b0f469b98a",
+    "superseded_subsystem_registry_sha256": "2e2100baa8d211d3320a65c435cfaceb79e07510e707c8ba314cbf9ad8a34020",
+    "superseded_root_control_sha256": "1e1bb3db951976bcd0ac4c17c6c1fb27b25ad0e0e0515b6bf86c052bb9860a99",
+    "reason_codes": [
+      "REGISTRY_DOES_NOT_COVER_NINE",
+      "BOARD_DOES_NOT_COVER_NINE",
+      "COMPLETION_DUPLICATE_CLOSURE_SHA_MAPPING",
+      "COMPLETION_CLOSURE_STATE_SUBSYSTEM_MISMATCH",
+      "ROOT_FORBIDS_ITS_OWN_AUTHORIZED_COMPLETION_CLAIM",
+      "ROOT_TRUE_WITH_STALE_NOT_COMPLETE_GATE",
+      "ROOT_TRUE_WITH_STALE_NOT_COMPLETE_QUEUE",
+      "BOARD_TRUE_WITH_EMBEDDED_FALSE_CURRENT_ENTRIES"
+    ],
+    "history_preserved_by_git": true
+  },
+  "required_sovereign_subsystem_count": 9,
+  "closed_sovereign_subsystem_count": 9,
   "unique_scoped_closure_commit_count": 9,
-  "required_subsystems": [
+  "required_sovereign_subsystems": [
     "SYNTAGMARIUM_V010",
     "ORBISTIUM_V010",
     "CONSONORIUM_V010",
@@ -37,7 +47,7 @@
     "ANAGNORIUM_V010",
     "REGRESSORIUM_V010"
   ],
-  "subsystem_results": [
+  "sovereign_closures": [
     {
       "ordinal": 1,
       "subsystem": "SYNTAGMARIUM_V010",
@@ -181,42 +191,15 @@
       "classification": "support_or_intake_closure"
     }
   ],
-  "registry_coverage_complete": true,
-  "registry_closure_state_complete": true,
-  "registry_closure_sha_complete": true,
-  "repository_scope_complete": true,
-  "blockers": [],
-  "integrity_manifest": {
-    "data_path": "data/system-completion-integrity.json",
-    "system_path": "system/system-completion-integrity.json"
+  "support_closures_excluded_from_sovereign_count": true,
+  "invariants": {
+    "all_required_sovereign_subsystems_present": true,
+    "all_required_sovereign_subsystems_closed": true,
+    "all_source_commits_signature_verified": true,
+    "all_closure_commit_references_repository_scoped": true,
+    "no_duplicate_scoped_closure_commit_references": true,
+    "system_completion_authority_not_issued_by_external_replay": true,
+    "external_replay_may_verify_completion_provenance_but_cannot_create_it": true
   },
-  "supersession": {
-    "superseded_main_sha": "fcb004f10299e9557e128f72310d63cdb4d2d2a3",
-    "superseded_completion_object_sha256": "66175413858cd7132980eeef05a0c262f48c1fdd40e9b57b49a93f346a2c4657",
-    "superseded_global_status_board_sha256": "2396c253110da7836b2083b822dfac9c89612d42592645ffcffa79b0f469b98a",
-    "superseded_subsystem_registry_sha256": "2e2100baa8d211d3320a65c435cfaceb79e07510e707c8ba314cbf9ad8a34020",
-    "superseded_root_control_sha256": "1e1bb3db951976bcd0ac4c17c6c1fb27b25ad0e0e0515b6bf86c052bb9860a99",
-    "reason_codes": [
-      "REGISTRY_DOES_NOT_COVER_NINE",
-      "BOARD_DOES_NOT_COVER_NINE",
-      "COMPLETION_DUPLICATE_CLOSURE_SHA_MAPPING",
-      "COMPLETION_CLOSURE_STATE_SUBSYSTEM_MISMATCH",
-      "ROOT_FORBIDS_ITS_OWN_AUTHORIZED_COMPLETION_CLAIM",
-      "ROOT_TRUE_WITH_STALE_NOT_COMPLETE_GATE",
-      "ROOT_TRUE_WITH_STALE_NOT_COMPLETE_QUEUE",
-      "BOARD_TRUE_WITH_EMBEDDED_FALSE_CURRENT_ENTRIES"
-    ],
-    "history_preserved_by_git": true
-  },
-  "final_boundary": "VERIFRAX_SYSTEM_COMPLETE_TRUE_ASSERTED_ONLY_BY_AUTHORIZED_COMPLETION_CLOSURE",
-  "external_replay_boundary": "VERIFRAX_EXTERNAL_CONTROL_VERIFY_GREEN_DOES_NOT_CREATE_VERIFRAX_SYSTEM_COMPLETE",
-  "terminal_boundary": "REGRESSORIUM_REMAINS_TERMINAL_RECOURSE_AND_DOES_NOT_CREATE_RECOGNITION_TRUTH",
-  "no_next_action_reason": "VERIFRAX_SYSTEM_COMPLETION_CLOSURE_ALREADY_AUTHORIZED_AND_GRAPH_RECONSTRUCTED",
-  "source_system_completion_gate_reevaluation_sha": "3ed66fb6c531c4964f817a5dbe8956a1d4883047",
-  "source_system_completion_gate_reevaluation_tag": "verifrax-root-system-completion-gate-reevaluation-regressorium-v010-3ed66fb6c531",
-  "source_system_completion_gate_blocker_repair_sha": "7fdb4602694ad509233dc813c1cb111d38e30a39",
-  "source_system_completion_gate_blocker_repair_tag": "verifrax-root-system-completion-gate-blocker-repair-regressorium-v010-7fdb4602694a",
-  "source_previous_system_completion_gate_sha": "852c10eda7262bd0bb1e75a0bf939b5f7ace739f",
-  "source_subsystem_closure_registry_sha": "d2b2bbad0443f696ca2d610fe2b8347bf533880b",
-  "source_regressorium_public_control_closure_sha": "58658e78a2a8f8daf2a6b1c263ea72a82028031a"
+  "next_valid_action": "NO_NEXT_ACTION_VERIFRAX_SYSTEM_COMPLETE"
 }

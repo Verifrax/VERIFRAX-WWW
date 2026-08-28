@@ -19,6 +19,7 @@
     "postbuild": "node scripts/emit-search-metadata.cjs",
     "build": "npm run emit:search-metadata",
     "check:verifrax-org36-public-surface-authority-witness": "node scripts/check-verifrax-org36-public-surface-authority-witness.cjs",
-    "check:verifrax-org36-observatory-runtime-convergence": "node scripts/check-verifrax-org36-observatory-runtime-convergence.cjs"
+    "check:verifrax-org36-observatory-runtime-convergence": "node scripts/check-verifrax-org36-observatory-runtime-convergence.cjs",
+    "check:system-completion-integrity": "node scripts/check-system-completion-integrity.mjs"
   }
 }
